@@ -6,11 +6,11 @@
     "**/.*",
     "**/node_modules/**",
     "bower.json",
-    "package.json"
+    "package.json",
+    "functions"
   ],
   "functions": {
     ".source": "functions",
     ".credentials": "secrets.json"
   }
-
 }
