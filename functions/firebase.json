@@ -1,0 +1,16 @@
+{
+  "firebase": "<YOUR_APP_ID>",
+  "public": "./",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**",
+    "bower.json",
+    "package.json"
+  ],
+  "functions": {
+    ".source": "functions",
+    ".credentials": "secrets.json"
+  }
+
+}
