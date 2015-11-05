@@ -22,6 +22,7 @@ A Server Side Google Cloud Function automatically moderates the messages such as
 You need to have installed [npm](https://www.npmjs.com/) which typically comes with [Node.js](https://nodejs.org).
 
 Install the Firebase CLI Alpha:
+
  - Download it at [go/hearth-alpha-cli](http://go/hearth-alpha-cli)
  - Install it using `npm install -g firebase-cli-hearth.tar.gz` (might have to `sudo`)
 
@@ -42,6 +43,7 @@ Find your Firebase DB URL. You can find it in the **Database** section. It will 
 Change `<YOUR_APP_ID>` in the `firebase.json` and `scripts/main.js` files with the App ID that you got from the Firebase DB URL.
 
 Enable the Google Cloud Functions APIs on your project:
+
  - Open [this page](https://console.developers.google.com/flows/enableapi?apiid=cloudfunctions,container,compute_component,storage_component,pubsub,logging)
  - Choose the project you created earlier and click **Continue**
  - Click the blue button which says **Go to credentials**
