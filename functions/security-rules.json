@@ -1,0 +1,17 @@
+{
+  "rules": {
+    ".read": true,
+    "messages": {
+      "$message": {
+        ".write": " !data.exists() ", // Can only add new messages. Not modify or delete them.
+        ".function": { // Create a function trigger
+          "name": "'helloworld'", // Must match a module export in your JS code
+                                  // notice the double quotes: this is a string
+                                  // which is eval’d into a string.
+          "condition": "true" // Filter when a function is triggered
+                              // This too must be quoted.
+        }
+      }
+    }
+  }
+}

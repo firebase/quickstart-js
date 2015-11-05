@@ -1,5 +1,6 @@
 {
   "firebase": "<YOUR_APP_ID>",
+  "rules": "security-rules.json",
   "public": "./",
   "ignore": [
     "firebase.json",
@@ -11,6 +12,9 @@
   ],
   "functions": {
     ".source": "functions",
-    ".credentials": "secrets.json"
+    ".credentials": "secrets.json",
+    "helloworld": {
+      "database": {} // eventually the rules syntax will move here
+    }
   }
 }
