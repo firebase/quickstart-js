@@ -15,38 +15,56 @@
  */
 
 var Firebase = require('firebase');
-
-exports.helloworld = function(context, data) {
-  console.log("It works! ");
-  context.done();
-};
+// TODO: Authorize with custom secrets or some other sort of JWT when we can do
+// TODO: that. Currently we can't get the Firebase Secret for projects created
+// TODO: with the new App Manager.
+//var FirebaseTokenGenerator = require('firebase-token-generator');
+//
+//var tokenGenerator = new FirebaseTokenGenerator('<YOUR_FIREBASE_SECRET>');
+//var token = tokenGenerator.createToken({uid: 'gcf-moderator'});
 
 // Moderators messages by lowering all uppercase characters
 exports.moderator = function(context, data) {
   // Read the Firebase DB entry that triggered the function.
+  console.log('New message with path: ' + data.path);
   var newMessageRef = new Firebase(data.path);
   newMessageRef.once('value', function(data) {
+    console.log('Read message content: ' + JSON.stringify(data.val()));
     var firebaseEntryValues = data.val();
     var message = firebaseEntryValues.message;
-    // Stop if the message has already been moderated. We need this until we can filter Cloud Functions by "child_created" events only.
+    // Stop if the message has already been moderated. We need this until we can
+    // filter Cloud Functions by "child_created" events only.
+    // TODO: Remove this when we can filter on "child_created" events.
     if (firebaseEntryValues.moderated) {
       return context.done();
     }
     // Moderate if the user is Yelling.
     if (message.isYelling()) {
+      console.log('User is yelling. moderating...');
       firebaseEntryValues.message = message.capitalizeSentence();
       firebaseEntryValues.moderated = true;
     }
     // Moderate if the user uses SwearWords.
     if (message.hasSwearWords()) {
+      console.log('User is swearing. moderating...');
       firebaseEntryValues.message = message.moderateSwearWords();
       firebaseEntryValues.moderated = true;
     }
     // If message has just been moderated we update the Firebase DB.
     if(firebaseEntryValues.moderated) {
-      newMessageRef.update(firebaseEntryValues, function(error) {
-        error ? context.done(error) : context.done();
-      });
+      console.log('Message has been moderated. Saving to DB...');
+      // TODO: Authorize when we can use custom auth on GCF.
+      //console.log('Authenticating first...');
+      //newMessageRef.authWithCustomToken(token, function(error) {
+      //  if (error) {
+      //    context.done(error);
+      //  } else {
+      //    console.log('Authentication OK.');
+          newMessageRef.update(firebaseEntryValues, function (error) {
+            error ? context.done(error) : context.done();
+          });
+      //  }
+      //});
     } else {
       context.done();
     }
