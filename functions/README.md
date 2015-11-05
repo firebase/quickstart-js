@@ -31,26 +31,27 @@ git clone sso://devrel/samples/firebase/quickstart/web
 cd web/functions
 ```
 
-Install all Build/Deploy tools dependencies such as [bower](http://bower.io/) by running: `npm install`.
-
-Install all JavaScript dependencies by running: `bower install`.
-
 Now you need to create a Firebase/Google Project. Do this on the [App Manager (Staging)](https://pantheon-staging-sso.corp.google.com/mobilesdk/console/)
 
 > PS: If this give you an error you need to initially follow a small process to enable the experiment on [this doc](https://docs.google.com/document/d/18iI_4uG6uh_AcewWD9OVTQbq_xNZRNAUzgcf7QML2Ek/edit#heading=h.36bxeqj15c70)
 
-Note your Firebase DB URL and your A. You can find it in the **Database** section. It will look like:
-`https://<YOUR_APP_ID>.firebaseio-staging.com/`
+Find your Firebase DB URL. You can find it in the **Database** section. It will look like:
+`https://<YOUR_APP_ID>.firebaseio-staging.com/` Note your **App ID**.
 
-Change `<YOUR_APP_ID>` in the `firebase.json` file with the App ID that's part of the Firebase DB URL.
+Change `<YOUR_APP_ID>` in the `firebase.json` and in the `scripts/main.js` file with the App ID that's part of the Firebase DB URL.
 
 Enable the Google Cloud Functions APIs on your project:
- - Open [this page](https://console.developers.google.com/flows/enableapi?apiid=cloudfunctions,container,compute_component,storage_component,pubsub,logging) to enable the APIs. Make sure you choose your project.
+ - Open [this page](https://console.developers.google.com/flows/enableapi?apiid=cloudfunctions,container,compute_component,storage_component,pubsub,logging) to enable the APIs.
+ - Choose the project you created earlier and click **Continue**.
  - Click the blue button which says **Go to credentials**.
  - Create a service account and download the credentials as a JSON file:
    - Click "Sandwich" menu button and select **Service Account**.
    - Make sure **JSON** is selected and click the **Create** button.
    - This downloads a JSON file. Save it in your quickstart directory as `secrets.json`
+
+[Enable Billing](https://console.developers.google.com/project/_/settings) for your project. You may have to [create a Billing account](https://console.developers.google.com/project) first.
+
+Run `firebase auth` and authenticate with your account.
 
 
 ## Start a local development server
@@ -63,6 +64,10 @@ firebase serve
 
 Then open [http://localhost:5000](http://localhost:5000)
 
+You'll see a working Guestbook. Simply add some messages and they should appear in the card below.
+
+The GCF haven't been deployed yet so they are not active. Once we've deployed the GCF in the next step all the messages will be changed to all uppercase characters.
+
 
 ## Deploy the app to prod
 
@@ -73,6 +78,8 @@ firebase deploy -m "Cool new deploy"
 ```
 
 This deploys a new version of your code that will be served from `https://<APP_ID>.firebaseapp-staging.com`
+
+This also deploys and activate the GCF which will uppercase all your messages.
 
 
 ## Contributing
