@@ -4,6 +4,9 @@ This quickstart demonstrates using Google Cloud Functions (GCF) and its interact
 
 ## Introduction
 
+This sample app is a Guestbook where anyone can come and add messages on a Web UI.
+A Server Side Google Cloud Function will automatically moderate the messages such as remove swearwords.
+
  - [Read more about GCF](https://sites.google.com/a/google.com/apheleia/)
  - [Read more about Hearth: GCF integration with Firebase](https://sites.google.com/a/google.com/hearth/home)
 
@@ -66,7 +69,7 @@ Then open [http://localhost:5000](http://localhost:5000)
 
 You'll see a working Guestbook. Simply add some messages and they should appear in the card below.
 
-The GCF haven't been deployed yet so they are not active. Once we've deployed the GCF in the next step all the messages will be changed to all uppercase characters.
+The GCF haven't been deployed yet so they are not active. Once we've deployed the GCF in the next step offensive messages will be moderated server side.
 
 
 ## Deploy the app to prod
@@ -74,12 +77,16 @@ The GCF haven't been deployed yet so they are not active. Once we've deployed th
 Deploy to Firebase using the following command:
 
 ```bash
-firebase deploy -m "Cool new deploy"
+firebase deploy
 ```
 
 This deploys a new version of your code that will be served from `https://<APP_ID>.firebaseapp-staging.com`
 
-This also deploys and activate the GCF which will uppercase all your messages.
+This also deploys and activate the GCF which will moderate all your messages.
+
+> The first time you call firebase deploy, things will hang or you will get a Server Error asking you to wait a few minutes. Your GCP project is spinning up the GCE instance and Kubernetes clusters required to run Cloud Functions. Just wait a few minutes and try again.
+
+On the Web UI offensive messages will no get moderated. For instance try to add "I DON'T LIKE THIS APP" this will get moderated to a - more civilized - non uppercase message: "I don't like this app". Also messages containing swearwords (like "crap" or "poop") will also be moderated.
 
 
 ## Contributing
