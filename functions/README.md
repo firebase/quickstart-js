@@ -5,7 +5,9 @@ This quickstart demonstrates using Google Cloud Functions (GCF) and its interact
 ## Introduction
 
 This sample app is a Guestbook where anyone can add messages using a Web UI.
-A Server Side Google Cloud Function automatically moderates the messages such as remove swearwords.
+A Server Side GCF automatically moderates the messages (e.g. remove swearwords).
+
+Further reading:
 
  - [Read more about GCF](https://sites.google.com/a/google.com/apheleia/)
  - [Read more about Hearth: GCF integration with Firebase](https://sites.google.com/a/google.com/hearth/home)
@@ -14,7 +16,7 @@ A Server Side Google Cloud Function automatically moderates the messages such as
 ## Prerequisites
 
  - [Sign up for GCF EAP](http://go/apheleia-alpha-signup-internal)
- - [Sign up for Hearth EAP](go/hearth-alpha-signup)
+ - [Sign up for Hearth EAP](http://go/hearth-alpha-signup)
 
 
 ## Initial setup, build tools and dependencies
@@ -33,7 +35,7 @@ git clone sso://devrel/samples/firebase/quickstart/web
 cd web/functions
 ```
 
-Now you need to create a Firebase/Google Project. Do this on the [App Manager (Staging)](https://pantheon-staging-sso.corp.google.com/mobilesdk/console/)
+Create a Firebase/Google Developer Project. Do this on the [App Manager (Staging)](https://pantheon-staging-sso.corp.google.com/mobilesdk/console/)
 
 > PS: If you get an error you need to initially follow a [small process]((https://docs.google.com/document/d/18iI_4uG6uh_AcewWD9OVTQbq_xNZRNAUzgcf7QML2Ek/edit#heading=h.36bxeqj15c70)) to enable the experiment.
 
