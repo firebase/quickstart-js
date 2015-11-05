@@ -4,8 +4,8 @@ This quickstart demonstrates using Google Cloud Functions (GCF) and its interact
 
 ## Introduction
 
-This sample app is a Guestbook where anyone can come and add messages on a Web UI.
-A Server Side Google Cloud Function will automatically moderate the messages such as remove swearwords.
+This sample app is a Guestbook where anyone can add messages using a Web UI.
+A Server Side Google Cloud Function automatically moderates the messages such as remove swearwords.
 
  - [Read more about GCF](https://sites.google.com/a/google.com/apheleia/)
  - [Read more about Hearth: GCF integration with Firebase](https://sites.google.com/a/google.com/hearth/home)
@@ -18,8 +18,6 @@ A Server Side Google Cloud Function will automatically moderate the messages suc
 
 
 ## Initial setup, build tools and dependencies
-
-The Firebase Cloud Functions Quickstart is build using JavaScript, Node and Firebase and hosted on Firebase static hosting and Google Cloud Functions. JavaScript dependencies are managed using [bower](http://bower.io/) and Build/Deploy tools dependencies are managed using [npm](https://www.npmjs.com/).
 
 You need to have installed [npm](https://www.npmjs.com/) which typically comes with [Node.js](https://nodejs.org).
 
@@ -36,25 +34,25 @@ cd web/functions
 
 Now you need to create a Firebase/Google Project. Do this on the [App Manager (Staging)](https://pantheon-staging-sso.corp.google.com/mobilesdk/console/)
 
-> PS: If this give you an error you need to initially follow a small process to enable the experiment on [this doc](https://docs.google.com/document/d/18iI_4uG6uh_AcewWD9OVTQbq_xNZRNAUzgcf7QML2Ek/edit#heading=h.36bxeqj15c70)
+> PS: If you get an error you need to initially follow a [small process]((https://docs.google.com/document/d/18iI_4uG6uh_AcewWD9OVTQbq_xNZRNAUzgcf7QML2Ek/edit#heading=h.36bxeqj15c70)) to enable the experiment.
 
 Find your Firebase DB URL. You can find it in the **Database** section. It will look like:
 `https://<YOUR_APP_ID>.firebaseio-staging.com/` Note your **App ID**.
 
-Change `<YOUR_APP_ID>` in the `firebase.json` and in the `scripts/main.js` file with the App ID that's part of the Firebase DB URL.
+Change `<YOUR_APP_ID>` in the `firebase.json` and `scripts/main.js` files with the App ID that you got from the Firebase DB URL.
 
 Enable the Google Cloud Functions APIs on your project:
- - Open [this page](https://console.developers.google.com/flows/enableapi?apiid=cloudfunctions,container,compute_component,storage_component,pubsub,logging) to enable the APIs.
- - Choose the project you created earlier and click **Continue**.
- - Click the blue button which says **Go to credentials**.
+ - Open [this page](https://console.developers.google.com/flows/enableapi?apiid=cloudfunctions,container,compute_component,storage_component,pubsub,logging)
+ - Choose the project you created earlier and click **Continue**
+ - Click the blue button which says **Go to credentials**
  - Create a service account and download the credentials as a JSON file:
    - Click "Sandwich" menu button and select **Service Account**.
    - Make sure **JSON** is selected and click the **Create** button.
-   - This downloads a JSON file. Save it in your quickstart directory as `secrets.json`
+   - This downloads a JSON file. Save it in your quickstart app directory as `secrets.json`
 
 [Enable Billing](https://console.developers.google.com/project/_/settings) for your project. You may have to [create a Billing account](https://console.developers.google.com/project) first.
 
-Run `firebase auth` and authenticate with your account.
+Run `firebase auth` and authenticate with your Google account.
 
 
 ## Start a local development server
