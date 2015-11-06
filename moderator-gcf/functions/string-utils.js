@@ -16,32 +16,15 @@
 
 /**** String Moderation functions ****/
 
+var capitalizeSentence = require('capitalize-sentence');
+var BadWordsFilter = require('bad-words');
+filter = new BadWordsFilter();
+
 exports.loadModeratorStringUtils = function() {
 
-  var swearWords = ['crap', 'damit', 'poop']; // Add whatever blacklisted words you can think of.
-
-  // Detect if the current message contains swearwords.
-  String.prototype.hasSwearWords = function () {
-    for (var i = 0; i < swearWords.length; i++) {
-      if (this.toLowerCase().indexOf(swearWords[i].toLowerCase()) !== -1) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  // Hide all swearwords. e.g: Crap => C***
+  // Hide all swearwords. e.g: Crap => ****
   String.prototype.moderateSwearWords = function () {
-    var moderated = this;
-    for (var i = 0; i < swearWords.length; i++) {
-      var hidden = '' + swearWords[i].charAt(0);
-      for (var j = 1; j < swearWords[i].length; j++) {
-        hidden += '*';
-      }
-      var regexp = new RegExp(swearWords[i], "ig");
-      moderated = moderated.replace(regexp, hidden);
-    }
-    return moderated;
+    return filter.clean(this);
   };
 
   // Detect if the current message is yelling. i.e. there are too many Uppercase
@@ -51,19 +34,9 @@ exports.loadModeratorStringUtils = function() {
       || this.replace(/[^!]/g, '').length >= 3;
   };
 
-  // Correctly capitalize the string as a sentence (e.g. uppercase after dots) and
-  // remove exclamation points.
+  // Correctly capitalize the string as a sentence (e.g. uppercase after dots)
+  // and remove exclamation points.
   String.prototype.capitalizeSentence = function () {
-    var sentence = this.toLowerCase().match(/[^\.!\?]+[\.!\?]+/g);
-    if (!sentence) {
-      sentence = [this.toLowerCase()];
-    }
-    var out = '';
-    sentence.forEach(function (entry) {
-      entry = entry.trim();
-      entry = entry.substring(0, 1).toUpperCase() + entry.substring(1);
-      out += entry + ' ';
-    });
-    return out.trim().replace(/!+/g, '.');
-  };
-}
+    return capitalizeSentence(this.toLowerCase()).replace(/!+/g, '.');
+  }
+};

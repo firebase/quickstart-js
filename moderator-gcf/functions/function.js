@@ -42,9 +42,10 @@ exports.moderator = function(context, data) {
       firebaseEntryValues.moderated = true;
     }
     // Moderate if the user uses SwearWords.
-    if (message.hasSwearWords()) {
+    var moderated = message.moderateSwearWords();
+    if (message != moderated) {
       console.log('User is swearing. moderating...');
-      message = message.moderateSwearWords();
+      message = moderated;
       firebaseEntryValues.moderated = true;
     }
     // If message has just been moderated we update the Firebase DB.
