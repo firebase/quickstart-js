@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
 var capitalizeSentence = require('capitalize-sentence');
 var BadWordsFilter = require('bad-words');
-filter = new BadWordsFilter();
+var filter = new BadWordsFilter();
 
 // Adds moderation functions to String prototype.
 exports.loadModerationStringUtils = function() {
