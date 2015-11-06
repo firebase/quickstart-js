@@ -55,12 +55,15 @@ exports.loadModeratorStringUtils = function() {
   // remove exclamation points.
   String.prototype.capitalizeSentence = function () {
     var sentence = this.toLowerCase().match(/[^\.!\?]+[\.!\?]+/g);
+    if (!sentence) {
+      sentence = [this.toLowerCase()];
+    }
     var out = '';
     sentence.forEach(function (entry) {
       entry = entry.trim();
       entry = entry.substring(0, 1).toUpperCase() + entry.substring(1);
       out += entry + ' ';
     });
-    return out.replace(/!+/g, '.');
+    return out.trim().replace(/!+/g, '.');
   };
 }
