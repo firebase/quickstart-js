@@ -41,7 +41,7 @@ function Guestbook() {
     this.displayMessage(data.key(), val.name, val.message, val.moderated);
   }.bind(this);
 
-  // Loads the last 10 messages and listen for new ones.
+  // Loads the last 12 messages and listen for new ones.
   this.messagesRef.limitToLast(12).on("child_added", callDisplayMessage);
   // Listen for messages updates.
   this.messagesRef.limitToLast(12).on("child_changed", callDisplayMessage);
