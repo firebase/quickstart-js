@@ -26,7 +26,8 @@ function Guestbook() {
   this.submitButton = document.getElementById('submit');
 
   // Saves message on form submit.
-  this.messageForm.addEventListener('submit', this.saveMessage());
+  this.saveMessage = this.saveMessage();
+  this.messageForm.addEventListener('submit', this.saveMessage);
 
   // Toggle for the button.
   this.toggleButton = this.toggleButton();
