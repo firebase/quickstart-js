@@ -1,4 +1,4 @@
-# Firebase Cloud Functions Sample
+# Firebase Cloud Functions Sample: Moderated Guestbook
 
 This sample demonstrates using Google Cloud Functions (GCF) and its interaction with a Firebase DB through a simple Web UI.
 
