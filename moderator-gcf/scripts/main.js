@@ -50,20 +50,29 @@ function resetMaterialTextfield(element) {
   element.blur();
 }
 
+var messageCardTemplate =
+'<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--4-col-desktop">' +
+  '<div class="mdl-card__supporting-text">' +
+    '<div class="message"></div>' +
+    '<div class="author"></div>' +
+    '<div class="moderated"></div>' +
+  '</div>' +
+'</div>';
+
 // Displays a Visitor's Book Message in the UI.
 function displayMessage(key, name, message, moderated) {
   var div = document.getElementById(key);
   if (!div) {
-    div = document.createElement('div');
+    var container = document.createElement('div');
+    container.innerHTML = messageCardTemplate;
+    div = container.firstChild;
     div.setAttribute('id', key);
-    messageList.insertBefore(div, messageList.firstChild);
+    messageList.insertBefore(div, document.getElementById('message-title').nextSibling);
   }
-  var verb = 'said';
-  if (message.replace(/[^A-Z]/g, '').length > message.length / 2
-    || message.replace(/[^!]/g, '').length >= 3) {
-    verb = 'yelled';
-  }
-  div.textContent = name + ' ' + verb + ' "' + message + '"' + (moderated ? ' (moderated)' : '');
+  div.querySelector('.message').textContent = message;
+  div.querySelector('.message').innerHTML = div.querySelector('.message').innerHTML.replace('\n', '<br>');;
+  div.querySelector('.author').textContent = name;
+  div.querySelector('.moderated').textContent = moderated ? '(This message has been moderated)' : '';
 }
 
 // Bindings on load.
