@@ -22,11 +22,10 @@ StringUtils.loadModeratorStringUtils();
 // Moderators messages by lowering all uppercase characters
 exports.moderator = function(context, data) {
   // Read the Firebase DB entry that triggered the function.
-  console.log('New message with path: ' + data.path);
-  console.log('Loading firebase: ' + config.firebaseDbUrl + data.path);
+  console.log('Loading firebase path: ' + config.firebaseDbUrl + data.path);
   var newMessageRef = new Firebase(config.firebaseDbUrl + data.path);
   newMessageRef.once('value', function(data) {
-    console.log('Read message content: ' + JSON.stringify(data.val()));
+    console.log('Got message content: ' + JSON.stringify(data.val()));
     var firebaseEntryValues = data.val();
     var message = firebaseEntryValues.message;
     // Stop if the message has already been moderated. We need this until we can
