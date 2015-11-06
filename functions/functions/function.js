@@ -15,6 +15,10 @@
  */
 
 var Firebase = require('firebase');
+var stringUtils = require('./string-utils.js');
+stringUtils.loadModeratorStringUtils();
+var config = require('./config.json');
+
 // TODO: Authorize with custom secrets or some other sort of JWT when we can do
 // TODO: that. Currently we can't get the Firebase Secret for projects created
 // TODO: with the new App Manager.
@@ -27,7 +31,8 @@ var Firebase = require('firebase');
 exports.moderator = function(context, data) {
   // Read the Firebase DB entry that triggered the function.
   console.log('New message with path: ' + data.path);
-  var newMessageRef = new Firebase(data.path);
+  console.log('Loading firebase: ' + config.firebaseDbUrl + data.path);
+  var newMessageRef = new Firebase(config.firebaseDbUrl + data.path);
   newMessageRef.once('value', function(data) {
     console.log('Read message content: ' + JSON.stringify(data.val()));
     var firebaseEntryValues = data.val();
@@ -41,18 +46,19 @@ exports.moderator = function(context, data) {
     // Moderate if the user is Yelling.
     if (message.isYelling()) {
       console.log('User is yelling. moderating...');
-      firebaseEntryValues.message = message.capitalizeSentence();
+      message = message.capitalizeSentence();
       firebaseEntryValues.moderated = true;
     }
     // Moderate if the user uses SwearWords.
     if (message.hasSwearWords()) {
       console.log('User is swearing. moderating...');
-      firebaseEntryValues.message = message.moderateSwearWords();
+      message = message.moderateSwearWords();
       firebaseEntryValues.moderated = true;
     }
     // If message has just been moderated we update the Firebase DB.
     if(firebaseEntryValues.moderated) {
-      console.log('Message has been moderated. Saving to DB...');
+      firebaseEntryValues.message = message;
+      console.log('Message has been moderated. Saving to DB: ' + JSON.stringify(firebaseEntryValues));
       // TODO: Authorize when we can use custom auth on GCF.
       //console.log('Authenticating first...');
       //newMessageRef.authWithCustomToken(token, function(error) {
@@ -70,43 +76,5 @@ exports.moderator = function(context, data) {
     }
   }, function(error) {
     context.done(error);
-  });
-};
-
-/**** String Moderation functions ****/
-
-var swearWords = ['crap', 'damit', 'poop']; // Add whatever blacklisted words you can think of.
-
-// Detect if the current message contains swearwords.
-String.prototype.hasSwearWords = function() {
-  for (var i = 0; i < swearWords.length; i++) {
-    if (this.toLowerCase().indexOf(swearWords[i].toLowerCase()) !== -1) {
-      return true;
-    }
-  }
-  return false;
-};
-
-// Hide all swearwords. e.g: Crap => C***
-String.prototype.moderateSwearWords = function() {
-  for (var i = 0; i < swearWords.length; i++) {
-    var moderated = '' + swearWords.charAt(0);
-    for (var j = 1; j < swearWords[i].length; j++) {
-      moderated += '*';
-    }
-    this.replace(/swearWords[i]/ig, moderated);
-  }
-  return false;
-};
-
-// Detect if the current message is yelling.
-String.prototype.isYelling = function() {
-  return this === this.toUpperCase();
-};
-
-// Correctly capitalize the string as a sentence (e.g. uppercase after dots).
-String.prototype.capitalizeSentence = function() {
-  return this.replace(/.+?[\.\?\!](\s|$)/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.slice(1);
   });
 };
