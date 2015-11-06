@@ -88,7 +88,7 @@ This also deploys and activate the GCF which will moderate all your messages.
 
 > The first time you call firebase deploy, things will hang or you will get a Server Error asking you to wait a few minutes. Your GCP project is spinning up the GCE instance and Kubernetes clusters required to run Cloud Functions. Just wait a few minutes and try again.
 
-On the Web UI offensive messages will no get moderated. For instance try to add "I DON'T LIKE THIS APP" this will get moderated to a - more civilized - non uppercase message: "I don't like this app". Also messages containing swearwords (like "crap" or "poop") will also be moderated.
+On the Web UI offensive messages will now get moderated. For instance try to add "I DON'T LIKE THIS APP!!" this will get moderated to a - more civilized - non uppercase message: "I don't like this app.". Also messages containing swearwords (like "crap" or "poop") will also be moderated.
 
 
 ## Contributing
