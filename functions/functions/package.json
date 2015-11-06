@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "firebase": "^2.3.1",
-    "firebase-token-generator": "^2.0.0"
+    "firebase": "^2.3.1"
   }
 }

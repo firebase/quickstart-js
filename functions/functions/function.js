@@ -15,17 +15,9 @@
  */
 
 var Firebase = require('firebase');
-var stringUtils = require('./string-utils.js');
-stringUtils.loadModeratorStringUtils();
 var config = require('./config.json');
-
-// TODO: Authorize with custom secrets or some other sort of JWT when we can do
-// TODO: that. Currently we can't get the Firebase Secret for projects created
-// TODO: with the new App Manager.
-//var FirebaseTokenGenerator = require('firebase-token-generator');
-//
-//var tokenGenerator = new FirebaseTokenGenerator('<YOUR_FIREBASE_SECRET>');
-//var token = tokenGenerator.createToken({uid: 'gcf-moderator'});
+var StringUtils = require('./string-utils.js');
+StringUtils.loadModeratorStringUtils();
 
 // Moderators messages by lowering all uppercase characters
 exports.moderator = function(context, data) {
@@ -60,17 +52,9 @@ exports.moderator = function(context, data) {
       firebaseEntryValues.message = message;
       console.log('Message has been moderated. Saving to DB: ' + JSON.stringify(firebaseEntryValues));
       // TODO: Authorize when we can use custom auth on GCF.
-      //console.log('Authenticating first...');
-      //newMessageRef.authWithCustomToken(token, function(error) {
-      //  if (error) {
-      //    context.done(error);
-      //  } else {
-      //    console.log('Authentication OK.');
-          newMessageRef.update(firebaseEntryValues, function (error) {
-            error ? context.done(error) : context.done();
-          });
-      //  }
-      //});
+      newMessageRef.update(firebaseEntryValues, function (error) {
+        error ? context.done(error) : context.done();
+      });
     } else {
       context.done();
     }
