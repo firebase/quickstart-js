@@ -17,6 +17,10 @@
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
+.mdl-layout__header-row span {
+  margin-left: 15px;
+  margin-top: 17px;
+}
 .mdl-grid {
   max-width: 1024px;
   margin: auto;
