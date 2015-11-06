@@ -1,10 +1,10 @@
-# Firebase Cloud Functions Quickstart
+# Firebase Cloud Functions Sample
 
-This quickstart demonstrates using Google Cloud Functions (GCF) and its interaction with a Firebase DB through a simple Web UI.
+This sample demonstrates using Google Cloud Functions (GCF) and its interaction with a Firebase DB through a simple Web UI.
 
 ## Introduction
 
-This sample app is a Guestbook where anyone can add messages using a Web UI.
+This sample app is a Guestbook. Anyone can add messages using a Web UI.
 A Server Side GCF automatically moderates the messages (e.g. remove swearwords).
 
 Further reading:
