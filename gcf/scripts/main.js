@@ -36,7 +36,7 @@ function saveMessage(e) {
   }
 }
 
-// Displays a Visitor's Book Message in the UI.
+// Add/Updates a message in the UI.
 function displayMessage(key, message) {
   var div = document.getElementById(key);
   if (!div) {
