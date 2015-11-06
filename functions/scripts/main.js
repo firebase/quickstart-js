@@ -50,15 +50,19 @@ function resetMaterialTextfield(element) {
 }
 
 // Displays a Visitor's Book Message in the UI.
-function displayMessage(key, name, message) {
+function displayMessage(key, name, message, moderated) {
   var div = document.getElementById(key);
   if (!div) {
     div = document.createElement('div');
     div.setAttribute('id', key);
     messageList.insertBefore(div, messageList.firstChild);
   }
-  var verb = message === message.toUpperCase() ? 'yelled' : 'said';
-  div.textContent = name + ' ' + verb + ' "' + message + '"';
+  var verb = 'said';
+  if (message.replace(/[^A-Z]/g, '').length > message.length / 2
+    || message.replace(/[^!]/g, '').length >= 3) {
+    verb = 'yelled';
+  }
+  div.textContent = name + ' ' + verb + ' "' + message + '"' + (moderated ? ' (moderated)' : '');
 }
 
 // Bindings on load.
@@ -68,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var displayMessageFromFirebaseData = function(data) {
     var val = data.val();
-    displayMessage(data.key(), val.name, val.message);
+    displayMessage(data.key(), val.name, val.message, val.moderated);
   }
   // Loads the last 10 messages and listen for new ones.
   messagesRef.limitToLast(10).on("child_added", displayMessageFromFirebaseData);
