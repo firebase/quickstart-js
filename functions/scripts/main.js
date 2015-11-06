@@ -21,49 +21,30 @@ var messagesRef = new Firebase('https://<YOUR_APP_ID>.firebaseio-staging.com/mes
 var messageList = document.getElementById('message-list');
 var messageForm = document.getElementById('message-form');
 var messageInput = document.getElementById('message');
-var nameInput = document.getElementById('name');
 
 // Saves a new message on the Firebase DB.
 function saveMessage(e) {
   e.preventDefault();
-  if (messageInput.value && nameInput.value) {
+  if (messageInput.value) {
     messagesRef.push({
-      name: nameInput.value,
-      message: messageInput.value,
-      timestamp: Firebase.ServerValue.TIMESTAMP
+      message: messageInput.value
     }, function(error){
       if (error) {
         console.log(error);
-      } else {
-        resetMaterialTextfield(messageInput);
-        resetMaterialTextfield(nameInput);
       }
     });
   }
-  return false;
-}
-
-// Resets the given MaterialTextField.
-function resetMaterialTextfield(element) {
-  element.value = '';
-  element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
-  element.blur();
 }
 
 // Displays a Visitor's Book Message in the UI.
-function displayMessage(key, name, message, moderated) {
+function displayMessage(key, message) {
   var div = document.getElementById(key);
   if (!div) {
     div = document.createElement('div');
     div.setAttribute('id', key);
     messageList.insertBefore(div, messageList.firstChild);
   }
-  var verb = 'said';
-  if (message.replace(/[^A-Z]/g, '').length > message.length / 2
-    || message.replace(/[^!]/g, '').length >= 3) {
-    verb = 'yelled';
-  }
-  div.textContent = name + ' ' + verb + ' "' + message + '"' + (moderated ? ' (moderated)' : '');
+  div.textContent = message;
 }
 
 // Bindings on load.
@@ -72,8 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
   messageForm.addEventListener('submit', saveMessage);
 
   var displayMessageFromFirebaseData = function(data) {
-    var val = data.val();
-    displayMessage(data.key(), val.name, val.message, val.moderated);
+    displayMessage(data.key(), data.val().message);
   }
   // Loads the last 10 messages and listen for new ones.
   messagesRef.limitToLast(10).on("child_added", displayMessageFromFirebaseData);

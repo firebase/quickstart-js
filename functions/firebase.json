@@ -11,7 +11,7 @@
   "functions": {
     ".source": "functions",
     ".credentials": "secrets.json",
-    "moderator": {
+    "uppercaser": {
       "database": {} // eventually the rules syntax will move here
     }
   }

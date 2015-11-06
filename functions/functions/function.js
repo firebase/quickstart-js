@@ -16,43 +16,17 @@
 
 var Firebase = require('firebase');
 var config = require('./config.json');
-var StringUtils = require('./string-utils.js');
-StringUtils.loadModeratorStringUtils();
 
-// Moderators messages by lowering all uppercase characters
-exports.moderator = function(context, data) {
+// Makes all new messages ALL UPPERCASE.
+exports.uppercaser = function(context, data) {
   // Read the Firebase DB entry that triggered the function.
-  console.log('New message with path: ' + data.path);
-  console.log('Loading firebase: ' + config.firebaseDbUrl + data.path);
+  console.log('Loading firebase path: ' + config.firebaseDbUrl + data.path);
   var newMessageRef = new Firebase(config.firebaseDbUrl + data.path);
   newMessageRef.once('value', function(data) {
-    console.log('Read message content: ' + JSON.stringify(data.val()));
-    var firebaseEntryValues = data.val();
-    var message = firebaseEntryValues.message;
-    // Stop if the message has already been moderated. We need this until we can
-    // filter Cloud Functions by "child_created" events only.
-    // TODO: Remove this when we can filter on "child_created" events.
-    if (firebaseEntryValues.moderated) {
-      return context.done();
-    }
-    // Moderate if the user is Yelling.
-    if (message.isYelling()) {
-      console.log('User is yelling. moderating...');
-      message = message.capitalizeSentence();
-      firebaseEntryValues.moderated = true;
-    }
-    // Moderate if the user uses SwearWords.
-    if (message.hasSwearWords()) {
-      console.log('User is swearing. moderating...');
-      message = message.moderateSwearWords();
-      firebaseEntryValues.moderated = true;
-    }
-    // If message has just been moderated we update the Firebase DB.
-    if(firebaseEntryValues.moderated) {
-      firebaseEntryValues.message = message;
-      console.log('Message has been moderated. Saving to DB: ' + JSON.stringify(firebaseEntryValues));
-      // TODO: Authorize when we can use custom auth on GCF.
-      newMessageRef.update(firebaseEntryValues, function (error) {
+    var message = data.val().message;
+    if (message != message.toUpperCase()) {
+      // Saving uppercased message to DB.
+      newMessageRef.update({message: message.toUpperCase()}, function (error) {
         error ? context.done(error) : context.done();
       });
     } else {
