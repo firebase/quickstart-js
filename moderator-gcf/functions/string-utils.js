@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-/**** String Moderation functions ****/
-
 var capitalizeSentence = require('capitalize-sentence');
 var BadWordsFilter = require('bad-words');
 filter = new BadWordsFilter();
 
+// Adds moderation functions to String prototype.
 exports.loadModeratorStringUtils = function() {
 
-  // Hide all swearwords. e.g: Crap => ****
+  // Hide all swearwords. e.g: Crap => ****.
   String.prototype.moderateSwearWords = function () {
     return filter.clean(this);
   };
 
   // Detect if the current message is yelling. i.e. there are too many Uppercase
-  // characters or exclamation marks.
+  // characters or exclamation points.
   String.prototype.isYelling = function () {
     return this.replace(/[^A-Z]/g, '').length > this.length / 2
       || this.replace(/[^!]/g, '').length >= 3;
