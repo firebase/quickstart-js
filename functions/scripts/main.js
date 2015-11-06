@@ -24,7 +24,8 @@ var messageInput = document.getElementById('message');
 var nameInput = document.getElementById('name');
 
 // Saves a new message on the Firebase DB.
-function saveMessage() {
+function saveMessage(e) {
+  e.preventDefault();
   if (messageInput.value && nameInput.value) {
     messagesRef.push({
       name: nameInput.value,
