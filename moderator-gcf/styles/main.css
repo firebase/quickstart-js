@@ -18,7 +18,6 @@ html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
 .mdl-grid {
-  justify-content: center;
   max-width: 1024px;
   margin: auto;
 }

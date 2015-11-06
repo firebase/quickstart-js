@@ -51,7 +51,7 @@ function resetMaterialTextfield(element) {
 }
 
 var messageCardTemplate =
-'<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--4-col-desktop">' +
+'<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop">' +
   '<div class="mdl-card__supporting-text">' +
     '<div class="message"></div>' +
     '<div class="author"></div>' +
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
     displayMessage(data.key(), val.name, val.message, val.moderated);
   }
   // Loads the last 10 messages and listen for new ones.
-  messagesRef.limitToLast(10).on("child_added", displayMessageFromFirebaseData);
+  messagesRef.limitToLast(12).on("child_added", displayMessageFromFirebaseData);
   // Listen for messages updates.
-  messagesRef.limitToLast(10).on("child_changed", displayMessageFromFirebaseData);
+  messagesRef.limitToLast(12).on("child_changed", displayMessageFromFirebaseData);
 }, false);
