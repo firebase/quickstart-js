@@ -28,7 +28,7 @@ exports.loadModeratorStringUtils = function() {
   };
 
   // Detect if the current message is yelling. i.e. there are too many Uppercase
-  // characters.
+  // characters or exclamation marks.
   String.prototype.isYelling = function () {
     return this.replace(/[^A-Z]/g, '').length > this.length / 2
       || this.replace(/[^!]/g, '').length >= 3;
