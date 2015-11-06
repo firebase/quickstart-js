@@ -1,0 +1,18 @@
+{
+  "firebase": "<YOUR_APP_ID>",
+  "rules": "security-rules.json",
+  "public": "./",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**",
+    "functions"
+  ],
+  "functions": {
+    ".source": "functions",
+    ".credentials": "secrets.json",
+    "moderator": {
+      "database": {} // eventually the rules syntax will move here
+    }
+  }
+}
