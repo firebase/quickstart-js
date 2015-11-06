@@ -51,7 +51,8 @@ exports.moderator = function(context, data) {
     // If message has just been moderated we update the Firebase DB.
     if(firebaseEntryValues.moderated) {
       firebaseEntryValues.message = message;
-      console.log('Message has been moderated. Saving to DB: ' + JSON.stringify(firebaseEntryValues));
+      console.log('Message has been moderated. Saving to DB: ' +
+        JSON.stringify(firebaseEntryValues));
       // TODO: Authorize when we can use custom auth on GCF.
       newMessageRef.update(firebaseEntryValues, function (error) {
         error ? context.done(error) : context.done();

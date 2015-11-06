@@ -51,7 +51,7 @@ html, body {
   font-size: 28px;
   line-height: 32px;
   font-weight: 200;
-  padding-bottom: 25px;
+  padding-bottom: 30px;
 }
 .author {
   position: absolute;
@@ -64,4 +64,7 @@ html, body {
   bottom: 10px;
   font-weight: 100;
   font-size: 10px;
+}
+.mdl-card__supporting-text {
+  background: linear-gradient(white, #f9f9f9);
 }

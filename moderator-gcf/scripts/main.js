@@ -15,77 +15,116 @@
  */
 'use strict';
 
-var messagesRef = new Firebase('https://<YOUR_APP_ID>.firebaseio-staging.com/messages');
+// Initializes the Guestbook.
+function Guestbook() {
 
-// Shortcuts to DOM Elements.
-var messageList = document.getElementById('message-list');
-var messageForm = document.getElementById('message-form');
-var messageInput = document.getElementById('message');
-var nameInput = document.getElementById('name');
+  // Shortcuts to DOM Elements.
+  this.messageList = document.getElementById('message-list');
+  this.messageForm = document.getElementById('message-form');
+  this.messageInput = document.getElementById('message');
+  this.nameInput = document.getElementById('name');
+  this.submitButton = document.getElementById('submit');
 
-// Saves a new message on the Firebase DB.
-function saveMessage(e) {
-  e.preventDefault();
-  if (messageInput.value && nameInput.value) {
-    messagesRef.push({
-      name: nameInput.value,
-      message: messageInput.value,
-      timestamp: Firebase.ServerValue.TIMESTAMP
-    }, function(error){
-      if (error) {
-        console.log(error);
-      } else {
-        resetMaterialTextfield(messageInput);
-        resetMaterialTextfield(nameInput);
-      }
-    });
-  }
-  return false;
+  // Saves message on form submit.
+  this.messageForm.addEventListener('submit', this.saveMessage());
+
+  // Toggle for the button.
+  this.toggleButton = this.toggleButton();
+  this.messageInput.addEventListener('keyup', this.toggleButton);
+  this.nameInput.addEventListener('keyup', this.toggleButton);
+  this.messageInput.addEventListener('change', this.toggleButton);
+  this.nameInput.addEventListener('change', this.toggleButton);
+
+  // Function calling displayMessage with correct attributes from Firebase data.
+  var callDisplayMessage = function (data) {
+    var val = data.val();
+    this.displayMessage(data.key(), val.name, val.message, val.moderated);
+  }.bind(this);
+
+  // Loads the last 10 messages and listen for new ones.
+  this.messagesRef.limitToLast(12).on("child_added", callDisplayMessage);
+  // Listen for messages updates.
+  this.messagesRef.limitToLast(12).on("child_changed", callDisplayMessage);
 }
 
+// Reference to the Messages feed in the Firebase DB.
+Guestbook.prototype.messagesRef =
+  new Firebase('https://<YOUR_APP_ID>.firebaseio-staging.com/messages');
+
+// Saves a new message on the Firebase DB.
+Guestbook.prototype.saveMessage = function() {
+  return function(e) {
+    e.preventDefault();
+    if (this.messageInput.value && this.nameInput.value) {
+      this.messagesRef.push({
+        name: this.nameInput.value,
+        message: this.messageInput.value,
+        timestamp: Firebase.ServerValue.TIMESTAMP
+      }, function (error) {
+        if (error) {
+          console.log(error);
+        } else {
+          this.resetMaterialTextfield(this.messageInput);
+          this.resetMaterialTextfield(this.nameInput);
+          this.toggleButton();
+        }
+      }.bind(this));
+    }
+    return false;
+  }.bind(this);
+};
+
 // Resets the given MaterialTextField.
-function resetMaterialTextfield(element) {
+Guestbook.prototype.resetMaterialTextfield = function(element) {
   element.value = '';
   element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
   element.blur();
-}
+};
 
-var messageCardTemplate =
-'<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop">' +
-  '<div class="mdl-card__supporting-text">' +
-    '<div class="message"></div>' +
-    '<div class="author"></div>' +
-    '<div class="moderated"></div>' +
-  '</div>' +
-'</div>';
+// Template for message cards.
+Guestbook.prototype.messageCardTemplate =
+  '<div class="mdl-card mdl-cell mdl-cell--12-col mdl-card__supporting-text ' +
+              'mdl-shadow--2dp mdl-cell--4-col-tablet ' +
+              'mdl-cell--4-col-desktop">' +
+      '<div class="message"></div>' +
+      '<div class="author"></div>' +
+      '<div class="moderated"></div>' +
+  '</div>';
 
 // Displays a Visitor's Book Message in the UI.
-function displayMessage(key, name, message, moderated) {
+Guestbook.prototype.displayMessage = function(key, name, message, moderated) {
   var div = document.getElementById(key);
+  // If an element for that message does not exists yet we create it.
   if (!div) {
     var container = document.createElement('div');
-    container.innerHTML = messageCardTemplate;
+    container.innerHTML = this.messageCardTemplate;
     div = container.firstChild;
     div.setAttribute('id', key);
-    messageList.insertBefore(div, document.getElementById('message-title').nextSibling);
+    this.messageList.insertBefore(div,
+      document.getElementById('message-title').nextSibling);
   }
-  div.querySelector('.message').textContent = message;
-  div.querySelector('.message').innerHTML = div.querySelector('.message').innerHTML.replace('\n', '<br>');;
   div.querySelector('.author').textContent = name;
-  div.querySelector('.moderated').textContent = moderated ? '(This message has been moderated)' : '';
-}
+  div.querySelector('.moderated').textContent =
+    moderated ? '(This message has been moderated)' : '';
+  div.querySelector('.message').textContent = message;
+  // Replace all line breaks by <br>.
+  div.querySelector('.message').innerHTML =
+    div.querySelector('.message').innerHTML.replace('\n', '<br>');
+};
+
+// Enables or disables the submit button depending on the values of the input
+// fields.
+Guestbook.prototype.toggleButton = function() {
+  return function() {
+    if (this.messageInput.value && this.nameInput.value) {
+      this.submitButton.removeAttribute('disabled');
+    } else {
+      this.submitButton.setAttribute('disabled', 'true');
+    }
+  }.bind(this);
+};
 
 // Bindings on load.
-document.addEventListener('DOMContentLoaded', function() {
-  // Saves message on form submit.
-  messageForm.addEventListener('submit', saveMessage);
-
-  var displayMessageFromFirebaseData = function(data) {
-    var val = data.val();
-    displayMessage(data.key(), val.name, val.message, val.moderated);
-  }
-  // Loads the last 10 messages and listen for new ones.
-  messagesRef.limitToLast(12).on("child_added", displayMessageFromFirebaseData);
-  // Listen for messages updates.
-  messagesRef.limitToLast(12).on("child_changed", displayMessageFromFirebaseData);
-}, false);
+window.addEventListener('load', function() {
+  new Guestbook();
+});
