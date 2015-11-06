@@ -16,8 +16,8 @@
 
 var Firebase = require('firebase');
 var config = require('./config.json');
-var StringUtils = require('./string-utils.js');
-StringUtils.loadModeratorStringUtils();
+var StringUtils = require('./moderation-string-utils.js');
+StringUtils.loadModerationStringUtils();
 
 // Moderators messages by lowering all uppercase characters
 exports.moderator = function(context, data) {
@@ -41,10 +41,9 @@ exports.moderator = function(context, data) {
       firebaseEntryValues.moderated = true;
     }
     // Moderate if the user uses SwearWords.
-    var moderated = message.moderateSwearWords();
-    if (message != moderated) {
+    if (message.containsSwearwords()) {
       console.log('User is swearing. moderating...');
-      message = moderated;
+      message = message.moderateSwearwords();
       firebaseEntryValues.moderated = true;
     }
     // If message has just been moderated we update the Firebase DB.

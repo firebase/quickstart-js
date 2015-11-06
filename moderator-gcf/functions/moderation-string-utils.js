@@ -19,10 +19,15 @@ var BadWordsFilter = require('bad-words');
 filter = new BadWordsFilter();
 
 // Adds moderation functions to String prototype.
-exports.loadModeratorStringUtils = function() {
+exports.loadModerationStringUtils = function() {
+
+  // Returns true of the string contains swearwords.
+  String.prototype.containsSwearwords = function () {
+    return this != filter.clean(this);
+  };
 
   // Hide all swearwords. e.g: Crap => ****.
-  String.prototype.moderateSwearWords = function () {
+  String.prototype.moderateSwearwords = function () {
     return filter.clean(this);
   };
 
