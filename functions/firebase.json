@@ -6,8 +6,6 @@
     "firebase.json",
     "**/.*",
     "**/node_modules/**",
-    "bower.json",
-    "package.json",
     "functions"
   ],
   "functions": {
