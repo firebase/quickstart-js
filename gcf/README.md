@@ -42,7 +42,7 @@ Create a Firebase/Google Developer Project. Do this on the [App Manager (Staging
 Find your Firebase DB URL. You can find it in the **Database** section. It will look like:
 `https://<YOUR_APP_ID>.firebaseio-staging.com/` Note your **App ID**.
 
-Change `<YOUR_APP_ID>` in the `firebase.json`, `scripts/main.js` and `functions/config.json` files with the App ID that you got from the Firebase DB URL. You can do that by running the following command: `sed -i "" 's/<YOUR_APP_ID>/<DONT_CHANGE_LEFT_HANDSIDE_YOUR_ACTUAL_APP_ID_GOES_HERE>/g' **/*.*` e.g. `sed -i "" 's/<YOUR_APP_ID>/firebase-app-id-eeaa0/g' **/*.*`.
+Change `<YOUR_APP_ID>` in the `firebase.json`, `scripts/main.js` and `functions/config.json` files with the App ID that you got from the Firebase DB URL. You can do that by running the following command: `sed -i "" 's/<YOUR_APP_ID>/<DONT_CHANGE_LEFT_HANDSIDE_YOUR_ACTUAL_APP_ID_GOES_HERE>/g' **/*.* *.json`. For example: `sed -i "" 's/<YOUR_APP_ID>/firebase-app-id-eeaa0/g' **/*.* *.json`.
 
 Enable the Google Cloud Functions APIs on your project:
 
