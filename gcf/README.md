@@ -4,8 +4,8 @@ This quickstart demonstrates using Google Cloud Functions (GCF) and its interact
 
 ## Introduction
 
-This sample app is a Guestbook where anyone can add messages using a Web UI.
-A Server Side GCF automatically moderates the messages (e.g. remove swearwords).
+This sample app is a Message board where anyone can add messages using a Web UI.
+A Server Side GCF automatically makes all the messages uppercase.
 
 Further reading:
 
@@ -69,9 +69,9 @@ firebase serve
 
 Then open [http://localhost:5000](http://localhost:5000)
 
-You'll see a working Guestbook. Simply add some messages and they should appear in the card below.
+You'll see a working Message board. Simply add some messages and they should appear in the card below.
 
-The GCF haven't been deployed yet so they are not active. Once we've deployed the GCF in the next step offensive messages will be moderated server side.
+The GCF haven't been deployed yet so they are not active. Once we've deployed the GCF in the next step the messages will be uppercased.
 
 
 ## Deploy the app to prod
@@ -88,7 +88,7 @@ This also deploys and activate the GCF which will moderate all your messages.
 
 > The first time you call firebase deploy, things will hang or you will get a Server Error asking you to wait a few minutes. Your GCP project is spinning up the GCE instance and Kubernetes clusters required to run Cloud Functions. Just wait a few minutes and try again.
 
-On the Web UI offensive messages will now get moderated. For instance try to add "I DON'T LIKE THIS APP!!" this will get moderated to a - more civilized - non uppercase message: "I don't like this app.". Also messages containing swearwords (like "crap" or "poop") will also be moderated.
+On the Web UI messages will now get uppercased.
 
 
 ## Contributing
