@@ -12,7 +12,7 @@
         ".function": {
           // Must match a module export in your JS code notice the double
           // quotes: this is a string which is eval’d into a string.
-          "name": "'uppercaser'",
+          "name": "'makeUpperCase'",
           // Filter when a function is triggered this too must be quoted.
           "condition": "true"
         }

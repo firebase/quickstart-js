@@ -48,7 +48,7 @@ function displayMessage(key, message) {
 }
 
 // Bindings on load.
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
   // Saves message on form submit.
   messageForm.addEventListener('submit', saveMessage);
 

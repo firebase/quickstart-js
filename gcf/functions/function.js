@@ -18,17 +18,24 @@ var Firebase = require('firebase');
 var config = require('./config.json');
 
 // Makes all new messages ALL UPPERCASE.
-exports.uppercaser = function(context, data) {
+exports.makeUpperCase = function(context, data) {
+
   // Read the Firebase DB entry that triggered the function.
   console.log('Loading firebase path: ' + config.firebaseDbUrl + data.path);
-  var newMessageRef = new Firebase(config.firebaseDbUrl + data.path);
-  newMessageRef.once('value', function(data) {
-    var message = data.val().message;
+  var messageRef = new Firebase(config.firebaseDbUrl + data.path);
+  messageRef.once('value', function(messageData) {
+
+    // Retrieved the message values.
+    console.log('Retrieved message content: ' + JSON.stringify(messageData.val()));
+    var message = messageData.val().message;
     if (message != message.toUpperCase()) {
+
       // Saving uppercased message to DB.
-      newMessageRef.update({message: message.toUpperCase()}, function (error) {
-        error ? context.done(error) : context.done();
+      console.log('Saving uppercased message: ' + message.toUpperCase());
+      messageRef.update({message: message.toUpperCase()}, function (error) {
+        context.done(error);
       });
+
     } else {
       context.done();
     }

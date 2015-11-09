@@ -11,8 +11,13 @@
   "functions": {
     ".source": "functions",
     ".credentials": "secrets.json",
-    "uppercaser": {
-      "database": {} // eventually the rules syntax will move here
+    "makeUpperCase": {
+      "triggers": {
+        "database": {
+          "path": "/messages",
+          "eventType": "child_added"
+        }
+      }
     }
   }
 }

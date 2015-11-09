@@ -42,7 +42,7 @@ Create a Firebase/Google Developer Project. Do this on the [App Manager (Staging
 Find your Firebase DB URL. You can find it in the **Database** section. It will look like:
 `https://<YOUR_APP_ID>.firebaseio-staging.com/` Note your **App ID**.
 
-Change `<YOUR_APP_ID>` in the `firebase.json`, `scripts/main.js` and `functions/config.json` files with the App ID that you got from the Firebase DB URL. You can do that by running the following command: `sed -i "" 's/<YOUR_APP_ID>/<DONT_CHANGE_LEFT_HANDSIDE_YOUR_ACTUAL_APP_ID_GOES_HERE>/g' **/*.* *.json`. For example: `sed -i "" 's/<YOUR_APP_ID>/firebase-app-id-eeaa0/g' **/*.* *.json`.
+Change `<YOUR_APP_ID>` in the `firebase.json`, `scripts/main.js` and `functions/config.json` files with the App ID that you got from the Firebase DB URL. You can do that by running the following command: `sed -i "" 's/<YOUR_APP_ID>/<YOUR_APP_ID_ACTUALLY_GOES_HERE>/g' **/*.* *.json`. For example: `sed -i "" 's/<YOUR_APP_ID>/firebase-app-id-eeaa0/g' **/*.* *.json`.
 
 Enable the Google Cloud Functions APIs on your project:
 
@@ -88,7 +88,9 @@ This also deploys and activate the GCF which will moderate all your messages.
 
 > The first time you call firebase deploy, things will hang or you will get a Server Error asking you to wait a few minutes. Your GCP project is spinning up the GCE instance and Kubernetes clusters required to run Cloud Functions. Just wait a few minutes and try again.
 
-On the Web UI messages will now get uppercased.
+On the Web UI messages will now get uppercased automatically shortly after you add them.
+
+Also have a look at the [GCF logs](https://console.developers.google.com/project/_/logs?service=compute.googleapis.com&key1&key2&logName&minLogLevel=0&expandAll=false&advancedFilter=metadata.serviceName%3D"compute.googleapis.com"%20log:"_default_worker") of your app and you should see entries written by our GCF.
 
 
 ## Contributing
