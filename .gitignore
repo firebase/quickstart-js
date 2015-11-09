@@ -1,4 +1,4 @@
-*/node_modules
-*/bower_components
-*/secrets.json
-*/firebase-debug.log
+**/secrets.json
+**/firebase-debug.log
+**/node_modules
+**/bower_components
