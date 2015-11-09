@@ -45,6 +45,8 @@ function Guestbook() {
   Guestbook.fbMessagesRef.limitToLast(12).on("child_added", callDisplayMessage);
   // Listen for messages updates.
   Guestbook.fbMessagesRef.limitToLast(12).on("child_changed", callDisplayMessage);
+  // Listen for messages updates.
+  Guestbook.fbMessagesRef.limitToLast(12).on("child_removed", callDisplayMessage);
 }
 
 // Reference to the Messages feed in the Firebase DB.
