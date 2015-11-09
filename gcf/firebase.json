@@ -9,8 +9,10 @@
     "functions"
   ],
   "functions": {
+    // Directory must contain a function.js file that contains the Google Cloud Functions
     ".source": "functions",
     ".credentials": "secrets.json",
+    // Must match a module export in your Node.js code
     "makeUpperCase": {
       "triggers": {
         "database": {
