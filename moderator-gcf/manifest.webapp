@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "Firebase GCF Quickstart",
+  "name": "A Guestbook. But moderated...",
   "launch_path": "/index.html",
   "description": "Demonstrates the use of Google Cloud Functions with a Firebase DB.",
   "icons": {
@@ -18,7 +18,7 @@
   },
   "locales": {
     "en": {
-      "name": "Firebase GCF Quickstart",
+      "name": "A Guestbook. But moderated...",
       "description": "Demonstrates the use of Google Cloud Functions with a Firebase DB."
     }
   }

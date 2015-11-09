@@ -1,6 +1,6 @@
 {
-  "name": "Firebase GCF Quickstart",
-  "short_name": "FB GCF Quickstart",
+  "name": "A Guestbook. But moderated...",
+  "short_name": "A Guestbook",
   "icons": [{
     "src": "images/touch/touch-icon-128x128.png",
     "sizes": "128x128",
