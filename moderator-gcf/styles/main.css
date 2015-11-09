@@ -32,6 +32,7 @@ html, body {
 }
 .mdl-layout__header-row {
   padding: 0;
+  margin: 0;
 }
 #message-form {
   display: flex;
@@ -42,10 +43,22 @@ html, body {
 }
 #message-list {
   padding: 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
   width: 100%;
+}
+#message-title {
+  margin-top: 20px;
 }
 .mdl-card {
   min-height: 0;
+}
+.message-card {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+.message-card.visible {
+  opacity: 1;
 }
 .message {
   font-size: 28px;
