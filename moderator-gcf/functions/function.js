@@ -17,49 +17,62 @@
 
 var Firebase = require('firebase');
 var config = require('./config.json');
-var StringUtils = require('./moderation-string-utils.js');
-StringUtils.loadModerationStringUtils();
+var stringUtils = require('./moderation-string-utils.js');
+stringUtils.loadModerationStringUtils();
 
-// Moderators messages by lowering all uppercase characters
+// Moderates messages by lowering all uppercase messages and removing swearwords.
 exports.moderator = function(context, data) {
+
   // Read the Firebase DB entry that triggered the function.
   console.log('Loading firebase path: ' + config.firebaseDbUrl + data.path);
-  var newMessageRef = new Firebase(config.firebaseDbUrl + data.path);
-  newMessageRef.once('value', function(data) {
-    console.log('Got message content: ' + JSON.stringify(data.val()));
-    var firebaseEntryValues = data.val();
-    var message = firebaseEntryValues.message;
-    // Stop if the message has already been moderated. We need this until we can
-    // filter Cloud Functions by "child_created" events only.
+  var messageFirebaseDbRef = new Firebase(config.firebaseDbUrl + data.path);
+  messageFirebaseDbRef.once('value', function(fbData) {
+
+    // Retrieved the message values.
+    console.log('Got message content: ' + JSON.stringify(fbData.val()));
+    var messageEntryData = fbData.val();
+
+    // Abort if the message has already been moderated. We need this until we can filter Cloud
+    // Functions by "child_created" events only.
     // TODO: Remove this when we can filter on "child_created" events.
-    if (firebaseEntryValues.moderated) {
+    if (messageEntryData.moderated) {
       return context.done();
     }
-    // Moderate if the user is Yelling.
-    if (message.isYelling()) {
-      console.log('User is yelling. moderating...');
-      message = message.capitalizeSentence();
-      firebaseEntryValues.moderated = true;
-    }
-    // Moderate if the user uses SwearWords.
-    if (message.containsSwearwords()) {
-      console.log('User is swearing. moderating...');
-      message = message.moderateSwearwords();
-      firebaseEntryValues.moderated = true;
-    }
+
+    // Run moderation checks on on the message and moderate if needed.
+    var moderatedMessage = moderateMessage(messageEntryData.message, context, messageFirebaseDbRef);
+
     // If message has just been moderated we update the Firebase DB.
-    if(firebaseEntryValues.moderated) {
-      firebaseEntryValues.message = message;
-      console.log('Message has been moderated. Saving to DB: ' +
-        JSON.stringify(firebaseEntryValues));
+    if (messageEntryData.message != moderatedMessage) {
+      console.log('Message has been moderated. Saving to DB: ' + moderatedMessage);
       // TODO: Authorize when we can use custom auth on GCF.
-      newMessageRef.update(firebaseEntryValues, function (error) {
-        error ? context.done(error) : context.done();
+      messageFirebaseDbRef.update({message: moderatedMessage, moderated: true}, function (error) {
+        context.done(error);
       });
     } else {
       context.done();
     }
+
+  // If reading the Firebase DB failed.
   }, function(error) {
     context.done(error);
   });
 };
+
+// Moderates the given message if needed.
+function moderateMessage(message) {
+
+  // Moderate if the user is Yelling.
+  if (message.isYelling()) {
+    console.log('User is yelling. moderating...');
+    message = message.capitalizeSentence();
+  }
+
+  // Moderate if the user uses SwearWords.
+  if (message.containsSwearwords()) {
+    console.log('User is swearing. moderating...');
+    message = message.moderateSwearwords();
+  }
+
+  return message;
+}
