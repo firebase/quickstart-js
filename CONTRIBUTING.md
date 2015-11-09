@@ -12,13 +12,13 @@ We'd love for you to contribute to our source code and to make the Firebase Web 
 
 ## <a name="coc"></a> Code of Conduct
 
-As contributors and maintainers of the Firebase Quickstart Web project, we pledge to respect everyone who contributes by posting issues, updating documentation, submitting pull requests, providing feedback in comments, and any other activities.
+As contributors and maintainers of the Firebase Web Quickstarts project, we pledge to respect everyone who contributes by posting issues, updating documentation, submitting pull requests, providing feedback in comments, and any other activities.
 
 Communication through any of Firebase's channels (GitHub, StackOverflow, Google+, Twitter, etc.) must be constructive and never resort to personal attacks, trolling, public or private harassment, insults, or other unprofessional conduct.
 
 We promise to extend courtesy and respect to everyone involved in this project regardless of gender, gender identity, sexual orientation, disability, age, race, ethnicity, religion, or level of experience. We expect anyone contributing to the project to do the same.
 
-If any member of the community violates this code of conduct, the maintainers of the Firebase Quickstart Web project may take action, removing issues, comments, and PRs or blocking accounts as deemed appropriate.
+If any member of the community violates this code of conduct, the maintainers of the Firebase  Web Quickstarts project may take action, removing issues, comments, and PRs or blocking accounts as deemed appropriate.
 
 If you are subject to or witness unacceptable behavior, or have any other concerns, please drop us a line at nivco@google.com.
 
@@ -30,23 +30,11 @@ If you feel that we're missing an important bit of documentation, feel free to
 file an issue so we can help. Here's an example to get you started:
 
 ```
-Component (if any):
-
 What are you trying to do or find out more about?
 
 Where have you looked?
 
 Where did you expect to find this information?
-```
-
-Or, if you're looking for a new design template:
-
-```
-Please provide a short summary of the template you’re looking for.
-
-What makes this template interesting or challenging from a design perspective?
-
-Please provide any URLs to good examples of this type of page that you may have come across.
 ```
 
 ## <a name="issue"></a> Found an Issue?
