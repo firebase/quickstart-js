@@ -17,7 +17,6 @@
       "triggers": {
         "database": {
           "path": "/messages/$message",
-          "eventType": "child_added",
           "condition": "newData.child('message').val() != newData.child('message').val().toUpperCase()"
         }
       }
