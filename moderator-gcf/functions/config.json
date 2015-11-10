@@ -1,3 +1,3 @@
 {
-  "firebaseDbUrl": "https://<YOUR_APP_ID>.firebaseio-staging.com/"
+  "firebaseDbUrl": "<DATABASE_URL>"
 }

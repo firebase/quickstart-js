@@ -50,7 +50,7 @@ function Guestbook() {
 }
 
 // Reference to the Messages feed in the Firebase DB.
-Guestbook.fbMessagesRef = new Firebase('https://<YOUR_APP_ID>.firebaseio-staging.com/messages');
+Guestbook.fbMessagesRef = new Firebase('<DATABASE_URL>/messages');
 
 // Saves a new message on the Firebase DB.
 Guestbook.prototype.saveMessage = function(e) {
