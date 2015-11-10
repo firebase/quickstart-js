@@ -40,9 +40,6 @@ Create a Firebase/Google Developer Project. Do this on the [App Manager (Staging
 > PS: If you get an error you need to initially follow a [small process]((https://docs.google.com/document/d/18iI_4uG6uh_AcewWD9OVTQbq_xNZRNAUzgcf7QML2Ek/edit#heading=h.36bxeqj15c70)) to enable the experiment.
 
 Find your Firebase DB URL. You can find it in the **Database** section. It will look like:
-`https://<YOUR_APP_ID>.firebaseio-staging.com/` Note your **App ID**.
-
-Find your Firebase DB URL. You can find it in the **Database** section. It will look like:
 `https://<YOUR_APP_ID>.firebaseio-staging.com/` Note your **App ID** and the **Database URL**.
 Use these values to replace `<APP_ID>` in the `firebase.json` and the `<DATABASE_URL>` in `scripts/main.js` and `functions/config.json`.
 You can also do this automatically by running: `./setup.sh <DATABASE_URL>`. For example: `setup.sh https://hearth-quickstart-752c4.firebaseio-staging.com/`.
