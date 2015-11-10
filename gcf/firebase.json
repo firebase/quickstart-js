@@ -1,5 +1,5 @@
 {
-  "firebase": "<YOUR_APP_ID>",
+  "firebase": "<APP_ID>",
   "rules": "security-rules.json",
   "public": "./",
   "ignore": [

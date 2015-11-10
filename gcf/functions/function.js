@@ -22,7 +22,7 @@ exports.makeuppercase = function(context, data) {
 
   // Read the Firebase DB entry that triggered the function.
   console.log('Loading firebase path: ' + config.firebaseDbUrl + data.path);
-  var messageRef = new Firebase(config.firebaseDbUrl + data.path);
+  var messageRef = new Firebase(config.firebaseDbUrl + '/' + data.path);
   messageRef.once('value', function(messageData) {
 
     // Retrieved the message values.

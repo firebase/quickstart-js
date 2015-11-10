@@ -15,7 +15,7 @@
  */
 'use strict';
 
-var messagesRef = new Firebase('https://<YOUR_APP_ID>.firebaseio-staging.com/messages');
+var messagesRef = new Firebase('<DB_URL>/messages');
 
 // Shortcuts to DOM Elements.
 var messageList = document.getElementById('message-list');
