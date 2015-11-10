@@ -42,19 +42,18 @@ Create a Firebase/Google Developer Project. Do this on the [App Manager (Staging
 Find your Firebase DB URL. You can find it in the **Database** section. It will look like:
 `https://<YOUR_APP_ID>.firebaseio-staging.com/` Note your **App ID**.
 
-Change `<YOUR_APP_ID>` in the `firebase.json`, `scripts/main.js` and `functions/config.json` files with the App ID that you got from the Firebase DB URL. You can do that by running the following command: `sed -i "" 's/<YOUR_APP_ID>/<YOUR_APP_ID_ACTUALLY_GOES_HERE>/g' **/*.* *.json`. For example: `sed -i "" 's/<YOUR_APP_ID>/firebase-app-id-eeaa0/g' **/*.* *.json`.
+Change `<YOUR_APP_ID>` in the `firebase.json`, `scripts/main.js` and `functions/config.json` files with the App ID that you got from the Firebase DB URL. You can also do that by running the following command: `sed -i "" 's/<YOUR_APP_ID>/<YOUR_APP_ID_ACTUALLY_GOES_HERE>/g' **/*.* *.json`. For example: `sed -i "" 's/<YOUR_APP_ID>/firebase-app-id-eeaa0/g' **/*.* *.json`.
 
 Enable the Google Cloud Functions APIs on your project:
 
  - Open [this page](https://console.developers.google.com/flows/enableapi?apiid=cloudfunctions,container,compute_component,storage_component,pubsub,logging)
  - Choose the project you created earlier and click **Continue**
- - Click the blue button which says **Go to credentials**
- - Create a service account and download the credentials as a JSON file:
-   - Click "Sandwich" menu button and select **Service Account**.
-   - Make sure **JSON** is selected and click the **Create** button.
-   - This downloads a JSON file. Save it in your quickstart app directory as `secrets.json`
 
-[Enable Billing](https://console.developers.google.com/project/_/settings) for your project. You may have to [create a Billing account](https://console.developers.google.com/project) first.
+Enable Billing on your project:
+
+ - Open [this page](https://console.developers.google.com/project/_/settings)
+ - Click **Enable Billing**
+ - Select one of your **Billing accounts**. You may have to [create a Billing account](https://console.developers.google.com/project) first.
 
 Run `firebase auth` and authenticate with your Google account.
 
