@@ -7,15 +7,7 @@
         // function can update though.
         // TODO: Add security rule when we can authenticate inside GCF.
         //".write": "!data.exists() || auth.uid === 'gcf-moderator'",
-        ".write": true,
-        // Create a function trigger
-        ".function": {
-          // Must match a module export in your JS code notice the double
-          // quotes: this is a string which is eval’d into a string.
-          "name": "'makeUpperCase'",
-          // Filter when a function is triggered this too must be quoted.
-          "condition": "true"
-        }
+        ".write": true
       }
     }
   }

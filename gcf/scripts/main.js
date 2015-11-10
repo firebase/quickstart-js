@@ -33,6 +33,7 @@ function saveMessage(e) {
         console.log(error);
       }
     });
+    messageInput.value = '';
   }
 }
 

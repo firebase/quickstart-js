@@ -18,12 +18,11 @@ html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
 .mdl-grid {
-  justify-content: center;
+  max-width: 1024px;
+  margin: auto;
 }
-.material-icons {
-  font-size: 36px;
-  top: 5px;
-  position: relative;
+.mdl-card {
+  min-height: 0;
 }
 .mdl-layout__header-row {
   padding: 0;

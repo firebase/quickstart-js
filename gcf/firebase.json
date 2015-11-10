@@ -9,15 +9,16 @@
     "functions"
   ],
   "functions": {
-    // Directory must contain a function.js file that contains the Google Cloud Functions
+    // Directory must contain a function.js file that exports the Google Cloud Functions
     ".source": "functions",
     ".credentials": "secrets.json",
     // Must match a module export in your Node.js code
-    "makeUpperCase": {
+    "makeuppercase": {
       "triggers": {
         "database": {
-          "path": "/messages",
-          "eventType": "child_added"
+          "path": "/messages/$message",
+          "eventType": "child_added",
+          "condition": "newData.child('message').val() != newData.child('message').val().toUpperCase()"
         }
       }
     }

@@ -86,7 +86,7 @@ This deploys a new version of your code that will be served from `https://<APP_I
 
 This also deploys and activate the GCF which will moderate all your messages.
 
-> The first time you call firebase deploy, things will hang or you will get a Server Error asking you to wait a few minutes. Your GCP project is spinning up the GCE instance and Kubernetes clusters required to run Cloud Functions. Just wait a few minutes and try again.
+> The first time you call `firebase deploy` your GCP project is spinning up the GCE instances and Kubernetes clusters required to run Cloud Functions. Wait a few minutes and run `firebase deploy` again.
 
 On the Web UI messages will now get uppercased automatically shortly after you add them.
 
