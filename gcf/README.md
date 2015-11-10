@@ -35,7 +35,7 @@ git clone sso://devrel/samples/firebase/quickstart/web
 cd web/gcf
 ```
 
-Create a Firebase/Google Developer Project. Do this on the [App Manager (Staging)](https://pantheon-staging-sso.corp.google.com/mobilesdk/console/)
+Create a Firebase/Google Developer Project. Do this on the [App Manager (Staging)](http://go/appmanager-staging)
 
 > PS: If you get an error you need to initially follow a [small process]((https://docs.google.com/document/d/18iI_4uG6uh_AcewWD9OVTQbq_xNZRNAUzgcf7QML2Ek/edit#heading=h.36bxeqj15c70)) to enable the experiment.
 
