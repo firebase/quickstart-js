@@ -54,7 +54,7 @@ Enable Billing on your project:
  - Open [this page](https://console.developers.google.com/project/_/settings)
  - Choose the project you created earlier and click **Continue**
  - Click **Enable Billing**
- - Select one of your **Billing accounts**. You may have to [create a Billing account](https://console.developers.google.com/project) first.
+ - Select one of your **Billing accounts**. You may have to [create a Billing account](https://pantheon.corp.google.com/billing/create) first.
 
 Run `firebase auth` and authenticate with your Google account.
 
