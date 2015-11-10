@@ -9,10 +9,17 @@
     "functions"
   ],
   "functions": {
+    // Directory must contain a function.js file that exports the Google Cloud Functions
     ".source": "functions",
     ".credentials": "secrets.json",
+    // Must match a module export in your Node.js code
     "moderator": {
-      "database": {} // eventually the rules syntax will move here
+      "triggers": {
+        "database": {
+          "path": "/messages/$message",
+          "condition": "!newData.child('sanitized').exists()"
+        }
+      }
     }
   }
 }

@@ -42,7 +42,7 @@ Create a Firebase/Google Developer Project. Do this on the [App Manager (Staging
 Find your Firebase DB URL. You can find it in the **Database** section. It will look like:
 `https://<YOUR_APP_ID>.firebaseio-staging.com/` Note your **App ID**.
 
-Change `<YOUR_APP_ID>` in the `firebase.json`, `scripts/main.js` and `functions/config.json` files with the App ID that you got from the Firebase DB URL. You can do that by running the following command: `sed -i "" 's/<YOUR_APP_ID>/<DONT_CHANGE_LEFT_HANDSIDE_YOUR_ACTUAL_APP_ID_GOES_HERE>/g' **/*.* *.json`. For example: `sed -i "" 's/<YOUR_APP_ID>/firebase-app-id-eeaa0/g' **/*.* *.json`.
+Change `<YOUR_APP_ID>` in the `firebase.json`, `scripts/main.js` and `functions/config.json` files with the App ID that you got from the Firebase DB URL. You can do that by running the following command: `sed -i "" 's/<YOUR_APP_ID>/<YOUR_APP_ID_ACTUALLY_GOES_HERE>/g' **/*.* *.json`. For example: `sed -i "" 's/<YOUR_APP_ID>/firebase-app-id-eeaa0/g' **/*.* *.json`.
 
 Enable the Google Cloud Functions APIs on your project:
 
@@ -86,7 +86,7 @@ This deploys a new version of your code that will be served from `https://<APP_I
 
 This also deploys and activate the GCF which will moderate all your messages.
 
-> The first time you call firebase deploy, things will hang or you will get a Server Error asking you to wait a few minutes. Your GCP project is spinning up the GCE instance and Kubernetes clusters required to run Cloud Functions. Just wait a few minutes and try again.
+> The first time you call `firebase deploy` your GCP project is spinning up the GCE instances and Kubernetes clusters required to run Cloud Functions. Wait a few minutes and run `firebase deploy` again.
 
 On the Web UI offensive messages will now get moderated. For instance try to add "I DON'T LIKE THIS APP!!" this will get moderated to a - more civilized - non uppercase message: "I don't like this app.". Also messages containing swearwords (like "crap" or "poop") will also be moderated.
 

@@ -26,18 +26,11 @@ exports.moderator = function(context, data) {
   // Read the Firebase DB entry that triggered the function.
   console.log('Loading firebase path: ' + config.firebaseDbUrl + data.path);
   var messageFirebaseDbRef = new Firebase(config.firebaseDbUrl + data.path);
-  messageFirebaseDbRef.once('value', function(fbData) {
+  messageFirebaseDbRef.once('value', function(messageData) {
 
     // Retrieved the message values.
-    console.log('Got message content: ' + JSON.stringify(fbData.val()));
-    var messageEntryData = fbData.val();
-
-    // Abort if the message has already been moderated. We need this until we can filter Cloud
-    // Functions by "child_created" events only.
-    // TODO: Remove this when we can filter on "child_created" events.
-    if (messageEntryData.moderated) {
-      return context.done();
-    }
+    console.log('Retrieved message content: ' + JSON.stringify(messageData.val()));
+    var messageEntryData = messageData.val();
 
     // Run moderation checks on on the message and moderate if needed.
     var moderatedMessage = moderateMessage(messageEntryData.message, context, messageFirebaseDbRef);
@@ -46,17 +39,15 @@ exports.moderator = function(context, data) {
     if (messageEntryData.message != moderatedMessage) {
       console.log('Message has been moderated. Saving to DB: ' + moderatedMessage);
       // TODO: Authorize when we can use custom auth on GCF.
-      messageFirebaseDbRef.update({message: moderatedMessage, moderated: true}, function (error) {
-        context.done(error);
-      });
+      messageFirebaseDbRef.update({message: moderatedMessage, moderated: true, sanitized: true},
+        context.done);
     } else {
-      context.done();
+      console.log('Marking message as sanitized. Saving to DB: ' + moderatedMessage);
+      messageFirebaseDbRef.update({sanitized: true}, context.done);
     }
 
   // If reading the Firebase DB failed.
-  }, function(error) {
-    context.done(error);
-  });
+  }, context.done);
 };
 
 // Moderates the given message if needed.
