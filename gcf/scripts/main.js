@@ -15,7 +15,7 @@
  */
 'use strict';
 
-var messagesRef = new Firebase('<DB_URL>/messages');
+var messagesRef = new Firebase('<DATABASE_URL>/messages');
 
 // Shortcuts to DOM Elements.
 var messageList = document.getElementById('message-list');
