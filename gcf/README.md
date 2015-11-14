@@ -35,14 +35,12 @@ git clone sso://devrel/samples/firebase/quickstart/web
 cd web/gcf
 ```
 
-Create a Firebase/Google Developer Project. Do this on the [App Manager (Staging)](http://go/appmanager-staging)
-
-> PS: If you get an error you need to initially follow a [small process]((https://docs.google.com/document/d/18iI_4uG6uh_AcewWD9OVTQbq_xNZRNAUzgcf7QML2Ek/edit#heading=h.36bxeqj15c70)) to enable the experiment.
+Create a Firebase/Google Developer Project. Do this on the [Firebase App Manager](http://go/appmanager-staging)
 
 Find your Firebase DB URL. You can find it in the **Database** section. It will look like:
-`https://<YOUR_APP_ID>.firebaseio-staging.com/` Note your **App ID** and the **Database URL**.
+`https://<YOUR_APP_ID>.firebaseio.com/` Note your **App ID** and the **Database URL**.
 Use these values to replace `<APP_ID>` in the `firebase.json` and the `<DATABASE_URL>` in `scripts/main.js` and `functions/config.json`.
-You can also do this automatically by running: `./setup.sh <DATABASE_URL>`. For example: `setup.sh https://hearth-quickstart-752c4.firebaseio-staging.com/`.
+You can also do this automatically by running: `./setup.sh <DATABASE_URL>`. For example: `setup.sh https://hearth-quickstart-752c4.firebaseio.com/`.
 
 Enable the Google Cloud Functions APIs on your project:
 
@@ -82,11 +80,11 @@ Deploy to Firebase using the following command:
 firebase deploy
 ```
 
-This deploys a new version of your code that will be served from `https://<APP_ID>.firebaseapp-staging.com`
+This deploys a new version of your code that will be served from `https://<APP_ID>.firebaseapp.com`
 
-This also deploys and activate the GCF which will moderate all your messages.
+This also deploys and activate the GCF which will make all of your messages uppercase.
 
-> The first time you call `firebase deploy` your GCP project is spinning up the GCE instances and Kubernetes clusters required to run Cloud Functions. Wait a few minutes and run `firebase deploy` again.
+> The first time you call `firebase deploy` your GCP project is spinning up the GCE instances and Kubernetes clusters required to run Cloud Functions. This may take a while but things will be a lot faster on subsequent deploys.
 
 On the Web UI messages will now get uppercased automatically shortly after you add them.
 
