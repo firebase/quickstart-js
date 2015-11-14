@@ -1,21 +1,21 @@
 # Firebase Cloud Functions Sample: Moderated Guestbook
 
-This sample demonstrates using Google Cloud Functions (GCF) and its interaction with a Firebase DB through a simple Web UI.
+This sample demonstrates using Google Cloud Functions and its interaction with a Firebase DB through a simple Web UI.
 
 ## Introduction
 
 This sample app is a Guestbook. Anyone can add messages using a Web UI.
-A Server Side GCF automatically moderates the messages (e.g. remove swearwords).
+A Server Side Cloud Function automatically moderates the messages (e.g. remove swearwords).
 
 Further reading:
 
- - [Read more about GCF](https://sites.google.com/a/google.com/apheleia/)
- - [Read more about Hearth: GCF integration with Firebase](https://sites.google.com/a/google.com/hearth/home)
+ - [Read more about Cloud Functions](https://sites.google.com/a/google.com/apheleia/)
+ - [Read more about Hearth: The Cloud Functions integration with Firebase](https://sites.google.com/a/google.com/hearth/home)
 
 
 ## Prerequisites
 
- - [Sign up for GCF EAP](http://go/apheleia-alpha-signup-internal)
+ - [Sign up for The Cloud Functions EAP](http://go/apheleia-alpha-signup-internal)
  - [Sign up for Hearth EAP](http://go/hearth-alpha-signup)
 
 
@@ -67,9 +67,9 @@ firebase serve
 
 Then open [http://localhost:5000](http://localhost:5000)
 
-You'll see a working Guestbook. Simply add some messages and they should appear in the card below.
+You'll see a working Guestbook app. Simply add some messages and they should appear in the card below.
 
-The GCF haven't been deployed yet so they are not active. Once we've deployed the GCF in the next step offensive messages will be moderated server side.
+The Cloud Function hasn't been deployed yet so they are not active. Once we've deployed the Cloud Function in the next step offensive messages will be moderated server side.
 
 
 ## Deploy the app to prod
@@ -80,15 +80,20 @@ Deploy to Firebase using the following command:
 firebase deploy
 ```
 
-This deploys a new version of your code that will be served from `https://<APP_ID>.firebaseapp.com`
-
-This also deploys and activate the GCF which will moderate all your messages.
+This deploys a new version of your front end code on Firebase static hosting.
+This also deploys and activate the Cloud Function which will moderate all your messages.
 
 > The first time you call `firebase deploy` your GCP project is spinning up the GCE instances and Kubernetes clusters required to run Cloud Functions. This may take a while but things will be a lot faster on subsequent deploys.
 
+Once the deploy succeeds your app is served from `https://<APP_ID>.firebaseapp.com`. Open the app using:
+
+```bash
+firebase open
+```
+
 On the Web UI offensive messages will now get moderated. For instance try to add "I DON'T LIKE THIS APP!!" this will get moderated to a - more civilized - non uppercase message: "I don't like this app.". Also messages containing swearwords (like "crap" or "poop") will also be moderated.
 
-Also have a look at the [GCF logs](https://console.developers.google.com/project/_/logs?service=compute.googleapis.com&key1&key2&logName&minLogLevel=0&expandAll=false&advancedFilter=metadata.serviceName%3D"compute.googleapis.com"%20log:"_default_worker") of your app and you should see entries written by our GCF.
+Also have a look at the [Cloud Functions logs](https://console.developers.google.com/project/_/logs?service=compute.googleapis.com&key1&key2&logName&minLogLevel=0&expandAll=false&advancedFilter=metadata.serviceName%3D"compute.googleapis.com"%20log:"_default_worker") of your app and you should see entries written by the Cloud Function.
 
 
 ## Contributing

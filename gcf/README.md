@@ -1,22 +1,22 @@
 # Firebase Cloud Functions Quickstart
 
-This quickstart demonstrates using Google Cloud Functions (GCF) and its interaction with a Firebase DB through a simple Web UI.
+This quickstart demonstrates using Google Cloud Functions and its interaction with a Firebase DB through a simple Web UI.
 
 ## Introduction
 
 This sample app is a Message board where anyone can add messages using a Web UI.
-A Server Side GCF automatically makes all the messages uppercase.
+A Server Side Cloud Function automatically makes all the messages uppercase.
 
 Further reading:
 
- - [Read more about GCF](https://sites.google.com/a/google.com/apheleia/)
- - [Read more about Hearth: GCF integration with Firebase](https://sites.google.com/a/google.com/hearth/home)
+ - [Read more about Cloud Functions](https://sites.google.com/a/google.com/apheleia/)
+ - [Read more about Hearth: Cloud Functions integration with Firebase](https://sites.google.com/a/google.com/hearth/home)
 
 
 ## Prerequisites
 
- - [Sign up for GCF EAP](http://go/apheleia-alpha-signup-internal)
- - [Sign up for Hearth EAP](http://go/hearth-alpha-signup)
+ - [Sign up for the Cloud Functions EAP](http://goto.google.com/apheleia-alpha-signup-internal)
+ - [Sign up for Hearth EAP](http://goto.google.com/hearth-alpha-signup)
 
 
 ## Initial setup, build tools and dependencies
@@ -67,9 +67,9 @@ firebase serve
 
 Then open [http://localhost:5000](http://localhost:5000)
 
-You'll see a working Message board. Simply add some messages and they should appear in the card below.
+You'll see a working Message Board. Simply add some messages and they should appear in the card below.
 
-The GCF haven't been deployed yet so they are not active. Once we've deployed the GCF in the next step the messages will be uppercased.
+The Cloud Function hasn't been deployed yet so they are not active. Once we've deployed the Cloud Function in the next step the messages will be uppercased.
 
 
 ## Deploy the app to prod
@@ -80,15 +80,20 @@ Deploy to Firebase using the following command:
 firebase deploy
 ```
 
-This deploys a new version of your code that will be served from `https://<APP_ID>.firebaseapp.com`
-
-This also deploys and activate the GCF which will make all of your messages uppercase.
+This deploys a new version of your front end code on Firebase static hosting.
+This also deploys and activate the Cloud Function taht will make all of your messages uppercase.
 
 > The first time you call `firebase deploy` your GCP project is spinning up the GCE instances and Kubernetes clusters required to run Cloud Functions. This may take a while but things will be a lot faster on subsequent deploys.
 
+Once the deploy succeeds your app is served from `https://<APP_ID>.firebaseapp.com`. Open the app using:
+
+```bash
+firebase open
+```
+
 On the Web UI messages will now get uppercased automatically shortly after you add them.
 
-Also have a look at the [GCF logs](https://console.developers.google.com/project/_/logs?service=compute.googleapis.com&key1&key2&logName&minLogLevel=0&expandAll=false&advancedFilter=metadata.serviceName%3D"compute.googleapis.com"%20log:"_default_worker") of your app and you should see entries written by our GCF.
+Also have a look at the [Cloud Function logs](https://console.developers.google.com/project/_/logs?service=compute.googleapis.com&key1&key2&logName&minLogLevel=0&expandAll=false&advancedFilter=metadata.serviceName%3D"compute.googleapis.com"%20log:"_default_worker") of your app and you should see entries written by the Cloud Function.
 
 
 ## Contributing
