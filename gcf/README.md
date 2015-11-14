@@ -25,8 +25,8 @@ You need to have installed [npm](https://www.npmjs.com/) which typically comes w
 
 Install the Firebase CLI Alpha:
 
- - Download it at [go/hearth-alpha-cli](http://go/hearth-alpha-cli)
- - Install it using `npm install -g firebase-cli-hearth.tar.gz` (might have to `sudo`)
+ - Download the [Firebase CLI 3.0.0 Alpha](https://developers.google.com/firebase/downloads/firebase-cli.3.0.0-alpha.latest.tar.gz)
+ - Install it using `npm install -g firebase-cli.3.0.0-alpha.latest.tar.gz` (might have to `sudo`)
 
 Clone this repo and enter the `functions` directory:
 
