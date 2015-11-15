@@ -11,8 +11,8 @@
   "functions": {
     // Directory must contain a function.js file that exports the Google Cloud Functions
     ".source": "functions",
-    // Must match a module export in your Node.js code
-    "makeuppercase": {
+    // [START trigger_rules]
+    "makeuppercase": { // Must match a module export in your Node.js code
       "triggers": {
         "database": {
           "path": "/messages/$message",
@@ -20,5 +20,6 @@
         }
       }
     }
+    // [END trigger_rules]
   }
 }
