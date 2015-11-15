@@ -37,10 +37,17 @@ cd web/gcf
 
 Create a Firebase/Google Developer Project. Do this on the [Firebase App Manager](http://go/appmanager-staging)
 
-Find your Firebase DB URL. You can find it in the **Database** section. It will look like:
+Find your Firebase DB URL and your App ID. You can find this in the **Database** section. It will look like:
 `https://<YOUR_APP_ID>.firebaseio.com/` Note your **App ID** and the **Database URL**.
+
 Use these values to replace `<APP_ID>` in the `firebase.json` and the `<DATABASE_URL>` in `scripts/main.js` and `functions/config.json`.
-You can also do this automatically by running: `./setup.sh <DATABASE_URL>`. For example: `setup.sh https://hearth-quickstart-752c4.firebaseio.com/`.
+You can also do this automatically by running:
+
+```bash
+./setup.sh <DATABASE_URL>
+```
+
+For example: `setup.sh https://hearth-quickstart-752c4.firebaseio.com/`.
 
 Enable the Google Cloud Functions APIs on your project:
 
