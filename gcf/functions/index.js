@@ -19,6 +19,7 @@ var Firebase = require('firebase');
 var ref = new Firebase('<DATABASE_URL>');
 // [END imports]
 
+// [START function]
 // Makes all new messages ALL UPPERCASE.
 exports.makeuppercase = function(context, data) {
 
@@ -37,3 +38,4 @@ exports.makeuppercase = function(context, data) {
 
   }, context.done);
 };
+// [END function]
