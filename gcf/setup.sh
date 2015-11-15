@@ -69,7 +69,7 @@ if [ "$count" -eq 0 ]; then
     appid=$(echo $1 | sed 's/https:\/\/\([^\.]*\)\..*/\1/g')
 
     if [ "$(uname)" == "Darwin" ]; then
-        sed -i ".bak" 's/<DATABASE_URL>/'$dburl'/g' functions/config.json
+        sed -i ".bak" 's/<DATABASE_URL>/'$dburl'/g' functions/index.js
         sed -i ".bak" 's/<DATABASE_URL>/'$dburl'/g' scripts/main.js
         sed -i ".bak" 's/<APP_ID>/'$appid'/g' firebase.json
         echo "Done!"
@@ -78,7 +78,7 @@ if [ "$count" -eq 0 ]; then
         printBak
 
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-        sed -i".bak" 's/<DATABASE_URL>/'$dburl'/g' functions/config.json
+        sed -i".bak" 's/<DATABASE_URL>/'$dburl'/g' functions/index.js
         sed -i".bak" 's/<DATABASE_URL>/'$dburl'/g' scripts/main.js
         sed -i".bak" 's/<APP_ID>/'$appid'/g' firebase.json
         echo "Done!"

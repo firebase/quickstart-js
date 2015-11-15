@@ -15,14 +15,14 @@
  */
 
 var Firebase = require('firebase');
-var config = require('./config.json');
+var ref = new Firebase('<DATABASE_URL>');
 
 // Makes all new messages ALL UPPERCASE.
 exports.makeuppercase = function(context, data) {
 
   // Read the Firebase DB entry that triggered the function.
   console.log('Loading firebase path: ' + config.firebaseDbUrl + data.path);
-  var messageRef = new Firebase(config.firebaseDbUrl + '/' + data.path);
+  var messageRef = ref.child(data.path);
   messageRef.once('value', function(messageData) {
 
     // Retrieved the message values.
