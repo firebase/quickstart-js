@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
+// [START imports]
 var Firebase = require('firebase');
 var ref = new Firebase('<DATABASE_URL>');
+// [END imports]
 
 // Makes all new messages ALL UPPERCASE.
 exports.makeuppercase = function(context, data) {
