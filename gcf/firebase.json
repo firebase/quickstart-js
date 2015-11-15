@@ -8,10 +8,10 @@
     "**/node_modules/**",
     "functions"
   ],
+  // [START trigger_rules]
   "functions": {
     // Directory must contain a function.js file that exports the Google Cloud Functions
     ".source": "functions",
-    // [START trigger_rules]
     "makeuppercase": { // Must match a module export in your Node.js code
       "triggers": {
         "database": {
@@ -20,6 +20,6 @@
         }
       }
     }
-    // [END trigger_rules]
   }
+  // [END trigger_rules]
 }
