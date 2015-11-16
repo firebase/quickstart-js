@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
 // [START imports]
 var Firebase = require('firebase');
@@ -24,7 +25,7 @@ var ref = new Firebase('<DATABASE_URL>');
 exports.makeuppercase = function(context, data) {
 
   // Read the Firebase database object that triggered the function.
-  console.log('Reading firebase object at path: ' + config.firebaseDbUrl + data.path);
+  console.log('Reading firebase object at path: ' + ref.toString() + data.path);
   var messageRef = ref.child(data.path);
   messageRef.once('value', function(messageData) {
 
