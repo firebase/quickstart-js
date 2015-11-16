@@ -25,8 +25,8 @@ var ref = new Firebase('<DATABASE_URL>');
 exports.makeuppercase = function(context, data) {
 
   // Read the Firebase database object that triggered the function.
-  console.log('Reading firebase object at path: ' + ref.toString() + data.path);
   var messageRef = ref.child(data.path);
+  console.log('Reading firebase object at path: ' + messageRef.toString());
   messageRef.once('value', function(messageData) {
 
     // Retrieved the message and uppercase it.
