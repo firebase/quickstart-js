@@ -2,6 +2,7 @@
 
 This quickstart demonstrates using Google Cloud Functions and its interaction with a Firebase DB through a simple Web UI.
 
+
 ## Introduction
 
 This sample app is a Message board where anyone can add messages using a Web UI.
@@ -11,12 +12,6 @@ Further reading:
 
  - [Read more about Cloud Functions](https://sites.google.com/a/google.com/apheleia/)
  - [Read more about Hearth: Cloud Functions integration with Firebase](https://sites.google.com/a/google.com/hearth/home)
-
-
-## Prerequisites
-
- - [Sign up for the Cloud Functions EAP](http://goto.google.com/apheleia-alpha-signup-internal)
- - [Sign up for Hearth EAP](http://goto.google.com/hearth-alpha-signup)
 
 
 ## Initial setup, build tools and dependencies
@@ -100,7 +95,7 @@ firebase open
 
 On the Web UI messages will now get uppercased automatically shortly after you add them.
 
-Also have a look at the [Cloud Function logs](https://console.developers.google.com/project/_/logs?service=compute.googleapis.com&key1&key2&logName&minLogLevel=0&expandAll=false&advancedFilter=metadata.serviceName%3D"compute.googleapis.com"%20log:"_default_worker") of your app and you should see entries written by the Cloud Function.
+Also have a look at the [Cloud Function logs](https://console.developers.google.com/project/_/logs?advancedFilter=metadata.serviceName:"cloudfunctions.googleapis.com") of your app and you should see entries written by the Cloud Function.
 
 
 ## Contributing

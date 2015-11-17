@@ -2,6 +2,7 @@
 
 This sample demonstrates using Google Cloud Functions and its interaction with a Firebase DB through a simple Web UI.
 
+
 ## Introduction
 
 This sample app is a Guestbook. Anyone can add messages using a Web UI.
@@ -11,12 +12,6 @@ Further reading:
 
  - [Read more about Cloud Functions](https://sites.google.com/a/google.com/apheleia/)
  - [Read more about Hearth: The Cloud Functions integration with Firebase](https://sites.google.com/a/google.com/hearth/home)
-
-
-## Prerequisites
-
- - [Sign up for The Cloud Functions EAP](http://go/apheleia-alpha-signup-internal)
- - [Sign up for Hearth EAP](http://go/hearth-alpha-signup)
 
 
 ## Initial setup, build tools and dependencies
@@ -97,7 +92,7 @@ firebase open
 
 On the Web UI offensive messages will now get moderated. For instance try to add "I DON'T LIKE THIS APP!!" this will get moderated to a - more civilized - non uppercase message: "I don't like this app.". Also messages containing swearwords (like "crap" or "poop") will also be moderated.
 
-Also have a look at the [Cloud Functions logs](https://console.developers.google.com/project/_/logs?service=compute.googleapis.com&key1&key2&logName&minLogLevel=0&expandAll=false&advancedFilter=metadata.serviceName%3D"compute.googleapis.com"%20log:"_default_worker") of your app and you should see entries written by the Cloud Function.
+Also have a look at the [Cloud Functions logs](https://console.developers.google.com/project/_/logs?advancedFilter=metadata.serviceName:"cloudfunctions.googleapis.com") of your app and you should see entries written by the Cloud Function.
 
 
 ## Contributing
