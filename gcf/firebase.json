@@ -1,6 +1,5 @@
 {
   "firebase": "<APP_ID>",
-  "rules": "security-rules.json",
   "public": "./",
   "ignore": [
     "firebase.json",
@@ -9,6 +8,7 @@
     "functions"
   ],
   // [START trigger_rules]
+  "rules": "security-rules.json",
   "functions": {
     // Directory must contain a index.js file that exports the Google Cloud Functions
     ".source": "functions",
