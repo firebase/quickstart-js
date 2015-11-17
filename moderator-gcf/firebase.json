@@ -9,7 +9,7 @@
     "functions"
   ],
   "functions": {
-    // Directory must contain a function.js file that exports the Google Cloud Functions
+    // Directory must contain a index.js file that exports the Google Cloud Functions
     ".source": "functions",
     // Must match a module export in your Node.js code
     "moderator": {
