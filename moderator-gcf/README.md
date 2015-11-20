@@ -16,21 +16,38 @@ Further reading:
 
 ## Initial setup, build tools and dependencies
 
+### 1. Install the Firebase CLI Alpha
+
 You need to have installed [npm](https://www.npmjs.com/) which typically comes with [Node.js](https://nodejs.org).
 
-Install the Firebase CLI Alpha:
+Download the [Firebase CLI 3.0.0 Alpha](https://developers.google.com/firebase/downloads/firebase-cli.3.0.0-alpha.latest.tar.gz) and install it using:
 
- - Download the [Firebase CLI 3.0.0 Alpha](https://developers.google.com/firebase/downloads/firebase-cli.3.0.0-alpha.latest.tar.gz)
- - Install it using `npm install -g firebase-cli.3.0.0-alpha.latest.tar.gz` (might have to `sudo`)
+```
+npm install -g firebase-cli.3.0.0-alpha.latest.tar.gz
+```
 
-Clone this repo and enter the `functions` directory:
+> You might have to `sudo` the command above.
+
+Run `firebase auth` and authenticate with your Google account.
+
+
+### 2. Clone this repo
+
+Clone this repo and enter the `web/moderator-gcf` directory:
 
 ```bash
 git clone sso://devrel/samples/firebase/quickstart/web
 cd web/moderator-gcf
 ```
 
-Create a Firebase/Google Developer Project. Do this on the [Firebase App Manager](http://go/appmanager-staging)
+
+
+### 3. Create a Firebase project and configure the quickstart
+
+Create a Firebase Project on the [Firebase Console](http://g.co/firebase).
+
+Note your Firebase database URL and your App ID. You can find your Firebase database URL in the **Database** section. It will look like:
+`https://<YOUR_APP_ID>.firebaseio.com/` Note your **App ID** and also the whole **Database URL**.
 
 Use these values to replace `<APP_ID>` in the `firebase.json` and the `<DATABASE_URL>` in `scripts/main.js` and `functions/config.json`.
 You can also do this automatically by running:
@@ -39,9 +56,12 @@ You can also do this automatically by running:
 ./setup.sh <DATABASE_URL>
 ```
 
-For example: `setup.sh https://hearth-quickstart-752c4.firebaseio.com/`.
+For example: `./setup.sh https://hearth-quickstart-12345.firebaseio.com/`.
 
-Enable the Google Cloud Functions APIs on your project:
+
+### 4. Enable the Google Cloud Functions APIs
+
+Enable the Google Cloud APIs required to run Cloud Functions on your project:
 
  - Open [this page](https://console.developers.google.com/flows/enableapi?apiid=cloudfunctions,container,compute_component,storage_component,pubsub,logging)
  - Choose the project you created earlier and click **Continue**
@@ -51,9 +71,7 @@ Enable Billing on your project:
  - Open [this page](https://console.developers.google.com/project/_/settings)
  - Choose the project you created earlier and click **Continue**
  - Click **Enable Billing**
- - Select one of your **Billing accounts**. You may have to [create a Billing account](https://pantheon.corp.google.com/billing/create) first.
-
-Run `firebase auth` and authenticate with your Google account.
+ - Select one of your **Billing accounts**. You may have to [create a Billing account](https://console.developers.google.com/billing/create) first.
 
 
 ## Start a local development server
@@ -66,9 +84,9 @@ firebase serve
 
 Then open [http://localhost:5000](http://localhost:5000)
 
-You'll see a working Guestbook app. Simply add some messages and they should appear in the card below.
+You'll see a working Guestbook app. Simply add some messages and they should appear in a card below.
 
-The Cloud Function hasn't been deployed yet so they are not active. Once we've deployed the Cloud Function in the next step offensive messages will be moderated server side.
+`firebase serve` only serves static assets locally at this point and the Cloud Functions haven't been deployed yet so they are not active. Once you've deployed the Cloud Function in the next step offensive messages will be moderated server side.
 
 
 ## Deploy the app to prod
@@ -79,10 +97,10 @@ Deploy to Firebase using the following command:
 firebase deploy
 ```
 
-This deploys a new version of your front end code on Firebase static hosting.
+This deploys the Web app on Firebase static hosting.
 This also deploys and activate the Cloud Function which will moderate all your messages.
 
-> The first time you call `firebase deploy` your GCP project is spinning up the GCE instances and Kubernetes clusters required to run Cloud Functions. This may take a while but things will be a lot faster on subsequent deploys.
+> The first time you call `firebase deploy` on a new project the Google Compute Engine instances and Kubernetes clusters required to run Cloud Functions will be spin-up. This may take a few minutes but things will be a lot faster on subsequent deploys.
 
 Once the deploy succeeds your app is served from `https://<APP_ID>.firebaseapp.com`. Open the app using:
 
@@ -92,7 +110,20 @@ firebase open
 
 On the Web UI offensive messages will now get moderated. For instance try to add "I DON'T LIKE THIS APP!!" this will get moderated to a - more civilized - non uppercase message: "I don't like this app.". Also messages containing swearwords (like "crap" or "poop") will also be moderated.
 
-Also have a look at the [Cloud Functions logs](https://console.developers.google.com/project/_/logs?advancedFilter=metadata.serviceName:"cloudfunctions.googleapis.com") of your app and you should see entries written by the Cloud Function.
+
+## Debugging
+
+Within Cloud Functions any `console.log()` statements will be logged to Cloud Logging. You can view these logs by using [this Cloud Logging filter](https://console.developers.google.com/project/_/logs?advancedFilter=metadata.serviceName:"cloudfunctions.googleapis.com").
+
+Alternatively, you can view logs locally by entering the following in your terminal from within your project's directory:
+
+```bash
+firebase functions:log [function-name]
+```
+
+Replace `function-name` with the name of the function you'd like to view logs for. You can add an optional `-f` flag to see logs as they are written.
+
+> To view logs locally you'll need to have [gcloud](https://cloud.google.com/sdk/) installed and have run `gcloud auth login`.
 
 
 ## Contributing
