@@ -8,10 +8,9 @@
     "functions"
   ],
   // [START trigger_rules]
-  "rules": "security-rules.json",
+  "rules": "security-rules.json", // Must be present as online rules will be overriden when using functions
   "functions": {
-    // Directory must contain a index.js file that exports the Google Cloud Functions
-    ".source": "functions",
+    ".source": "functions", // Directory must contain an index.js file that exports the Google Cloud Functions
     "makeuppercase": { // Must match a module export in your Node.js code
       "triggers": {
         "database": {
