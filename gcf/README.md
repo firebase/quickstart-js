@@ -1,4 +1,4 @@
-# Firebase Cloud Functions Quickstart
+# Firebase Cloud Functions Quickstart - Web
 
 This quickstart demonstrates using **Google Cloud Functions** and its interaction with a **Firebase database** through a simple **Web app**.
 
@@ -10,8 +10,7 @@ A Server Side Cloud Function automatically makes all the messages uppercase as s
 
 Further reading:
 
- - [Read more about Cloud Functions](https://sites.google.com/a/google.com/apheleia/)
- - [Read more about Hearth: Cloud Functions integration with Firebase](https://sites.google.com/a/google.com/hearth/home)
+ - [Read more about Cloud Functions](https://developers.google.com/firebase/docs/cloud-functions/setup)
 
 
 ## Initial setup, build tools and dependencies
@@ -48,14 +47,14 @@ Create a Firebase Project on the [Firebase Console](http://g.co/firebase).
 Note your Firebase database URL and your App ID. You can find your Firebase database URL in the **Database** section. It will look like:
 `https://<YOUR_APP_ID>.firebaseio.com/` Note your **App ID** and also the whole **Database URL**.
 
-Use these values to replace `<APP_ID>` in the `firebase.json` and the `<DATABASE_URL>` in `scripts/main.js` and `functions/config.json`.
+Use these values to replace `<APP_ID>` in `firebase.json` and the `<DATABASE_URL>` in `scripts/main.js` and `functions/config.json`.
 You can also do this automatically by running:
 
 ```bash
 ./setup.sh <DATABASE_URL>
 ```
 
-For example: `./setup.sh https://hearth-quickstart-12345.firebaseio.com/`.
+For example: `./setup.sh https://functions-quickstart-12345.firebaseio.com/`.
 
 
 ### 4. Enable the Google Cloud Functions APIs

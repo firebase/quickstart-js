@@ -25,7 +25,7 @@ function printHelp() {
     fi
     echo ""
     echo "Usage: ./setup.sh <DATABASE_URL>"
-    echo "e.g: ./setup.sh https://hearth-moderator-752c4.firebaseio-staging.com/"
+    echo "e.g: ./setup.sh https://functions-moderator-12345.firebaseio.com/"
 }
 
 count=$(countBakFiles)
