@@ -72,21 +72,6 @@ Enable Billing on your project:
  - Select one of your **Billing accounts**. You may have to [create a Billing account](https://console.developers.google.com/billing/create) first.
 
 
-## Start a local development server
-
-You can start a local development server by running:
-
-```bash
-firebase serve
-```
-
-Then open [http://localhost:5000](http://localhost:5000)
-
-You'll see a working Message Board. Simply add some messages and they should appear in the card below.
-
-`firebase serve` only serves static assets locally at this point and the Cloud Functions haven't been deployed yet so they are not active. Once we've deployed the Cloud Functions in the next step the messages will be uppercased.
-
-
 ## Deploy the app to prod
 
 Deploy to Firebase using the following command:
@@ -100,13 +85,38 @@ This also deploys and activate the Cloud Function that will make all of your mes
 
 > The first time you call `firebase deploy` on a new project the Google Compute Engine instances and Kubernetes clusters required to run Cloud Functions will be spin-up. This may take a few minutes but things will be a lot faster on subsequent deploys.
 
-Once the deploy succeeds your app is served from `https://<APP_ID>.firebaseapp.com`. Open the app using:
+
+## See the results
+
+Once your Cloud Function is deployed add the following objects to your Firebase Database manually using the Firebase Console:
+
+```
+\functions-quickstart-12345
+    \messages
+        \key-123456
+            text: "This is my first message!"
+        \key-123457
+            text: "This is my second message!"
+```
+
+Adding these objects triggers the cloud function which makes the messages uppercase:
+
+```
+\functions-quickstart-12345
+    \messages
+        \key-123456
+            text: "THIS IS MY FIRST MESSAGE!"
+        \key-123457
+            text: "THIS IS MY SECOND MESSAGE!"
+```
+
+Now try to add messages using the Web app which is now served from `https://<APP_ID>.firebaseapp.com`. You can open the app using:
 
 ```bash
 firebase open
 ```
 
-On the Web UI messages will now get uppercased automatically shortly after you add them.
+On the Web app messages will get uppercased automatically shortly after you add them.
 
 
 ## Debugging
