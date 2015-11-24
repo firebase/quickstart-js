@@ -27,7 +27,7 @@ function saveMessage(e) {
   e.preventDefault();
   if (messageInput.value) {
     messagesRef.push({
-      message: messageInput.value
+      text: messageInput.value
     }, function(error){
       if (error) {
         console.log(error);
@@ -54,7 +54,7 @@ window.addEventListener('load', function() {
   messageForm.addEventListener('submit', saveMessage);
 
   var displayMessageFromFirebaseData = function(data) {
-    displayMessage(data.key(), data.val().message);
+    displayMessage(data.key(), data.val().text);
   }
   // Loads the last 10 messages and listen for new ones.
   messagesRef.limitToLast(10).on("child_added", displayMessageFromFirebaseData);

@@ -31,11 +31,11 @@ exports.makeuppercase = function(context, data) {
 
     // Retrieved the message and uppercase it.
     console.log('Retrieved message content: ' + JSON.stringify(messageData.val()));
-    var uppercased = messageData.val().message.toUpperCase();
+    var uppercased = messageData.val().text.toUpperCase();
 
     // Saving the uppercased message to DB.
     console.log('Saving uppercased message: ' + uppercased);
-    messageRef.update({message: uppercased}, context.done);
+    messageRef.update({text: uppercased}, context.done);
 
   }, context.done);
 };
