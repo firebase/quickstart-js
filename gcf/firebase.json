@@ -8,7 +8,7 @@
     "functions"
   ],
   // [START trigger_rules]
-  "rules": "security-rules.json", // Must be present as online rules will be overriden
+  "rules": "security-rules.json", // Must be present as online rules will be overridden
   "functions": {
     ".source": "functions", // Directory must contain an index.js
     "makeuppercase": { // Must match a module export in your index.js
