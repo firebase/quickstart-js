@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * For more information on setting up and running this sample code, see
+ * https://developers.google.com/firebase/docs/cloud-functions/writing-functions
+ */
+
 'use strict';
 
 // [START imports]

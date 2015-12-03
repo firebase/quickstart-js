@@ -1,3 +1,8 @@
+//
+// For more information on setting up and running this sample code, see
+// https://developers.google.com/firebase/docs/cloud-functions/writing-functions
+//
+
 {
   "firebase": "<APP_ID>",
   "public": "./",
