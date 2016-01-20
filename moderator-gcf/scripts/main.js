@@ -38,7 +38,7 @@ function Guestbook() {
   // Function calling displayMessage with correct attributes from Firebase data.
   var callDisplayMessage = function (data) {
     var val = data.val();
-    this.displayMessage(data.key(), val.name, val.message, val.moderated);
+    this.displayMessage(data.key(), val.name, val.text, val.moderated);
   }.bind(this);
 
   // Loads the last 12 messages and listen for new ones.
@@ -58,7 +58,7 @@ Guestbook.prototype.saveMessage = function(e) {
   if (this.messageInput.value && this.nameInput.value) {
     Guestbook.fbMessagesRef.push({
       name: this.nameInput.value,
-      message: this.messageInput.value,
+      text: this.messageInput.value,
       timestamp: Firebase.ServerValue.TIMESTAMP
     }, function (error) {
       if (error) {

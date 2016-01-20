@@ -70,7 +70,6 @@ if [ "$count" -eq 0 ]; then
 
     if [ "$(uname)" == "Darwin" ]; then
         sed -i ".bak" 's/<DATABASE_URL>/'$dburl'/g' functions/config.json
-        sed -i ".bak" 's/<DATABASE_URL>/'$dburl'/g' scripts/main.js
         sed -i ".bak" 's/<APP_ID>/'$appid'/g' firebase.json
         echo "Done!"
         echo ""
@@ -79,7 +78,6 @@ if [ "$count" -eq 0 ]; then
 
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
         sed -i".bak" 's/<DATABASE_URL>/'$dburl'/g' functions/config.json
-        sed -i".bak" 's/<DATABASE_URL>/'$dburl'/g' scripts/main.js
         sed -i".bak" 's/<APP_ID>/'$appid'/g' firebase.json
         echo "Done!"
         echo ""

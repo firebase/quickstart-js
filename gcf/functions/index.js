@@ -23,7 +23,8 @@
 
 // [START imports]
 var Firebase = require('firebase');
-var ref = new Firebase('<DATABASE_URL>');
+var env = require('./env');
+var ref = new Firebase(env.get('firebase.database.url'));
 // [END imports]
 
 // [START function]
@@ -46,3 +47,43 @@ exports.makeuppercase = function(context, data) {
   }, context.done);
 };
 // [END function]
+
+
+// [START auth_user]
+// Makes all new messages ALL UPPERCASE.
+// We impersonate the user who has made the change that triggered the function.
+exports.makeuppercaseuserauth = function(context, data) {
+
+  // Authorize to the Firebase Database as the user.
+  ref.authWithCustomToken(data.authToken, function(error, result) {
+    if (error) {
+      context.done(error);
+    } else {
+      console.log('Authorized successfully with payload: ', result.auth);
+
+      // Now we access the Database as an authenticated user.
+      exports.makeuppercase(context, data);
+    }
+  });
+};
+// [END auth_user]
+
+
+// [START auth_admin]
+// Makes all new messages ALL UPPERCASE.
+// We authorize to the database as an admin.
+exports.makeuppercaseadminauth = function(context, data) {
+
+  // Authorize to the Firebase Database with admin rights.
+  ref.authWithCustomToken(env.get('firebase.database.secret'), function(error, result) {
+    if (error) {
+      context.done(error);
+    } else {
+      console.log('Authorized successfully with admin rights');
+
+      // Now we access the Database as an admin.
+      exports.makeuppercase(context, data);
+    }
+  });
+};
+// [END auth_admin]
