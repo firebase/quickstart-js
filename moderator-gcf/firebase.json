@@ -1,5 +1,5 @@
 {
-  "firebase": "a5-hearth-test-ad5b5",
+  "firebase": "<APP_ID>",
   "rules": "security-rules.json",
   "public": "./",
   "ignore": [
