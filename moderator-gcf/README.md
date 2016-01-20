@@ -47,7 +47,7 @@ Create a Firebase Project on the [Firebase Console](http://g.co/firebase).
 Note your Firebase database URL and your App ID. You can find your Firebase database URL in the **Database** section. It will look like:
 `https://<YOUR_APP_ID>.firebaseio.com/` Note your **App ID** and also the whole **Database URL**.
 
-Use these values to replace `<APP_ID>` in `firebase.json` and the `<DATABASE_URL>` in `scripts/main.js` and `functions/config.json`.
+Use these values to replace `<APP_ID>` in `firebase.json` and the `<DATABASE_URL>` in `scripts/main.js`.
 You can also do this automatically by running:
 
 ```bash
