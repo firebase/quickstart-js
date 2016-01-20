@@ -18,6 +18,7 @@
 
 var Firebase = require('firebase');
 var env = require('./env');
+var ref = new Firebase(env.get('firebase.database.url'));
 var stringUtils = require('./moderation-string-utils.js');
 stringUtils.loadModerationStringUtils();
 
@@ -31,27 +32,23 @@ exports.moderator = function(context, data) {
     } else {
       console.log('Authorized successfully with admin rights');
 
+      var messageRef = ref.child(data.path);
+      var sanitizedMessagesRef = ref.child('sanitized');
+
       // Read the Firebase DB entry that triggered the function.
       console.log('Loading firebase path: ' + env.get('firebase.database.url') + data.path);
-      var messageFirebaseDbRef = new Firebase(env.get('firebase.database.url') + data.path);
-      messageFirebaseDbRef.once('value', function(messageData) {
+      messageRef.once('value', function(messageData) {
 
         // Retrieved the message values.
         console.log('Retrieved message content: ' + JSON.stringify(messageData.val()));
         var messageEntryData = messageData.val();
 
         // Run moderation checks on on the message and moderate if needed.
-        var moderatedMessage = moderateMessage(messageEntryData.text, context, messageFirebaseDbRef);
+        var moderatedMessage = moderateMessage(messageEntryData.text, context, messageRef);
 
-        // If message has just been moderated we update the Firebase DB.
-        if (messageEntryData.text != moderatedMessage) {
-          console.log('Message has been moderated. Saving to DB: ' + moderatedMessage);
-          messageFirebaseDbRef.update({text: moderatedMessage, sanitized: true},
-              context.done);
-        } else {
-          console.log('Marking message as sanitized. Saving to DB: ' + moderatedMessage);
-          messageFirebaseDbRef.update({sanitized: true}, context.done);
-        }
+        console.log('Saving sanitized message to DB: ' + moderatedMessage);
+        sanitizedMessagesRef.push({text: moderatedMessage, name: messageEntryData.name,
+            moderated: messageEntryData.text != moderatedMessage}, context.done);
 
         // If reading the Firebase DB failed.
       }, context.done);

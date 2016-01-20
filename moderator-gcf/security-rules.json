@@ -1,15 +1,14 @@
 {
   "rules": {
-    ".read": true,
     "messages": {
       "$message": {
-        // Users can only add new messages. Not modify or delete them. Cloud
-        // function can update though.
-        // TODO: Add security rules below when authentication inside GCF is available.
-        //".write": "(!data.exists() && !newData.child('sanitized').exists()) || auth.uid === 'gcf-moderator'"
-        //".read": "data.child('sanitized').val() === true || auth.uid === 'gcf-moderator'"
-        ".write": true
+        // Users can only add new messages to the review queue.
+        ".write": "!data.exists()"
       }
+    },
+    "sanitized": {
+      // Users can read sanitized messages.
+      ".read": "true"
     }
   }
 }

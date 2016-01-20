@@ -42,15 +42,17 @@ function Guestbook() {
   }.bind(this);
 
   // Loads the last 12 messages and listen for new ones.
-  Guestbook.fbMessagesRef.limitToLast(12).on("child_added", callDisplayMessage);
+  Guestbook.fbSanitizedMessagesRef.limitToLast(12).on("child_added", callDisplayMessage);
   // Listen for messages updates.
-  Guestbook.fbMessagesRef.limitToLast(12).on("child_changed", callDisplayMessage);
+  Guestbook.fbSanitizedMessagesRef.limitToLast(12).on("child_changed", callDisplayMessage);
   // Listen for messages updates.
-  Guestbook.fbMessagesRef.limitToLast(12).on("child_removed", callDisplayMessage);
+  Guestbook.fbSanitizedMessagesRef.limitToLast(12).on("child_removed", callDisplayMessage);
 }
 
-// Reference to the Messages feed in the Firebase DB.
+// Reference to the new messages feed in the Firebase DB.
 Guestbook.fbMessagesRef = new Firebase('<DATABASE_URL>/messages');
+// Reference to the sanitized messages feed in the Firebase DB.
+Guestbook.fbSanitizedMessagesRef = new Firebase('<DATABASE_URL>/sanitized');
 
 // Saves a new message on the Firebase DB.
 Guestbook.prototype.saveMessage = function(e) {
