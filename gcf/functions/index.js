@@ -54,17 +54,24 @@ exports.makeuppercase = function(context, data) {
 // We impersonate the user who has made the change that triggered the function.
 exports.makeuppercaseuserauth = function(context, data) {
 
-  // Authorize to the Firebase Database as the user.
-  ref.authWithCustomToken(data.authToken, function(error, result) {
-    if (error) {
-      context.done(error);
-    } else {
-      console.log('Authorized successfully with payload: ', result.auth);
+  // Authorize to the Firebase Database as the user unless he has not signed it.
+  if (!data.authToken) {
 
-      // Now we access the Database as an authenticated user.
-      exports.makeuppercase(context, data);
-    }
-  });
+    console.log('User has not signed in.');
+    exports.makeuppercase(context, data);
+
+  } else {
+    ref.authWithCustomToken(data.authToken, function (error, result) {
+      if (error) {
+        context.done(error);
+      } else {
+        console.log('Authorized successfully with payload: ', result.auth);
+
+        // Now we access the Database as an authenticated user.
+        exports.makeuppercase(context, data);
+      }
+    });
+  }
 };
 // [END auth_user]
 
@@ -75,7 +82,7 @@ exports.makeuppercaseuserauth = function(context, data) {
 exports.makeuppercaseadminauth = function(context, data) {
 
   // Authorize to the Firebase Database with admin rights.
-  ref.authWithCustomToken(env.get('firebase.database.secret'), function(error, result) {
+  ref.authWithCustomToken(env.get('firebase.database.secret'), function(error) {
     if (error) {
       context.done(error);
     } else {
