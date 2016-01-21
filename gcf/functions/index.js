@@ -54,43 +54,65 @@ exports.makeuppercase = function(context, data) {
 // We impersonate the user who has made the change that triggered the function.
 exports.makeuppercaseuserauth = function(context, data) {
 
-  // Authorize to the Firebase Database as the user unless he has not signed it.
-  if (!data.authToken) {
+  // Authorize to the Firebase Database as the user if possible.
+  if (data.authToken) {
 
-    console.log('User has not signed in.');
-    exports.makeuppercase(context, data);
-
-  } else {
-    ref.authWithCustomToken(data.authToken, function (error, result) {
+    var userAuthRef = new Firebase(env.get('firebase.database.url'), data.authToken);
+    userAuthRef.authWithCustomToken(data.authToken, function (error, result) {
       if (error) {
         context.done(error);
       } else {
         console.log('Authorized successfully with payload: ', result.auth);
 
-        // Now we access the Database as an authenticated user.
-        exports.makeuppercase(context, data);
+        // Read the Firebase database object that triggered the function.
+        var messageRef = userAuthRef.child(data.path);
+        console.log('Reading firebase object at path: ' + messageRef.toString());
+        messageRef.once('value', function(messageData) {
+
+          // Retrieved the message and uppercase it.
+          console.log('Retrieved message content: ' + JSON.stringify(messageData.val()));
+          var uppercased = messageData.val().text.toUpperCase();
+
+          // Saving the uppercased message to DB.
+          console.log('Saving uppercased message: ' + uppercased);
+          messageRef.update({text: uppercased}, context.done);
+
+        }, context.done);
       }
     });
+
+  } else {
+    console.log('User has not signed in. Lets try unauthenticated.');
+    exports.makeuppercase(context, data);
   }
 };
 // [END auth_user]
 
 
 // [START auth_admin]
+// Firebase Database reference with admin authorization.
+var adminAuthRef = new Firebase(env.get('firebase.database.url'), 'admin');
+
+// Authorize to the Firebase Database with admin credentials.
+adminAuthRef.authWithCustomToken(env.get('firebase.database.secret'));
+
 // Makes all new messages ALL UPPERCASE.
 // We authorize to the database as an admin.
 exports.makeuppercaseadminauth = function(context, data) {
 
-  // Authorize to the Firebase Database with admin rights.
-  ref.authWithCustomToken(env.get('firebase.database.secret'), function(error) {
-    if (error) {
-      context.done(error);
-    } else {
-      console.log('Authorized successfully with admin rights');
+  // Read the Firebase database object that triggered the function.
+  var messageRef = adminAuthRef.child(data.path);
+  console.log('Reading firebase object at path: ' + messageRef.toString());
+  messageRef.once('value', function(messageData) {
 
-      // Now we access the Database as an admin.
-      exports.makeuppercase(context, data);
-    }
-  });
+    // Retrieved the message and uppercase it.
+    console.log('Retrieved message content: ' + JSON.stringify(messageData.val()));
+    var uppercased = messageData.val().text.toUpperCase();
+
+    // Saving the uppercased message to DB.
+    console.log('Saving uppercased message: ' + uppercased);
+    messageRef.update({text: uppercased}, context.done);
+
+  }, context.done);
 };
 // [END auth_admin]
