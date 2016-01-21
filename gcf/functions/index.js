@@ -86,7 +86,7 @@ exports.makeuppercaseuserauth = function(context, data) {
     });
 
   } else {
-    console.log('User has not signed in. Lets try unauthenticated.');
+    console.log('User has not signed in. Try unauthenticated.');
     exports.makeuppercase(context, data);
   }
 };
@@ -103,6 +103,7 @@ adminAuthRef.authWithCustomToken(env.get('firebase.database.secret'));
 // Makes all new messages ALL UPPERCASE.
 // We authorize to the database as an admin.
 exports.makeuppercaseadminauth = function(context, data) {
+// [END auth_admin]
 
   // Read the Firebase database object that triggered the function.
   var messageRef = adminAuthRef.child(data.path);
@@ -119,4 +120,3 @@ exports.makeuppercaseadminauth = function(context, data) {
 
   }, context.done);
 };
-// [END auth_admin]
