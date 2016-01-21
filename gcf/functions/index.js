@@ -49,7 +49,7 @@ exports.makeuppercase = function(context, data) {
 // [END function]
 
 
-// [START auth_user]
+// [START auth_user_start]
 // Makes all new messages ALL UPPERCASE.
 // We impersonate the user who has made the change that triggered the function.
 exports.makeuppercaseuserauth = function(context, data) {
@@ -65,6 +65,7 @@ exports.makeuppercaseuserauth = function(context, data) {
         context.done(error);
       } else {
         console.log('Authorized successfully with payload: ', result.auth);
+// [END auth_user_start]
 
         // Read the Firebase database object that triggered the function.
         var messageRef = userAuthRef.child(data.path);
@@ -80,6 +81,7 @@ exports.makeuppercaseuserauth = function(context, data) {
           messageRef.update({text: uppercased}, context.done);
 
         }, context.done);
+// [START auth_user_end]
       }
     });
 
@@ -88,7 +90,7 @@ exports.makeuppercaseuserauth = function(context, data) {
     exports.makeuppercase(context, data);
   }
 };
-// [END auth_user]
+// [END auth_user_end]
 
 
 // [START auth_admin]
