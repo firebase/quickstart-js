@@ -57,7 +57,7 @@ exports.makeuppercaseuserauth = function(context, data) {
   // Authorize to the Firebase Database as the user if possible.
   if (data.authToken) {
 
-    // Create a Database reference that's specific to the user token.
+    // Create a Database reference specific to the user so as to not share the auth globally.
     var userAuthRef = new Firebase(env.get('firebase.database.url'), data.authToken);
 
     userAuthRef.authWithCustomToken(data.authToken, function (error, result) {
