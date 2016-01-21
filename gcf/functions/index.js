@@ -49,48 +49,37 @@ exports.makeuppercase = function(context, data) {
 // [END function]
 
 
-// [START auth_user_start]
+// [START auth_user]
 // Makes all new messages ALL UPPERCASE.
 // We impersonate the user who has made the change that triggered the function.
 exports.makeuppercaseuserauth = function(context, data) {
+
+  var localRef = ref;
 
   // Authorize to the Firebase Database as the user if possible.
   if (data.authToken) {
 
     // Create a Database reference specific to the user so as to not share the auth globally.
-    var userAuthRef = new Firebase(env.get('firebase.database.url'), data.authToken);
-
-    userAuthRef.authWithCustomToken(data.authToken, function (error, result) {
-      if (error) {
-        context.done(error);
-      } else {
-        console.log('Authorized successfully with payload: ', result.auth);
-// [END auth_user_start]
-
-        // Read the Firebase database object that triggered the function.
-        var messageRef = userAuthRef.child(data.path);
-        console.log('Reading firebase object at path: ' + messageRef.toString());
-        messageRef.once('value', function(messageData) {
-
-          // Retrieved the message and uppercase it.
-          console.log('Retrieved message content: ' + JSON.stringify(messageData.val()));
-          var uppercased = messageData.val().text.toUpperCase();
-
-          // Saving the uppercased message to DB.
-          console.log('Saving uppercased message: ' + uppercased);
-          messageRef.update({text: uppercased}, context.done);
-
-        }, context.done);
-// [START auth_user_end]
-      }
-    });
-
-  } else {
-    console.log('User has not signed in. Try unauthenticated.');
-    exports.makeuppercase(context, data);
+    localRef = new Firebase(env.get('firebase.database.url'), data.authToken);
+    localRef.authWithCustomToken(data.authToken);
   }
+// [END auth_user]
+
+  // Read the Firebase database object that triggered the function.
+  var messageRef = localRef.child(data.path);
+  console.log('Reading firebase object at path: ' + messageRef.toString());
+  messageRef.once('value', function(messageData) {
+
+    // Retrieved the message and uppercase it.
+    console.log('Retrieved message content: ' + JSON.stringify(messageData.val()));
+    var uppercased = messageData.val().text.toUpperCase();
+
+    // Saving the uppercased message to DB.
+    console.log('Saving uppercased message: ' + uppercased);
+    messageRef.update({text: uppercased}, context.done);
+
+  }, context.done);
 };
-// [END auth_user_end]
 
 
 // [START auth_admin]

@@ -1,6 +1,6 @@
 {
   "main": "index.js",
   "dependencies": {
-    "firebase": "^2.3.1"
+    "firebase": "^2.4.0"
   }
 }
