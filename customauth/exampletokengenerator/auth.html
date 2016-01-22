@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2016 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Token Generator Example</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script language="JavaScript" type="text/javascript"
+        src="http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js">
+  </script>
+  <script>
+        // NOTE: This is an example token generator to allow you to easily create
+        // Firebase custom auth tokens with a service account JSON file. You should
+        // integrate token generation and signing in to your own code using a Google
+        // client library for the language you work with.
+
+        // These values are extracted from the service account JSON.
+        var sub = "";
+        var sPKCS8PEM = "";
+        var kid = ""
+
+        // Generate an ID token and sign it with the private key.
+        function handleGenerateClick(evt) {
+          var uid = document.getElementById('uid').value;
+          if (uid == '') {
+            console.log("Blank uid");
+            return;
+          }
+          // Header
+          var oHeader = {alg: 'RS256', kid: kid, typ: 'JWT'};
+
+          // Payload
+          var oPayload = {};
+          var tNow = KJUR.jws.IntDate.get('now');
+          var tEnd = KJUR.jws.IntDate.get('now + 1hour');
+          oPayload.aud = "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit";
+          oPayload.exp = tEnd;
+          oPayload.iat = tNow;
+          oPayload.iss = sub;
+          oPayload.sub = sub;
+          oPayload.user_id = uid;
+          oPayload.scope = "https://www.googleapis.com/auth/identitytoolkit";
+
+          var sHeader = JSON.stringify(oHeader);
+          var sPayload = JSON.stringify(oPayload);
+
+          var sJWT = KJUR.jws.JWS.sign(null, sHeader, sPayload, sPKCS8PEM, 'notasecret');
+
+          document.getElementById("tokenbox").textContent = sJWT;
+          console.log(sJWT);
+
+          var link = "<a href='../index.html?tok=" + sJWT + "'>Use this token in the web custom auth example</a>";
+          document.getElementById("linktokenbox").innerHTML = link;
+        }
+
+         function handleFileSelect(evt) {
+           evt.stopPropagation();
+           evt.preventDefault();
+           var files = evt.target.files;
+           for (var i = 0, f; f = files[i]; i++) {
+             if (f.type == "application/json") {
+               loadJson(f);
+               return;
+             }
+           }
+           console.log("No JSON file found!");
+         }
+
+         function loadJson(f) {
+           var reader = new FileReader();
+           reader.onload = function (_) {
+             data = JSON.parse(reader.result)
+             console.log(data);
+             if (data.type && data.type == "service_account") {
+               kid = data.private_key_id;
+               sPKCS8PEM = data.private_key;
+               sub = data.client_email;
+               document.getElementById("notoken").style.display = "none";
+               document.getElementById("gettoken").style.display = "block";
+               document.getElementById("subtext").textContent = "Generating Tokens For " + sub;
+             } else {
+               console.log("Bad file read.");
+             }
+           }
+           reader.readAsText(f)
+         }
+
+</script>
+</head>
+<body>
+  <div class="mdl-layout" id="content">
+    <header class="mdl-layout__header mdl-grid">
+      <h1>Token Generator</h1>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" id="notoken">
+          <p>In order to generate a token you'll need to use a service account JSON file provided
+            by the <a href="https://console.developers.google.com">Google Developers Console</a> view
+            of your Firebase project. We recommend that once you're done testing with this tool you
+            delete the service account you made, and create a fresh one for the integration with your
+            actual authentication system.
+          </p>
+          <p>
+            To get started, select your JSON file below.
+          </p>
+          <input type="file" id="file" name="file" />
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div  class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" id="gettoken" style="display: none;">
+          <h4 id="subtext"></h2>
+          <label>Enter User ID: <input type="text" id="uid" name="uid" /></label> <button id="go">Generate</button>
+          <h5>Token:</h5>
+          <p id="tokenbox" style="word-wrap: break-word;">
+          </p>
+          <p id="linktokenbox">
+          </p>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+  </main>
+  </div>
+  <script>
+    document.getElementById('file').addEventListener('change', handleFileSelect, false);
+    document.getElementById("go").addEventListener('click', handleGenerateClick, false);
+  </script>
+</body>
+</html>
