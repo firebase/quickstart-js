@@ -15,45 +15,42 @@
  */
 'use strict';
 
-
+// Create reference to the database authorized as an admin.
 var Firebase = require('firebase');
 var env = require('./env');
-var ref = new Firebase(env.get('firebase.database.url'));
+var ref = new Firebase(env.get('firebase.database.url'), 'admin');
+ref.authWithCustomToken(env.get('firebase.database.secret'));
+
+// load moderation library.
 var stringUtils = require('./moderation-string-utils.js');
 stringUtils.loadModerationStringUtils();
 
 // Moderates messages by lowering all uppercase messages and removing swearwords.
 exports.moderator = function(context, data) {
 
-  // Authorize to the Firebase Database with admin rights.
-  ref.authWithCustomToken(env.get('firebase.database.secret'), function(error) {
-    if (error) {
-      context.done(error);
-    } else {
-      console.log('Authorized successfully with admin rights');
+  console.log('Authorized successfully with admin rights');
 
-      var messageRef = ref.child(data.path);
-      var sanitizedMessagesRef = ref.child('sanitized');
+  var messageRef = ref.child(data.path);
+  var sanitizedMessagesRef = ref.child('sanitized');
 
-      // Read the Firebase DB entry that triggered the function.
-      console.log('Loading firebase path: ' + env.get('firebase.database.url') + data.path);
-      messageRef.once('value', function(messageData) {
+  // Read the Firebase DB entry that triggered the function.
+  console.log('Loading firebase path: ' + env.get('firebase.database.url') + data.path);
+  messageRef.once('value', function(messageData) {
 
-        // Retrieved the message values.
-        console.log('Retrieved message content: ' + JSON.stringify(messageData.val()));
-        var messageEntryData = messageData.val();
+    // Retrieved the message values.
+    console.log('Retrieved message content: ' + JSON.stringify(messageData.val()));
+    var messageEntryData = messageData.val();
 
-        // Run moderation checks on on the message and moderate if needed.
-        var moderatedMessage = moderateMessage(messageEntryData.text, context, messageRef);
+    // Run moderation checks on on the message and moderate if needed.
+    var moderatedMessage = moderateMessage(messageEntryData.text, context, messageRef);
 
-        console.log('Saving sanitized message to DB: ' + moderatedMessage);
-        sanitizedMessagesRef.push({text: moderatedMessage, name: messageEntryData.name,
-            moderated: messageEntryData.text != moderatedMessage}, context.done);
+    // Add the moderated message to a fanned out structure.
+    console.log('Saving sanitized message to DB: ' + moderatedMessage);
+    sanitizedMessagesRef.push({text: moderatedMessage, name: messageEntryData.name,
+        moderated: messageEntryData.text != moderatedMessage}, context.done);
 
-        // If reading the Firebase DB failed.
-      }, context.done);
-    }
-  });
+    // If reading the Firebase DB failed.
+  }, context.done);
 };
 
 // Moderates the given message if needed.
