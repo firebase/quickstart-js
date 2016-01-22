@@ -15,6 +15,15 @@
  */
 
 /**
+ * This exports three versions of a function that makes new messages written to a Firebase Database
+ * all uppercase:
+ *
+ * makeuppercase: Basic version with no auth involved
+ * makeuppercaseuserauth: Uses the same auth as the database change which triggered the function
+ * makeuppercaseadminauth: Uses admin auth from env which grants all access
+ *
+ * Simply switch the triggered function in the firebase.json file to try one function or the other.
+ *
  * For more information on setting up and running this sample code, see
  * https://developers.google.com/firebase/docs/cloud-functions/writing-functions
  */
@@ -59,6 +68,7 @@ exports.makeuppercaseuserauth = function(context, data) {
   // Authorize to the Firebase Database as the user if possible.
   if (data.authToken) {
 
+    console.log('Authorizing to the database using incoming auth.');
     // Create a Database reference specific to the user so as to not share the auth globally.
     localRef = new Firebase(env.get('firebase.database.url'), data.authToken);
     localRef.authWithCustomToken(data.authToken);
