@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Material Design Theming -->
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Firebase JS -->
+    <script src='firebasejs/3.0.0-eap.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  </head>
+  <body>
+    <header class="mdl-layout__header mdl-grid">
+      <h1>Realtime Database Example</h1>
+    </header>
+    <main class="mdl-layout__content">
+      <div id='messagesDiv' class="mdl-grid">
+      </div>
+      <div id='sender' class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+          <input class="mdl-textfield__input" type='text' id='nameInput' placeholder='Name'>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+          <input class="mdl-textfield__input" type='text' id='messageInput' placeholder='Message'>
+        </div>
+      <div>
+    </main>
+    <script>
+    /**************************************************
+     * TODO(DEVELOPER): Change these config variables. *
+     **************************************************/
+      var apiKey = 'YOUR_BROWSER_API_KEY_HERE';
+      var databaseUrl = "YOUR_DATABASE_URL_HERE";
+      // [START configure]
+      var config = {
+        apiKey: apiKey,
+        databaseUrl: databaseUrl
+      };
+      var app = firebase.App.initialize(config);
+      var database = firebase.database();
+      var myDataRef = database.ref().child("messages");
+      // [END configure]
+      $('#messageInput').keypress(function (e) {
+        if (e.keyCode == 13) {
+          var name = $('#nameInput').val();
+          var text = $('#messageInput').val();
+          // [START writeval]
+          myDataRef.push({name: name, text: text});
+          // [END writeval]
+          $('#messageInput').val('');
+        }
+      });
+      // [START readdata]
+      myDataRef.on('child_added', function(snapshot) {
+        var message = snapshot.val();
+        displayChatMessage(message.name, message.text);
+      });
+      // [END readdata]
+      function displayChatMessage(name, text) {
+        $('<div class="mdl-cell mdl-cell--12-col" />').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
+        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+      };
+    </script>
+  </body>
+</html>

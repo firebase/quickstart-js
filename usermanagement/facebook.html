@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2016 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook Sign In Example</title>
+
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- Firebase Auth -->
+  <script type="text/javascript">
+    /**************************************************
+     * TODO(DEVELOPER): Change these config variables. *
+     **************************************************/
+    var apiKey = 'YOUR_API_KEY_HERE';
+    var databaseUrl = "YOUR_DATABASE_URL_HERE";
+    var facebookAppId = "YOUR_FACEBOOK_APP_ID";
+  </script>
+  <!--  We are including the firebase auth file manually, but in the
+        future we will provide a full packaged version for use in production -->
+  <script type="text/javascript" src="firebasejs/3.0.0-eap.1/firebase.js"></script>
+  <script type="text/javascript">
+    console.log("Initializing App");
+    // [START appconfg]
+    // Api key in config.
+    var config = {
+      apiKey: apiKey,
+      databaseUrl: databaseUrl
+    };
+    var app = firebase.App.initialize(config, "my app");
+    var auth = app.auth();
+    // [END appconfig]
+
+    function checkLoginState(evt) {
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          console.log("Facebook Auth Response", response);
+          // [START facebookcredential]
+          // Sign in with credential from the Facebook user.
+          var credential = firebase.FacebookAuthProvider.credential({
+           "accessToken" : response.authResponse.accessToken
+          })
+          // [END facebookcredential]
+          // [START authwithcred]
+          auth.signInWithCredential(credential).then(function(user) {
+           console.log("Sign In Success", user);
+          }, function(error) {
+           console.log("Sign In Error", error);
+          });
+          // [END authwithcred]
+        }
+      });
+    }
+
+    /*
+     * Handle the sign out button press.
+     *
+     * Sign in status persists between page reloads, so we check status using
+     * |currentUser| on the Firebase auth object.
+     *
+     * auth.signOut clears the current session.
+     */
+    function handleSignOut(evt) {
+      if (auth.currentUser()) {
+        // [START signout]
+        auth.signOut().then(function() {
+          // Signout complete.
+          console.log("Signed Out");
+        }, function(error) {
+          console.log("Sign Out Error", error);
+        });
+        // [END signout]
+      }
+    }
+
+    /**
+     * initApp handles setting up the Firebase context and registering
+     * callbacks for the auth status.
+     *
+     * The core initialization is in firebase.App - this is the glue class
+     * which stores configuration. We provide an app name here to allow
+     * distinguishing multiple app instances.
+     *
+     * This method also registers a listener with app.addAuthStateListener.
+     * This listener is called when the user is signed in or out, and that
+     * is where we update the UI.
+     *
+     * When signed in, we also authenticate to the Firebase Realtime Database.
+     */
+    function initApp() {
+      // Check preconditions.
+      if (databaseUrl.indexOf("firebaseio") < 0 || apiKey.indexOf("AI") < 0) {
+        console.log("Enter your config values for apiKey and databaseUrl");
+        alert("Enter your config values for apiKey and databaseUrl");
+        return;
+      }
+
+      console.log("Adding auth state listener");
+      // Auth state changes.
+      // [START authstatelistener]
+      app.addAuthStateListener(function(event) {
+        // Current user.
+        var user = event.user;
+        var getToken = event.getToken;
+        console.log("User Object:", user);
+
+        if (!user) {
+          document.getElementById('signout').disabled = true;
+          return;
+        }
+        document.getElementById('signout').disabled = false;
+        alert("Welcome UID:" + user.userId);
+
+        // [START_EXCLUDE]
+        var myFirebaseRef = app.database().ref();
+        myFirebaseRef.on("value", function(snapshot) {
+          console.log("Database snapshot:", snapshot.val());
+        });
+        // [END_EXCLUDE]
+      }, function(error) {
+        console.log("Auth Listener Error", error);
+      });
+      // [END authstatelistener]
+
+      if (!auth.currentUser()) {
+        document.getElementById('signout').disabled = true;
+      }
+
+      document.getElementById("signout").addEventListener('click', handleSignOut, false);
+  }
+
+  window.onload = function() {
+    initApp();
+  };
+</script>
+</head>
+<body>
+  <script>
+    // [START facebookconfig]
+    window.fbAsyncInit = function() {
+      FB.init({
+        /**************************************************
+         * TODO(DEVELOPER): Change these config variable. *
+         **************************************************/
+        appId      : facebookAppId,
+        xfbml      : true,
+        version    : 'v2.5'
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+     // [END facebookconfig]
+  </script>
+  <div class="mdl-layout" id="content">
+    <header class="mdl-layout__header mdl-grid">
+      <h1>Firebase Facebook Authentication</h1>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" >
+          <p>Sign in with your Facebook account below.</p>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" style=>
+            <fb:login-button data-auto-logout-link="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+            <button id="signout" name="signout">Sign Out</button>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+  </main>
+  </div>
+</body>
+</html>

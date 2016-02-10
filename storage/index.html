@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2016 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Storage Example</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script type="text/javascript" src="firebasejs/3.0.0-eap.1/firebase.js"></script>
+  </script>
+  <script>
+    /**************************************************
+     * TODO(DEVELOPER): Change these config variables. *
+     **************************************************/
+    var apiKey = 'YOUR_API_KEYs';
+    var storageUrl = "gs://YOUR_PROJECT_ID.storage.firebase.com/"
+    var config = {
+      apiKey: apiKey
+    };
+    var app = firebase.App.initialize(config);
+    var auth = app.auth();
+    var storageRef = app.storage().fromUrl(storageUrl);
+
+    function handleFileSelect(evt) {
+      if (!auth.currentUser()) {
+        alert("You need to sign in first!");
+        return;
+      }
+      evt.stopPropagation();
+      evt.preventDefault();
+      var files = evt.target.files;
+      for (var i = 0, f; f = files[i]; i++) {
+
+       var metadata = {
+         'contentType': f.type,
+         'metadata': {
+           'uploader': 'example',
+         }
+       };
+
+       // Push to child path.
+       var uploadTask = storageRef.child('images').put(f, metadata);
+
+       // Will be firebase.Task.Event.COMPLETE
+       // [START oncomplete]
+       uploadTask.on("complete", function(task, error){
+         console.log("Uploaded " + task.totalBytes() + " bytes.");
+         storageRef.child('images').getMetadata().then(function(metadata) {
+           console.log(metadata);
+           var url = metadata.downloadUrls[0];
+           console.log("File available at ", url);
+           // [START_EXCLUDE]
+           document.getElementById("linkbox").innerHTML = "<a href='" +  url + "'>Click For File</a>";
+           // [END_EXCLUDE]
+         });
+       });
+       // [END oncomplete]
+
+       // Will be firebase.Task.Event.FAILURE
+       // [START onfailure]
+       uploadTask.on("failure", function(task, error){
+         console.log("Upload failed:", error)
+       });
+       // [END onfailure]
+      }
+    }
+
+    function handleSignIn(evt) {
+      if (auth.currentUser()) {
+        auth.signOut().then(function() {
+          console.log("Signed Out");
+        }, function(error) {
+          console.log("Sign Out Error", error);
+        });
+      } else {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        if (!validate(email, password)) {
+          return;
+        }
+        // Sign in with email and pass.
+        auth.signInWithEmailAndPassword(email, password).then(function(user) {
+          console.log("Sign In Success", user);
+        }, function(error) {
+          console.log("Sign In Error", error);
+        });
+      }
+    }
+
+    function handleSignUp(evt) {
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      if (!validate(email, password)) {
+        return;
+      }
+      auth.createUserWithEmailAndPassword(email, password).then(function(user) {
+        console.log("Create user and sign in Success", user);
+      }, function(error) {
+        console.log("Create user and sign in Error", error);
+      });
+    }
+
+    function validate(email, password) {
+      if (email.length < 4) {
+        alert("Please enter an email address.");
+        return false;
+      }
+      if (password.length < 4) {
+        alert("Please enter a password.");
+        return false;
+      }
+      return true;
+    }
+
+    function updateUiForUser(user) {
+      if (!user) {
+        document.getElementById('signin').textContent = "Sign In";
+        document.getElementById('signup').disabled = false;
+        document.getElementById('file').disabled = true;
+        return;
+      }
+      document.getElementById('signup').disabled = true;
+      document.getElementById('file').disabled = false;
+      document.getElementById('signin').textContent = "Sign Out";
+    }
+
+    window.onload = function() {
+      document.getElementById("signin").addEventListener('click', handleSignIn, false);
+      document.getElementById("signup").addEventListener('click', handleSignUp, false);
+      document.getElementById('file').addEventListener('change', handleFileSelect, false);
+      document.getElementById('file').disabled = true;
+      updateUiForUser(auth.currentUser);
+
+      app.addAuthStateListener(function(event) {
+        var user = event.user;
+        console.log("User Object:", user);
+
+        updateUiForUser(user);
+      }, function(error) {
+        console.log("Auth Listener Error", error);
+      });
+    }
+</script>
+</head>
+<body>
+  <div class="mdl-layout" id="content">
+    <header class="mdl-layout__header mdl-grid">
+      <h1>Storage Example</h1>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" id="notoken">
+          <p>Select a file below. When it is uploaded, a link will be displayed to the uploaded file.
+          </p>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div  class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop">
+          <h4 id="subtext">Sign In To Upload Files</h4>
+          <input type="text" id="email" name="email" placeholder="Email" />
+          <input type="password" id="password" name="password" placeholder="Password" />
+          <br />
+          <button id="signin" name="signin">Sign In</button> <button id="signup" name="signup">Sign Up</button>
+          <h4>Choose File</h4>
+          <input type="file" id="file" name="file" />
+          <h4>File URL:</h4>
+          <p id="linkbox">
+          </p>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+  </main>
+  </div>
+</body>
+</html>
