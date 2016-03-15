@@ -13,8 +13,8 @@ Getting Started
 
 - Set up your project on the [Firebase Console](http://g.co/firebase).
 - Manually enable a Firebase Storage bucket.
-- Edit index.html and fill in the API key and storage URL values.
-- Open the sample index.html in a web browser.
+- Edit index.html and fill in the API key and project ID (e.g. foobar-f3dc) values.
+- Open the sample index.html in a web browser or run `firebase serve`
 
 Support
 -------

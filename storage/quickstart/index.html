@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2016 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Storage Example</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- Firebase JS -->
+  <script src='https://www.gstatic.com/firebasejs/staging/3.0.0-eap.2/firebase.js'></script>
+  <script>
+    /**************************************************
+     * TODO(DEVELOPER): Change these config variables. *
+     **************************************************/
+    var apiKey = 'YOUR_API_KEY';
+    var projectId = 'YOUR_PROJECT_ID';
+    var config = {
+      apiKey: apiKey,
+      projectId: projectId
+    };
+    var app = firebase.App.initialize(config);
+    var auth = app.auth();
+    var storageRef = app.storage().ref();
+
+    function handleFileSelect(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      var files = evt.target.files;
+      for (var i = 0, f; f = files[i]; i++) {
+
+       var metadata = {
+         'contentType': f.type,
+         'metadata': {
+           'uploader': 'example',
+         }
+       };
+
+       // Push to child path.
+       var uploadTask = storageRef.child('images').put(f, metadata);
+
+       // Will be firebase.Storage.TaskEvent.COMPLETE
+       // [START oncomplete]
+       uploadTask.on("state_changed", function(task, error) {
+         if (task.state == "complete") {
+           console.log("Uploaded " + task.totalBytes + " bytes.");
+           console.log(task.metadata);
+           var url = task.metadata.downloadUrls[0];
+           console.log("File available at ", url);
+           // [START_EXCLUDE]
+           document.getElementById("linkbox").innerHTML = "<a href='" +  url + "'>Click For File</a>";
+           // [END_EXCLUDE]
+         } else if (task.state == "error") {
+           // [START onfailure]
+           console.log("Upload failed:", task.error)
+           // [END onfailure]
+         }
+       });
+       // [END oncomplete]
+      }
+    }
+
+    window.onload = function() {
+      document.getElementById('file').addEventListener('change', handleFileSelect, false);
+      document.getElementById('file').disabled = true;
+
+      app.addAuthStateListener(function(event) {
+        var user = event.user;
+        console.log("User Object:", user);
+        document.getElementById('file').disabled = false;
+
+      }, function(error) {
+        console.log("Auth Listener Error", error);
+      });
+
+      auth.signInAnonymously().then(function(user) {
+          console.log("Anonymous Sign In Success", user);
+        }, function(error) {
+          console.log("Anonymous Sign In Error", error);
+        });
+    }
+</script>
+</head>
+<body>
+  <div class="mdl-layout" id="content">
+    <header class="mdl-layout__header mdl-grid">
+      <h1>Storage Example</h1>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" id="notoken">
+          <p>Select a file below. When it is uploaded, a link will be displayed to the uploaded file.
+          </p>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div  class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop">
+          <h4>Choose File</h4>
+          <input type="file" id="file" name="file" />
+          <h4>File URL:</h4>
+          <p id="linkbox">
+          </p>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+  </main>
+  </div>
+</body>
+</html>
