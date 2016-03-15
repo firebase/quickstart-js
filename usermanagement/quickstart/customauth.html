@@ -21,22 +21,20 @@ limitations under the License.
   <title>Custom Token Consumer Example</title>
 
   <!-- Material Design Theming -->
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
-  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
 
   <!-- Firebase Auth -->
   <script type="text/javascript">
     /**************************************************
      * TODO(DEVELOPER): Change these config variable. *
      **************************************************/
-    // var apiKey = 'YOUR_API_KEY_HERE';
-    // var databaseUrl = "YOUR_DATABASE_URL_HERE";
-    var apiKey = 'AIzaSyCg-o5xY9Yq98WerS_SclgKBYw5XolQvo8';
-    var databaseUrl = "https://testcrash-6f435.firebaseio.com/";
+    var apiKey = 'YOUR_API_KEY_HERE';
+    var databaseUrl = 'YOUR_DATABASE_URL_HERE';
   </script>
 
-  <script src='https://www.gstatic.com/firebasejs/staging/3.0.0-eap.2/firebase.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/staging/3.0.0-eap.2/firebase.js"></script>
   <script type="text/javascript">
     var app = null;
     var auth = null;
@@ -54,28 +52,28 @@ limitations under the License.
      * We can check for the result in the callback, or monitor the auth status
      * separately (see initApp for that part).
      */
-    function handleSignIn(evt) {
+    function handleSignIn() {
       if (auth.currentUser) {
         // [START signout]
         auth.signOut().then(function() {
           // Signout complete.
-          console.log("Signed Out");
+          console.log('Signed Out');
         }, function(error) {
-          console.log("Sign Out Error", error);
+          console.error('Sign Out Error', error);
         });
         // [END signout]
       } else {
         var token = document.getElementById('tokentext').value;
         if (token.length < 10) {
-          alert("Please enter a token in the text area");
+          alert('Please enter a token in the text area');
           return;
         }
         // Sign in with custom token generated following previous instructions.
         // [START authwithtoken]
         auth.signInWithCustomToken(token).then(function(user) {
-          console.log("Sign In Success", user);
+          console.log('Sign In Success', user);
         }, function(error) {
-          console.log("Sign In Error", error);
+          console.error('Sign In Error', error);
         });
         // [END authwithtoken]
       }
@@ -96,11 +94,11 @@ limitations under the License.
      * When signed in, we also authenticate to the Firebase Realtime Database.
      */
     function initApp() {
-      console.log("Initializing App");
+      console.log('Initializing App');
       // Check preconditions.
-      if (databaseUrl.indexOf("firebaseio") < 0 || apiKey.indexOf("AI") < 0) {
-        console.log("Enter your config values for apiKey and databaseUrl");
-        alert("Enter your config values for apiKey and databaseUrl");
+      if (databaseUrl.indexOf('firebaseio') < 0 || apiKey.indexOf('AI') < 0) {
+        console.log('Enter your config values for apiKey and databaseUrl');
+        alert('Enter your config values for apiKey and databaseUrl');
         return;
       }
 
@@ -110,44 +108,44 @@ limitations under the License.
         apiKey: apiKey,
         databaseUrl: databaseUrl
       };
-      app = firebase.App.initialize(config, "my app");
+      app = firebase.App.initialize(config);
       auth = app.auth();
       // [END appconfig]
 
-      console.log("Adding auth state listener");
+      console.log('Adding auth state listener');
       // Auth state changes.
       // [START authstatelistener]
       app.addAuthStateListener(function(event) {
         // Current user.
         var user = event.user;
         var getToken = event.getToken;
-        console.log("User Object:", user);
+        console.log('User Object:', user);
 
         if (!user) {
-          document.getElementById('signin').textContent = "Sign In";
+          document.getElementById('signin').textContent = 'Sign In';
           return;
         }
-        document.getElementById('signin').textContent = "Sign Out";
-        alert("Welcome UID:" + user.uid);
+        document.getElementById('signin').textContent = 'Sign Out';
+        alert('Welcome UID:' + user.uid);
 
         // [START_EXCLUDE]
         var myFirebaseRef = app.database().ref();
-        myFirebaseRef.on("value", function(snapshot) {
-          console.log("Database snapshot:", snapshot.val());
+        myFirebaseRef.on('value', function(snapshot) {
+          console.log('Database snapshot:', snapshot.val());
         });
         // [END_EXCLUDE]
       }, function(error) {
-        console.log("Auth Listener Error", error);
+        console.error('Auth Listener Error', error);
       });
       // [END authstatelistener]
 
-      document.getElementById("signin").addEventListener('click', handleSignIn, false);
-  }
+      document.getElementById('signin').addEventListener('click', handleSignIn, false);
+    }
 
-  window.onload = function() {
-    initApp();
-  };
-</script>
+    window.onload = function() {
+      initApp();
+    };
+  </script>
 </head>
 <body>
   <div class="mdl-layout" id="content">

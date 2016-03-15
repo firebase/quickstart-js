@@ -4,17 +4,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Material Design Theming -->
-    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.orange-indigo.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
 
     <!-- Firebase JS -->
     <script src='https://www.gstatic.com/firebasejs/staging/3.0.0-eap.2/firebase.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
   </head>
   <body>
-    <header class="mdl-layout__header mdl-grid">
-      <h1>Realtime Database Example</h1>
+    <header class="mdl-layout__header mdl-grid mdl-color-text--white mdl-color--primary">
+      <h2>Realtime Database Example</h2>
     </header>
     <main class="mdl-layout__content">
       <div id='messagesDiv' class="mdl-grid">
@@ -26,43 +26,56 @@
         <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
           <input class="mdl-textfield__input" type='text' id='messageInput' placeholder='Message'>
         </div>
-      <div>
+      </div>
     </main>
     <script>
-    /**************************************************
-     * TODO(DEVELOPER): Change these config variables. *
-     **************************************************/
-    var apiKey = 'YOUR_BROWSER_API_KEY_HERE';
-    var databaseUrl = 'YOUR_DATABASE_URL_HERE';
+      /**************************************************
+       * TODO(DEVELOPER): Change these config variables. *
+       **************************************************/
+      var apiKey = 'YOUR_BROWSER_API_KEY_HERE';
+      var databaseUrl = 'YOUR_DATABASE_URL_HERE';
+
       // [START configure]
+      // Configure the Firebase SDK.
       var config = {
         apiKey: apiKey,
         databaseUrl: databaseUrl
       };
       var app = firebase.App.initialize(config);
-      var database = firebase.database();
-      var myDataRef = database.ref().child("messages");
+      var database = app.database();
+      var myDataRef = database.ref().child('messages');
       // [END configure]
-      $('#messageInput').keypress(function (e) {
+
+      // Write new chat message when pressing enter key.
+      var messageInput = $('#messageInput');
+      var nameInput = $('#nameInput');
+      messageInput.keypress(function(e) {
         if (e.keyCode == 13) {
-          var name = $('#nameInput').val();
-          var text = $('#messageInput').val();
+          var name = nameInput.val();
+          var text = messageInput.val();
           // [START writeval]
           myDataRef.push({name: name, text: text});
           // [END writeval]
-          $('#messageInput').val('');
+          messageInput.val('');
         }
       });
+
       // [START readdata]
+      // Listen for new chat messages.
       myDataRef.on('child_added', function(snapshot) {
         var message = snapshot.val();
         displayChatMessage(message.name, message.text);
       });
       // [END readdata]
+
+      // Displays a new chat message in the UI.
       function displayChatMessage(name, text) {
-        $('<div class="mdl-cell mdl-cell--12-col" />').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
-        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
-      };
+        var messageDiv = $('#messagesDiv');
+        var messageContainer = $('<div class="mdl-cell mdl-cell--12-col" />');
+        messageContainer.text(text).prepend($('<em/>').text(name + ': '));
+        messageContainer.appendTo(messageDiv);
+        messageDiv[0].scrollTop = messageDiv[0].scrollHeight;
+      }
     </script>
   </body>
 </html>

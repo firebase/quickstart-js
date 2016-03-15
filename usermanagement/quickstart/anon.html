@@ -21,9 +21,9 @@ limitations under the License.
   <title>Anonymous Authentication Example</title>
 
   <!-- Material Design Theming -->
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
-  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
 
   <!-- Firebase Auth -->
   <script type="text/javascript">
@@ -31,10 +31,10 @@ limitations under the License.
      * TODO(DEVELOPER): Change these config variable. *
      **************************************************/
     var apiKey = 'YOUR_API_KEY_HERE';
-    var databaseUrl = "YOUR_DATABASE_URL_HERE";
+    var databaseUrl = 'YOUR_DATABASE_URL_HERE';
   </script>
 
-  <script src='https://www.gstatic.com/firebasejs/staging/3.0.0-eap.2/firebase.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/staging/3.0.0-eap.2/firebase.js"></script>
   <script type="text/javascript">
     var app = null;
     var auth = null;
@@ -52,23 +52,23 @@ limitations under the License.
      * We can check for the result in the callback, or monitor the auth status
      * separately (see initApp for that part).
      */
-    function handleSignIn(evt) {
+    function handleSignIn() {
       if (auth.currentUser) {
         // [START signout]
         auth.signOut().then(function() {
           // Signout complete.
-          console.log("Signed Out");
+          console.log('Signed Out');
         }, function(error) {
-          console.log("Sign Out Error", error);
+          console.error('Sign Out Error', error);
         });
         // [END signout]
       } else {
 
         // [START authanon]
         auth.signInAnonymously().then(function(user) {
-          console.log("Sign In Success", user);
+          console.log('Sign In Success', user);
         }, function(error) {
-          console.log("Sign In Error", error);
+          console.log('Sign In Error', error);
         });
         // [END authanon]
       }
@@ -91,11 +91,11 @@ limitations under the License.
      * from the Secure Token Service
      */
     function initApp() {
-      console.log("Initializing App");
+      console.log('Initializing App');
       // Check preconditions.
-      if (databaseUrl.indexOf("firebaseio") < 0 || apiKey.indexOf("AI") < 0) {
-        console.log("Enter your config values for apiKey and databaseUrl");
-        alert("Enter your config values for apiKey and databaseUrl");
+      if (databaseUrl.indexOf('firebaseio') < 0 || apiKey.indexOf('AI') < 0) {
+        console.log('Enter your config values for apiKey and databaseUrl');
+        alert('Enter your config values for apiKey and databaseUrl');
         return;
       }
 
@@ -109,40 +109,40 @@ limitations under the License.
       auth = app.auth();
       // [END appconfig]
 
-      console.log("Adding auth state listener");
+      console.log('Adding auth state listener');
       // Auth state changes.
       // [START authstatelistener]
       app.addAuthStateListener(function(event) {
         // Current user.
         var user = event.user;
         var getToken = event.getToken;
-        console.log("User Object:", user);
+        console.log('User Object:', user);
 
         if (!user) {
-          document.getElementById('signin').textContent = "Sign In";
+          document.getElementById('signin').textContent = 'Sign In';
           return;
         }
-        document.getElementById('signin').textContent = "Sign Out";
-        alert("Welcome UID:" + user.uid);
+        document.getElementById('signin').textContent = 'Sign Out';
+        alert('Welcome UID:' + user.uid);
 
         // [START_EXCLUDE]
         var myFirebaseRef = app.database().ref();
-        myFirebaseRef.on("value", function(snapshot) {
-          console.log("Database snapshot:", snapshot.val());
+        myFirebaseRef.on('value', function(snapshot) {
+          console.log('Database snapshot:', snapshot.val());
         });
         // [END_EXCLUDE]
       }, function(error) {
-        console.log("Auth Listener Error", error);
+        console.error('Auth Listener Error', error);
       });
       // [END authstatelistener]
 
-      document.getElementById("signin").addEventListener('click', handleSignIn, false);
-  }
+      document.getElementById('signin').addEventListener('click', handleSignIn, false);
+    }
 
-  window.onload = function() {
-    initApp();
-  };
-</script>
+    window.onload = function() {
+      initApp();
+    };
+  </script>
 </head>
 <body>
   <div class="mdl-layout" id="content">

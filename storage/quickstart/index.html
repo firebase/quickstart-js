@@ -19,18 +19,50 @@ limitations under the License.
   <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Firebase Storage Example</title>
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
-  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
 
   <!-- Firebase JS -->
   <script src='https://www.gstatic.com/firebasejs/staging/3.0.0-eap.2/firebase.js'></script>
+</head>
+<body>
+  <div class="mdl-layout" id="content">
+    <header class="mdl-layout__header mdl-grid mdl-color-text--white mdl-color--primary">
+      <h2>Storage Example</h2>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell-12-col-tablet mdl-cell--12-col-desktop" id="notoken">
+          <p>Select a file below. When it is uploaded, a link will be displayed to the uploaded file.
+          </p>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div  class="mdl-cell mdl-cell-12-col-tablet mdl-cell--12-col-desktop">
+          <h4>Choose File</h4>
+          <input type="file" id="file" name="file" />
+          <h4>File URL:</h4>
+          <p id="linkbox">
+          </p>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+    </main>
+  </div>
   <script>
     /**************************************************
      * TODO(DEVELOPER): Change these config variables. *
      **************************************************/
     var apiKey = 'YOUR_API_KEY';
     var projectId = 'YOUR_PROJECT_ID';
+
+    // Configure the Firebase SDK.
     var config = {
       apiKey: apiKey,
       projectId: projectId
@@ -45,34 +77,32 @@ limitations under the License.
       var files = evt.target.files;
       for (var i = 0, f; f = files[i]; i++) {
 
-       var metadata = {
-         'contentType': f.type,
-         'metadata': {
-           'uploader': 'example',
-         }
-       };
+        var metadata = {
+          'contentType': f.type,
+          'metadata': {
+            'uploader': 'example'
+          }
+        };
 
-       // Push to child path.
-       var uploadTask = storageRef.child('images').put(f, metadata);
+        // Push to child path.
+        var uploadTask = storageRef.child('images').put(f, metadata);
 
-       // Will be firebase.Storage.TaskEvent.COMPLETE
-       // [START oncomplete]
-       uploadTask.on("state_changed", function(task, error) {
-         if (task.state == "complete") {
-           console.log("Uploaded " + task.totalBytes + " bytes.");
-           console.log(task.metadata);
-           var url = task.metadata.downloadUrls[0];
-           console.log("File available at ", url);
-           // [START_EXCLUDE]
-           document.getElementById("linkbox").innerHTML = "<a href='" +  url + "'>Click For File</a>";
-           // [END_EXCLUDE]
-         } else if (task.state == "error") {
-           // [START onfailure]
-           console.log("Upload failed:", task.error)
-           // [END onfailure]
-         }
-       });
-       // [END oncomplete]
+        // Listen for errors and completion of the upload.
+        // [START oncomplete]
+        uploadTask.on('state_changed', null, function(error) {
+          // [START onfailure]
+          console.error('Upload failed:', error)
+          // [END onfailure]
+        }, function() {
+          console.log('Uploaded',task.totalBytes,'bytes.');
+          console.log(this.metadata);
+          var url = this.metadata.downloadUrls[0];
+          console.log('File available at', url);
+          // [START_EXCLUDE]
+          document.getElementById('linkbox').innerHTML = '<a href="' +  url + '">Click For File</a>';
+          // [END_EXCLUDE]
+        }.bind(uploadTask));
+        // [END oncomplete]
       }
     }
 
@@ -82,47 +112,19 @@ limitations under the License.
 
       app.addAuthStateListener(function(event) {
         var user = event.user;
-        console.log("User Object:", user);
+        console.log('User Object:', user);
         document.getElementById('file').disabled = false;
 
       }, function(error) {
-        console.log("Auth Listener Error", error);
+        console.error('Auth Listener Error', error);
       });
 
       auth.signInAnonymously().then(function(user) {
-          console.log("Anonymous Sign In Success", user);
-        }, function(error) {
-          console.log("Anonymous Sign In Error", error);
-        });
+        console.log('Anonymous Sign In Success', user);
+      }).catch(function(error) {
+        console.error('Anonymous Sign In Error', error);
+      });
     }
-</script>
-</head>
-<body>
-  <div class="mdl-layout" id="content">
-    <header class="mdl-layout__header mdl-grid">
-      <h1>Storage Example</h1>
-    </header>
-    <main class="mdl-layout__content">
-      <div class="mdl-grid">
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" id="notoken">
-          <p>Select a file below. When it is uploaded, a link will be displayed to the uploaded file.
-          </p>
-        </div>
-        <div class="mdl-layout-spacer"></div>
-      </div>
-      <div class="mdl-grid">
-        <div class="mdl-layout-spacer"></div>
-        <div  class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop">
-          <h4>Choose File</h4>
-          <input type="file" id="file" name="file" />
-          <h4>File URL:</h4>
-          <p id="linkbox">
-          </p>
-        </div>
-        <div class="mdl-layout-spacer"></div>
-      </div>
-  </main>
-  </div>
+  </script>
 </body>
 </html>

@@ -19,9 +19,12 @@ limitations under the License.
   <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Custom Token Generator Example</title>
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
-  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+
   <script language="JavaScript" type="text/javascript"
         src="http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js">
   </script>
@@ -32,15 +35,15 @@ limitations under the License.
         // client library for the language you work with.
 
         // These values are extracted from the service account JSON.
-        var sub = "";
-        var sPKCS8PEM = "";
-        var kid = ""
+        var sub = '';
+        var sPKCS8PEM = '';
+        var kid = '';
 
         // Generate an ID token and sign it with the private key.
-        function handleGenerateClick(evt) {
+        function handleGenerateClick() {
           var uid = document.getElementById('uid').value;
           if (uid == '') {
-            console.log("Blank uid");
+            console.log('Blank uid');
             return;
           }
           // Header
@@ -50,24 +53,24 @@ limitations under the License.
           var oPayload = {};
           var tNow = KJUR.jws.IntDate.get('now');
           var tEnd = KJUR.jws.IntDate.get('now + 1hour');
-          oPayload.aud = "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit";
+          oPayload.aud = 'https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit';
           oPayload.exp = tEnd;
           oPayload.iat = tNow;
           oPayload.iss = sub;
           oPayload.sub = sub;
           oPayload.user_id = uid;
-          oPayload.scope = "https://www.googleapis.com/auth/identitytoolkit";
+          oPayload.scope = 'https://www.googleapis.com/auth/identitytoolkit';
 
           var sHeader = JSON.stringify(oHeader);
           var sPayload = JSON.stringify(oPayload);
 
           var sJWT = KJUR.jws.JWS.sign(null, sHeader, sPayload, sPKCS8PEM, 'notasecret');
 
-          document.getElementById("tokenbox").textContent = sJWT;
+          document.getElementById('tokenbox').textContent = sJWT;
           console.log(sJWT);
 
-          var link = "<a href='../index.html?tok=" + sJWT + "'>Use this token in the web custom auth example</a>";
-          document.getElementById("linktokenbox").innerHTML = link;
+          var link = '<a href="../index.html?tok=' + sJWT + '">Use this token in the web custom auth example</a>';
+          document.getElementById('linktokenbox').innerHTML = link;
         }
 
          function handleFileSelect(evt) {
@@ -75,30 +78,30 @@ limitations under the License.
            evt.preventDefault();
            var files = evt.target.files;
            for (var i = 0, f; f = files[i]; i++) {
-             if (f.type == "application/json") {
+             if (f.type === 'application/json') {
                loadJson(f);
                return;
              }
            }
-           console.log("No JSON file found!");
+           console.log('No JSON file found!');
          }
 
          function loadJson(f) {
            var reader = new FileReader();
-           reader.onload = function (_) {
-             data = JSON.parse(reader.result)
+           reader.onload = function() {
+             var data = JSON.parse(reader.result);
              console.log(data);
-             if (data.type && data.type == "service_account") {
+             if (data.type && data.type === 'service_account') {
                kid = data.private_key_id;
                sPKCS8PEM = data.private_key;
                sub = data.client_email;
-               document.getElementById("notoken").style.display = "none";
-               document.getElementById("gettoken").style.display = "block";
-               document.getElementById("subtext").textContent = "Generating Tokens For " + sub;
+               document.getElementById('notoken').style.display = 'none';
+               document.getElementById('gettoken').style.display = 'block';
+               document.getElementById('subtext').textContent = 'Generating Tokens For ' + sub;
              } else {
-               console.log("Bad file read.");
+               console.log('Bad file read.');
              }
-           }
+           };
            reader.readAsText(f)
          }
 
@@ -129,7 +132,7 @@ limitations under the License.
       <div class="mdl-grid">
         <div class="mdl-layout-spacer"></div>
         <div  class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" id="gettoken" style="display: none;">
-          <h4 id="subtext"></h2>
+          <h4 id="subtext"></h4>
           <label>Enter User ID: <input type="text" id="uid" name="uid" /></label> <button id="go">Generate</button>
           <h5>Token:</h5>
           <p id="tokenbox" style="word-wrap: break-word;">
@@ -143,7 +146,7 @@ limitations under the License.
   </div>
   <script>
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
-    document.getElementById("go").addEventListener('click', handleGenerateClick, false);
+    document.getElementById('go').addEventListener('click', handleGenerateClick, false);
   </script>
 </body>
 </html>

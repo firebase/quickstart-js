@@ -21,9 +21,9 @@ limitations under the License.
   <title>Facebook Sign In Example</title>
 
   <!-- Material Design Theming -->
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.green-orange.min.css" />
-  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
 
   <!-- Firebase Auth -->
   <script type="text/javascript">
@@ -31,38 +31,38 @@ limitations under the License.
      * TODO(DEVELOPER): Change these config variables. *
      **************************************************/
     var apiKey = 'YOUR_API_KEY_HERE';
-    var databaseUrl = "YOUR_DATABASE_URL_HERE";
-    var facebookAppId = "YOUR_FACEBOOK_APP_ID";
+    var databaseUrl = 'YOUR_DATABASE_URL_HERE';
+    var facebookAppId = 'YOUR_FACEBOOK_APP_ID';
   </script>
 
-  <script src='https://www.gstatic.com/firebasejs/staging/3.0.0-eap.2/firebase.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/staging/3.0.0-eap.2/firebase.js"></script>
   <script type="text/javascript">
-    console.log("Initializing App");
+    console.log('Initializing App');
     // [START appconfig]
     // Api key in config.
     var config = {
       apiKey: apiKey,
       databaseUrl: databaseUrl
     };
-    var app = firebase.App.initialize(config, "my app");
+    var app = firebase.App.initialize(config);
     var auth = app.auth();
     // [END appconfig]
 
-    function checkLoginState(evt) {
+    function checkLoginState() {
       FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
-          console.log("Facebook Auth Response", response);
+          console.log('Facebook Auth Response', response);
           // [START facebookcredential]
           // Sign in with credential from the Facebook user.
           var credential = firebase.FacebookAuthProvider.credential({
-           "accessToken" : response.authResponse.accessToken
-          })
+            'accessToken' : response.authResponse.accessToken
+          });
           // [END facebookcredential]
           // [START authwithcred]
           auth.signInWithCredential(credential).then(function(user) {
-           console.log("Sign In Success", user);
+            console.log('Sign In Success', user);
           }, function(error) {
-           console.log("Sign In Error", error);
+            console.error('Sign In Error', error);
           });
           // [END authwithcred]
         }
@@ -77,14 +77,14 @@ limitations under the License.
      *
      * auth.signOut clears the current session.
      */
-    function handleSignOut(evt) {
+    function handleSignOut() {
       if (auth.currentUser) {
         // [START signout]
         auth.signOut().then(function() {
           // Signout complete.
-          console.log("Signed Out");
+          console.log('Signed Out');
         }, function(error) {
-          console.log("Sign Out Error", error);
+          console.error('Sign Out Error', error);
         });
         // [END signout]
       }
@@ -106,36 +106,36 @@ limitations under the License.
      */
     function initApp() {
       // Check preconditions.
-      if (databaseUrl.indexOf("firebaseio") < 0 || apiKey.indexOf("AI") < 0) {
-        console.log("Enter your config values for apiKey and databaseUrl");
-        alert("Enter your config values for apiKey and databaseUrl");
+      if (databaseUrl.indexOf('firebaseio') < 0 || apiKey.indexOf('AI') < 0) {
+        console.log('Enter your config values for apiKey and databaseUrl');
+        alert('Enter your config values for apiKey and databaseUrl');
         return;
       }
 
-      console.log("Adding auth state listener");
+      console.log('Adding auth state listener');
       // Auth state changes.
       // [START authstatelistener]
       app.addAuthStateListener(function(event) {
         // Current user.
         var user = event.user;
         var getToken = event.getToken;
-        console.log("User Object:", user);
+        console.log('User Object:', user);
 
         if (!user) {
           document.getElementById('signout').disabled = true;
           return;
         }
         document.getElementById('signout').disabled = false;
-        alert("Welcome UID:" + user.uid);
+        alert('Welcome UID:' + user.uid);
 
         // [START_EXCLUDE]
         var myFirebaseRef = app.database().ref();
-        myFirebaseRef.on("value", function(snapshot) {
-          console.log("Database snapshot:", snapshot.val());
+        myFirebaseRef.on('value', function(snapshot) {
+          console.log('Database snapshot:', snapshot.val());
         });
         // [END_EXCLUDE]
       }, function(error) {
-        console.log("Auth Listener Error", error);
+        console.log('Auth Listener Error', error);
       });
       // [END authstatelistener]
 
@@ -143,13 +143,13 @@ limitations under the License.
         document.getElementById('signout').disabled = true;
       }
 
-      document.getElementById("signout").addEventListener('click', handleSignOut, false);
-  }
+      document.getElementById('signout').addEventListener('click', handleSignOut, false);
+    }
 
-  window.onload = function() {
-    initApp();
-  };
-</script>
+    window.onload = function() {
+      initApp();
+    };
+  </script>
 </head>
 <body>
   <script>
@@ -169,7 +169,7 @@ limitations under the License.
        var js, fjs = d.getElementsByTagName(s)[0];
        if (d.getElementById(id)) {return;}
        js = d.createElement(s); js.id = id;
-       js.src = "//connect.facebook.net/en_US/sdk.js";
+       js.src = ''//connect.facebook.net/en_US/sdk.js';
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
      // [END facebookconfig]
