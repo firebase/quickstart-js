@@ -15,7 +15,21 @@
  */
 'use strict';
 
-var messagesRef = new Firebase('<DATABASE_URL>/messages');
+
+/**************************************************
+ * TODO(DEVELOPER): Change these config variables. *
+ **************************************************/
+var apiKey = '<API_KEY>';
+var databaseUrl = '<DATABASE_URL>';
+
+// Initialize Firebase Database.
+var config = {
+  apiKey: apiKey,
+  databaseUrl: databaseUrl
+};
+var app = firebase.App.initialize(config);
+var database = app.database();
+var messagesRef = database.ref().child('messages');
 
 // Shortcuts to DOM Elements.
 var messageList = document.getElementById('message-list');
@@ -28,10 +42,6 @@ function saveMessage(e) {
   if (messageInput.value) {
     messagesRef.push({
       text: messageInput.value
-    }, function(error){
-      if (error) {
-        console.log(error);
-      }
     });
     messageInput.value = '';
   }
@@ -55,9 +65,9 @@ window.addEventListener('load', function() {
 
   var displayMessageFromFirebaseData = function(data) {
     displayMessage(data.key(), data.val().text);
-  }
+  };
   // Loads the last 10 messages and listen for new ones.
-  messagesRef.limitToLast(10).on("child_added", displayMessageFromFirebaseData);
+  messagesRef.limitToLast(10).on('child_added', displayMessageFromFirebaseData);
   // Listen for messages updates.
-  messagesRef.limitToLast(10).on("child_changed", displayMessageFromFirebaseData);
+  messagesRef.limitToLast(10).on('child_changed', displayMessageFromFirebaseData);
 }, false);
