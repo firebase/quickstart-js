@@ -108,6 +108,21 @@ This also deploys and activate the Function that will make all of your messages 
 
 > The first time you call `firebase deploy` on a new project the Google Compute Engine instances and Kubernetes clusters required to run Firebase Functions will be spin-up. This may take a few minutes but things will be a lot faster on subsequent deploys. If you get an error try again after waiting a few minutes.
 
+## Data Model
+
+In this sample we use the following data model:
+
+```
+\functions-quickstart-12345
+    \messages
+        \key-123456
+            text: "This is my first message!"
+        \key-123457
+            text: "This is my second message!"
+```
+
+ - `\functions-quickstart-12345\messages` is a list of Objects. New messages get pushed in this list.
+ - A message is an Object with one attribute: `text`. We chose this instead of a simple String for consistency with the other Firebase samples and codelabs so that you can easilly combbine them.
 
 ## See the results
 

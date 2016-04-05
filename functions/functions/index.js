@@ -30,7 +30,7 @@ var functions = require('firebase-functions');
 
 // [START function]
 // Makes all new messages ALL UPPERCASE.
-exports.makeuppercase = functions.database()
+exports.makeUppercase = functions.database()
     .path('/messages/{messageId}').on('write', function(event) {
       // Reference to the database object that triggered the function.
       // This reference is authorized as the user who initiated the write that triggered the function.
