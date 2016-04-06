@@ -18,33 +18,12 @@ limitations under the License.
 <head>
   <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!--
-    Note that Google Sign In does not work from a file URL. You will need to make
-    this page available from a web server, either from localhost or using Firebase
-    Hosting.
-
-    Whichever domain it is running on, you'll have to add the origin for that domain
-    in the Google Developer Console: https://console.developers.google.com, search
-    for Credentials and create a new credential > OAuth client ID > web application,
-    and set the domain as an authorised origin (e.g. http://localhost:8000 or https://foo.bar).
-    -->
-  <!-- [START google_config] -->
-  <meta name="google-signin-scope" content="profile email">
-  <!--
-   * TODO(DEVELOPER): Change this config variable. *
-   -->
-  <meta name="google-signin-client_id" content="YOUR_CLIENT_ID_HERE">
-  <meta name="google-signin-cookiepolicy" content="single_host_origin">
-  <!-- [END google_config] -->
-  <title>Google Sign In Example</title>
+  <title>Custom Token Consumer Example</title>
 
   <!-- Material Design Theming -->
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
-
-  <!-- Google Sign In -->
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
   <!-- Firebase Auth -->
   <script type="text/javascript">
@@ -53,55 +32,12 @@ limitations under the License.
      **************************************************/
     var apiKey = 'YOUR_API_KEY_HERE';
     var databaseUrl = 'YOUR_DATABASE_URL_HERE';
-    // Also remember to change the Google Client ID above!
   </script>
-  <script src="https://www.gstatic.com/firebasejs/3.0.0-eap.2/firebase.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/staging/3.0.0-eap.3/firebase.js"></script>
   <script type="text/javascript">
-    console.log('Initializing App');
-    // [START appconfig]
-    // Api key in config.
-    var config = {
-      apiKey: apiKey,
-      databaseUrl: databaseUrl
-    };
-    var app = firebase.App.initialize(config);
-    var auth = app.auth();
-    // [END appconfig]
-
-    function onSignIn(googleUser) {
-      // [START checksameuser]
-      if (auth.currentUser) {
-        // If we are already signed in with Google and Firebase,
-        // check we're in a Firebase account associated with the same
-        // Google account.
-        var providerData = auth.currentUser.getProviderData();
-        for (var key in providerData) {
-          if (providerData[key].providerId === 'google.com') {
-            var mungedId = 'https://accounts.google.com/' + googleUser.getBasicProfile().getId();
-            if (providerData[key].userId == mungedId) {
-              // We don't need to reauth the Firebase connection.
-              return;
-            }
-
-          }
-        }
-      }
-      // [END checksameuser]
-
-      // [START googlecredential]
-      // Sign in with credential from the Google user.
-      var credential = firebase.GoogleAuthProvider.credential({
-        'idToken' : googleUser.getAuthResponse().id_token
-      });
-      // [END googlecredential]
-      // [START authwithcred]
-      auth.signInWithCredential(credential).then(function(user) {
-        console.log('Sign In Success', user);
-      }, function(error) {
-        console.error('Sign In Error', error);
-      });
-      // [END authwithcred]
-    }
+    var app = null;
+    var auth = null;
 
     /*
      * Handle the sign in button press.
@@ -110,8 +46,13 @@ limitations under the License.
      * |currentUser| on the Firebase auth object.
      *
      * auth.signOut clears the current session.
+     *
+     * auth.signInWithCustomToken takes the ID token we have generated from
+     * our own authentication system and passes it to the Firebase Auth backend.
+     * We can check for the result in the callback, or monitor the auth status
+     * separately (see initApp for that part).
      */
-    function handleSignOut() {
+    function handleSignIn() {
       if (auth.currentUser) {
         // [START signout]
         auth.signOut().then(function() {
@@ -121,6 +62,20 @@ limitations under the License.
           console.error('Sign Out Error', error);
         });
         // [END signout]
+      } else {
+        var token = document.getElementById('tokentext').value;
+        if (token.length < 10) {
+          alert('Please enter a token in the text area');
+          return;
+        }
+        // Sign in with custom token generated following previous instructions.
+        // [START authwithtoken]
+        auth.signInWithCustomToken(token).then(function(user) {
+          console.log('Sign In Success', user);
+        }, function(error) {
+          console.error('Sign In Error', error);
+        });
+        // [END authwithtoken]
       }
     }
 
@@ -139,6 +94,7 @@ limitations under the License.
      * When signed in, we also authenticate to the Firebase Realtime Database.
      */
     function initApp() {
+      console.log('Initializing App');
       // Check preconditions.
       if (databaseUrl.indexOf('firebaseio') < 0 || apiKey.indexOf('AI') < 0) {
         console.log('Enter your config values for apiKey and databaseUrl');
@@ -146,20 +102,29 @@ limitations under the License.
         return;
       }
 
+      // [START appconfig]
+      // Api key in config.
+      var config = {
+        apiKey: apiKey,
+        databaseURL: databaseUrl
+      };
+      app = firebase.initializeApp(config);
+      auth = app.auth();
+      // [END appconfig]
+
       console.log('Adding auth state listener');
       // Auth state changes.
       // [START authstatelistener]
       app.addAuthStateListener(function(event) {
         // Current user.
-        var user = event.user;
-        var getToken = event.getToken;
+        var user = event.currentUser;
         console.log('User Object:', user);
 
         if (!user) {
-          document.getElementById('signout').disabled = true;
+          document.getElementById('signin').textContent = 'Sign In';
           return;
         }
-        document.getElementById('signout').disabled = false;
+        document.getElementById('signin').textContent = 'Sign Out';
         alert('Welcome UID:' + user.uid);
 
         // [START_EXCLUDE]
@@ -168,12 +133,10 @@ limitations under the License.
           console.log('Database snapshot:', snapshot.val());
         });
         // [END_EXCLUDE]
-      }, function(error) {
-        console.error('Auth Listener Error', error);
       });
       // [END authstatelistener]
 
-      document.getElementById('signout').addEventListener('click', handleSignOut, false);
+      document.getElementById('signin').addEventListener('click', handleSignIn, false);
     }
 
     window.onload = function() {
@@ -184,21 +147,22 @@ limitations under the License.
 <body>
   <div class="mdl-layout" id="content">
     <header class="mdl-layout__header mdl-grid">
-      <h1>Firebase Google Authentication</h1>
+      <h1>Firebase Custom Authentication</h1>
     </header>
     <main class="mdl-layout__content">
       <div class="mdl-grid">
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" >
-          <p>Sign in with your Google account below.</p>
+          <p>Enter a custom token below. For testing, you can generate one with the <a href="exampletokengenerator/auth.html">example generator</a>, but you can also generate your token manually.</p>
         </div>
         <div class="mdl-layout-spacer"></div>
       </div>
       <div class="mdl-grid">
         <div class="mdl-layout-spacer"></div>
-        <div class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" style=>
-          <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-          <button id="signout" name="signout">Sign Out</button>
+        <div class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop">
+          <textarea id="tokentext" style="width: 100%; height: 200px;" name="tokentext" placeholder="Enter Your Custom Token"></textarea>
+          <br />
+          <button class="mdl-button mdl-js-button mdl-button--raised" id="signin" name="signin">Sign In / Sign Out</button>
         </div>
         <div class="mdl-layout-spacer"></div>
       </div>

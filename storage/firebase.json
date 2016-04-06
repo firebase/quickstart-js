@@ -1,9 +1,10 @@
 {
-  "firebase": "YOUR_PROJECT_ID_HERE",
-  "public": "quickstart",
-  "ignore": [
-    "firebase.json",
-    "**/.*",
-    "**/node_modules/**"
-  ]
+  "hosting": {
+    "public": "./",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
 }

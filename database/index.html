@@ -4,12 +4,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Material Design Theming -->
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.orange-indigo.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
     <!-- Firebase JS -->
-    <script src='https://www.gstatic.com/firebasejs/3.0.0-eap.2/firebase.js'></script>
+    <script src='https://www.gstatic.com/firebasejs/staging/3.0.0-eap.3/firebase.js'></script>
+
+      <!-- JQuery -->
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
   </head>
   <body>
@@ -39,9 +41,9 @@
       // Configure the Firebase SDK.
       var config = {
         apiKey: apiKey,
-        databaseUrl: databaseUrl
+        databaseURL: databaseUrl
       };
-      var app = firebase.App.initialize(config);
+      var app = firebase.initializeApp(config);
       var database = app.database();
       var myDataRef = database.ref().child('messages');
       // [END configure]

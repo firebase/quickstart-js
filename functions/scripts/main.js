@@ -25,9 +25,9 @@ var databaseUrl = '<DATABASE_URL>';
 // Initialize Firebase Database.
 var config = {
   apiKey: apiKey,
-  databaseUrl: databaseUrl
+  databaseURL: databaseUrl
 };
-var app = firebase.App.initialize(config);
+var app = firebase.initializeApp(config);
 var database = app.database();
 var messagesRef = database.ref().child('messages');
 

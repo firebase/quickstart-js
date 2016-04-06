@@ -122,7 +122,7 @@ In this sample we use the following data model:
 ```
 
  - `\functions-quickstart-12345\messages` is a list of Objects. New messages get pushed in this list.
- - A message is an Object with one attribute: `text`. We chose this instead of a simple String for consistency with the other Firebase samples and codelabs so that you can easilly combbine them.
+ - A message is an Object with one attribute: `text`. We chose this instead of a simple String for consistency with the other Firebase samples and codelabs so that you can easily combine them.
 
 ## See the results
 
@@ -179,4 +179,4 @@ We'd love that you contribute to the project. Before doing so please read our [C
 
 ## License
 
-© Google, 2015. Licensed under an [Apache-2](../LICENSE) license.
+© Google, 2016. Licensed under an [Apache-2](../LICENSE) license.

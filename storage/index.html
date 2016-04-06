@@ -21,12 +21,12 @@ limitations under the License.
   <title>Firebase Storage Example</title>
 
   <!-- Material Design Theming -->
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
   <!-- Firebase JS -->
-  <script src='https://www.gstatic.com/firebasejs/3.0.0-eap.2/firebase.js'></script>
+  <script src='https://www.gstatic.com/firebasejs/staging/3.0.0-eap.3/firebase.js'></script>
 </head>
 <body>
   <div class="mdl-layout" id="content">
@@ -67,7 +67,7 @@ limitations under the License.
       apiKey: apiKey,
       projectId: projectId
     };
-    var app = firebase.App.initialize(config);
+    var app = firebase.initializeApp(config);
     var auth = app.auth();
     var storageRef = app.storage().ref();
 
@@ -111,12 +111,9 @@ limitations under the License.
       document.getElementById('file').disabled = true;
 
       app.addAuthStateListener(function(event) {
-        var user = event.user;
+        var user = event.currentUser;
         console.log('User Object:', user);
         document.getElementById('file').disabled = false;
-
-      }, function(error) {
-        console.error('Auth Listener Error', error);
       });
 
       auth.signInAnonymously().then(function(user) {

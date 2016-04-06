@@ -21,9 +21,9 @@ limitations under the License.
   <title>Facebook Sign In Example</title>
 
   <!-- Material Design Theming -->
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
   <!-- Firebase Auth -->
   <script type="text/javascript">
@@ -35,16 +35,16 @@ limitations under the License.
     var facebookAppId = 'YOUR_FACEBOOK_APP_ID';
   </script>
 
-  <script src="https://www.gstatic.com/firebasejs/3.0.0-eap.2/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/staging/3.0.0-eap.3/firebase.js"></script>
   <script type="text/javascript">
     console.log('Initializing App');
     // [START appconfig]
     // Api key in config.
     var config = {
       apiKey: apiKey,
-      databaseUrl: databaseUrl
+      databaseURL: databaseUrl
     };
-    var app = firebase.App.initialize(config);
+    var app = firebase.initializeApp(config);
     var auth = app.auth();
     // [END appconfig]
 
@@ -54,7 +54,7 @@ limitations under the License.
           console.log('Facebook Auth Response', response);
           // [START facebookcredential]
           // Sign in with credential from the Facebook user.
-          var credential = firebase.FacebookAuthProvider.credential({
+          var credential = firebase.auth.FacebookAuthProvider.credential({
             'accessToken' : response.authResponse.accessToken
           });
           // [END facebookcredential]
@@ -117,8 +117,7 @@ limitations under the License.
       // [START authstatelistener]
       app.addAuthStateListener(function(event) {
         // Current user.
-        var user = event.user;
-        var getToken = event.getToken;
+        var user = event.currentUser;
         console.log('User Object:', user);
 
         if (!user) {
@@ -134,8 +133,6 @@ limitations under the License.
           console.log('Database snapshot:', snapshot.val());
         });
         // [END_EXCLUDE]
-      }, function(error) {
-        console.log('Auth Listener Error', error);
       });
       // [END authstatelistener]
 
@@ -156,9 +153,6 @@ limitations under the License.
     // [START facebookconfig]
     window.fbAsyncInit = function() {
       FB.init({
-        /**************************************************
-         * TODO(DEVELOPER): Change these config variable. *
-         **************************************************/
         appId      : facebookAppId,
         xfbml      : true,
         version    : 'v2.5'
@@ -169,7 +163,7 @@ limitations under the License.
        var js, fjs = d.getElementsByTagName(s)[0];
        if (d.getElementById(id)) {return;}
        js = d.createElement(s); js.id = id;
-       js.src = ''//connect.facebook.net/en_US/sdk.js';
+       js.src = '//connect.facebook.net/en_US/sdk.js';
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
      // [END facebookconfig]
@@ -190,7 +184,7 @@ limitations under the License.
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-cell mdl-cell-8-col-tablet mdl-cell--8-col-desktop" style=>
             <fb:login-button data-auto-logout-link="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-            <button id="signout" name="signout">Sign Out</button>
+            <button class="mdl-button mdl-js-button mdl-button--raised" id="signout" name="signout">Sign Out</button>
         </div>
         <div class="mdl-layout-spacer"></div>
       </div>
