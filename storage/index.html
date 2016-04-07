@@ -90,7 +90,7 @@ limitations under the License.
         console.error('Upload failed:', error)
         // [END onfailure]
       }, function() {
-        console.log('Uploaded',this.totalBytes,'bytes.');
+        console.log('Uploaded',uploadTask.snapshot.totalBytes,'bytes.');
         console.log(uploadTask.snapshot.metadata);
         var url = uploadTask.snapshot.metadata.downloadURLs[0];
         console.log('File available at', url);
