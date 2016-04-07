@@ -74,36 +74,31 @@ limitations under the License.
     function handleFileSelect(evt) {
       evt.stopPropagation();
       evt.preventDefault();
-      var files = evt.target.files;
-      for (var i = 0, f; f = files[i]; i++) {
+      var file = evt.target.files[0];
 
-        var metadata = {
-          'contentType': f.type,
-          'metadata': {
-            'uploader': 'example'
-          }
-        };
+      var metadata = {
+        'contentType': file.type
+      };
 
-        // Push to child path.
-        var uploadTask = storageRef.child('images').put(f, metadata);
+      // Push to child path.
+      var uploadTask = storageRef.child('images').put(file, metadata);
 
-        // Listen for errors and completion of the upload.
-        // [START oncomplete]
-        uploadTask.on('state_changed', null, function(error) {
-          // [START onfailure]
-          console.error('Upload failed:', error)
-          // [END onfailure]
-        }, function() {
-          console.log('Uploaded',task.totalBytes,'bytes.');
-          console.log(this.metadata);
-          var url = this.metadata.downloadUrls[0];
-          console.log('File available at', url);
-          // [START_EXCLUDE]
-          document.getElementById('linkbox').innerHTML = '<a href="' +  url + '">Click For File</a>';
-          // [END_EXCLUDE]
-        }.bind(uploadTask));
-        // [END oncomplete]
-      }
+      // Listen for errors and completion of the upload.
+      // [START oncomplete]
+      uploadTask.on('state_changed', null, function(error) {
+        // [START onfailure]
+        console.error('Upload failed:', error)
+        // [END onfailure]
+      }, function() {
+        console.log('Uploaded',this.totalBytes,'bytes.');
+        console.log(uploadTask.snapshot.metadata);
+        var url = uploadTask.snapshot.metadata.downloadURLs[0];
+        console.log('File available at', url);
+        // [START_EXCLUDE]
+        document.getElementById('linkbox').innerHTML = '<a href="' +  url + '">Click For File</a>';
+        // [END_EXCLUDE]
+      });
+      // [END oncomplete]
     }
 
     window.onload = function() {
