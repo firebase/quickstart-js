@@ -31,18 +31,7 @@ cd web/functions
 
 Create a Firebase Project on the [Firebase Console](http://g.co/firebase).
 
-Note your Firebase **database URL** and your **Project ID**. You can find your Firebase database URL in the **Database** section. It looks like:
-`https://<YOUR_PROJECT_ID>.firebaseio.com/`.
-
-Create a Browser API Key on your project:
-
- - Open [this page](https://console.developers.google.com/apis/credentials/key?type=CLIENT_SIDE&project=_).
- - Select your project (e.g. `functions-quickstart-12345`) and click **Continue**.
- - Enter a name and the URLs that you’d like to whitelist. These should be `localhost:5000` (used for local development) and `<PROJECT_ID>.firebaseapp.com` (e.g. `functions-quickstart-12345.firebaseapp.com` which is your Firebase static hosting URL).
- - Click **Create**.
- - Note your **API Key** (e.g. `AIzaSyBvhcMB9my5Uuu_wqpqCNfDjyqoHKKX3yM`).
-
-Use these values to replace `<DATABASE_URL>` and `<API_KEY>` in `scripts/main.js`.
+Go the the **Auth** section and enter the **WEB SETUP** tab. Copy the web initialisation snippet and paste it in the `head` section of the `index.html` file.
 
 Set up your Firebase project by running `firebase use --add`, select your Project ID and follow the instructions.
 

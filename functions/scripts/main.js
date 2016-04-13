@@ -15,20 +15,7 @@
  */
 'use strict';
 
-
-/**************************************************
- * TODO(DEVELOPER): Change these config variables. *
- **************************************************/
-var apiKey = '<API_KEY>';
-var databaseUrl = '<DATABASE_URL>';
-
-// Initialize Firebase Database.
-var config = {
-  apiKey: apiKey,
-  databaseURL: databaseUrl
-};
-var app = firebase.initializeApp(config);
-var database = app.database();
+var database = firebase.app().database();
 var messagesRef = database.ref().child('messages');
 
 // Shortcuts to DOM Elements.

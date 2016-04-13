@@ -24,11 +24,10 @@ Getting Started
 - Set up your project on the [Firebase Console](http://g.co/firebase).
 - Enable the authentication method you want to use in the Auth tab - you don't need to enable custom auth.
 - In the [Google Developer Console](https://console.developers.google.com), access the project you created in the Firebase Console. 
-- In the search box search for an select "Credentials" and create a Browser API key restricted to the domain you are using.
 - For Custom Auth, also create a new Service Account, and download the JSON representation.
-- For Google Sign In you will need to create a client ID with a Javascript Origin field set to your domain.
-- Edit the .html for the authentication method you want to try and fill in the API key and Database URL values in index.html. You can see the database URL from the Database section on the Firebase Console.
-- Open the sample `.html` in a web browser. Note that for Google Sign In you must use a webserver of some kind, file:// hosted pages wont work.
+- For Google Sign In you will need to create a Web Client ID with a Javascript Origin field set to your domain (and/or localhost:5000).
+- Edit the `.html` for the authentication method you want to try and copy the initialization snippet from **Auth > WEB SETUP** into the `<head>` section of `.html`.
+- Run `firebase serve` using the Firebase CLI tool to launch a local server and open the sample `.html` in a web browser. Note that for Google Sign In you must use a webserver of some kind, file:// hosted pages wont work.
 
 Support
 -------

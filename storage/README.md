@@ -11,9 +11,10 @@ Introduction
 Getting Started
 ---------------
 
-- Set up your project on the [Firebase Console](http://g.co/firebase).
-- Manually enable a Firebase Storage bucket.
-- Edit index.html and fill in the API key and project ID (e.g. `foobar-f3dc`) values.
+- Create your project on the [Firebase Console](http://g.co/firebase).
+- Copy the initialization snippet from **Auth > WEB SETUP** into the `<head>` section of `index.html`.
+- See [these instructions](https://firebasestorage.googleapis.com/v0/create.html) to create a Firebase Storage bucket.
+- Specify the bucket name in the web initialization snippet `config` object by adding a `storageBucket` attribute (e.g. `var config = { storageBucket: "my-project-12345.appspot.com",`).
 - Open the sample index.html in a web browser or run `firebase serve`
 
 Support
