@@ -33,8 +33,10 @@ limitations under the License.
        ************************************************************************************************ -->
 
   <script type="text/javascript">
+    // [START appconfig]
     var app = firebase.app();
     var auth = app.auth();
+    // [END appconfig]
 
     function checkLoginState() {
       FB.getLoginStatus(function(response) {
