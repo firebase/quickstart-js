@@ -38,6 +38,7 @@ limitations under the License.
     var auth = app.auth();
     // [END appconfig]
 
+    // [START facebookcallback]
     function checkLoginState() {
       FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
@@ -48,6 +49,7 @@ limitations under the License.
             'accessToken' : response.authResponse.accessToken
           });
           // [END facebookcredential]
+    // [END facebookcallback]
           // [START authwithcred]
           auth.signInWithCredential(credential).then(function(user) {
             console.log('Sign In Success', user);
@@ -172,7 +174,9 @@ limitations under the License.
                   <div class="mdl-card__supporting-text mdl-color-text--grey-600">
                       <p>Sign in with your Facebook account below.</p>
 
+                      <!-- [START facebook_button] -->
                       <fb:login-button data-auto-logout-link="true" scope="public_profile,email" onlogin="checkLoginState();" size="large"></fb:login-button>
+                      <!-- [END facebook_button] -->
                   </div>
               </div>
 
