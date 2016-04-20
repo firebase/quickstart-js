@@ -48,40 +48,28 @@
                   <div class="mdl-card__title mdl-color--orange-200">
                       <h2 class="mdl-card__title-text">Add new message</h2>
                   </div>
-                  <div class="mdl-card__supporting-text mdl-color-text--grey-600" id="messagesDiv">
-                      <input class="mdl-textfield__input" type="text" id="nameInput" placeholder="Name">
-                      <input class="mdl-textfield__input" type="text" id="messageInput" placeholder="Message">
+                  <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                      <form id="form">
+                          <input class="mdl-textfield__input" type="text" id="nameInput" placeholder="Name">
+                          <input class="mdl-textfield__input" type="text" id="messageInput" placeholder="Message">
+                          <input class="mdl-button mdl-js-button mdl-button--raised" disabled type="submit" id="submit" value="Send Message">
+                      </form>
                   </div>
               </div>
           </div>
       </main>
     </div>
     <script>
+      // [START configure]
       var database = firebase.app().database();
       var myDataRef = database.ref().child('messages');
+      var auth = firebase.app().auth();
       // [END configure]
 
-      // Write new chat message when pressing enter key.
       var messageInput = $('#messageInput');
       var nameInput = $('#nameInput');
-      messageInput.keypress(function(e) {
-        if (e.keyCode == 13) {
-          var name = nameInput.val();
-          var text = messageInput.val();
-          // [START writeval]
-          myDataRef.push({name: name, text: text});
-          // [END writeval]
-          messageInput.val('');
-        }
-      });
-
-      // [START readdata]
-      // Listen for new chat messages.
-      myDataRef.on('child_added', function(snapshot) {
-        var message = snapshot.val();
-        displayChatMessage(message.name, message.text);
-      });
-      // [END readdata]
+      var form = $('#form');
+      var submit = $('#submit');
 
       // Displays a new chat message in the UI.
       function displayChatMessage(name, text) {
@@ -90,6 +78,37 @@
         messageContainer.text(text).prepend($('<em/>').text(name + ': '));
         messageContainer.appendTo(messageDiv);
         messageDiv[0].scrollTop = messageDiv[0].scrollHeight;
+      }
+
+      window.onload = function() {
+        // Sign the user in anonymously since accessing the Database requires the user to be authorized.
+        auth.signInAnonymously().then(function(user) {
+          console.log('Anonymous Sign In Success', user);
+
+          // Write new chat message when pressing enter key or clicking submit button.
+          form.submit(function(e) {
+            e.preventDefault();
+            var name = nameInput.val();
+            var text = messageInput.val();
+            // [START writeval]
+            myDataRef.push({name: name, text: text});
+            // [END writeval]
+            messageInput.val('');
+          });
+
+          // Enable submit button.
+          submit.prop('disabled', false);
+
+          // [START readdata]
+          // Listen for new chat messages.
+          myDataRef.on('child_added', function(snapshot) {
+            var message = snapshot.val();
+            displayChatMessage(message.name, message.text);
+          });
+          // [END readdata]
+        }).catch(function(error) {
+          console.error('Anonymous Sign In Error', error);
+        });
       }
     </script>
   </body>

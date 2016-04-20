@@ -13,6 +13,7 @@ Getting Started
 
 - Create your project on the [Firebase Console](http://g.co/firebase).
 - Copy the initialization snippet from **Auth > WEB SETUP** into the `<head>` section of `index.html`.
+- Enable Anonymous auth in the **Auth** section.
 - See [these instructions](https://developers.google.com/firebase/docs/storage/configure-a-bucket) to create a Firebase Storage bucket.
 - Specify the bucket name in the web initialization snippet `config` object by adding a `storageBucket` attribute:
 ```javascript

@@ -15,6 +15,7 @@ Getting Started
 
 - Create your project on the [Firebase Console](http://g.co/firebase).
 - Copy the initialization snippet from **Auth > WEB SETUP** into the `<head>` section of `index.html`.
+- Enable Anonymous auth in the **Auth** tab.
 - Run `firebase serve` using the Firebase CLI tool to launch a local server.
 - Alternative, open the sample index.html in a web browser.
 
