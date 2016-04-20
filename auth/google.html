@@ -73,7 +73,7 @@ limitations under the License.
         for (var key in providerData) {
           if (providerData[key].providerId === 'google.com') {
             var mungedId = 'https://accounts.google.com/' + googleUser.getBasicProfile().getId();
-            if (providerData[key].userId == mungedId) {
+            if (providerData[key].uid == mungedId) {
               // We don't need to reauth the Firebase connection.
               return;
             }
