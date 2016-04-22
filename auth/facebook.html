@@ -45,11 +45,9 @@ limitations under the License.
           console.log('Facebook Auth Response', response);
           // [START facebookcredential]
           // Sign in with credential from the Facebook user.
-          var credential = firebase.auth.FacebookAuthProvider.credential({
-            'accessToken' : response.authResponse.accessToken
-          });
+          var credential = firebase.auth.FacebookAuthProvider.credential(
+              response.authResponse.accessToken);
           // [END facebookcredential]
-    // [END facebookcallback]
           // [START authwithcred]
           auth.signInWithCredential(credential).then(function(user) {
             console.log('Sign In Success', user);
@@ -60,6 +58,7 @@ limitations under the License.
         }
       });
     }
+    // [END facebookcallback]
 
     /*
      * Handle the sign out button press.

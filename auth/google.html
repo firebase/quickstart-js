@@ -85,9 +85,8 @@ limitations under the License.
 
       // [START googlecredential]
       // Sign in with credential from the Google user.
-      var credential = firebase.auth.GoogleAuthProvider.credential({
-        'idToken' : googleUser.getAuthResponse().id_token
-      });
+      var credential = firebase.auth.GoogleAuthProvider.credential(
+          googleUser.getAuthResponse().id_token);
       // [END googlecredential]
       // [START authwithcred]
       auth.signInWithCredential(credential).then(function(user) {
