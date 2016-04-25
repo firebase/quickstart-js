@@ -33,6 +33,12 @@ limitations under the License.
        ************************************************************************************************ -->
 
   <script type="text/javascript">
+    console.log('Initializing App');
+    // [START appconfig]
+    var app = firebase.app();
+    var auth = app.auth();
+    // [END appconfig]
+
     /*
      * Handle the sign in button press.
      *
@@ -69,28 +75,15 @@ limitations under the License.
     }
 
     /**
-     * initApp handles setting up the Firebase context and registering
-     * callbacks for the auth status.
+     * initApp handles registering callbacks for the auth status.
      *
-     * The core initialization is in firebase.App - this is the glue class
-     * which stores configuration. We provide an app name here to allow
-     * distinguishing multiple app instances.
-     *
-     * This method also registers a listener with auth.onAuthStateChanged.
+     * This method registers a listener with auth.onAuthStateChanged.
      * This listener is called when the user is signed in or out, and that
      * is where we update the UI.
      *
      * When signed in, we also authenticate to the Firebase Realtime Database.
-     * In this alpha version of the library we do that by retrieving a token
-     * from the Secure Token Service
      */
     function initApp() {
-
-      // [START appconfig]
-      window.app = firebase.app();
-      window.auth = app.auth();
-      // [END appconfig]
-
       console.log('Adding auth state listener');
       // Auth state changes.
       // [START authstatelistener]
