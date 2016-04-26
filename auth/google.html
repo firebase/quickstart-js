@@ -65,38 +65,38 @@ limitations under the License.
       window.googleUser = googleUser;
 
       var unsubscribe = auth.onAuthStateChanged(function() {
-          unsubscribe();
+        unsubscribe();
 
-          // [START checksameuser]
-          if (auth.currentUser) {
-            // If we are already signed in with Google and Firebase,
-            // check we're in a Firebase account associated with the same
-            // Google account.
-            var providerData = auth.currentUser.providerData;
-            for (var key in providerData) {
-              if (providerData[key].providerId === 'google.com') {
-                var mungedId = 'https://accounts.google.com/' + googleUser.getBasicProfile().getId();
-                if (providerData[key].uid == mungedId) {
-                  // We don't need to reauth the Firebase connection.
-                  return;
-                }
+        // [START checksameuser]
+        if (auth.currentUser) {
+          // If we are already signed in with Google and Firebase,
+          // check we're in a Firebase account associated with the same
+          // Google account.
+          var providerData = auth.currentUser.providerData;
+          for (var key in providerData) {
+            if (providerData[key].providerId === 'google.com') {
+              var mungedId = 'https://accounts.google.com/' + googleUser.getBasicProfile().getId();
+              if (providerData[key].uid == mungedId) {
+                // We don't need to reauth the Firebase connection.
+                return;
               }
             }
           }
-          // [END checksameuser]
+        }
+        // [END checksameuser]
 
-          // [START googlecredential]
-          // Sign in with credential from the Google user.
-          var credential = firebase.auth.GoogleAuthProvider.credential(
-                  googleUser.getAuthResponse().id_token);
-          // [END googlecredential]
-          // [START authwithcred]
-          auth.signInWithCredential(credential).then(function (user) {
-              console.log('Sign In Success', user);
-              document.getElementById('signout').disabled = false;
-          }, function (error) {
-              console.error('Sign In Error', error);
-          });
+        // [START googlecredential]
+        // Sign in with credential from the Google user.
+        var credential = firebase.auth.GoogleAuthProvider.credential(
+                googleUser.getAuthResponse().id_token);
+        // [END googlecredential]
+        // [START authwithcred]
+        auth.signInWithCredential(credential).then(function(user) {
+          console.log('Sign In Success', user);
+          document.getElementById('signout').disabled = false;
+        }, function(error) {
+          console.error('Sign In Error', error);
+        });
       });
     }
 
