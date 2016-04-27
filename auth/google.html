@@ -61,44 +61,45 @@ limitations under the License.
     // [END appconfig]
 
     function onSignIn(googleUser) {
-      // Keep track of the Google User so we can sign out of Google Login.
-      window.googleUser = googleUser;
-
-      var unsubscribe = auth.onAuthStateChanged(function() {
+      // We need to register an Observer on Firebase Auth to make sure auth is initialized.
+      var unsubscribe = auth.onAuthStateChanged(function(firebaseUser) {
         unsubscribe();
-
-        // [START checksameuser]
-        if (auth.currentUser) {
-          // If we are already signed in with Google and Firebase,
-          // check we're in a Firebase account associated with the same
-          // Google account.
-          var providerData = auth.currentUser.providerData;
-          for (var key in providerData) {
-            if (providerData[key].providerId === 'google.com') {
-              var mungedId = 'https://accounts.google.com/' + googleUser.getBasicProfile().getId();
-              if (providerData[key].uid == mungedId) {
-                // We don't need to reauth the Firebase connection.
-                return;
-              }
-            }
-          }
+        if (!isUserEqual(googleUser, firebaseUser)) {
+          // [START googlecredential]
+          // Sign in with credential from the Google user.
+          var credential = firebase.auth.GoogleAuthProvider.credential(
+              googleUser.getAuthResponse().id_token);
+          // [END googlecredential]
+          // [START authwithcred]
+          auth.signInWithCredential(credential);
+          // [END authwithcred]
+        } else {
+          console.log('User already signed-in Firebase.');
         }
-        // [END checksameuser]
-
-        // [START googlecredential]
-        // Sign in with credential from the Google user.
-        var credential = firebase.auth.GoogleAuthProvider.credential(
-                googleUser.getAuthResponse().id_token);
-        // [END googlecredential]
-        // [START authwithcred]
-        auth.signInWithCredential(credential).then(function(user) {
-          console.log('Sign In Success', user);
-          document.getElementById('signout').disabled = false;
-        }, function(error) {
-          console.error('Sign In Error', error);
-        });
       });
     }
+
+    /**
+     * Check that the given Google user is equals to the given Firebase user.
+     */
+    // [START checksameuser]
+    function isUserEqual(googleUser, firebaseUser) {
+      if (!firebaseUser) {
+        return false;
+      }
+      var providerData = firebaseUser.providerData;
+      for (var i = 0; i < providerData.length; i++) {
+        if (providerData[i].providerId === 'google.com') {
+          var mungedId = 'https://accounts.google.com/' + googleUser.getBasicProfile().getId();
+          if (providerData[i].uid == mungedId) {
+            // We don't need to reauth the Firebase connection.
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+    // [END checksameuser]
 
     /*
      * Handle the sign in button press.
@@ -109,18 +110,10 @@ limitations under the License.
      * auth.signOut clears the current session.
      */
     function handleSignOut() {
-      if (auth.currentUser) {
-        // [START signout]
-        auth.signOut().then(function() {
-          // Firebase Signout complete.
-          window.googleUser.disconnect();
-          document.getElementById('signout').disabled = true;
-          console.log('Signed Out');
-        }, function(error) {
-          console.error('Sign Out Error', error);
-        });
-        // [END signout]
-      }
+      var googleAuth = gapi.auth2.getAuthInstance();
+      googleAuth.signOut().then(function() {
+        auth.signOut();
+      });
     }
 
     /**

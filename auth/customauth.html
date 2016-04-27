@@ -40,28 +40,22 @@ limitations under the License.
     var auth = app.auth();
     // [END appconfig]
 
-    /*
+    /**
      * Handle the sign in button press.
      *
-     * Sign in status persists between page reloads, so we check status using
-     * |currentUser| on the Firebase auth object.
+     * Sign in status persists between page reloads, so we check status using |currentUser| on the
+     * Firebase auth object.
      *
      * auth.signOut clears the current session.
      *
-     * auth.signInWithCustomToken takes the ID token we have generated from
-     * our own authentication system and passes it to the Firebase Auth backend.
-     * We can check for the result in the callback, or monitor the auth status
-     * separately (see initApp for that part).
+     * auth.signInWithCustomToken takes the ID token we have generated from our own authentication
+     * system and passes it to the Firebase Auth backend. We can check for the result in the
+     * callback, or monitor the auth status separately (see initApp for that part).
      */
     function handleSignIn() {
       if (auth.currentUser) {
         // [START signout]
-        auth.signOut().then(function() {
-          // Signout complete.
-          console.log('Signed Out');
-        }, function(error) {
-          console.error('Sign Out Error', error);
-        });
+        auth.signOut();
         // [END signout]
       } else {
         var token = document.getElementById('tokentext').value;

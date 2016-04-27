@@ -32,54 +32,60 @@ limitations under the License.
        * TODO(DEVELOPER): Paste the initialization snippet from: Firebase Console > Auth > WEB SETUP. *
        ************************************************************************************************ -->
 
+
   <script type="text/javascript">
-    // [START appconfig]
-    var app = firebase.app();
-    var auth = app.auth();
-    // [END appconfig]
-
-    // [START facebookcallback]
-    function checkLoginState() {
-      FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-          console.log('Facebook Auth Response', response);
-          // [START facebookcredential]
-          // Sign in with credential from the Facebook user.
-          var credential = firebase.auth.FacebookAuthProvider.credential(
-              response.authResponse.accessToken);
-          // [END facebookcredential]
-          // [START authwithcred]
-          auth.signInWithCredential(credential).then(function(user) {
-            console.log('Sign In Success', user);
-          }, function(error) {
-            console.error('Sign In Error', error);
-          });
-          // [END authwithcred]
-        }
-      });
-    }
-    // [END facebookcallback]
-
-    /*
-     * Handle the sign out button press.
-     *
-     * Sign in status persists between page reloads, so we check status using
-     * |currentUser| on the Firebase auth object.
-     *
-     * auth.signOut clears the current session.
+    /**
+     * Function called when there is a change in Facebook auth state.
      */
-    function handleSignOut() {
-      if (auth.currentUser) {
-        // [START signout]
-        auth.signOut().then(function() {
-          // Signout complete.
-          console.log('Signed Out');
-        }, function(error) {
-          console.error('Sign Out Error', error);
+    // [START facebookcallback]
+    function checkLoginState(event) {
+      if (event.authResponse) {
+        console.log('Facebook Auth Response', event);
+        var unsubscribe = auth.onAuthStateChanged(function(firebaseUser) {
+          unsubscribe();
+          // Check if we are already signed-in Firebase with the correct user.
+          if (!isUserEqual(event.authResponse, firebaseUser)) {
+            // [START facebookcredential]
+            // Sign in with credential from the Facebook user.
+            var credential = firebase.auth.FacebookAuthProvider.credential(
+                event.authResponse.accessToken);
+            // [END facebookcredential]
+            // [START authwithcred]
+            auth.signInWithCredential(credential);
+            // [END authwithcred]
+          } else {
+            console.log('User already signed-in Firebase.');
+          }
         });
+      } else {
+        // [START signout]
+        auth.signOut();
         // [END signout]
       }
     }
+    // [END facebookcallback]
+
+    /**
+     * Check that the given Facebook user is equals to the  given Firebase user
+     */
+    // [START checksameuser]
+    function isUserEqual(facebookAuthResponse, firebaseUser) {
+      if (!firebaseUser) {
+        return false;
+      }
+      var providerData = firebaseUser.providerData;
+      for (var i = 0; i < providerData.length; i++) {
+        if (providerData[i].providerId === 'facebook.com') {
+          var mungedId = 'http://facebook.com/' + facebookAuthResponse.userID;
+          if (providerData[i].uid == mungedId) {
+            // We don't need to reauth the Firebase connection.
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+    // [END checksameuser]
 
     /**
      * initApp handles setting up the Firebase context and registering
@@ -96,6 +102,11 @@ limitations under the License.
      * When signed in, we also authenticate to the Firebase Realtime Database.
      */
     function initApp() {
+      // [START appconfig]
+      window.app = firebase.app();
+      window.auth = app.auth();
+      // [END appconfig]
+
       console.log('Adding auth state listener');
       // Auth state changes.
       // [START authstatelistener]
@@ -117,9 +128,7 @@ limitations under the License.
       // [END authstatelistener]
     }
 
-    window.onload = function() {
-      initApp();
-    };
+    initApp();
   </script>
 </head>
 <body>
@@ -135,11 +144,9 @@ limitations under the License.
         xfbml      : true,
         version    : 'v2.6'
       });
-      FB.Event.subscribe("auth.authResponseChange", function(event){
-        if(!event.authResponse) {
-          handleSignOut();
-        }
-      });
+
+      // Observe the change in Facebook login status
+      FB.Event.subscribe('auth.authResponseChange', checkLoginState);
     };
 
     (function(d, s, id){
@@ -174,7 +181,7 @@ limitations under the License.
                       <p>Sign in with your Facebook account below.</p>
 
                       <!-- [START facebook_button] -->
-                      <fb:login-button data-auto-logout-link="true" scope="public_profile,email" onlogin="checkLoginState();" size="large"></fb:login-button>
+                      <fb:login-button data-auto-logout-link="true" scope="public_profile,email" size="large"></fb:login-button>
                       <!-- [END facebook_button] -->
                   </div>
               </div>

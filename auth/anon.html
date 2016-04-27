@@ -39,47 +39,35 @@ limitations under the License.
     var auth = app.auth();
     // [END appconfig]
 
-    /*
-     * Handle the sign in button press.
+    /**
+     * Handles the sign in button press.
      *
-     * Sign in status persists between page reloads, so we check status using
-     * |currentUser| on the Firebase auth object.
+     * Sign in status persists between page reloads, so we check status using |currentUser| on the
+     * Firebase auth object.
      *
      * auth.signOut clears the current session.
      *
-     * auth.signInWithCustomToken takes the ID token we have generated from
-     * our own authentication system and passes it to the Firebase Auth backend.
-     * We can check for the result in the callback, or monitor the auth status
-     * separately (see initApp for that part).
+     * auth.signInAnonymously takes the ID token we have generated from our own authentication
+     * system and passes it to the Firebase Auth backend. We can check for the result in the
+     * callback, or monitor the auth statusseparately (see initApp for that part).
      */
-    function handleSignIn() {
+    function toggleSignIn() {
       if (auth.currentUser) {
         // [START signout]
-        auth.signOut().then(function() {
-          // Signout complete.
-          console.log('Signed Out');
-        }, function(error) {
-          console.error('Sign Out Error', error);
-        });
+        auth.signOut();
         // [END signout]
       } else {
-
         // [START authanon]
-        auth.signInAnonymously().then(function(user) {
-          console.log('Sign In Success', user);
-        }, function(error) {
-          console.log('Sign In Error', error);
-        });
+        auth.signInAnonymously();
         // [END authanon]
       }
     }
 
     /**
-     * initApp handles registering callbacks for the auth status.
+     * Handles registering callbacks for the auth status.
      *
-     * This method registers a listener with auth.onAuthStateChanged.
-     * This listener is called when the user is signed in or out, and that
-     * is where we update the UI.
+     * This method registers a listener with auth.onAuthStateChanged. This listener is called when
+     * the user is signed in or out, and that is where we update the UI.
      *
      * When signed in, we also authenticate to the Firebase Realtime Database.
      */
