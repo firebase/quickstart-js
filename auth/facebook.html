@@ -34,6 +34,11 @@ limitations under the License.
 
 
   <script type="text/javascript">
+    // [START appconfig]
+    var app = firebase.app();
+    var auth = app.auth();
+    // [END appconfig]
+
     /**
      * Function called when there is a change in Facebook auth state.
      */
@@ -102,11 +107,6 @@ limitations under the License.
      * When signed in, we also authenticate to the Firebase Realtime Database.
      */
     function initApp() {
-      // [START appconfig]
-      window.app = firebase.app();
-      window.auth = app.auth();
-      // [END appconfig]
-
       console.log('Adding auth state listener');
       // Auth state changes.
       // [START authstatelistener]
