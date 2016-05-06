@@ -28,9 +28,9 @@ limitations under the License.
   <link rel="stylesheet" href="main.css">
 
   <!-- Firebase -->
-  <!-- ************************************************************************************************
-       * TODO(DEVELOPER): Paste the initialization snippet from: Firebase Console > Auth > WEB SETUP. *
-       ************************************************************************************************ -->
+  <!-- ***********************************************************************************************************************
+       * TODO(DEVELOPER): Paste the initialization snippet from: Firebase Console > Overview > Add Firebase to your web app. *
+       *********************************************************************************************************************** -->
 
   <script type="text/javascript">
     console.log('Initializing App');
@@ -96,7 +96,7 @@ limitations under the License.
       });
       // [END authstatelistener]
 
-      document.getElementById('signin').addEventListener('click', handleSignIn, false);
+      document.getElementById('signin').addEventListener('click', toggleSignIn, false);
     }
 
     window.onload = function() {
