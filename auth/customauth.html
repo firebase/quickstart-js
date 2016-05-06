@@ -28,9 +28,9 @@ limitations under the License.
   <link rel="stylesheet" href="main.css">
 
   <!-- Firebase -->
-  <!-- ************************************************************************************************
-       * TODO(DEVELOPER): Paste the initialization snippet from: Firebase Console > Auth > WEB SETUP. *
-       ************************************************************************************************ -->
+  <!-- ***********************************************************************************************************************
+       * TODO(DEVELOPER): Paste the initialization snippet from: Firebase Console > Overview > Add Firebase to your web app. *
+       *********************************************************************************************************************** -->
 
   <script type="text/javascript">
 
@@ -65,21 +65,16 @@ limitations under the License.
         }
         // Sign in with custom token generated following previous instructions.
         // [START authwithtoken]
-        auth.signInWithCustomToken(token).then(function(user) {
-          console.log('Sign In Success', user);
-        }, function(error) {
-          console.error('Sign In Error', error);
-        });
+        auth.signInWithCustomToken(token);
         // [END authwithtoken]
       }
     }
 
     /**
-     * initApp handles registering callbacks for the auth status.
+     * Handles registering callbacks for the auth status.
      *
-     * This method registers a listener with auth.onAuthStateChanged.
-     * This listener is called when the user is signed in or out, and that
-     * is where we update the UI.
+     * This method registers a listener with auth.onAuthStateChanged. This listener is called when
+     * the user is signed in or out, and that is where we update the UI.
      *
      * When signed in, we also authenticate to the Firebase Realtime Database.
      */
