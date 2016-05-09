@@ -8,21 +8,20 @@ Android quickstarts.
 Introduction
 ------------
 
-- [Read more about Firebase Database](https://developers.google.com/firebase)
+- [Read more about Firebase Database](https://firebase.google.com/docs/database/)
 
 Getting Started
 ---------------
 
-- Create your project on the [Firebase Console](http://g.co/firebase).
-- Copy the initialization snippet from **Auth > WEB SETUP** into the `<head>` section of `index.html`.
-- Enable Anonymous auth in the **Auth** tab.
+- Create your project on the [Firebase Console](https://firebase.google.com/console).
+- Copy the initialization snippet from: **Overview > Add Firebase to your web app** into the `<head>` section of `index.html`.
+- Enable Anonymous auth in the **Auth > SIGN IN METHOD** tab.
 - Run `firebase serve` using the Firebase CLI tool to launch a local server.
-- Alternative, open the sample index.html in a web browser.
 
 Support
 -------
 
-https://developers.google.com/firebase/support/
+https://firebase.google.com/support/
 
 License
 -------

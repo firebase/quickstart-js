@@ -36,8 +36,7 @@ Getting Started
 Support
 -------
 
-https://developers.google.com/firebase/support/
-
+https://firebase.google.com/support/
 
 License
 -------
