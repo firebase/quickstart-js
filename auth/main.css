@@ -17,10 +17,38 @@
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
+a {
+  text-decoration: none;
+}
+li a {
+  text-decoration: underline;
+  color: #0288d1;
+}
 .mdl-grid {
   max-width: 1024px;
   margin: auto;
 }
 .mdl-layout__header-row {
   padding: 0;
+}
+.quickstart-user-details-container {
+  margin-top: 20px;
+  line-height: 25px;
+}
+#quickstart-sign-in-status {
+  font-weight: bold;
+}
+pre {
+  overflow-x: scroll;
+  line-height: 18px;
+}
+code {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+h3 {
+  background: url('firebase-logo.png') no-repeat;
+  background-size: 40px;
+  padding-left: 50px;
+  color: white;
 }

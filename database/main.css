@@ -26,5 +26,11 @@ html, body {
 }
 .mdl-textfield__input {
   max-width: 300px;
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
+h3 {
+  background: url('firebase-logo.png') no-repeat;
+  background-size: 40px;
+  padding-left: 50px;
+}
+

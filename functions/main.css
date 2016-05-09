@@ -42,3 +42,9 @@ html, body {
   padding: 15px;
   border-bottom: 1px #f1f1f1 solid;
 }
+h3 {
+  background: url('firebase-logo.png') no-repeat;
+  background-size: 40px;
+  padding-left: 50px;
+}
+

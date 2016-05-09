@@ -5,9 +5,13 @@ The Firebase auth quickstart demonstrates several methods for signing in.
 
 The Firebase email/password quickstart demonstrates using a Firebase stored email & password - you can both create and sign in a user. 
 
-The Firebase Google Sign in quickstart demonstrates using a Google account to authenticate to Firebase.
+The Firebase Google Sign in quickstarts demonstrate using a Google account to authenticate to Firebase using three different techniques: with a popup, a redirect and an auth token.
 
-The Firebase Facebook Login quickstart demonstrates using a Facebook account to authenticate to Firebase.
+The Firebase Facebook Login quickstarts demonstrate using a Facebook account to authenticate to Firebase using three different techniques: with a popup, a redirect and an auth token.
+
+The Firebase GitHub Login quickstarts demonstrate using a Facebook account to authenticate to Firebase using two different techniques: with a popup and a redirect.
+
+The Firebase Twitter Login quickstarts demonstrate using a Facebook account to authenticate to Firebase using two different techniques: with a popup and a redirect.
 
 The Firebase Anonymous auth quickstart demonstrates authenticate to Firebase anonymously.
 
@@ -16,17 +20,17 @@ The Firebase custom auth web quickstart demonstrates how to authenticate to Fire
 Introduction
 ------------
 
-- [Read more about Firebase Custom Auth](https://developers.google.com/firebase)
+- [Read more about Firebase Auth](https://firebase.google.com/docs/auth/)
 
 Getting Started
 ---------------
 
-- Set up your project on the [Firebase Console](http://g.co/firebase).
-- Enable the authentication method you want to use in the Auth tab - you don't need to enable custom auth.
+- Set up your project on the [Firebase Console](http://firebase.google.com/console).
+- Enable the authentication method you want to use in the Auth section > SIGN IN METHOD tab - you don't need to enable custom auth.
 - In the [Google Developer Console](https://console.developers.google.com), access the project you created in the Firebase Console. 
-- For Custom Auth, also create a new Service Account, and download the JSON representation.
-- For Google Sign In you will need to create a Web Client ID with a Javascript Origin field set to your domain (and/or localhost:5000).
-- Edit the `.html` for the authentication method you want to try and copy the initialization snippet from **Auth > WEB SETUP** into the `<head>` section of `.html`.
+- For Custom Auth, also create a new Service Account in your project [Developers Console](https://console.developers.google.com/apis/credentials/serviceaccountkey?project=_), and download the JSON representation.
+- For Facebook, Twitter and GitHub you will need to create a application as a developer on their developer platform, whitelist `https://<project_id>.firebaseapp.com/__/auth/handler` for auth redirects and enable and setup the app's credentials in the Firebase Console > Auth > SIGN IN METHOD.
+- Edit the `.html` for the authentication method you want to try and copy the initialization snippet from the Firebase Console **Overview > Add Firebase to your web app** into the `<head>` section of `.html`.
 - Run `firebase serve` using the Firebase CLI tool to launch a local server and open the sample `.html` in a web browser. Note that for Google Sign In you must use a webserver of some kind, file:// hosted pages wont work.
 
 Support
