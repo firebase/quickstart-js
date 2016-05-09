@@ -33,26 +33,22 @@ limitations under the License.
        *********************************************************************************************************************** -->
 
   <script type="text/javascript">
-    // [START appconfig]
-    var app = firebase.app();
-    var auth = app.auth();
-    // [END appconfig]
 
     /**
      * Function called when clicking the Login/Logout button.
      */
     // [START buttoncallback]
     function toggleSignIn() {
-      if (!auth.currentUser) {
+      if (!firebase.app().auth().currentUser) {
         // [START createprovider]
         var provider = new firebase.auth.TwitterAuthProvider();
         // [END sicreateprovidergnin]
         // [START signin]
-        auth.signInWithPopup(provider);
+        firebase.app().auth().signInWithPopup(provider);
         // [END signin]
       } else {
         // [START signout]
-        auth.signOut();
+        firebase.app().auth().signOut();
         // [END signout]
       }
       // [START_EXCLUDE]
@@ -69,7 +65,7 @@ limitations under the License.
      * which stores configuration. We provide an app name here to allow
      * distinguishing multiple app instances.
      *
-     * This method also registers a listener with auth.onAuthStateChanged.
+     * This method also registers a listener with firebase.app().auth().onAuthStateChanged.
      * This listener is called when the user is signed in or out, and that
      * is where we update the UI.
      *
@@ -78,7 +74,7 @@ limitations under the License.
     function initApp() {
       // Listening for auth state changes.
       // [START authstatelistener]
-      auth.onAuthStateChanged(function(user) {
+      firebase.app().auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
           var displayName = user.displayName;

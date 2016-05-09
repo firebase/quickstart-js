@@ -33,17 +33,13 @@ limitations under the License.
        *********************************************************************************************************************** -->
 
   <script type="text/javascript">
-    // [START appconfig]
-    var app = firebase.app();
-    var auth = app.auth();
-    // [END appconfig]
 
     /**
      * Function called when clicking the Login/Logout button.
      */
     // [START buttoncallback]
     function toggleSignIn() {
-      if (!auth.currentUser) {
+      if (!firebase.app().auth().currentUser) {
         // [START createprovider]
         var provider = new firebase.auth.GithubAuthProvider();
         // [END sicreateprovidergnin]
@@ -51,11 +47,11 @@ limitations under the License.
         provider.addScope('repo');
         // [END addscopes]
         // [START signin]
-        auth.signInWithRedirect(provider);
+        firebase.app().auth().signInWithRedirect(provider);
         // [END signin]
       } else {
         // [START signout]
-        auth.signOut();
+        firebase.app().auth().signOut();
         // [END signout]
       }
       // [START_EXCLUDE]
@@ -72,7 +68,7 @@ limitations under the License.
      * which stores configuration. We provide an app name here to allow
      * distinguishing multiple app instances.
      *
-     * This method also registers a listener with auth.onAuthStateChanged.
+     * This method also registers a listener with firebase.app().auth().onAuthStateChanged.
      * This listener is called when the user is signed in or out, and that
      * is where we update the UI.
      *
@@ -81,22 +77,24 @@ limitations under the License.
     function initApp() {
       // Result from Redirect auth flow.
       // [START getidptoken]
-      auth.getRedirectResult().then(function(result) {
+      firebase.app().auth().getRedirectResult().then(function(result) {
         if (result.credential) {
           // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-          let token = result.credential.accessToken;
+          var token = result.credential.accessToken;
           // [START_EXCLUDE]
           document.getElementById('quickstart-oauthtoken').textContent = token;
         } else {
           document.getElementById('quickstart-oauthtoken').textContent = 'null';
           // [END_EXCLUDE]
         }
+        // The signed-in user info.
+        var user = result.user;
       });
       // [START getidptoken]
 
       // Listening for auth state changes.
       // [START authstatelistener]
-      auth.onAuthStateChanged(function(user) {
+      firebase.app().auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
           var displayName = user.displayName;

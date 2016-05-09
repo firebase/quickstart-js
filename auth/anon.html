@@ -33,22 +33,18 @@ limitations under the License.
        *********************************************************************************************************************** -->
 
   <script type="text/javascript">
-    // [START appconfig]
-    var app = firebase.app();
-    var auth = app.auth();
-    // [END appconfig]
 
     /**
      * Handles the sign in button press.
      */
     function toggleSignIn() {
-      if (auth.currentUser) {
+      if (firebase.app().auth().currentUser) {
         // [START signout]
-        auth.signOut();
+        firebase.app().auth().signOut();
         // [END signout]
       } else {
         // [START authanon]
-        auth.signInAnonymously();
+        firebase.app().auth().signInAnonymously();
         // [END authanon]
       }
       document.getElementById('quickstart-sign-in').disabled = true;
@@ -57,7 +53,7 @@ limitations under the License.
     /**
      * Handles registering callbacks for the auth status.
      *
-     * This method registers a listener with auth.onAuthStateChanged. This listener is called when
+     * This method registers a listener with firebase.app().auth().onAuthStateChanged. This listener is called when
      * the user is signed in or out, and that is where we update the UI.
      *
      * When signed in, we also authenticate to the Firebase Realtime Database.
@@ -65,7 +61,7 @@ limitations under the License.
     function initApp() {
       // Listening for auth state changes.
       // [START authstatelistener]
-      auth.onAuthStateChanged(function(user) {
+      firebase.app().auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
           var displayName = user.displayName;

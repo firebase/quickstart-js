@@ -33,10 +33,6 @@ limitations under the License.
        *********************************************************************************************************************** -->
 
   <script type="text/javascript">
-    // [START appconfig]
-    var app = firebase.app();
-    var auth = app.auth();
-    // [END appconfig]
 
     /**
      * Function called when clicking the Login/Logout button.
@@ -84,13 +80,15 @@ limitations under the License.
       auth.getRedirectResult().then(function(result) {
         if (result.credential) {
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-          let token = result.credential.accessToken;
+          var token = result.credential.accessToken;
           // [START_EXCLUDE]
           document.getElementById('quickstart-oauthtoken').textContent = token;
         } else {
           document.getElementById('quickstart-oauthtoken').textContent = 'null';
           // [END_EXCLUDE]
         }
+        // The signed-in user info.
+        var user = result.user;
       });
       // [START getidptoken]
 

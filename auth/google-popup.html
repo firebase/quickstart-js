@@ -33,17 +33,13 @@ limitations under the License.
        *********************************************************************************************************************** -->
 
   <script type="text/javascript">
-    // [START appconfig]
-    var app = firebase.app();
-    var auth = app.auth();
-    // [END appconfig]
 
     /**
      * Function called when clicking the Login/Logout button.
      */
     // [START buttoncallback]
     function toggleSignIn() {
-      if (!auth.currentUser) {
+      if (!firebase.app().auth().currentUser) {
         // [START createprovider]
         var provider = new firebase.auth.GoogleAuthProvider();
         // [END sicreateprovidergnin]
@@ -51,9 +47,11 @@ limitations under the License.
         provider.addScope('https://www.googleapis.com/auth/plus.login');
         // [END addscopes]
         // [START signin]
-        auth.signInWithPopup(provider).then(function(result) {
+        firebase.app().auth().signInWithPopup(provider).then(function(result) {
           // This gives you a Google Access Token. You can use it to access the Google API.
-          let token = result.credential.accessToken;
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
           // [START_EXCLUDE]
           document.getElementById('quickstart-oauthtoken').textContent = token;
           // [END_EXCLUDE]
@@ -61,7 +59,7 @@ limitations under the License.
         // [END signin]
       } else {
         // [START signout]
-        auth.signOut();
+        firebase.app().auth().signOut();
         // [END signout]
       }
       // [START_EXCLUDE]
@@ -78,7 +76,7 @@ limitations under the License.
      * which stores configuration. We provide an app name here to allow
      * distinguishing multiple app instances.
      *
-     * This method also registers a listener with auth.onAuthStateChanged.
+     * This method also registers a listener with firebase.app().auth().onAuthStateChanged.
      * This listener is called when the user is signed in or out, and that
      * is where we update the UI.
      *
@@ -87,7 +85,7 @@ limitations under the License.
     function initApp() {
       // Listening for auth state changes.
       // [START authstatelistener]
-      auth.onAuthStateChanged(function(user) {
+      firebase.app().auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
           var displayName = user.displayName;
