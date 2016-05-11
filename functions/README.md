@@ -29,9 +29,9 @@ cd web/functions
 
 ### 2. Create a Firebase project and configure the quickstart
 
-Create a Firebase Project on the [Firebase Console](http://g.co/firebase).
+Create a Firebase Project on the [Firebase Console](https://console.firebase.google.com).
 
-Go the the **Auth** section and enter the **WEB SETUP** tab. Copy the web initialisation snippet and paste it in the `head` section of the `index.html` file.
+In the Firebase Console's project **Overview** click the **Add Firebase to your web app** button. Copy the web initialisation snippet and paste it in the `head` section of the `index.html` file.
 
 Set up your Firebase project by running `firebase use --add`, select your Project ID and follow the instructions.
 

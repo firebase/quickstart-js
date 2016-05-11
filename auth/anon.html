@@ -44,7 +44,16 @@ limitations under the License.
         // [END signout]
       } else {
         // [START authanon]
-        firebase.app().auth().signInAnonymously();
+        firebase.app().auth().signInAnonymously().catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode == 'auth/operation-not-allowed') {
+            alert('You must enable Anonymous auth in the Firebase Console.');
+          }
+          // [END_EXCLUDE]
+        });
         // [END authanon]
       }
       document.getElementById('quickstart-sign-in').disabled = true;

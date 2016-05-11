@@ -55,7 +55,16 @@ limitations under the License.
         }
         // Sign in with email and pass.
         // [START authwithemail]
-        firebase.app().auth().signInWithEmailAndPassword(email, password);
+        firebase.app().auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode == 'auth/wrong-password') {
+            alert('Wrong password.');
+          }
+          // [END_EXCLUDE]
+        });
         // [END authwithemail]
       }
       document.getElementById('quickstart-sign-in').disabled = true;
@@ -74,7 +83,16 @@ limitations under the License.
       }
       // Sign in with email and pass.
       // [START createwithemail]
-      firebase.app().auth().createUserWithEmailAndPassword(email, password);
+      firebase.app().auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // [START_EXCLUDE]
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
+        }
+        // [END_EXCLUDE]
+      });
       // [END createwithemail]
     }
 
