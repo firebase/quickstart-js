@@ -57,6 +57,8 @@ limitations under the License.
           // [START_EXCLUDE]
           if (errorCode == 'auth/invalid-custom-token') {
             alert('The token you provided is not valid.');
+          } else {
+            console.error(error);
           }
           // [END_EXCLUDE]
         });

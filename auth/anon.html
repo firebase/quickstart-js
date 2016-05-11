@@ -51,6 +51,8 @@ limitations under the License.
           // [START_EXCLUDE]
           if (errorCode == 'auth/operation-not-allowed') {
             alert('You must enable Anonymous auth in the Firebase Console.');
+          } else {
+            console.error(error);
           }
           // [END_EXCLUDE]
         });

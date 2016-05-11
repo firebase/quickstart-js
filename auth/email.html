@@ -62,6 +62,8 @@ limitations under the License.
           // [START_EXCLUDE]
           if (errorCode == 'auth/wrong-password') {
             alert('Wrong password.');
+          } else {
+            console.error(error);
           }
           // [END_EXCLUDE]
         });
@@ -90,6 +92,8 @@ limitations under the License.
         // [START_EXCLUDE]
         if (errorCode == 'auth/weak-password') {
           alert('The password is too weak.');
+        } else {
+          console.error(error);
         }
         // [END_EXCLUDE]
       });
