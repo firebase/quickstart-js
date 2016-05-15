@@ -39,7 +39,7 @@ limitations under the License.
      */
     // [START buttoncallback]
     function toggleSignIn() {
-      if (!firebase.app().auth().currentUser) {
+      if (!firebase.auth().currentUser) {
         // [START createprovider]
         var provider = new firebase.auth.GithubAuthProvider();
         // [END createprovider]
@@ -47,7 +47,7 @@ limitations under the License.
         provider.addScope('repo');
         // [END addscopes]
         // [START signin]
-        firebase.app().auth().signInWithPopup(provider).then(function(result) {
+        firebase.auth().signInWithPopup(provider).then(function(result) {
           // This gives you a GitHub Access Token. You can use it to access the GitHub API.
           var token = result.credential.accessToken;
           // The signed-in user info.
@@ -76,7 +76,7 @@ limitations under the License.
         // [END signin]
       } else {
         // [START signout]
-        firebase.app().auth().signOut();
+        firebase.auth().signOut();
         // [END signout]
       }
       // [START_EXCLUDE]
@@ -93,7 +93,7 @@ limitations under the License.
      * which stores configuration. We provide an app name here to allow
      * distinguishing multiple app instances.
      *
-     * This method also registers a listener with firebase.app().auth().onAuthStateChanged.
+     * This method also registers a listener with firebase.auth().onAuthStateChanged.
      * This listener is called when the user is signed in or out, and that
      * is where we update the UI.
      *
@@ -102,7 +102,7 @@ limitations under the License.
     function initApp() {
       // Listening for auth state changes.
       // [START authstatelistener]
-      firebase.app().auth().onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
           var displayName = user.displayName;

@@ -61,9 +61,9 @@
   </div>
     <script>
       // [START configure]
-      var database = firebase.app().database();
+      var database = firebase.database();
       var myDataRef = database.ref('messages');
-      var auth = firebase.app().auth();
+      var auth = firebase.auth();
       // [END configure]
 
       var messageInput = $('#messageInput');

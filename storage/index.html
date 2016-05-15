@@ -65,8 +65,8 @@ limitations under the License.
     </main>
   </div>
   <script>
-    var auth = firebase.app().auth();
-    var storageRef = firebase.app().storage().ref();
+    var auth = firebase.auth();
+    var storageRef = firebase.storage().ref();
 
     function handleFileSelect(evt) {
       evt.stopPropagation();

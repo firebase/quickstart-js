@@ -38,9 +38,9 @@ limitations under the License.
      * Handles the sign in button press.
      */
     function toggleSignIn() {
-      if (firebase.app().auth().currentUser) {
+      if (firebase.auth().currentUser) {
         // [START signout]
-        firebase.app().auth().signOut();
+        firebase.auth().signOut();
         // [END signout]
       } else {
         var email = document.getElementById('email').value;
@@ -55,7 +55,7 @@ limitations under the License.
         }
         // Sign in with email and pass.
         // [START authwithemail]
-        firebase.app().auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
           // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
@@ -85,7 +85,7 @@ limitations under the License.
       }
       // Sign in with email and pass.
       // [START createwithemail]
-      firebase.app().auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -103,7 +103,7 @@ limitations under the License.
     /**
      * Handles registering callbacks for the auth status.
      *
-     * This method registers a listener with firebase.app().auth().onAuthStateChanged. This listener is called when
+     * This method registers a listener with firebase.auth().onAuthStateChanged. This listener is called when
      * the user is signed in or out, and that is where we update the UI.
      *
      * When signed in, we also authenticate to the Firebase Realtime Database.
@@ -111,7 +111,7 @@ limitations under the License.
     function initApp() {
       // Listening for auth state changes.
       // [START authstatelistener]
-      firebase.app().auth().onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
           var displayName = user.displayName;
