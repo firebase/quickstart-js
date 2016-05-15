@@ -2,8 +2,8 @@ Firebase Realtime Database Quickstart
 =============================
 
 The Firebase Database quickstart demonstrates how to connect to the Firebase Realtime Database and
-to send and retrieve data. It provides a simple chat interface, and will interoperate with the iOS and
-Android quickstarts.
+to send and retrieve data through a simple social blogging app. It will interoperate with the iOS and
+Android database quickstarts.
 
 Introduction
 ------------
@@ -15,7 +15,7 @@ Getting Started
 
 - Create your project on the [Firebase Console](https://console.firebase.google.com).
 - Copy the initialization snippet from: **Overview > Add Firebase to your web app** into the `<head>` section of `index.html`.
-- Enable Anonymous auth in the **Auth > SIGN IN METHOD** tab.
+- Enable Google auth in the **Auth > SIGN IN METHOD** tab.
 - Run `firebase serve` using the Firebase CLI tool to launch a local server.
 
 Support

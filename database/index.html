@@ -1,115 +1,144 @@
 <!doctype html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+  Copyright 2016 Google Inc. All rights reserved.
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+      https://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Demonstrates the use of Google Cloud Database with a Firebase DB">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Database Quickstart</title>
 
-    <!-- Material Design Theming -->
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
 
-    <link rel="stylesheet" href="main.css">
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Firebase Database Quickstart">
+  <meta name="theme-color" content="#303F9F">
 
-    <!-- JQuery -->
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Firebase Database Quickstart">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
 
-    <!-- Firebase -->
-    <!-- ***********************************************************************************************************************
-         * TODO(DEVELOPER): Paste the initialization snippet from: Firebase Console > Overview > Add Firebase to your web app. *
-         *********************************************************************************************************************** -->
+  <!-- Tile icon for Win8 -->
+  <meta name="msapplication-TileColor" content="#3372DF">
+  <meta name="msapplication-navbutton-color" content="#303F9F">
 
-  </head>
-  <body>
-  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <!-- Material Design Lite -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
-    <!-- Header section containing title -->
-    <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
-      <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-        <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop">
-          <h3>Realtime Database Quickstart</h3>
+  <link rel="stylesheet" href="main.css">
+
+  <!-- Firebase -->
+  <!-- ***********************************************************************************************************************
+       * TODO(DEVELOPER): Paste the initialization snippet from: Firebase Console > Overview > Add Firebase to your web app. *
+       *********************************************************************************************************************** -->
+
+</head>
+<body>
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+
+  <!-- Splash screen -->
+  <section id="page-splash">
+    <h3 class="logo">Database Web Quickstart</h3>
+    <div>
+      <button id="sign-in-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign in with Google</button>
+    </div>
+  </section>
+
+  <!-- Header section containing logo and menu -->
+  <header class="header mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
+
+    <div class="mdl-layout__header-row titlebar">
+      <h3 class="logo">Database Web Quickstart</h3>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="tab mdl-layout__header-row mdl-color--light-blue-600">
+      <div class="mdl-tab">
+        <div id="menu-recent" class="mdl-layout__tab is-active mdl-button mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">new_releases</i> Recent
+        </div>
+        <div id="menu-my-posts" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">home</i> My posts
+        </div>
+        <div id="menu-my-top-posts" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">trending_up</i> My top posts
+        </div>
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect" id="add">
+          <i class="material-icons">mode_edit</i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mdl-layout__content mdl-color--grey-100">
+
+    <!-- Show the add post form -->
+    <section class="mdl-grid content" id="add-post" style="display:none">
+      <div class="mdl-cell mdl-cell--12-col mdl-grid">
+
+          <!-- Card containing the inputs to add a new messages -->
+          <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet
+                  mdl-cell--6-col-desktop">
+            <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+              <h2 class="mdl-card__title-text">New Post</h2>
+            </div>
+            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+              <form id="message-form" action="#">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="new-post-title">
+                  <label class="mdl-textfield__label" for="new-post-title">Post title...</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <textarea class="mdl-textfield__input" rows="3" id="new-post-message"></textarea>
+                  <label class="mdl-textfield__label" for="new-post-message">Post message...</label>
+                </div>
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                  Add post
+                </button>
+              </form>
+            </div>
         </div>
       </div>
-    </header>
+    </section>
 
-    <main class="mdl-layout__content mdl-color--grey-100">
-      <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-
-        <!-- Container for the messages -->
-        <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-          <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-            <h2 class="mdl-card__title-text">Messages</h2>
-          </div>
-          <div class="mdl-card__supporting-text mdl-color-text--grey-600" id="messagesDiv">
-          </div>
-        </div>
-
-        <!-- Container for the new message form -->
-        <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-          <div class="mdl-card__title mdl-color--orange-200">
-            <h2 class="mdl-card__title-text">Add new message</h2>
-          </div>
-          <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-            <form id="form">
-              <input class="mdl-textfield__input" type="text" id="nameInput" placeholder="Name">
-              <input class="mdl-textfield__input" type="text" id="messageInput" placeholder="Message">
-              <input class="mdl-button mdl-js-button mdl-button--raised" disabled type="submit" id="submit" value="Send Message">
-            </form>
-          </div>
-        </div>
+    <!-- Show a list of recent posts -->
+    <section class="mdl-grid content" id="recent-posts-list" style="display:none">
+      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
       </div>
-    </main>
-  </div>
-    <script>
-      // [START configure]
-      var database = firebase.database();
-      var myDataRef = database.ref('messages');
-      var auth = firebase.auth();
-      // [END configure]
+    </section>
 
-      var messageInput = $('#messageInput');
-      var nameInput = $('#nameInput');
-      var form = $('#form');
-      var submit = $('#submit');
+    <!-- Show the list of user's posts -->
+    <section class="mdl-grid content" id="user-posts-list" style="display:none">
+      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
+      </div>
+    </section>
 
-      // Displays a new chat message in the UI.
-      function displayChatMessage(name, text) {
-        var messageDiv = $('#messagesDiv');
-        var messageContainer = $('<p/>');
-        messageContainer.text(text).prepend($('<em/>').text(name + ': '));
-        messageContainer.appendTo(messageDiv);
-        messageDiv[0].scrollTop = messageDiv[0].scrollHeight;
-      }
+    <!-- Show the list of top user's posts -->
+    <section class="mdl-grid content" id="top-user-posts-list" style="display:none">
+      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
+      </div>
+    </section>
+  </main>
+</div>
 
-      window.onload = function() {
-        // Sign the user in anonymously since accessing the Database requires the user to be authorized.
-        auth.signInAnonymously().then(function(user) {
-          console.log('Anonymous Sign In Success', user);
-
-          // Write new chat message when pressing enter key or clicking submit button.
-          form.submit(function(e) {
-            e.preventDefault();
-            var name = nameInput.val();
-            var text = messageInput.val();
-            // [START writeval]
-            myDataRef.push({name: name, text: text});
-            // [END writeval]
-            messageInput.val('');
-          });
-
-          // Enable submit button.
-          submit.prop('disabled', false);
-
-          // [START readdata]
-          // Listen for new chat messages.
-          myDataRef.on('child_added', function(snapshot) {
-            var message = snapshot.val();
-            displayChatMessage(message.name, message.text);
-          });
-          // [END readdata]
-        }).catch(function(error) {
-          console.error('Anonymous Sign In Error', error);
-        });
-      }
-    </script>
-  </body>
+<script src="scripts/main.js"></script>
+</body>
 </html>
