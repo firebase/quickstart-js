@@ -55,7 +55,7 @@ limitations under the License.
           var errorCode = error.code;
           var errorMessage = error.message;
           // [START_EXCLUDE]
-          if (errorCode == 'auth/invalid-custom-token') {
+          if (errorCode === 'auth/invalid-custom-token') {
             alert('The token you provided is not valid.');
           } else {
             console.error(error);

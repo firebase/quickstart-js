@@ -60,7 +60,7 @@ limitations under the License.
           var errorCode = error.code;
           var errorMessage = error.message;
           // [START_EXCLUDE]
-          if (errorCode == 'auth/wrong-password') {
+          if (errorCode === 'auth/wrong-password') {
             alert('Wrong password.');
           } else {
             console.error(error);
