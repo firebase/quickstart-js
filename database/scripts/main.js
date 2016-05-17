@@ -228,7 +228,7 @@ function addCommentElement(postElement, id, text, author) {
 function setCommentValues(postElement, id, text, author) {
   var comment = postElement.getElementsByClassName('comment-' + id)[0];
   comment.getElementsByClassName('comment')[0].innerText = text;
-  comment.getElementsByClassName('username')[0].innerText = author;
+  comment.getElementsByClassName('fp-username')[0].innerText = author;
 }
 
 /**
@@ -270,9 +270,10 @@ function startDatabaseQueries() {
  * Writes the user's data to the database.
  */
 // [START basic_write]
-function writeUserData(userId, name) {
+function writeUserData(userId, name, email) {
   firebase.database().ref('users/' + userId).set({
-    username: name
+    username: name,
+    email: email
   });
 }
 // [END basic_write]
@@ -289,7 +290,7 @@ window.addEventListener('load', function() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       splashPage.style.display = 'none';
-      writeUserData(user.uid, user.displayName);
+      writeUserData(user.uid, user.displayName, user.email);
       startDatabaseQueries();
     } else {
       splashPage.style.display = 'block';
