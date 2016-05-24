@@ -1,0 +1,14 @@
+# GOOGLE SAMPLE PACKAGING DATA
+#
+# This file is used by Google as part of our samples packaging process.
+# End users may safely ignore this file. It has no relevance to other systems.
+---
+status:       PUBLISHED
+technologies: [Web, Firebase]
+categories:   [Getting Started]
+languages:    [JavaScript]
+solutions:    [Mobile, Monetization, Startup, Enterprise]
+github:       firebase/quickstart-js
+level:        BEGINNER
+icon:         .google/icon.png
+license:      apache2
