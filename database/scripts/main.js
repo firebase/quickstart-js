@@ -262,8 +262,8 @@ function startDatabaseQueries() {
   };
 
   fetchPosts(topUserPostsRef, topUserPostsSection);
-  fetchPosts(recentPostsRef, userPostsSection);
-  fetchPosts(userPostsRef, recentPostsSection);
+  fetchPosts(recentPostsRef, recentPostsSection);
+  fetchPosts(userPostsRef, userPostsSection);
 }
 
 /**
