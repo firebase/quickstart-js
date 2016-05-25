@@ -97,8 +97,8 @@ function createPostElement(postId, title, text, author) {
             '</div>' +
           '</div>' +
           '<span class="star">' +
-            '<div class="not-stared material-icons">star_border</div>' +
-            '<div class="stared material-icons">star</div>' +
+            '<div class="not-starred material-icons">star_border</div>' +
+            '<div class="starred material-icons">star</div>' +
             '<div class="star-count">0</div>' +
           '</span>' +
           '<div class="text"></div>' +
@@ -120,8 +120,8 @@ function createPostElement(postId, title, text, author) {
 
   var addCommentForm = postElement.getElementsByClassName('add-comment')[0];
   var commentInput = postElement.getElementsByClassName('new-comment')[0];
-  var star = postElement.getElementsByClassName('stared')[0];
-  var unStar = postElement.getElementsByClassName('not-stared')[0];
+  var star = postElement.getElementsByClassName('starred')[0];
+  var unStar = postElement.getElementsByClassName('not-starred')[0];
 
   // Set values.
   postElement.getElementsByClassName('text')[0].innerText = text;
@@ -151,7 +151,7 @@ function createPostElement(postId, title, text, author) {
   });
   // [END post_value_event_listener]
 
-  // Listen for the stared status.
+  // Listen for the starred status.
   firebase.database().ref('posts/' + postId + '/stars/' + uid).on('value', function(snapshot) {
     updateStarredByCurrentUser(postElement, snapshot.val());
   });
@@ -193,11 +193,11 @@ function createNewComment(postId, username, uid, text) {
  */
 function updateStarredByCurrentUser(postElement, starred) {
   if (starred) {
-    postElement.getElementsByClassName('stared')[0].style.display = 'inline-block';
-    postElement.getElementsByClassName('not-stared')[0].style.display = 'none';
+    postElement.getElementsByClassName('starred')[0].style.display = 'inline-block';
+    postElement.getElementsByClassName('not-starred')[0].style.display = 'none';
   } else {
-    postElement.getElementsByClassName('stared')[0].style.display = 'none';
-    postElement.getElementsByClassName('not-stared')[0].style.display = 'inline-block';
+    postElement.getElementsByClassName('starred')[0].style.display = 'none';
+    postElement.getElementsByClassName('not-starred')[0].style.display = 'inline-block';
   }
 }
 
@@ -262,8 +262,8 @@ function startDatabaseQueries() {
   };
 
   fetchPosts(topUserPostsRef, topUserPostsSection);
-  fetchPosts(recentPostsRef, userPostsSection);
-  fetchPosts(userPostsRef, recentPostsSection);
+  fetchPosts(recentPostsRef, recentPostsSection);
+  fetchPosts(userPostsRef, userPostsSection);
 }
 
 /**

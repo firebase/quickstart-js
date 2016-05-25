@@ -39,7 +39,7 @@ limitations under the License.
      */
     // [START buttoncallback]
     function toggleSignIn() {
-      if (!auth.currentUser) {
+      if (!firebase.auth().currentUser) {
         // [START createprovider]
         var provider = new firebase.auth.FacebookAuthProvider();
         // [END createprovider]
@@ -47,11 +47,11 @@ limitations under the License.
         provider.addScope('user_likes');
         // [END addscopes]
         // [START signin]
-        auth.signInWithRedirect(provider);
+        firebase.auth().signInWithRedirect(provider);
         // [END signin]
       } else {
         // [START signout]
-        auth.signOut();
+        firebase.auth().signOut();
         // [END signout]
       }
       // [START_EXCLUDE]
@@ -68,7 +68,7 @@ limitations under the License.
      * which stores configuration. We provide an app name here to allow
      * distinguishing multiple app instances.
      *
-     * This method also registers a listener with auth.onAuthStateChanged.
+     * This method also registers a listener with firebase.auth().onAuthStateChanged.
      * This listener is called when the user is signed in or out, and that
      * is where we update the UI.
      *
@@ -77,7 +77,7 @@ limitations under the License.
     function initApp() {
       // Result from Redirect auth flow.
       // [START getidptoken]
-      auth.getRedirectResult().then(function(result) {
+      firebase.auth().getRedirectResult().then(function(result) {
         if (result.credential) {
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
           var token = result.credential.accessToken;
@@ -111,7 +111,7 @@ limitations under the License.
 
       // Listening for auth state changes.
       // [START authstatelistener]
-      auth.onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
           var displayName = user.displayName;
