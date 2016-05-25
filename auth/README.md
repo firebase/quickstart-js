@@ -9,9 +9,9 @@ The Firebase Google Sign in quickstarts demonstrate using a Google account to au
 
 The Firebase Facebook Login quickstarts demonstrate using a Facebook account to authenticate to Firebase using three different techniques: with a popup, a redirect and an auth token.
 
-The Firebase GitHub Login quickstarts demonstrate using a Facebook account to authenticate to Firebase using two different techniques: with a popup and a redirect.
+The Firebase GitHub Login quickstarts demonstrate using a GitHub account to authenticate to Firebase using two different techniques: with a popup and a redirect.
 
-The Firebase Twitter Login quickstarts demonstrate using a Facebook account to authenticate to Firebase using two different techniques: with a popup and a redirect.
+The Firebase Twitter Login quickstarts demonstrate using a Twitter account to authenticate to Firebase using two different techniques: with a popup and a redirect.
 
 The Firebase Anonymous auth quickstart demonstrates authenticate to Firebase anonymously.
 
