@@ -85,7 +85,7 @@ limitations under the License.
       };
 
       // Push to child path.
-      var uploadTask = storageRef.child('images').put(file, metadata);
+      var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
 
       // Listen for errors and completion of the upload.
       // [START oncomplete]
