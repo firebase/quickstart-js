@@ -63,8 +63,10 @@ limitations under the License.
           if (errorCode === 'auth/wrong-password') {
             alert('Wrong password.');
           } else {
-            console.error(error);
+            alert(errorMessage);
           }
+          console.log(error);
+          document.getElementById('quickstart-sign-in').disabled = false;
           // [END_EXCLUDE]
         });
         // [END authwithemail]
@@ -72,6 +74,9 @@ limitations under the License.
       document.getElementById('quickstart-sign-in').disabled = true;
     }
 
+    /**
+     * Handles the sign up button press.
+     */
     function handleSignUp() {
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
@@ -93,11 +98,26 @@ limitations under the License.
         if (errorCode == 'auth/weak-password') {
           alert('The password is too weak.');
         } else {
-          console.error(error);
+          alert(errorMessage);
         }
+        console.log(error);
         // [END_EXCLUDE]
       });
       // [END createwithemail]
+    }
+
+    /**
+     * Sends an email verification to the user.
+     */
+    function sendEmailVerification() {
+      // [START sendemailverification]
+      firebase.auth().currentUser.sendEmailVerification().then(function() {
+        // Email Verification sent!
+        // [START_EXCLUDE]
+        alert('Email Verification Sent!');
+        // [END_EXCLUDE]
+      });
+      // [END sendemailverification]
     }
 
     /**
@@ -112,6 +132,9 @@ limitations under the License.
       // Listening for auth state changes.
       // [START authstatelistener]
       firebase.auth().onAuthStateChanged(function(user) {
+        // [START_EXCLUDE silent]
+        document.getElementById('quickstart-verify-email').disabled = true;
+        // [END_EXCLUDE]
         if (user) {
           // User is signed in.
           var displayName = user.displayName;
@@ -135,6 +158,9 @@ limitations under the License.
             refreshToken: refreshToken,
             providerData: providerData
           }, null, '  ');
+          if (!emailVerified) {
+            document.getElementById('quickstart-verify-email').disabled = false;
+          }
           // [END_EXCLUDE]
         } else {
           // User is signed out.
@@ -152,6 +178,7 @@ limitations under the License.
 
       document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
       document.getElementById('quickstart-sign-up').addEventListener('click', handleSignUp, false);
+      document.getElementById('quickstart-verify-email').addEventListener('click', sendEmailVerification, false);
     }
 
     window.onload = function() {
@@ -189,6 +216,8 @@ limitations under the License.
           <button disabled class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Sign In</button>
           &nbsp;&nbsp;&nbsp;
           <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-up" name="signup">Sign Up</button>
+          &nbsp;&nbsp;&nbsp;
+          <button class="mdl-button mdl-js-button mdl-button--raised" disabled id="quickstart-verify-email" name="verify-email">Send Email Verification</button>
 
           <!-- Container where we'll display the user details -->
           <div class="quickstart-user-details-container">
