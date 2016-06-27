@@ -81,14 +81,8 @@ limitations under the License.
           document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
           document.getElementById('quickstart-sign-in').textContent = 'Sign out';
           document.getElementById('quickstart-account-details').textContent = JSON.stringify({
-            displayName: displayName,
-            email: email,
-            emailVerified: emailVerified,
-            photoURL: photoURL,
             isAnonymous: isAnonymous,
-            uid: uid,
-            refreshToken: refreshToken,
-            providerData: providerData
+            uid: uid
           }, null, '  ');
           // [END_EXCLUDE]
         } else {
