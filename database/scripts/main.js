@@ -34,14 +34,15 @@ var myTopPostsMenuButton = document.getElementById('menu-my-top-posts');
  * Saves a new post to the Firebase DB.
  */
 // [START write_fan_out]
-function writeNewPost(uid, username, title, body) {
+function writeNewPost(uid, username, picture, title, body) {
   // A post entry.
   var postData = {
     author: username,
     uid: uid,
     body: body,
     title: title,
-    starCount: 0
+    starCount: 0,
+    authorPic: picture
   };
 
   // Get a key for a new Post.
@@ -82,7 +83,7 @@ function toggleStar(postRef, uid) {
 /**
  * Creates a post element.
  */
-function createPostElement(postId, title, text, author, authorId) {
+function createPostElement(postId, title, text, author, authorId, authorPic) {
   var uid = firebase.auth().currentUser.uid;
 
   var html =
@@ -129,17 +130,7 @@ function createPostElement(postId, title, text, author, authorId) {
   postElement.getElementsByClassName('text')[0].innerText = text;
   postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = title;
   postElement.getElementsByClassName('username')[0].innerText = author || 'Anonymous';
-
-  // Retrieve the post's user id
-  firebase.database().ref('posts/' + postId + '/uid').once('value').then(function(snapshot) {
-    const userId = snapshot.val();
-
-    // Retrieve the user's profile picture
-    firebase.database().ref('users/' + userId + '/profile_picture').once('value').then(function(snapshot) {
-      const photoURL = snapshot.val();
-      postElement.getElementsByClassName('avatar')[0].style.backgroundImage = `url("${photoURL || './silhouette.jpg'}")`;
-    });
-  });
+  postElement.getElementsByClassName('avatar')[0].style.backgroundImage = `url("${authorPic || './silhouette.jpg'}")`;
 
   // Listen for comments.
   // [START child_event_listener_recycler]
@@ -270,7 +261,7 @@ function startDatabaseQueries() {
       var author = data.val().author || 'Anonymous';
       var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
       containerElement.insertBefore(
-          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid),
+          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic),
           containerElement.firstChild);
     });
   };
@@ -324,6 +315,7 @@ window.addEventListener('load', function() {
         var username = snapshot.val().username;
         // [START_EXCLUDE]
         writeNewPost(firebase.auth().currentUser.uid, firebase.auth().currentUser.displayName,
+            firebase.auth().currentUser.photoURL,
             titleInput.value, postText).then(function() {
               myPostsMenuButton.click();
             });
