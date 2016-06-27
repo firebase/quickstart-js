@@ -62,15 +62,17 @@ function writeNewPost(uid, username, title, body) {
 // [START post_stars_transaction]
 function toggleStar(postRef, uid) {
   postRef.transaction(function(post) {
-    if (post.stars && post.stars[uid]) {
-      post.starCount--;
-      post.stars[uid] = null;
-    } else {
-      post.starCount++;
-      if (!post.stars) {
-        post.stars = {};
+    if (post) {
+      if (post.stars && post.stars[uid]) {
+        post.starCount--;
+        post.stars[uid] = null;
+      } else {
+        post.starCount++;
+        if (!post.stars) {
+          post.stars = {};
+        }
+        post.stars[uid] = true;
       }
-      post.stars[uid] = true;
     }
     return post;
   });
@@ -80,7 +82,7 @@ function toggleStar(postRef, uid) {
 /**
  * Creates a post element.
  */
-function createPostElement(postId, title, text, author) {
+function createPostElement(postId, title, text, author, authorId) {
   var uid = firebase.auth().currentUser.uid;
 
   var html =
@@ -178,7 +180,7 @@ function createPostElement(postId, title, text, author) {
   // Bind starring action.
   var onStarClicked = function() {
     var globalPostRef = firebase.database().ref('/posts/' + postId);
-    var userPostRef = firebase.database().ref('/user-posts/' + uid + '/' + postId);
+    var userPostRef = firebase.database().ref('/user-posts/' + authorId + '/' + postId);
     toggleStar(globalPostRef, uid);
     toggleStar(userPostRef, uid);
   };
@@ -271,7 +273,7 @@ function startDatabaseQueries() {
       }
       var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
       containerElement.insertBefore(
-          createPostElement(data.key, data.val().title, data.val().body, author),
+          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid),
           containerElement.firstChild);
     });
   };
@@ -309,7 +311,7 @@ window.addEventListener('load', function() {
       writeUserData(user.uid, user.displayName, user.email, user.photoURL);
       startDatabaseQueries();
     } else {
-      splashPage.style.display = 'block';
+      splashPage.style.display = '';
     }
   });
 
