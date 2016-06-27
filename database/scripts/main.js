@@ -128,7 +128,18 @@ function createPostElement(postId, title, text, author, authorId) {
   // Set values.
   postElement.getElementsByClassName('text')[0].innerText = text;
   postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = title;
-  postElement.getElementsByClassName('username')[0].innerText = author;
+  postElement.getElementsByClassName('username')[0].innerText = author || 'Anonymous';
+
+  // Retrieve the post's user id
+  firebase.database().ref('posts/' + postId + '/uid').once('value').then(function(snapshot) {
+    const userId = snapshot.val();
+
+    // Retrieve the user's profile picture
+    firebase.database().ref('users/' + userId + '/profile_picture').once('value').then(function(snapshot) {
+      const photoURL = snapshot.val();
+      postElement.getElementsByClassName('avatar')[0].style.backgroundImage = `url("${photoURL || './silhouette.jpg'}")`;
+    });
+  });
 
   // Listen for comments.
   // [START child_event_listener_recycler]
@@ -218,7 +229,7 @@ function addCommentElement(postElement, id, text, author) {
   comment.classList.add('comment-' + id);
   comment.innerHTML = '<span class="username"></span><span class="comment"></span>';
   comment.getElementsByClassName('comment')[0].innerText = text;
-  comment.getElementsByClassName('username')[0].innerText = author;
+  comment.getElementsByClassName('username')[0].innerText = author || 'Anonymous';
 
   var commentsContainer = postElement.getElementsByClassName('comments-container')[0];
   commentsContainer.appendChild(comment);
@@ -256,9 +267,13 @@ function startDatabaseQueries() {
 
   var fetchPosts = function(postsRef, sectionElement) {
     postsRef.on('child_added', function(data) {
+      var author = 'Anonymous';
+      if (typeof data.val().author != 'undefined') {
+        author = data.val().author;
+      }
       var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
       containerElement.insertBefore(
-          createPostElement(data.key, data.val().title, data.val().body, data.val().author, data.val().uid),
+          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid),
           containerElement.firstChild);
     });
   };
@@ -272,10 +287,11 @@ function startDatabaseQueries() {
  * Writes the user's data to the database.
  */
 // [START basic_write]
-function writeUserData(userId, name, email) {
+function writeUserData(userId, name, email, imageUrl) {
   firebase.database().ref('users/' + userId).set({
     username: name,
-    email: email
+    email: email,
+    profile_picture : imageUrl
   });
 }
 // [END basic_write]
@@ -292,7 +308,7 @@ window.addEventListener('load', function() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       splashPage.style.display = 'none';
-      writeUserData(user.uid, user.displayName, user.email);
+      writeUserData(user.uid, user.displayName, user.email, user.photoURL);
       startDatabaseQueries();
     } else {
       splashPage.style.display = '';
