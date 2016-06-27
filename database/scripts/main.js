@@ -267,10 +267,7 @@ function startDatabaseQueries() {
 
   var fetchPosts = function(postsRef, sectionElement) {
     postsRef.on('child_added', function(data) {
-      var author = 'Anonymous';
-      if (typeof data.val().author != 'undefined') {
-        author = data.val().author;
-      }
+      var author = data.val().author || 'Anonymous';
       var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
       containerElement.insertBefore(
           createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid),
