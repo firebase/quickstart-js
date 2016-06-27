@@ -293,7 +293,7 @@ window.addEventListener('load', function() {
       writeUserData(user.uid, user.displayName, user.email);
       startDatabaseQueries();
     } else {
-      splashPage.style.display = 'block';
+      splashPage.style.display = '';
     }
   });
 
