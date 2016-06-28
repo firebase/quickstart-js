@@ -129,7 +129,7 @@ function createPostElement(postId, title, text, author, authorId, authorPic) {
   // Set values.
   postElement.getElementsByClassName('text')[0].innerText = text;
   postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = title;
-  postElement.getElementsByClassName('username')[0].innerText = author;
+  postElement.getElementsByClassName('username')[0].innerText = author || 'Anonymous';
   postElement.getElementsByClassName('avatar')[0].style.backgroundImage = `url("${authorPic || './silhouette.jpg'}")`;
 
   // Listen for comments.
@@ -258,9 +258,10 @@ function startDatabaseQueries() {
 
   var fetchPosts = function(postsRef, sectionElement) {
     postsRef.on('child_added', function(data) {
+      var author = data.val().author || 'Anonymous';
       var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
       containerElement.insertBefore(
-          createPostElement(data.key, data.val().title, data.val().body, data.val().author, data.val().uid),
+          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid),
           containerElement.firstChild);
     });
   };
