@@ -261,7 +261,7 @@ function startDatabaseQueries() {
       var author = data.val().author || 'Anonymous';
       var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
       containerElement.insertBefore(
-          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid),
+          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic),
           containerElement.firstChild);
     });
   };
