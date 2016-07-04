@@ -126,6 +126,10 @@ h3 {
     margin-left: 10px;
     color: inherit;
 }
+#sign-out-button {
+    margin: 10px;
+    color: inherit;
+}
 .mdl-button .material-icons {
     margin-top: -2px;
 }
