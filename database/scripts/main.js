@@ -34,14 +34,15 @@ var myTopPostsMenuButton = document.getElementById('menu-my-top-posts');
  * Saves a new post to the Firebase DB.
  */
 // [START write_fan_out]
-function writeNewPost(uid, username, title, body) {
+function writeNewPost(uid, username, picture, title, body) {
   // A post entry.
   var postData = {
     author: username,
     uid: uid,
     body: body,
     title: title,
-    starCount: 0
+    starCount: 0,
+    authorPic: picture
   };
 
   // Get a key for a new Post.
@@ -82,7 +83,7 @@ function toggleStar(postRef, uid) {
 /**
  * Creates a post element.
  */
-function createPostElement(postId, title, text, author, authorId) {
+function createPostElement(postId, title, text, author, authorId, authorPic) {
   var uid = firebase.auth().currentUser.uid;
 
   var html =
@@ -128,7 +129,8 @@ function createPostElement(postId, title, text, author, authorId) {
   // Set values.
   postElement.getElementsByClassName('text')[0].innerText = text;
   postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = title;
-  postElement.getElementsByClassName('username')[0].innerText = author;
+  postElement.getElementsByClassName('username')[0].innerText = author || 'Anonymous';
+  postElement.getElementsByClassName('avatar')[0].style.backgroundImage = `url("${authorPic || './silhouette.jpg'}")`;
 
   // Listen for comments.
   // [START child_event_listener_recycler]
@@ -218,7 +220,7 @@ function addCommentElement(postElement, id, text, author) {
   comment.classList.add('comment-' + id);
   comment.innerHTML = '<span class="username"></span><span class="comment"></span>';
   comment.getElementsByClassName('comment')[0].innerText = text;
-  comment.getElementsByClassName('username')[0].innerText = author;
+  comment.getElementsByClassName('username')[0].innerText = author || 'Anonymous';
 
   var commentsContainer = postElement.getElementsByClassName('comments-container')[0];
   commentsContainer.appendChild(comment);
@@ -256,9 +258,10 @@ function startDatabaseQueries() {
 
   var fetchPosts = function(postsRef, sectionElement) {
     postsRef.on('child_added', function(data) {
+      var author = data.val().author || 'Anonymous';
       var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
       containerElement.insertBefore(
-          createPostElement(data.key, data.val().title, data.val().body, data.val().author, data.val().uid),
+          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic),
           containerElement.firstChild);
     });
   };
@@ -272,10 +275,11 @@ function startDatabaseQueries() {
  * Writes the user's data to the database.
  */
 // [START basic_write]
-function writeUserData(userId, name, email) {
+function writeUserData(userId, name, email, imageUrl) {
   firebase.database().ref('users/' + userId).set({
     username: name,
-    email: email
+    email: email,
+    profile_picture : imageUrl
   });
 }
 // [END basic_write]
@@ -292,7 +296,7 @@ window.addEventListener('load', function() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       splashPage.style.display = 'none';
-      writeUserData(user.uid, user.displayName, user.email);
+      writeUserData(user.uid, user.displayName, user.email, user.photoURL);
       startDatabaseQueries();
     } else {
       splashPage.style.display = '';
@@ -311,6 +315,7 @@ window.addEventListener('load', function() {
         var username = snapshot.val().username;
         // [START_EXCLUDE]
         writeNewPost(firebase.auth().currentUser.uid, firebase.auth().currentUser.displayName,
+            firebase.auth().currentUser.photoURL,
             titleInput.value, postText).then(function() {
               myPostsMenuButton.click();
             });
