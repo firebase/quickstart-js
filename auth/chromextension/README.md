@@ -3,12 +3,14 @@ Firebase Auth w/ Chrome Extensions Quickstart
 
 This sample shows how to authorize Firebase in a Chrome extension using a Google account.
 
+Feel free to try out a deployed version of the Chrome Extension directly: https://chrome.google.com/webstore/detail/lpgchdfbjddonaolofeijjackhnhnlla
+
 Introduction
 ------------
 
 - [Read more about Firebase Auth](https://firebase.google.com/docs/auth/)
 
-Getting Started
+Setting up this sample
 ---------------
 
 - Create a Firebase project using the [Firebase Console](https://console.firebase.google.com).
@@ -18,8 +20,6 @@ Getting Started
 - Edit the `credential.js` and enter your project's identifiers you get from the Firebase Console **Overview > Add Firebase to your web app**.
 - Edit the `manifest.json` and enter your **Client ID** and your extension's **Public Key**. Also make sure you remove all comment lines (starting with `//`) in the `manifest.json` file before deploying your extension online.
 - Install the Extension in your browser and click on the extension's icon once installed. The first time your users will install the extension they will have to authorize Firebase using the login button.
-
-Feel free to try out a deployed version of the Chrome Extension directly: https://chrome.google.com/webstore/detail/lpgchdfbjddonaolofeijjackhnhnlla
 
 
 Using Firebase in your own extension
@@ -39,10 +39,9 @@ The keys to using Firebase in a Chrome extension are:
  
  - Adding the following content security policy to your `manifest.json` to allow importing the Firebase SDK and accessing the Realtime Database as well as Firebase Storage:
    
-   ```javascript
-   "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'"
-   ```
-
+ ```javascript
+ "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'"
+ ```
 
 
 Support
