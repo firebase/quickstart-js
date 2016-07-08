@@ -13,8 +13,8 @@
   "permissions": [
     "identity"
   ],
-  // Adding https://www.gstatic.com/ to the external scripts authorized domains so we can import the firebase JS SDK.
-  "content_security_policy":"script-src 'self' https://www.gstatic.com/; object-src 'self'",
+  // Adding https://www.gstatic.com/ to the external scripts authorized domains so we can import the firebase JS SDK and access the Realtime Database as well as Firebase Storage.
+  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
   "oauth2": {
     // TODO(DEVELOPER): Change the line below to the OAuth Client ID you created as described in https://developer.chrome.com/apps/app_identity#google
     "client_id": "<YOUR_CLIENT_ID>",
