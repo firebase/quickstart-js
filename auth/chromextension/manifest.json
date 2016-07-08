@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "Firebase Auth in Chrome Extension Sample",
+  "description": "This sample shows how to authorize Firebase in a Chrome extension using a Google account.",
+  "version": "2.0",
+  "icons": {
+    "128": "firebase.png"
+  },
+  "browser_action": {
+    "default_icon": "firebase.png",
+    "default_popup": "credentials.html"
+  },
+  "permissions": [
+    "identity"
+  ],
+  // Adding https://www.gstatic.com/ to the external scripts authorized domains so we can import the firebase JS SDK.
+  "content_security_policy":"script-src 'self' https://www.gstatic.com/; object-src 'self'",
+  "oauth2": {
+    // TODO(DEVELOPER): Change the line below to the OAuth Client ID you created as described in https://developer.chrome.com/apps/app_identity#google
+    "client_id": "<YOUR_CLIENT_ID>",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  // TODO(DEVELOPER): Change the line below to your Chrome Extension's public key as described in https://developer.chrome.com/apps/app_identity#google
+  "key": "<YOUR_EXTENSION_PUBLIC_KEY>"
+}
