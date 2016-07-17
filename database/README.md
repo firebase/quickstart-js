@@ -14,9 +14,13 @@ Getting Started
 ---------------
 
 - Create your project on the [Firebase Console](https://console.firebase.google.com).
-- Copy the initialization snippet into the index.html file by clicking the red HTML
-  logo at the top right of the page with the caption "Add Firebase to your web app".  The snippet which appears should be placed in the `<head>` section of `index.html`.
-- Enable Google auth in the **Auth > SIGN IN METHOD** tab.
+- From your Firebase project console, click on red circle button with the caption "Add Firebase to your web app".
+![Alt text](/pics/redcircle.png?raw=true "Red Circle")
+- Copy the initialization snippet into the index.html file by clicking the red HTML.
+![Alt text](/pics/snippet.png?raw=true "Snippet")
+- The snippet should be placed in the `<head>` section of `index.html`.
+- Enable auth in the **Auth > SIGN IN METHOD** tab.
+![Alt text](/pics/enable.png?raw=true "Enable auth")
 - Run `firebase serve` using the Firebase CLI tool to launch a local server.
 
 Support
