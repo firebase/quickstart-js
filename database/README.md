@@ -19,8 +19,8 @@ Getting Started
 - Copy the initialization snippet into the index.html file by clicking the red HTML.
 ![Alt text](/database/pics/snippet.png?raw=true "Snippet")
 - The snippet should be placed in the `<head>` section of `index.html`.
-- Enable auth in the **Auth > SIGN IN METHOD** tab.
-![Alt text](/database/pics/enable.png?raw=true "Enable auth")
+- Enable Google auth in the **Auth > SIGN IN METHOD** tab.
+![Alt text](/database/pics/enable.png?raw=true "Enable google auth")
 - Run `firebase serve` using the Firebase CLI tool to launch a local server.
 
 Support
