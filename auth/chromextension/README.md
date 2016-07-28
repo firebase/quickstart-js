@@ -1,7 +1,7 @@
 Firebase Auth w/ Chrome Extensions Quickstart
 =============================================
 
-This sample shows how to authorize Firebase in a Chrome extension using a Google account.
+This sample demonstrates how to authorize a user with Firebase in a Chrome extension using a Google account and setup the Chrome extension to allow .
 
 Feel free to try out a deployed version of the Chrome Extension directly: https://chrome.google.com/webstore/detail/lpgchdfbjddonaolofeijjackhnhnlla
 
