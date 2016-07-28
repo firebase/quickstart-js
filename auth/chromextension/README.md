@@ -37,7 +37,7 @@ The keys to using Firebase in a Chrome extension are:
  firebase.auth().signInWithCredential(credential);
  ```
  
- - Adding the following content security policy to your `manifest.json` to allow importing the Firebase SDK and accessing the Realtime Database as well as Firebase Storage:
+ - Add the following content security policy to your `manifest.json` to allow importing the Firebase SDK and accessing the Realtime Database as well as Firebase Storage:
    
  ```javascript
  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'"
