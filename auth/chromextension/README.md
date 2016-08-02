@@ -31,9 +31,9 @@ The keys to using Firebase in a Chrome extension are:
  ```javascript
  // Initialize Firebase
  var config = {
-   apiKey: "<qwertyuiopasdfghjklzxcvbnm>",
-   databaseURL: "https://<my-app-id>.firebaseio.com",
-   storageBucket: "<my-app-id>.appspot.com"
+    apiKey: "<qwertyuiopasdfghjklzxcvbnm>",
+    databaseURL: "https://<my-app-id>.firebaseio.com",
+    storageBucket: "<my-app-id>.appspot.com"
  };
  firebase.initializeApp(config);
  ```
