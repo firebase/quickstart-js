@@ -1,5 +1,5 @@
-Firebase Auth w/ Chrome Extensions Quickstart
-=============================================
+Firebase Auth in Chrome Extensions
+==================================
 
 This sample demonstrates how to authorize a user with Firebase in a Chrome extension using a Google account and setup the Chrome extension to allow .
 
@@ -26,6 +26,18 @@ Using Firebase in your own extension
 ------------------------------------
 
 The keys to using Firebase in a Chrome extension are:
+ - Becasue of Chrome Extensions' [Content Security Policy](https://developer.chrome.com/extensions/contentSecurityPolicy) you need to avoid inline JavaScript in your HTML pages so you need to add the Firebase initialisation snippet in your JS file instead of inside the HTML file as we [typically instruct](https://firebase.google.com/docs/web/setup). The Firebase initialisation snippet looks like this:
+ 
+ ```javascript
+ // Initialize Firebase
+ var config = {
+   apiKey: "<qwertyuiopasdfghjklzxcvbnm>",
+   databaseURL: "https://<my-app-id>.firebaseio.com",
+   storageBucket: "<my-app-id>.appspot.com"
+ };
+ firebase.initializeApp(config);
+ ```
+
  - Create a Google Client ID that's authorized for your Chrome extension and whitelist it in your Firebase project:
    - Create a new OAuth Client ID in your project's [Developers Console](https://console.developers.google.com/apis/credentials/oauthclient?project=_), Select **Chrome App** and enter your Chrome Extension/App ID.
    - In your project's Firebase Console, enable the **Google** authentication method in the **Auth** section > **SIGN IN METHOD** tab.
