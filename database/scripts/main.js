@@ -30,6 +30,7 @@ var topUserPostsSection = document.getElementById('top-user-posts-list');
 var recentMenuButton = document.getElementById('menu-recent');
 var myPostsMenuButton = document.getElementById('menu-my-posts');
 var myTopPostsMenuButton = document.getElementById('menu-my-top-posts');
+var listeningFirebaseRefs = [];
 
 /**
  * Saves a new post to the Firebase DB.
@@ -151,15 +152,22 @@ function createPostElement(postId, title, text, author, authorId, authorPic) {
 
   // Listen for likes counts.
   // [START post_value_event_listener]
-  firebase.database().ref('posts/' + postId + '/starCount').on('value', function(snapshot) {
+  var starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
+  starCountRef.on('value', function(snapshot) {
     updateStarCount(postElement, snapshot.val());
   });
   // [END post_value_event_listener]
 
   // Listen for the starred status.
-  firebase.database().ref('posts/' + postId + '/stars/' + uid).on('value', function(snapshot) {
+  var starredStatusRef = firebase.database().ref('posts/' + postId + '/stars/' + uid)
+  starredStatusRef.on('value', function(snapshot) {
     updateStarredByCurrentUser(postElement, snapshot.val());
   });
+
+  // Keep track of all Firebase reference on which we are listening.
+  listeningFirebaseRefs.push(commentsRef);
+  listeningFirebaseRefs.push(starCountRef);
+  listeningFirebaseRefs.push(starredStatusRef);
 
   // Create new comment.
   addCommentForm.onsubmit = function(e) {
@@ -267,9 +275,15 @@ function startDatabaseQueries() {
     });
   };
 
+  // Fetching and displaying all posts of each sections.
   fetchPosts(topUserPostsRef, topUserPostsSection);
   fetchPosts(recentPostsRef, recentPostsSection);
   fetchPosts(userPostsRef, userPostsSection);
+
+  // Keep track of all Firebase refs we are listening to.
+  listeningFirebaseRefs.push(topUserPostsRef);
+  listeningFirebaseRefs.push(recentPostsRef);
+  listeningFirebaseRefs.push(userPostsRef);
 }
 
 /**
@@ -305,7 +319,19 @@ window.addEventListener('load', function() {
       writeUserData(user.uid, user.displayName, user.email, user.photoURL);
       startDatabaseQueries();
     } else {
+      // Display the splash page where you can sign-in.
       splashPage.style.display = '';
+
+      // Remove all previously displayed posts.
+      topUserPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
+      recentPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
+      userPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
+
+      // Stop all currently listening Firebase listeners.
+      listeningFirebaseRefs.forEach(function(ref) {
+        ref.off();
+      });
+      listeningFirebaseRefs = [];
     }
   });
 
