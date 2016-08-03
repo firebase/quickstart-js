@@ -121,7 +121,9 @@ function createPostElement(postId, title, text, author, authorId, authorPic) {
   var div = document.createElement('div');
   div.innerHTML = html;
   var postElement = div.firstChild;
-  componentHandler.upgradeElements(postElement.getElementsByClassName('mdl-textfield')[0]);
+  if (componentHandler) {
+    componentHandler.upgradeElements(postElement.getElementsByClassName('mdl-textfield')[0]);
+  }
 
   var addCommentForm = postElement.getElementsByClassName('add-comment')[0];
   var commentInput = postElement.getElementsByClassName('new-comment')[0];
@@ -132,7 +134,8 @@ function createPostElement(postId, title, text, author, authorId, authorPic) {
   postElement.getElementsByClassName('text')[0].innerText = text;
   postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = title;
   postElement.getElementsByClassName('username')[0].innerText = author || 'Anonymous';
-  postElement.getElementsByClassName('avatar')[0].style.backgroundImage = `url("${authorPic || './silhouette.jpg'}")`;
+  postElement.getElementsByClassName('avatar')[0].style.backgroundImage = 'url("' +
+      (authorPic || './silhouette.jpg') + '")';
 
   // Listen for comments.
   // [START child_event_listener_recycler]
@@ -347,6 +350,26 @@ function newPostForCurrentUser(title, text) {
   // [END single_value_read]
 }
 
+/**
+ * Displays the given section element and changes styling of the given button.
+ */
+function showSection(sectionElement, buttonElement) {
+  recentPostsSection.style.display = 'none';
+  userPostsSection.style.display = 'none';
+  topUserPostsSection.style.display = 'none';
+  addPost.style.display = 'none';
+  recentMenuButton.classList.remove('is-active');
+  myPostsMenuButton.classList.remove('is-active');
+  myTopPostsMenuButton.classList.remove('is-active');
+
+  if (sectionElement) {
+    sectionElement.style.display = 'block';
+  }
+  if (buttonElement) {
+    buttonElement.classList.add('is-active');
+  }
+}
+
 // Bindings on load.
 window.addEventListener('load', function() {
   // Bind Sign in button.
@@ -379,40 +402,16 @@ window.addEventListener('load', function() {
 
   // Bind menu buttons.
   recentMenuButton.onclick = function() {
-    recentPostsSection.style.display = 'block';
-    userPostsSection.style.display = 'none';
-    topUserPostsSection.style.display = 'none';
-    addPost.style.display = 'none';
-    recentMenuButton.classList.add('is-active');
-    myPostsMenuButton.classList.remove('is-active');
-    myTopPostsMenuButton.classList.remove('is-active');
+    showSection(recentPostsSection, recentMenuButton);
   };
   myPostsMenuButton.onclick = function() {
-    recentPostsSection.style.display = 'none';
-    userPostsSection.style.display = 'block';
-    topUserPostsSection.style.display = 'none';
-    addPost.style.display = 'none';
-    recentMenuButton.classList.remove('is-active');
-    myPostsMenuButton.classList.add('is-active');
-    myTopPostsMenuButton.classList.remove('is-active');
+    showSection(userPostsSection, myPostsMenuButton);
   };
   myTopPostsMenuButton.onclick = function() {
-    recentPostsSection.style.display = 'none';
-    userPostsSection.style.display = 'none';
-    topUserPostsSection.style.display = 'block';
-    addPost.style.display = 'none';
-    recentMenuButton.classList.remove('is-active');
-    myPostsMenuButton.classList.remove('is-active');
-    myTopPostsMenuButton.classList.add('is-active');
+    showSection(topUserPostsSection, myTopPostsMenuButton);
   };
   addButton.onclick = function() {
-    recentPostsSection.style.display = 'none';
-    userPostsSection.style.display = 'none';
-    topUserPostsSection.style.display = 'none';
-    addPost.style.display = 'block';
-    recentMenuButton.classList.remove('is-active');
-    myPostsMenuButton.classList.remove('is-active');
-    myTopPostsMenuButton.classList.remove('is-active');
+    showSection();
     messageInput.value = '';
     titleInput.value = '';
   };
