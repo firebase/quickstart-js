@@ -299,6 +299,54 @@ function writeUserData(userId, name, email, imageUrl) {
 }
 // [END basic_write]
 
+/**
+ * Cleanups the UI and removes all Firebase listeners.
+ */
+function cleanupUi() {
+  // Remove all previously displayed posts.
+  topUserPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
+  recentPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
+  userPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
+
+  // Stop all currently listening Firebase listeners.
+  listeningFirebaseRefs.forEach(function(ref) {
+    ref.off();
+  });
+  listeningFirebaseRefs = [];
+}
+
+/**
+ * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
+ */
+function onAuthStateChanged(user) {
+  cleanupUi();
+  if (user) {
+    splashPage.style.display = 'none';
+    writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+    startDatabaseQueries();
+  } else {
+    // Display the splash page where you can sign-in.
+    splashPage.style.display = '';
+  }
+}
+
+/**
+ * Creates a new post for the current user.
+ */
+function newPostForCurrentUser(title, text) {
+  // [START single_value_read]
+  var userId = firebase.auth().currentUser.uid;
+  return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+    var username = snapshot.val().username;
+    // [START_EXCLUDE]
+    return writeNewPost(firebase.auth().currentUser.uid, username,
+        firebase.auth().currentUser.photoURL,
+        title, text);
+    // [END_EXCLUDE]
+  });
+  // [END single_value_read]
+}
+
 // Bindings on load.
 window.addEventListener('load', function() {
   // Bind Sign in button.
@@ -313,47 +361,19 @@ window.addEventListener('load', function() {
   });
 
   // Listen for auth state changes
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      splashPage.style.display = 'none';
-      writeUserData(user.uid, user.displayName, user.email, user.photoURL);
-      startDatabaseQueries();
-    } else {
-      // Display the splash page where you can sign-in.
-      splashPage.style.display = '';
-
-      // Remove all previously displayed posts.
-      topUserPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
-      recentPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
-      userPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
-
-      // Stop all currently listening Firebase listeners.
-      listeningFirebaseRefs.forEach(function(ref) {
-        ref.off();
-      });
-      listeningFirebaseRefs = [];
-    }
-  });
+  firebase.auth().onAuthStateChanged(onAuthStateChanged);
 
   // Saves message on form submit.
   messageForm.onsubmit = function(e) {
     e.preventDefault();
-    if (messageInput.value && titleInput.value) {
-      var postText = messageInput.value;
-      messageInput.value = '';
-      // [START single_value_read]
-      var userId = firebase.auth().currentUser.uid;
-      firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-        var username = snapshot.val().username;
-        // [START_EXCLUDE]
-        writeNewPost(firebase.auth().currentUser.uid, firebase.auth().currentUser.displayName,
-            firebase.auth().currentUser.photoURL,
-            titleInput.value, postText).then(function() {
-              myPostsMenuButton.click();
-            });
-        // [END_EXCLUDE]
+    var text = messageInput.value;
+    var title = titleInput.value;
+    if (text && title) {
+      newPostForCurrentUser(title, text).then(function() {
+        myPostsMenuButton.click();
       });
-      // [END single_value_read]
+      messageInput.value = '';
+      titleInput.value = '';
     }
   };
 
