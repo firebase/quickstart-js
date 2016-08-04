@@ -411,7 +411,7 @@ window.addEventListener('load', function() {
     showSection(topUserPostsSection, myTopPostsMenuButton);
   };
   addButton.onclick = function() {
-    showSection();
+    showSection(addPost);
     messageInput.value = '';
     titleInput.value = '';
   };
