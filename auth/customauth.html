@@ -120,8 +120,19 @@ limitations under the License.
       document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
     }
 
+    function getHashValue(key) {
+      var matches = location.hash.match(new RegExp(key+'=([^&]*)'));
+      return matches ? matches[1] : null;
+    }
+
     window.onload = function() {
       initApp();
+
+      // If a token has been passed in the hash fragment we display it in the UI and start the sign in process.
+      document.getElementById('tokentext').value = getHashValue('token') || '';
+      if (document.getElementById('tokentext').value) {
+        firebase.auth().signInWithCustomToken(getHashValue('token'));
+      }
     };
   </script>
 </head>

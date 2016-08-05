@@ -71,7 +71,7 @@ limitations under the License.
           document.getElementById('tokenbox').textContent = sJWT;
           console.log(sJWT);
 
-          var link = '<a href="../index.html?tok=' + sJWT + '">Use this token in the web custom auth example</a>';
+          var link = '<a href="../customauth.html#token=' + sJWT + '">Use this token in the web custom auth example</a>';
           document.getElementById('linktokenbox').innerHTML = link;
         }
 
@@ -131,9 +131,9 @@ limitations under the License.
                 </div>
                 <div class="mdl-card__supporting-text mdl-color-text--grey-600" id="notoken">
                     <p>
-                      In order to generate a token you'll need to use a service account JSON file provided
-                      by the <a href="https://console.developers.google.com">Google Developers Console</a> view
-                      of your Firebase project. We recommend that once you're done testing with this tool you
+                      In order to generate a token you'll need to use a service account JSON file provided by the
+                      <a href="https://console.developers.google.com/apis/credentials/serviceaccountkey?project=_">Google Developers Console</a>
+                      view of your Firebase project. We recommend that once you're done testing with this tool you
                       delete the service account you made, and create a fresh one for the integration with your
                       actual authentication system.
                     </p>
