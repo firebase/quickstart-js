@@ -319,9 +319,21 @@ function cleanupUi() {
 }
 
 /**
+ * The ID of the currently signed-in User. We keep track of this to detect Auth state change events that are just
+ * programmatic token refresh but not a User status change.
+ */
+var currentUID;
+
+/**
  * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
  */
 function onAuthStateChanged(user) {
+  // We ignore token refresh events.
+  if (user && currentUID === user.uid || !user && currentUID === null) {
+    return;
+  }
+  currentUID = user ? user.uid : null;
+
   cleanupUi();
   if (user) {
     splashPage.style.display = 'none';
