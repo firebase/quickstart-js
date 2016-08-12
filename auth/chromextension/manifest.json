@@ -2,13 +2,16 @@
   "manifest_version": 2,
   "name": "Firebase Auth in Chrome Extension Sample",
   "description": "This sample shows how to authorize Firebase in a Chrome extension using a Google account.",
-  "version": "2.0",
+  "version": "2.1",
   "icons": {
     "128": "firebase.png"
   },
   "browser_action": {
     "default_icon": "firebase.png",
     "default_popup": "credentials.html"
+  },
+  "background": {
+    "page": "background.html"
   },
   "permissions": [
     "identity"
