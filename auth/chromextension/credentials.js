@@ -36,6 +36,7 @@ function initApp() {
       var refreshToken = user.refreshToken;
       var providerData = user.providerData;
       // [START_EXCLUDE]
+      document.getElementById('quickstart-button').textContent = 'Sign out';
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
       document.getElementById('quickstart-account-details').textContent = JSON.stringify({
         displayName: displayName,
@@ -50,12 +51,13 @@ function initApp() {
       // [END_EXCLUDE]
     } else {
       // Let's try to get a Google auth token programmatically.
-      startAuth(false);
       // [START_EXCLUDE]
+      document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
       document.getElementById('quickstart-account-details').textContent = 'null';
       // [END_EXCLUDE]
     }
+    document.getElementById('quickstart-button').disabled = false;
   });
   // [END authstatelistener]
 
@@ -68,11 +70,9 @@ function initApp() {
  */
 function startAuth(interactive) {
   // Request an OAuth token from the Chrome Identity API.
-  chrome.identity.getAuthToken({ interactive: !!interactive }, function(token) {
+  chrome.identity.getAuthToken({interactive: !!interactive}, function(token) {
     if (chrome.runtime.lastError && !interactive) {
       console.log('It was not possible to get a token programmatically.');
-      // Show the sign-in button
-      document.getElementById('quickstart-button').disabled = false;
     } else if(chrome.runtime.lastError) {
       console.error(chrome.runtime.lastError);
     } else if (token) {
@@ -97,7 +97,11 @@ function startAuth(interactive) {
  */
 function startSignIn() {
   document.getElementById('quickstart-button').disabled = true;
-  startAuth(true);
+  if (firebase.auth().currentUser) {
+    firebase.auth().signOut();
+  } else {
+    startAuth(true);
+  }
 }
 
 window.onload = function() {
