@@ -106,12 +106,15 @@ limitations under the License.
       document.getElementById('file').addEventListener('change', handleFileSelect, false);
       document.getElementById('file').disabled = true;
 
-      // Sign the user in anonymously since accessing Storage requires the user to be authorized.
-      auth.signInAnonymously().then(function(user) {
-        console.log('Anonymous Sign In Success', user);
-        document.getElementById('file').disabled = false;
-      }).catch(function(error) {
-        console.error('Anonymous Sign In Error', error);
+      auth.onAuthStateChanged(function(user) {
+        if (user) {
+          console.log('Anonymous user signed-in.', user);
+          document.getElementById('file').disabled = false;
+        } else {
+          console.log('There was no anonymous session. Creating a new anonymous user.');
+          // Sign the user in anonymously since accessing Storage requires the user to be authorized.
+          auth.signInAnonymously();
+        }
       });
     }
   </script>
