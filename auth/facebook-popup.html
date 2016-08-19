@@ -86,18 +86,9 @@ limitations under the License.
     // [END buttoncallback]
 
     /**
-     * initApp handles setting up the Firebase context and registering
-     * callbacks for the auth status.
-     *
-     * The core initialization is in firebase.App - this is the glue class
-     * which stores configuration. We provide an app name here to allow
-     * distinguishing multiple app instances.
-     *
-     * This method also registers a listener with firebase.auth().onAuthStateChanged.
-     * This listener is called when the user is signed in or out, and that
-     * is where we update the UI.
-     *
-     * When signed in, we also authenticate to the Firebase Realtime Database.
+     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
      */
     function initApp() {
       // Listening for auth state changes.
@@ -111,21 +102,11 @@ limitations under the License.
           var photoURL = user.photoURL;
           var isAnonymous = user.isAnonymous;
           var uid = user.uid;
-          var refreshToken = user.refreshToken;
           var providerData = user.providerData;
           // [START_EXCLUDE]
           document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
           document.getElementById('quickstart-sign-in').textContent = 'Log out';
-          document.getElementById('quickstart-account-details').textContent = JSON.stringify({
-            displayName: displayName,
-            email: email,
-            emailVerified: emailVerified,
-            photoURL: photoURL,
-            isAnonymous: isAnonymous,
-            uid: uid,
-            refreshToken: refreshToken,
-            providerData: providerData
-          }, null, '  ');
+          document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
           // [END_EXCLUDE]
         } else {
           // User is signed out.

@@ -33,21 +33,11 @@ function initApp() {
       var photoURL = user.photoURL;
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
-      var refreshToken = user.refreshToken;
       var providerData = user.providerData;
       // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign out';
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
-      document.getElementById('quickstart-account-details').textContent = JSON.stringify({
-        displayName: displayName,
-        email: email,
-        emailVerified: emailVerified,
-        photoURL: photoURL,
-        isAnonymous: isAnonymous,
-        uid: uid,
-        refreshToken: refreshToken,
-        providerData: providerData
-      }, null, '  ');
+      document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
       // [END_EXCLUDE]
     } else {
       // Let's try to get a Google auth token programmatically.

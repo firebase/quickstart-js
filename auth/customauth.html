@@ -67,13 +67,11 @@ limitations under the License.
       document.getElementById('quickstart-sign-in').disabled = true;
     }
 
+
     /**
-     * Handles registering callbacks for the auth status.
-     *
-     * This method registers a listener with firebase.auth().onAuthStateChanged. This listener is called when
-     * the user is signed in or out, and that is where we update the UI.
-     *
-     * When signed in, we also authenticate to the Firebase Realtime Database.
+     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
      */
     function initApp() {
       // Listening for auth state changes.
@@ -87,21 +85,11 @@ limitations under the License.
           var photoURL = user.photoURL;
           var isAnonymous = user.isAnonymous;
           var uid = user.uid;
-          var refreshToken = user.refreshToken;
           var providerData = user.providerData;
           // [START_EXCLUDE]
           document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
           document.getElementById('quickstart-sign-in').textContent = 'Sign out';
-          document.getElementById('quickstart-account-details').textContent = JSON.stringify({
-            displayName: displayName,
-            email: email,
-            emailVerified: emailVerified,
-            photoURL: photoURL,
-            isAnonymous: isAnonymous,
-            uid: uid,
-            refreshToken: refreshToken,
-            providerData: providerData
-          }, null, '  ');
+          document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
           // [END_EXCLUDE]
         } else {
           // User is signed out.

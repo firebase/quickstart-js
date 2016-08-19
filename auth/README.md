@@ -1,21 +1,17 @@
-Firebase Auth Quickstart
+Firebase Auth Quickstarts
 =============================
 
-The Firebase auth quickstart demonstrates several methods for signing in.
+The Firebase auth quickstart demonstrates several methods for signing in:
 
-The Firebase email/password quickstart demonstrates using a Firebase stored email & password - you can both create and sign in a user. 
+ - The [Firebase email/password quickstart](email.html) demonstrates using a Firebase stored email & password - you can both create and sign in a user.
+ - The Firebase Google Sign in quickstarts demonstrate using a Google account to authenticate to Firebase using three different techniques: with a [popup](google-popup.html), a [redirect](google-redirect.html) and an [auth token](google-credentials.html).
+ - The Firebase Facebook Login quickstarts demonstrate using a Facebook account to authenticate to Firebase using three different techniques: with a [popup](facebook-popup.html), a [redirect](facebook-redirect.html) and an [auth token](facebook-credentials.html).
+ - The Firebase GitHub Login quickstarts demonstrate using a GitHub account to authenticate to Firebase using two different techniques: with a [popup](github-popup.html) and a [redirect](github-redirect.html).
+ - The Firebase Twitter Login quickstarts demonstrate using a Twitter account to authenticate to Firebase using two different techniques: with a [popup](twitter-popup.html) and a [redirect](twitter-redirect.html).
+ - The [Firebase Anonymous auth quickstart](anon.html) demonstrates how to authenticate to Firebase anonymously.
+ - The [Firebase custom auth quickstart](customauth.html) demonstrates how to authenticate to Firebase with a user who has been authenticated from your own pre-existing authentication system. This is done by generating a token in a specific format, which is signed using the private key from a service account downloaded from the Google Developer Console. This token can then be passed to your client application which uses it to authenticate to Firebase. We provide an [example token generator](exampletokengenerator/auth.html) for demonstration purposes. Note: Generating tokens in production should be done server side.
 
-The Firebase Google Sign in quickstarts demonstrate using a Google account to authenticate to Firebase using three different techniques: with a popup, a redirect and an auth token.
-
-The Firebase Facebook Login quickstarts demonstrate using a Facebook account to authenticate to Firebase using three different techniques: with a popup, a redirect and an auth token.
-
-The Firebase GitHub Login quickstarts demonstrate using a GitHub account to authenticate to Firebase using two different techniques: with a popup and a redirect.
-
-The Firebase Twitter Login quickstarts demonstrate using a Twitter account to authenticate to Firebase using two different techniques: with a popup and a redirect.
-
-The Firebase Anonymous auth quickstart demonstrates authenticate to Firebase anonymously.
-
-The Firebase custom auth web quickstart demonstrates how to authenticate to Firebase with a user who has been authenticated from your own pre-existing authentication system. This is done by generating a token in a specific format, which is signed using the private key from a service account downloaded from the Google Developer Console. This token can then be passed to your client application which uses it to authenticate to Firebase.
+We also provide the [code for a Chrome Extension](chromeextension) showing how to setup and authorize Firebase in a Chrome extension.
 
 Introduction
 ------------
