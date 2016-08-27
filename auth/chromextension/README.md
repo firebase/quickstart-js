@@ -13,12 +13,49 @@ Introduction
 Setting up this sample
 ---------------
 
-- Create a Firebase project using the [Firebase Console](https://console.firebase.google.com).
-- Create a new OAuth Client ID in your project's [Developers Console](https://console.developers.google.com/apis/credentials/oauthclient?project=_), Select **Chrome App** and enter your Chrome Extension/App ID.
-- In your project's Firebase Console, enable the **Google** authentication method in the **Auth** section > **SIGN IN METHOD** tab.
+### Creating a dummy Chrome extension (how to obtain a Chrome App ID and Public Key)
+
+Setting up authentication in Chrome extensions is a bit of a chicken vs. egg problem. You need the **Public Key** and **Chrome App ID** to configure your manifest.json file, but you have to publish that to the Chrome Store to get the values. So we will publish a dummy app in order to obtain these.
+
+Create a new directory and add a `manifest.json` file similar to the following:
+
+    {
+      "manifest_version": 2,
+      "name": "Firebase Auth in Chrome Extension Sample",
+      "description": "This sample shows how to authorize Firebase in a Chrome extension using a Google account.",
+      "version": "0.1",
+      "permissions": [
+        "identity"
+      ]
+    }
+
+Zip the directory:
+
+    cd ..
+    zip -r <chrome ext name>.zip <directory name>
+
+Upload the dummy extension to the app store by going to the [Chrome App Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard) and clicking **Add a New Item**. For more reading on publishing to the Chrome Web Store, go [here](https://developer.chrome.com/webstore/publish).
+
+Once the extension is uploaded and visible under **Your Listings**, click the **more info** link to the right. Copy down both the **Item ID** (e.g. `kjdohecpbfnjbinmakjcmpgpbbhhijgf`) and **Public Key** (e.g. `MIIBIjANBgkqhkiG9w0B...long string of text...unbQIDAQAB`). You will need both of these below.
+
+### Creating an OAuth Client
+
+- Go to the [Google Developer's Console](https://console.developers.google.com/apis/credentials/oauthclient?project=_).
+- Click the **Create a New Project** button.
+- Go to **Credentials** > **OAuth Consent Screen** and add a project name.
+- Go back to the **Credentials** main tab and choose **Create Credentials** > **OAUth Client ID**.
+- Select **Chrome App** and enter your Chrome Extension/App ID (the `Item ID` obtained above).
+- Note the `Client ID` (e.g. `7159....j00.apps.googleusercontent.com`) as you will need this below.
+
+### Configuring your Firebase Project
+
+- Create or select a Firebase project at [Firebase Console](https://console.firebase.google.com).
+- Enable the **Google** authentication method in the **Auth** section > **SIGN IN METHOD** tab.
 - Add the Client ID you created to the whitelist using the **Whitelist client IDs from external projects (optional)**
 - Edit the `credential.js` and `background.js` and enter your project's identifiers you get from the Firebase Console **Overview > Add Firebase to your web app**.
-- Edit the `manifest.json` and enter your **Client ID** and your extension's **Public Key**. Also make sure you remove all comment lines (starting with `//`) in the `manifest.json` file before deploying your extension online.
+- Edit the `manifest.json`
+   - Enter your **OAuth Client ID** and your extension's **Public Key**.
+   - Remove all comment lines (starting with `//`) in the `manifest.json` file before deploying your extension online.
 - Install the Extension in your browser and click on the extension's icon once installed. The first time your users will install the extension they will have to authorize Firebase using the login button.
 
 
