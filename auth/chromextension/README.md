@@ -36,14 +36,13 @@ Zip the directory:
 
 Upload the dummy extension to the app store by going to the [Chrome App Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard) and clicking **Add a New Item**. For more reading on publishing to the Chrome Web Store, go [here](https://developer.chrome.com/webstore/publish).
 
+> Of course if you already own an extension and would like to add Firebase to it, skip the steps above.
+
 Once the extension is uploaded and visible under **Your Listings**, click the **more info** link to the right. Copy down both the **Item ID** (e.g. `kjdohecpbfnjbinmakjcmpgpbbhhijgf`) and **Public Key** (e.g. `MIIBIjANBgkqhkiG9w0B...long string of text...unbQIDAQAB`). You will need both of these below.
 
 ### Creating an OAuth Client
 
-- Go to the [Google Developer's Console](https://console.developers.google.com/apis/credentials/oauthclient?project=_).
-- Click the **Create a New Project** button.
-- Go to **Credentials** > **OAuth Consent Screen** and add a project name.
-- Go back to the **Credentials** main tab and choose **Create Credentials** > **OAUth Client ID**.
+- Create a new **OAuth Client ID** in [your project's Developers Console](https://console.developers.google.com/apis/credentials/oauthclient?project=_) (Click this link and select your Firebase project).
 - Select **Chrome App** and enter your Chrome Extension/App ID (the `Item ID` obtained above).
 - Note the `Client ID` (e.g. `7159....j00.apps.googleusercontent.com`) as you will need this below.
 
