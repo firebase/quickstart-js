@@ -21,6 +21,8 @@ Samples available:
    - Simple Social Blogging app 
  - [Storage](storage)
    - Upload a file to Firebase Storage and display its URL
+ - [Messaging](messaging)
+   - Send notifications
 
 ## How to make contributions?
 Please read and follow the steps in the [CONTRIBUTING.md](CONTRIBUTING.md)
