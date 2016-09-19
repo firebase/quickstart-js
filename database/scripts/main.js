@@ -329,13 +329,13 @@ var currentUID;
  */
 function onAuthStateChanged(user) {
   // We ignore token refresh events.
-  if (user && currentUID === user.uid || !user && currentUID === null) {
+  if (user && currentUID === user.uid) {
     return;
   }
-  currentUID = user ? user.uid : null;
 
   cleanupUi();
   if (user) {
+    currentUID = user.uid;
     splashPage.style.display = 'none';
     writeUserData(user.uid, user.displayName, user.email, user.photoURL);
     startDatabaseQueries();
