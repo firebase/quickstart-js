@@ -45,18 +45,23 @@ limitations under the License.
       <!-- Container for the Table of content -->
       <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+          <!-- div to display the generated Instance ID token -->
           <div id="token_div" style="display: none;">
-            <h4>Token</h4>
+            <h4>Instance ID Token</h4>
             <p id="token" style="word-break: break-all;"></p>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                     onclick="deleteToken()">Delete Token</button>
           </div>
+          <!-- div to display the UI to allow the request for permission to
+               notify the user. This is shown if the app has not yet been
+               granted permission to notify. -->
           <div id="permission_div" style="display: none;">
             <h4>Needs Permission</h4>
             <p id="token"></p>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                    onclick="askPermission()">Request Permission</button>
+                    onclick="requestPermission()">Request Permission</button>
           </div>
+          <!-- div to display messages received by this app. -->
           <div id="messages"></div>
         </div>
       </div>
@@ -65,32 +70,62 @@ limitations under the License.
   </main>
 </div>
 <!-- Firebase -->
-<!-- *******************************************************************************
-     * TODO(DEVELOPER): Paste the initialization snippet by navigating to:
-      https://console.firebase.google.com
-     and choosing a project you've created.  Then click the red HTML logo at the top
-     right of the page with the caption "Add Firebase to your web app".
-     Copy the snippet that appears in place of this comment.
-     *************************************************************************** -->
+<!-- ********************************************************
+     * TODO(DEVELOPER): Update Firebase initialization code:
+        1. Go to the Firebase console: https://console.firebase.google.com/
+        2. Choose a Firebase project you've created
+        3. Click "Add Firebase to your web app"
+        4. Replace the following initialization code with the code from the Firebase console:
+-->
+<!-- START INITIALIZATION CODE -->
+<!-- PASTE FIREBASE INITIALIZATION CODE HERE -->
+<!-- END INITIALIZATION CODE -->
+<!-- ******************************************************** -->
+<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-app.js"></script>
+<script src="/sdk/firebase-messaging-external_bin.js"></script>
+<script>
+ // Initialize Firebase
+ var config = {
+   apiKey: "AIzaSyDtD5AoOpsKWNN6aa9ZyUVOzvYsuTUm90M",
+   authDomain: "gh-quickstarter-278bf.firebaseapp.com",
+   databaseURL: "https://gh-quickstarter-278bf.firebaseio.com",
+   storageBucket: "gh-quickstarter-278bf.appspot.com",
+   messagingSenderId: "1023287755677"
+ };
+ firebase.initializeApp(config);
+</script>
 <script>
   // [START get_messaging_object]
+  // Retrieve Firebase Messaging object. It allows you to define how the app
+  // handles incoming messages to the page.
   const messaging = firebase.messaging();
   // [END get_messaging_object]
+
+  // IDs of divs that display Instance ID token UI or request permission UI.
   const tokenDivId = 'token_div';
   const permissionDivId = 'permission_div';
 
   // [START refresh_token]
-  // Called if InstanceID token is updated. This may occur if the security of
-  // the previous token had been compromised. Note that you will have to
-  // re-subscribe the new token to the topics that the previous token was
-  // subscribed to.
+  // Callback fired if Instance ID token is updated. This may occur if the
+  // security of the previous token had been compromised. Once your server
+  // receives the new Instance ID token it should subscribe the new
+  // Instance ID token to all the topics that the previous Instance ID token
+  // was subscribed to.
   messaging.onTokenRefresh(function() {
     messaging.getToken()
     .then(function(refreshedToken) {
       console.log('Token refreshed.');
+      // Indicate that the new Instance ID token has not yet been sent to the
+      // app server.
       setTokenSentToServer(false);
+      // Send Instance ID token to app server.
       sendTokenToServer(refreshedToken);
+      // Display new Instance ID token and clear all previous messages.
       resetUI();
+    })
+    .catch(function(err) {
+      console.log('Unable to retrieve refreshed token ', err);
+      showToken('Unable to retrieve refreshed token ', err);
     });
   });
   // [END refresh_token]
@@ -100,22 +135,26 @@ limitations under the License.
   // message is received while the app is in the foreground or when the user
   // clicks on a the notification resulting from the user clicking on a
   // notification message.
+
+  // Handle incoming messages. Called when:
+  // - a message is received while the app has focus
+  // - the user clicks on an app notification created by a sevice worker
+  //   `messaging.setBackgroundMessageHandler` handler.
   messaging.onMessage(function(payload) {
-    console.log("Message received.");
-    console.log(payload);
+    console.log("Message received. ", payload);
     // [START_EXCLUDE]
+    // Update the UI to include the received message.
     appendMessage(payload);
     // [END_EXCLUDE]
   });
   // [END receive_message]
 
   function resetUI() {
-    // Reset UI
     clearMessages();
     showToken('loading...');
+    // [START get_token]
     // Get Instance ID token. Initially this makes a network call, once retrieved
     // subsequent calls to getToken will return from cache.
-    // [START get_token]
     messaging.getToken()
     .then(function(currentToken) {
       if (currentToken) {
@@ -133,21 +172,21 @@ limitations under the License.
     .catch(function(err) {
       console.log('An error occurred while retrieving token. This may occurr after ' +
           'notification permission has been denied. ', err);
+      showToken('Error retrieving Instance ID token. ', err);
       setTokenSentToServer(false);
     });
   }
   // [END get_token]
-  resetUI();
 
   function showToken(currentToken) {
     // Show token in console and UI.
-    var tokenEle = document.querySelector('#token');
-    tokenEle.textContent = currentToken;
+    var tokenElement = document.querySelector('#token');
+    tokenElement.textContent = currentToken;
   }
 
-  // Send the Instance ID token your application server so that you can use it
-  // to send message to this app. Also you can use the token on the application
-  // server to subscribe/unsubscribe the token from topics.
+  // Send the Instance ID token your application server, so that it can:
+  // - send messages back to this app
+  // - subscribe/unsubscribe the token from topics
   function sendTokenToServer(currentToken) {
     if (!isTokenSentToServer()) {
       console.log('Sending token to server...');
@@ -184,19 +223,21 @@ limitations under the License.
     }
   }
 
-  function askPermission() {
+  function requestPermission() {
     console.log('Requesting permission...');
     // [START request_permission]
     messaging.requestPermission()
     .then(function() {
       console.log('Notification permission granted.');
+      // TODO(developer): Retrieve a Instance ID token for use with FCM.
       // [START_EXCLUDE]
-      // Now you can retrieve a Instance ID token for use with FCM.
+      // In many cases once an app has been granted notification permission, it
+      // should update its UI reflecting this.
       resetUI();
       // [END_EXCLUDE]
     })
     .catch(function(err) {
-      console.log('Unable to get permission to notify.');
+      console.log('Unable to get permission to notify. ', err);
     });
     // [END request_permission]
   }
@@ -204,22 +245,30 @@ limitations under the License.
   function deleteToken() {
     // Delete Instance ID token.
     // [START delete_token]
-    messaging.deleteToken()
-    .then(function() {
-      console.log('Token deleted.');
-      setTokenSentToServer(false);
-      // [START_EXCLUDE]
-      // Once token is deleted update UI.
-      resetUI();
-      // [END_EXCLUDE]
+    messaging.getToken()
+    .then(function(currentToken) {
+      messaging.deleteToken(currentToken)
+      .then(function() {
+        console.log('Token deleted.');
+        setTokenSentToServer(false);
+        // [START_EXCLUDE]
+        // Once token is deleted update UI.
+        resetUI();
+        // [END_EXCLUDE]
+      })
+      .catch(function(err) {
+        console.log('Unable to delete token. ', err);
+      });
+      // [END delete_token]
     })
     .catch(function(err) {
-      console.log('Unable to delete token.');
+      console.log('Error retrieving Instance ID token. ', err);
+      showToken('Error retrieving Instance ID token. ', err);
     });
-    // [END delete_token]
+
   }
 
-  // Add a messages to the messages element.
+  // Add a message to the messages element.
   function appendMessage(payload) {
     const messagesElement = document.querySelector('#messages');
     const dataHeaderELement = document.createElement('h5');
@@ -248,6 +297,8 @@ limitations under the License.
     showHideDiv(tokenDivId, false);
     showHideDiv(permissionDivId, true);
   }
+
+  resetUI();
 </script>
 </body>
 </html>
