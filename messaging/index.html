@@ -26,6 +26,8 @@ limitations under the License.
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
   <link rel="stylesheet" href="main.css">
+
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -81,23 +83,9 @@ limitations under the License.
 <!-- PASTE FIREBASE INITIALIZATION CODE HERE -->
 <!-- END INITIALIZATION CODE -->
 <!-- ******************************************************** -->
-<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-app.js"></script>
-<script src="/sdk/firebase-messaging-external_bin.js"></script>
-<script>
- // Initialize Firebase
- var config = {
-   apiKey: "AIzaSyDtD5AoOpsKWNN6aa9ZyUVOzvYsuTUm90M",
-   authDomain: "gh-quickstarter-278bf.firebaseapp.com",
-   databaseURL: "https://gh-quickstarter-278bf.firebaseio.com",
-   storageBucket: "gh-quickstarter-278bf.appspot.com",
-   messagingSenderId: "1023287755677"
- };
- firebase.initializeApp(config);
-</script>
 <script>
   // [START get_messaging_object]
-  // Retrieve Firebase Messaging object. It allows you to define how the app
-  // handles incoming messages to the page.
+  // Retrieve Firebase Messaging object.
   const messaging = firebase.messaging();
   // [END get_messaging_object]
 
@@ -106,11 +94,7 @@ limitations under the License.
   const permissionDivId = 'permission_div';
 
   // [START refresh_token]
-  // Callback fired if Instance ID token is updated. This may occur if the
-  // security of the previous token had been compromised. Once your server
-  // receives the new Instance ID token it should subscribe the new
-  // Instance ID token to all the topics that the previous Instance ID token
-  // was subscribed to.
+  // Callback fired if Instance ID token is updated.
   messaging.onTokenRefresh(function() {
     messaging.getToken()
     .then(function(refreshedToken) {
@@ -120,8 +104,10 @@ limitations under the License.
       setTokenSentToServer(false);
       // Send Instance ID token to app server.
       sendTokenToServer(refreshedToken);
-      // Display new Instance ID token and clear all previous messages.
+      // [START_EXCLUDE]
+      // Display new Instance ID token and clear UI of all previous messages.
       resetUI();
+      // [END_EXCLUDE]
     })
     .catch(function(err) {
       console.log('Unable to retrieve refreshed token ', err);
@@ -131,11 +117,6 @@ limitations under the License.
   // [END refresh_token]
 
   // [START receive_message]
-  // Handle messages that are received by this page. This is called when a
-  // message is received while the app is in the foreground or when the user
-  // clicks on a the notification resulting from the user clicking on a
-  // notification message.
-
   // Handle incoming messages. Called when:
   // - a message is received while the app has focus
   // - the user clicks on an app notification created by a sevice worker
@@ -159,7 +140,6 @@ limitations under the License.
     .then(function(currentToken) {
       if (currentToken) {
         sendTokenToServer(currentToken);
-        // Update UI to show token.
         updateUIForPushEnabled(currentToken);
       } else {
         // Show permission request.
@@ -170,8 +150,7 @@ limitations under the License.
       }
     })
     .catch(function(err) {
-      console.log('An error occurred while retrieving token. This may occurr after ' +
-          'notification permission has been denied. ', err);
+      console.log('An error occurred while retrieving token. ', err);
       showToken('Error retrieving Instance ID token. ', err);
       setTokenSentToServer(false);
     });
@@ -272,9 +251,10 @@ limitations under the License.
   function appendMessage(payload) {
     const messagesElement = document.querySelector('#messages');
     const dataHeaderELement = document.createElement('h5');
-    const dataElement = document.createElement('p');
+    const dataElement = document.createElement('pre');
+    dataElement.style = 'overflow-x:hidden;'
     dataHeaderELement.textContent = 'Received message:';
-    dataElement.textContent = JSON.stringify(payload.data);
+    dataElement.textContent = JSON.stringify(payload, null, 2);
     messagesElement.appendChild(dataHeaderELement);
     messagesElement.appendChild(dataElement);
   }
