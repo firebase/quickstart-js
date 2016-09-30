@@ -9,7 +9,7 @@ importScripts('https://www.gstatic.com/firebasejs/3.5.0/firebase.js');
 firebase.initializeApp({
   'messagingSenderId': 'YOUR-SENDER-ID'
 });
-// [START initialize_firebase_in_sw]
+// [END initialize_firebase_in_sw]
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
 // messages.
