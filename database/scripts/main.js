@@ -89,7 +89,7 @@ function createPostElement(postId, title, text, author, authorId, authorPic) {
   var uid = firebase.auth().currentUser.uid;
 
   var html =
-      '<div class="post mdl-cell mdl-cell--12-col ' +
+      '<div class="post post-' + postId + ' mdl-cell mdl-cell--12-col ' +
                   'mdl-cell--6-col-tablet mdl-cell--4-col-desktop mdl-grid mdl-grid--no-spacing">' +
         '<div class="mdl-card mdl-shadow--2dp">' +
           '<div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">' +
@@ -275,6 +275,19 @@ function startDatabaseQueries() {
       containerElement.insertBefore(
           createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic),
           containerElement.firstChild);
+    });
+    postsRef.on('child_changed', function(data) {	
+		var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
+		var postElement = containerElement.getElementsByClassName('post-' + data.key)[0];
+		postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = data.val().title;
+		postElement.getElementsByClassName('username')[0].innerText = data.val().author;
+		postElement.getElementsByClassName('text')[0].innerText = data.val().body;
+		postElement.getElementsByClassName('star-count')[0].innerText = data.val().starCount;
+    });
+    postsRef.on('child_removed', function(data) {
+		var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
+		var post = containerElement.getElementsByClassName('post-' + data.key)[0];
+	    post.parentElement.removeChild(post);
     });
   };
 
