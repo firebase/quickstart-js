@@ -62,6 +62,7 @@ curl -X POST -H "Authorization: key=YOUR-SERVER-KEY" -H "Content-Type: applicati
 
 ### App focus
 The browser gives your app focus when both:
+
 1. Your app is running in the currently selected browser tab.
 2. The browser tab's window currently has focus, as defined by the operating system.
 
