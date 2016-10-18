@@ -25,7 +25,9 @@ Getting Started
    notifications to the browser.
 5. Use the generated Instance ID token to send an HTTP request to FCM that
    delivers the message to the web application, inserting appropriate values
-   for YOUR-SERVER-KEY and YOUR-IID-TOKEN.
+   for [YOUR-SERVER-KEY](https://console.firebase.google.com/project/_/settings/cloudmessaging)
+   and YOUR-IID-TOKEN.
+
 ### HTTP
 ```
 POST /fcm/send HTTP/1.1
@@ -43,6 +45,7 @@ Content-Type: application/json
   "to": "YOUR-IID-TOKEN"
 }
 ```
+
 ### cURL
 ```
 curl -X POST -H "Authorization: key=YOUR-SERVER-KEY" -H "Content-Type: application/json" -d '{
@@ -55,6 +58,7 @@ curl -X POST -H "Authorization: key=YOUR-SERVER-KEY" -H "Content-Type: applicati
   "to": "YOUR-IID-TOKEN"
 }' "https://fcm.googleapis.com/fcm/send"
 ```
+
 - When the app has the browser focus , the received message is handled through
   the `onMessage` callback in index.html. When the app does not have browser
   focus then the `setBackgroundMessageHandler` callback in firebase-messaging-sw.js
