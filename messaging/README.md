@@ -39,7 +39,7 @@ Content-Type: application/json
   "notification": {
     "title": "Portugal vs. Denmark",
     "body": "5 to 1",
-    "icon": "firebase-icon.png",
+    "icon": "firebase-logo.png",
     "click_action": "http://localhost:8081"
   },
   "to": "YOUR-IID-TOKEN"
@@ -52,7 +52,7 @@ curl -X POST -H "Authorization: key=YOUR-SERVER-KEY" -H "Content-Type: applicati
   "notification": {
     "title": "Portugal vs. Denmark",
     "body": "5 to 1",
-    "icon": "firebase-icon.png",
+    "icon": "firebase-logo.png",
     "click_action": "http://localhost:8081"
   },
   "to": "YOUR-IID-TOKEN"
