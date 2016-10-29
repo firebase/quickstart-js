@@ -208,7 +208,7 @@ limitations under the License.
     messaging.requestPermission()
     .then(function() {
       console.log('Notification permission granted.');
-      // TODO(developer): Retrieve a Instance ID token for use with FCM.
+      // TODO(developer): Retrieve an Instance ID token for use with FCM.
       // [START_EXCLUDE]
       // In many cases once an app has been granted notification permission, it
       // should update its UI reflecting this.
@@ -216,7 +216,7 @@ limitations under the License.
       // [END_EXCLUDE]
     })
     .catch(function(err) {
-      console.log('Unable to get permission to notify. ', err);
+      console.log('Unable to get permission to notify.', err);
     });
     // [END request_permission]
   }
