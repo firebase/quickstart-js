@@ -405,6 +405,8 @@ window.addEventListener('load', function() {
 
   // Bind Sign out button.
   signOutButton.addEventListener('click', function() {
+    // Set currentUID to null.
+    currentUID = null;
     firebase.auth().signOut();
   });
 
