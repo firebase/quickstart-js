@@ -353,6 +353,8 @@ function onAuthStateChanged(user) {
     writeUserData(user.uid, user.displayName, user.email, user.photoURL);
     startDatabaseQueries();
   } else {
+    // Set currentUID to null.
+    currentUID = null;
     // Display the splash page where you can sign-in.
     splashPage.style.display = '';
   }
