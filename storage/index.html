@@ -89,7 +89,7 @@ limitations under the License.
       storageRef.child('images/' + file.name).put(file, metadata).then(function(snapshot) {
         console.log('Uploaded', snapshot.totalBytes, 'bytes.');
         console.log(snapshot.metadata);
-        var url = snapshot.metadata.downloadURLs[0];
+        var url = snapshot.downloadURL;
         console.log('File available at', url);
         // [START_EXCLUDE]
         document.getElementById('linkbox').innerHTML = '<a href="' +  url + '">Click For File</a>';
