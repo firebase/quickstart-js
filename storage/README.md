@@ -1,12 +1,12 @@
-Firebase Storage Quickstart
-=============================
+Firebase SDK for Cloud Storage Quickstart
+=========================================
 
-The Firebase Storage quickstart demonstrates how to connect to Firebase storage, store data, and retrieve a download URL.
+The Firebase SDK for Cloud Storage  quickstart demonstrates how to connect to Cloud Storage, store data, and retrieve a download URL from a web client.
 
 Introduction
 ------------
 
-- [Read more about Firebase Storage](https://firebase.google.com/docs/storage/)
+- [Read more about Firebase SDK for Cloud Storage ](https://firebase.google.com/docs/storage/)
 
 Getting Started
 ---------------
