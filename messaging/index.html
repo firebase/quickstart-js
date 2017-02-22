@@ -186,11 +186,7 @@ limitations under the License.
   }
 
   function setTokenSentToServer(sent) {
-    if (sent) {
-      window.localStorage.setItem('sentToServer', 1);
-    } else {
-      window.localStorage.setItem('sentToServer', 0);
-    }
+    window.localStorage.setItem('sentToServer', sent ? 1 : 0);
   }
 
   function showHideDiv(divId, show) {
