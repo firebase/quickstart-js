@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <html>
 <head>
-  <meta charset=utf-8/>
+  <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Firebase Cloud Messaging Example</title>
 
@@ -186,11 +186,7 @@ limitations under the License.
   }
 
   function setTokenSentToServer(sent) {
-    if (sent) {
-      window.localStorage.setItem('sentToServer', 1);
-    } else {
-      window.localStorage.setItem('sentToServer', 0);
-    }
+    window.localStorage.setItem('sentToServer', sent ? 1 : 0);
   }
 
   function showHideDiv(divId, show) {
