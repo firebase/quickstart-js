@@ -88,7 +88,7 @@ curl -X POST -H "Authorization: key=YOUR-SERVER-KEY" -H "Content-Type: applicati
 ```
 
 ### App focus
-When the app has the browser focus , the received message is handled through
+When the app has the browser focus, the received message is handled through
 the `onMessage` callback in index.html. When the app does not have browser
 focus then the `setBackgroundMessageHandler` callback in firebase-messaging-sw.js
 is where the received message is handled.
