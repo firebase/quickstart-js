@@ -13,9 +13,9 @@ Getting Started
 
 - Create your project on the [Firebase Console](https://console.firebase.google.com).
 - From your Firebase project console, click on red circle button with the caption "Add Firebase to your web app".
-![Alt text](/storage/pics/redcircle.png?raw=true "Red Circle")
+![Alt text](pics/redcircle.png?raw=true "Red Circle")
 - Copy the initialization snippet into the index.html file by clicking the red HTML.
-![Alt text](/storage/pics/snippet.png?raw=true "Snippet")
+![Alt text](pics/snippet.png?raw=true "Snippet")
 - The snippet which appears should be placed in the `<head>` section of `index.html`.
 - Enable Anonymous auth in the **Auth > SIGN IN METHOD** tab.
 ![Alt text](/storage/pics/enable.png?raw=true "Enable auth")
