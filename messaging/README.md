@@ -87,12 +87,12 @@ curl -X POST -H "Authorization: key=YOUR-SERVER-KEY" -H "Content-Type: applicati
 }' "https://fcm.googleapis.com/fcm/send"
 ```
 
-- When the app has the browser focus , the received message is handled through
-  the `onMessage` callback in index.html. When the app does not have browser
-  focus then the `setBackgroundMessageHandler` callback in firebase-messaging-sw.js
-  is where the received message is handled.
-
 ### App focus
+When the app has the browser focus, the received message is handled through
+the `onMessage` callback in `index.html`. When the app does not have browser
+focus then the `setBackgroundMessageHandler` callback in `firebase-messaging-sw.js`
+is where the received message is handled.
+
 The browser gives your app focus when both:
 
 1. Your app is running in the currently selected browser tab.
