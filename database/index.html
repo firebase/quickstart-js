@@ -44,17 +44,21 @@
 
   <link rel="stylesheet" href="main.css">
 
-  <!-- Firebase -->
-  <!-- *******************************************************************************
-       * TODO(DEVELOPER): Paste the initialization snippet by navigating to:
-
-        https://console.firebase.google.com
-
-       and choosing a project you've created.  Then click the red HTML logo at the top
-       right of the page with the caption "Add Firebase to your web app".
-
-       Copy the snippet that appears in place of this comment.
-       *************************************************************************** -->
+  <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-messaging.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDL4Trtg4kH1YyMAkHa7ALRbIUkwAaOtVM",
+    authDomain: "themainline-b3c09.firebaseapp.com",
+    databaseURL: "https://themainline-b3c09.firebaseio.com",
+    storageBucket: "themainline-b3c09.appspot.com",
+    messagingSenderId: "368880593245"
+  };
+  firebase.initializeApp(config);
+</script>
 
 </head>
 <body>
@@ -146,6 +150,8 @@
     </section>
   </main>
 </div>
+
+
 
 <script src="scripts/main.js"></script>
 </body>
