@@ -44,18 +44,6 @@
 
   <link rel="stylesheet" href="main.css">
 
-  <!-- Firebase -->
-  <!-- *******************************************************************************
-       * TODO(DEVELOPER): Paste the initialization snippet by navigating to:
-
-        https://console.firebase.google.com
-
-       and choosing a project you've created.  Then click the red HTML logo at the top
-       right of the page with the caption "Add Firebase to your web app".
-
-       Copy the snippet that appears in place of this comment.
-       *************************************************************************** -->
-
 </head>
 <body>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -146,6 +134,14 @@
     </section>
   </main>
 </div>
+
+<!-- Import and configure the Firebase SDK -->
+<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+<!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+<script src="/__/firebase/3.9.0/firebase-app.js"></script>
+<script src="/__/firebase/3.9.0/firebase-auth.js"></script>
+<script src="/__/firebase/3.9.0/firebase-database.js"></script>
+<script src="/__/firebase/init.js"></script>
 
 <script src="scripts/main.js"></script>
 </body>
