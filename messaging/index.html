@@ -175,10 +175,7 @@ limitations under the License.
   }
 
   function isTokenSentToServer() {
-    if (window.localStorage.getItem('sentToServer') == 1) {
-      return true;
-    }
-    return false;
+    return window.localStorage.getItem('sentToServer') == 1;
   }
 
   function setTokenSentToServer(sent) {
