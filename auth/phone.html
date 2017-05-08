@@ -30,10 +30,8 @@ limitations under the License.
   <!-- Import and configure the Firebase SDK -->
   <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
   <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
-  <script src="https://www.gstatic.com/firebasejs/staging/4.0.0/firebase.js"></script> <!-- TODO: REMOVE before launch
   <script src="/__/firebase/4.0.0/firebase-app.js"></script>
   <script src="/__/firebase/4.0.0/firebase-auth.js"></script>
-  -->
   <script src="/__/firebase/init.js"></script>
 
   <script type="text/javascript">
@@ -52,11 +50,8 @@ limitations under the License.
             .then(function(confirmationResult) {
               // SMS sent. Prompt user to type the code from the message, then sign the
               // user in with confirmationResult.confirm(code).
-              // [START_EXCLUDE]
-              document.getElementById('verification-code-form').style.display = 'block';
-              document.getElementById('verify-code-button').disabled = false;
-              // [END_EXCLUDE]
               window.confirmationResult = confirmationResult;
+              showVerificationCodeForm();
             }).catch(function(error) {
               // Error; SMS not sent
               // [START_EXCLUDE]
@@ -72,6 +67,14 @@ limitations under the License.
         firebase.auth().signOut();
         // [END signout]
       }
+    }
+
+    /**
+     * Displays the Verification Code input form.
+     */
+    function showVerificationCodeForm() {
+      document.getElementById('verification-code-form').style.display = 'block';
+      document.getElementById('verify-code-button').disabled = false;
     }
 
     /**
