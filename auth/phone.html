@@ -30,9 +30,10 @@ limitations under the License.
   <!-- Import and configure the Firebase SDK -->
   <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
   <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
-  <script src="https://www.gstatic.com/firebasejs/staging/4.0.0/firebase.js"></script> <!-- TODO: REMOVE before launch -->
+  <script src="https://www.gstatic.com/firebasejs/staging/4.0.0/firebase.js"></script> <!-- TODO: REMOVE before launch
   <script src="/__/firebase/4.0.0/firebase-app.js"></script>
   <script src="/__/firebase/4.0.0/firebase-auth.js"></script>
+  -->
   <script src="/__/firebase/init.js"></script>
 
   <script type="text/javascript">
@@ -40,28 +41,29 @@ limitations under the License.
     /**
      * Function called when clicking the Login/Logout button.
      */
-    // [START buttoncallback]
-    function toggleSignIn() {
-      // [START_EXCLUDE]
-      document.getElementById('quickstart-sign-in').disabled = true;
-      // [END_EXCLUDE]
+    function toggleSignIn(e) {
+      e.preventDefault();
+      document.getElementById('sign-in-button').disabled = true;
       if (!firebase.auth().currentUser) {
-        var phoneNumber = document.getElementById('phone-number').value;
         // [START signin]
-        firebase.auth().signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
+        var phoneNumber = getPhoneNumberFromUserInput();
+        var appVerifier = window.recaptchaVerifier;
+        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
             .then(function(confirmationResult) {
               // SMS sent. Prompt user to type the code from the message, then sign the
               // user in with confirmationResult.confirm(code).
               // [START_EXCLUDE]
-              document.getElementById('verification-code-container').style.display = 'block';
-              document.getElementById('verify-code-button').style.display = 'block';
+              document.getElementById('verification-code-form').style.display = 'block';
+              document.getElementById('verify-code-button').disabled = false;
               // [END_EXCLUDE]
               window.confirmationResult = confirmationResult;
             }).catch(function(error) {
               // Error; SMS not sent
               // [START_EXCLUDE]
               console.error('Error during signInWithPhoneNumber', error);
-              document.getElementById('quickstart-sign-in').disabled = false;
+              window.alert('Error during signInWithPhoneNumber:\n\n'
+                  + error.code + '\n\n' + error.message);
+              document.getElementById('sign-in-button').disabled = false;
               // [END_EXCLUDE]
             });
         // [END signin]
@@ -71,13 +73,15 @@ limitations under the License.
         // [END signout]
       }
     }
-    // [END buttoncallback]
 
     /**
      * Function called when clicking the "Verify Code" button.
      */
-    function verifyCode() {
-      var code = document.getElementById('verification-code').value;
+    function verifyCode(e) {
+      document.getElementById('verify-code-button').disabled = true;
+      e.preventDefault();
+      // [START verifyCode]
+      var code = getCodeFromUserInput();
       confirmationResult.confirm(code).then(function(result) {
         // User signed in successfully.
         var user = result.user;
@@ -88,9 +92,29 @@ limitations under the License.
         // User couldn't sign in (bad verification code?)
         // [START_EXCLUDE]
         console.error('Error while checking the verification code', error);
-        document.getElementById('quickstart-sign-in').disabled = false;
+        window.alert('Error while checking the verification code:\n\n'
+            + error.code + '\n\n' + error.message);
+        document.getElementById('sign-in-button').disabled = false;
+        document.getElementById('verify-code-button').disabled = false;
         // [END_EXCLUDE]
       });
+      // [END verifyCode]
+    }
+
+    /**
+     * Reads the verification code from the user input.
+     */
+    function getCodeFromUserInput() {
+      return document.getElementById('verification-code').value;
+    }
+
+    /**
+     * Reads the phone number from the user input.
+     */
+    function getPhoneNumberFromUserInput() {
+      // We remove all spaces, dashes and parentheses.
+      return document.getElementById('phone-number').value
+          .split('-').join('').split(' ').join('').split('(').join('').split(')').join('');
     }
 
     /**
@@ -104,43 +128,48 @@ limitations under the License.
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
-          var displayName = user.displayName;
+          var uid = user.uid;
           var email = user.email;
-          var emailVerified = user.emailVerified;
           var photoURL = user.photoURL;
           var isAnonymous = user.isAnonymous;
-          var uid = user.uid;
+          var displayName = user.displayName;
           var providerData = user.providerData;
+          var emailVerified = user.emailVerified;
           // [START_EXCLUDE]
-          document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
-          document.getElementById('quickstart-sign-in').textContent = 'Sign out';
-          document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+          document.getElementById('sign-in-status').textContent = 'Signed in';
+          document.getElementById('sign-in-button').textContent = 'Sign-out';
+          document.getElementById('account-details').textContent = JSON.stringify(user, null, '  ');
           // [END_EXCLUDE]
         } else {
           // User is signed out.
           // [START_EXCLUDE]
-          document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
-          document.getElementById('quickstart-sign-in').textContent = 'Sign in with phone number';
-          document.getElementById('quickstart-account-details').textContent = 'null';
-          document.getElementById('quickstart-oauthtoken').textContent = 'null';
-          document.getElementById('verification-code-container').style.display = 'none';
-          document.getElementById('verify-code-button').style.display = 'none';
+          document.getElementById('sign-in-status').textContent = 'Signed out';
+          document.getElementById('sign-in-button').textContent = 'Sign-in';
+          document.getElementById('account-details').textContent = 'null';
+          document.getElementById('verification-code-form').style.display = 'none';
           // [END_EXCLUDE]
         }
       });
       // [END authstatelistener]
 
-      document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
-
-      document.getElementById('phone-number').addEventListener('keyup', function(e) {
-        document.getElementById('quickstart-sign-in').disabled = !e.target.value;
-      }, false);
-
-      document.getElementById('verify-code-button').addEventListener('click', verifyCode, false);
+      document.getElementById('sign-in-form').addEventListener('submit',toggleSignIn);
+      document.getElementById('phone-number').addEventListener('keyup', validatePhoneNumber);
+      document.getElementById('phone-number').addEventListener('change', validatePhoneNumber);
+      document.getElementById('verification-code-form').addEventListener('submit', verifyCode);
 
       // [START appVerifier]
       window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
       // [END appVerifier]
+    }
+
+    /**
+     * Validates the phone number enterered by the user and disables or enables the sign-in button.
+     * Phone numbers need to be international formats, including country code and starting with the `+` sign.
+     */
+    function validatePhoneNumber() {
+      var pattern = /^\+[0-9\s\-\(\)]+$/;
+      var phoneNumber = document.getElementById('phone-number').value;
+      document.getElementById('sign-in-button').disabled = phoneNumber.search(pattern) === -1;
     }
 
     window.onload = function() {
@@ -171,31 +200,31 @@ limitations under the License.
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
           <p>Sign in with your phone number below.</p>
 
-          <!-- Input to enter the phone number -->
-          <form action="#">
+          <form id="sign-in-form" action="#">
+            <!-- Input to enter the phone number -->
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" pattern="\+?-?[0-9]*(\.[0-9]+)?" id="phone-number">
+              <input class="mdl-textfield__input" type="text" pattern="\+[0-9\s\-\(\)]+" id="phone-number">
               <label class="mdl-textfield__label" for="phone-number">Enter your phone number...</label>
-              <span class="mdl-textfield__error">Input is not a phone number!</span>
+              <span class="mdl-textfield__error">Input is not an international phone number!</span>
             </div>
-          </form>
 
-          <!-- Button that handles sign-in/sign-out -->
-          <button disabled class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in">Sign in with phone number</button>
+            <!-- Button that handles sign-in/sign-out -->
+            <input type="submit" disabled class="mdl-button mdl-js-button mdl-button--raised" id="sign-in-button" value="Sign-in"/>
+          </form>
 
           <!-- Container to display the re-captcha check -->
           <div id="recaptcha-container"></div>
 
-          <!-- Input to enter the phone number -->
-          <form id="verification-code-container" action="#">
+          <form id="verification-code-form" action="#">
+            <!-- Input to enter the phone number -->
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="verification-code">
               <label class="mdl-textfield__label" for="verification-code">Enter the verification code...</label>
             </div>
-          </form>
 
-          <!-- Button that triggers code verification -->
-          <button class="mdl-button mdl-js-button mdl-button--raised" id="verify-code-button">Verify Code</button>
+            <!-- Button that triggers code verification -->
+            <input type="submit" class="mdl-button mdl-js-button mdl-button--raised" id="verify-code-button" value="Verify Code"/>
+          </form>
         </div>
       </div>
 
@@ -206,12 +235,10 @@ limitations under the License.
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
           <!-- Container where we'll display the user details -->
-          <div class="quickstart-user-details-container">
-            Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
+          <div class="user-details-container">
+            Firebase sign-in status: <span id="sign-in-status">Unknown</span>
             <div>Firebase auth <code>currentUser</code> object value:</div>
-            <pre><code id="quickstart-account-details">null</code></pre>
-            <div>Google OAuth Access Token:</div>
-            <pre><code id="quickstart-oauthtoken">null</code></pre>
+            <pre><code id="account-details">null</code></pre>
           </div>
         </div>
       </div>

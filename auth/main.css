@@ -31,11 +31,11 @@ li a {
 .mdl-layout__header-row {
   padding: 0;
 }
-.quickstart-user-details-container {
+.quickstart-user-details-container, .user-details-container {
   margin-top: 20px;
   line-height: 25px;
 }
-#quickstart-sign-in-status {
+#quickstart-sign-in-status, #sign-in-status {
   font-weight: bold;
 }
 pre {
@@ -51,4 +51,14 @@ h3 {
   background-size: 40px;
   padding-left: 50px;
   color: white;
+}
+#verification-code-form {
+  display:none;
+}
+
+#recaptcha-container {
+  margin-top: 10px;
+}
+#verify-code-button, #sign-in-button {
+  margin-left: 20px;
 }
