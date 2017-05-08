@@ -8,25 +8,18 @@ The Firebase Cloud Messaging quickstart demonstrates how to:
 Introduction
 ------------
 
-- [Read more about Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/)
+[Read more about Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/)
 
 Getting Started
 ---------------
 
-1. Set up your project on the [Firebase Console](https://console.firebase.google.com).
-2. Paste initialization snippet into `index.html` with the one generated from
-   the Firebase Console **Overview > Add Firebase to your web app**. See TODO in
-   `index.html`.
-3. Run the app
-     - Install the [Firebase CLI](https://firebase.google.com/docs/cli/)
-     - Use command `firebase serve -p 8081` to serve app locally.
-     - Open http://localhost:8081 in your browser.
-4. Click REQUEST PERMISSION button to request permission for the app to send
-   notifications to the browser.
-5. Use the generated Instance ID token to send an HTTP request to FCM that
-   delivers the message to the web application, inserting appropriate values
-   for [YOUR-SERVER-KEY](https://console.firebase.google.com/project/_/settings/cloudmessaging)
-   and YOUR-IID-TOKEN.
+1. Create your project on the [Firebase Console](https://console.firebase.google.com).
+1. You must have the [Firebase CLI](https://firebase.google.com/docs/cli/) installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
+1. On the command line run `firebase use --add` and select the Firebase project you have created.
+1. On the command line run `firebase serve -p 8081` using the Firebase CLI tool to launch a local server.
+1. Open [http://localhost:8081](http://localhost:8081) in your browser.
+4. Click **REQUEST PERMISSION** button to request permission for the app to send notifications to the browser.
+5. Use the generated Instance ID token (IID Token) to send an HTTP request to FCM that delivers the message to the web application, inserting appropriate values for [`YOUR-SERVER-KEY`](https://console.firebase.google.com/project/_/settings/cloudmessaging) and `YOUR-IID-TOKEN`.
 
 ### HTTP
 ```
