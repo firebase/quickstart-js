@@ -71,18 +71,14 @@ limitations under the License.
     </div>
   </main>
 </div>
-<!-- Firebase -->
-<!-- ********************************************************
-     * TODO(DEVELOPER): Update Firebase initialization code:
-        1. Go to the Firebase console: https://console.firebase.google.com/
-        2. Choose a Firebase project you've created
-        3. Click "Add Firebase to your web app"
-        4. Replace the following initialization code with the code from the Firebase console:
--->
-<!-- START INITIALIZATION CODE -->
-<!-- PASTE FIREBASE INITIALIZATION CODE HERE -->
-<!-- END INITIALIZATION CODE -->
-<!-- ******************************************************** -->
+
+<!-- Import and configure the Firebase SDK -->
+<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+<!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+<script src="/__/firebase/3.9.0/firebase-app.js"></script>
+<script src="/__/firebase/3.9.0/firebase-messaging.js"></script>
+<script src="/__/firebase/init.js"></script>
+
 <script>
   // [START get_messaging_object]
   // Retrieve Firebase Messaging object.
@@ -179,10 +175,7 @@ limitations under the License.
   }
 
   function isTokenSentToServer() {
-    if (window.localStorage.getItem('sentToServer') == 1) {
-          return true;
-    }
-    return false;
+    return window.localStorage.getItem('sentToServer') == 1;
   }
 
   function setTokenSentToServer(sent) {
