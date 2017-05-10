@@ -16,6 +16,7 @@
 
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
+  background-color: #f5f5f5;
 }
 a {
   text-decoration: none;
@@ -23,6 +24,12 @@ a {
 li a {
   text-decoration: underline;
   color: #0288d1;
+}
+.mdl-card {
+  overflow: visible;
+}
+.grecaptcha-logo {
+  background-color: white;
 }
 .mdl-grid {
   max-width: 1024px;
@@ -57,13 +64,14 @@ h3 {
 }
 #recaptcha-container {
   margin-top: 10px;
-}
-#sign-in-button {
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 #verify-code-button, #cancel-verify-code-button {
   margin-left: 20px;
 }
 #sign-out-button {
   display: none;
+}
+#sign-in-card {
+  z-index: 2;
 }
