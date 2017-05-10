@@ -297,8 +297,11 @@ limitations under the License.
    * Returns true if the ReCaptcha is in an OK state.
    */
   function isCaptchaOK() {
+    // [START getRecaptchaResponse]
+    var recaptchaResponse = grecaptcha.getResponse(window.recaptchaWidgetId);
+    // [END getRecaptchaResponse]
     return typeof window.recaptchaWidgetId !== 'undefined'
-        && grecaptcha.getResponse(window.recaptchaWidgetId) !== '';
+        && recaptchaResponse !== '';
   }
 
   /**
