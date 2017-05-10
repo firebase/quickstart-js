@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2016 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phone Authentication simple popup flow</title>
+
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<main class="mdl-layout__content mdl-color--grey-100">
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+    <p>Enter your phone number below.</p>
+
+    <form id="sign-in-form" action="#">
+      <!-- Input to enter the phone number -->
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" pattern="\+[0-9\s\-\(\)]+" id="phone-number">
+        <label class="mdl-textfield__label" for="phone-number">Enter your phone number...</label>
+        <span class="mdl-textfield__error">Input is not an international phone number!</span>
+      </div>
+
+      <!-- Button that handles sign-in -->
+      <input type="submit" disabled class="mdl-button mdl-js-button mdl-button--raised" id="sign-in-button" value="Sign-in"/>
+
+      <!-- Container to display the re-captcha check -->
+      <div id="recaptcha-container"></div>
+    </form>
+  </div>
+</main>
+
+<!-- Import and configure the Firebase SDK -->
+<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+<!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+<script src="/__/firebase/4.0.0/firebase-app.js"></script>
+<script src="/__/firebase/4.0.0/firebase-auth.js"></script>
+<script src="/__/firebase/init.js"></script>
+
+<script type="text/javascript">
+
+  /**
+   * Set up UI event listeners and registering Firebase auth listeners.
+   */
+  window.onload = function() {
+    // Event bindings.
+    document.getElementById('sign-in-form').addEventListener('submit', onSignInSubmit);
+    document.getElementById('phone-number').addEventListener('keyup', updateSignInButtonUI);
+    document.getElementById('phone-number').addEventListener('change', updateSignInButtonUI);
+
+    // [START appVerifier]
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    // [END appVerifier]
+  };
+
+  /**
+   * Function called when clicking the Login/Logout button.
+   */
+  function onSignInSubmit(e) {
+    e.preventDefault();
+    if (isPhoneNumberValid()) {
+      window.signingIn = true;
+      updateSignInButtonUI();
+      var phoneNumber = getPhoneNumberFromUserInput();
+      var appVerifier = window.recaptchaVerifier;
+      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+          .then(function(confirmationResult) {
+            window.signingIn = false;
+            // SMS sent. Prompt user to type the code from the message, then sign the
+            // user in with confirmationResult.confirm(code).
+            var code = window.prompt('Enter the verification code you received by SMS');
+            if (code) {
+              confirmationResult.confirm(code).then(function () {
+                window.close();
+              }).catch(function (error) {
+                // User couldn't sign in (bad verification code?)
+                console.error('Error while checking the verification code', error);
+                window.alert('Error while checking the verification code:\n\n'
+                    + error.code + '\n\n' + error.message);
+                updateSignInButtonUI();
+              });
+            } else {
+              window.close();
+            }
+          }).catch(function(error) {
+            // Error; SMS not sent
+            console.error('Error during signInWithPhoneNumber', error);
+            window.alert('Error during signInWithPhoneNumber:\n\n'
+                + error.code + '\n\n' + error.message);
+            updateSignInButtonUI();
+          });
+    }
+  }
+
+  /**
+   * Reads the phone number from the user input.
+   */
+  function getPhoneNumberFromUserInput() {
+    return document.getElementById('phone-number').value;
+  }
+
+  /**
+   * Returns true if the phone number is valid.
+   */
+  function isPhoneNumberValid() {
+    var pattern = /^\+[0-9\s\-\(\)]+$/;
+    var phoneNumber = getPhoneNumberFromUserInput();
+    return phoneNumber.search(pattern) !== -1;
+  }
+
+  /**
+   * Updates the Sign-in button state depending on ReCaptcha and form values state.
+   */
+  function updateSignInButtonUI() {
+    document.getElementById('sign-in-button').disabled = !isPhoneNumberValid() || !!window.signingIn;
+  }
+</script>
+</body>
+</html>
