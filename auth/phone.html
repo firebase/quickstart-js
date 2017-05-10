@@ -61,15 +61,15 @@ limitations under the License.
             <!-- Container to display the re-captcha check -->
             <div id="recaptcha-container"></div>
 
-            <!-- Button that handles sign-in/sign-out -->
+            <!-- Button that handles sign-in -->
             <input type="submit" disabled class="mdl-button mdl-js-button mdl-button--raised" id="sign-in-button" value="Sign-in"/>
           </form>
 
-          <!-- Button that handles sign-in/sign-out -->
+          <!-- Button that handles sign-out -->
           <button class="mdl-button mdl-js-button mdl-button--raised" id="sign-out-button">Sign-out</button>
 
           <form id="verification-code-form" action="#">
-            <!-- Input to enter the phone number -->
+            <!-- Input to enter the verification code -->
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="verification-code">
               <label class="mdl-textfield__label" for="verification-code">Enter the verification code...</label>
@@ -205,16 +205,16 @@ limitations under the License.
             updateSignInFormUI();
             // [END_EXCLUDE]
           }).catch(function (error) {
-        // Error; SMS not sent
-        // [START_EXCLUDE]
-        console.error('Error during signInWithPhoneNumber', error);
-        window.alert('Error during signInWithPhoneNumber:\n\n'
-            + error.code + '\n\n' + error.message);
-        window.signingIn = false;
-        grecaptcha.reset(window.recaptchaWidgetId);
-        updateSignInButtonUI();
-        // [END_EXCLUDE]
-      });
+            // Error; SMS not sent
+            // [START_EXCLUDE]
+            console.error('Error during signInWithPhoneNumber', error);
+            window.alert('Error during signInWithPhoneNumber:\n\n'
+                + error.code + '\n\n' + error.message);
+            window.signingIn = false;
+            updateSignInFormUI();
+            updateSignInButtonUI();
+            // [END_EXCLUDE]
+          });
       // [END signin]
     }
   }
@@ -280,9 +280,7 @@ limitations under the License.
    * Reads the phone number from the user input.
    */
   function getPhoneNumberFromUserInput() {
-    // We remove all spaces, dashes and parentheses.
-    return document.getElementById('phone-number').value
-        .split('-').join('').split(' ').join('').split('(').join('').split(')').join('');
+    return document.getElementById('phone-number').value;
   }
 
   /**
@@ -306,6 +304,16 @@ limitations under the License.
       return recaptchaResponse !== '';
     }
     return false;
+  }
+
+  /**
+   * Re-initializes the ReCaptacha widget.
+   */
+  function resetReCaptcha() {
+    if (typeof grecaptcha !== 'undefined'
+        && typeof window.recaptchaWidgetId !== 'undefined') {
+      grecaptcha.reset(window.recaptchaWidgetId);
+    }
   }
 
   /**
@@ -334,7 +342,7 @@ limitations under the License.
     if (firebase.auth().currentUser || window.confirmationResult) {
       document.getElementById('sign-in-form').style.display = 'none';
     } else {
-      typeof grecaptcha !== 'undefined' && grecaptcha.reset(window.recaptchaWidgetId);
+      resetReCaptcha();
       document.getElementById('sign-in-form').style.display = 'block';
     }
   }
