@@ -55,10 +55,15 @@ h3 {
 #verification-code-form {
   display:none;
 }
-
 #recaptcha-container {
   margin-top: 10px;
 }
-#verify-code-button, #sign-in-button {
+#sign-in-button {
+  margin-top: 20px;
+}
+#verify-code-button, #cancel-verify-code-button {
   margin-left: 20px;
+}
+#sign-out-button {
+  display: none;
 }
