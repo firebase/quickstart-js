@@ -86,6 +86,8 @@ limitations under the License.
       firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
           .then(function(confirmationResult) {
             window.signingIn = false;
+            updateSignInButtonUI();
+            resetRecaptcha();
             // SMS sent. Prompt user to type the code from the message, then sign the
             // user in with confirmationResult.confirm(code).
             var code = window.prompt('Enter the verification code you received by SMS');
@@ -96,18 +98,17 @@ limitations under the License.
                 // User couldn't sign in (bad verification code?)
                 console.error('Error while checking the verification code', error);
                 window.alert('Error while checking the verification code:\n\n'
-                    + error.code + '\n\n' + error.message);
-                updateSignInButtonUI();
+                    + error.code + '\n\n' + error.message)
               });
-            } else {
-              window.close();
             }
           }).catch(function(error) {
             // Error; SMS not sent
+            window.signingIn = false;
             console.error('Error during signInWithPhoneNumber', error);
             window.alert('Error during signInWithPhoneNumber:\n\n'
                 + error.code + '\n\n' + error.message);
             updateSignInButtonUI();
+            resetRecaptcha();
           });
     }
   }
@@ -126,6 +127,15 @@ limitations under the License.
     var pattern = /^\+[0-9\s\-\(\)]+$/;
     var phoneNumber = getPhoneNumberFromUserInput();
     return phoneNumber.search(pattern) !== -1;
+  }
+
+  /**
+   * This resets the recaptcha widget.
+   */
+  function resetRecaptcha() {
+    return window.recaptchaVerifier.render().then(function(widgetId) {
+      grecaptcha.reset(widgetId);
+    });
   }
 
   /**
