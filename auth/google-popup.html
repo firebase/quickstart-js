@@ -46,7 +46,7 @@ limitations under the License.
         var provider = new firebase.auth.GoogleAuthProvider();
         // [END createprovider]
         // [START addscopes]
-        provider.addScope('https://www.googleapis.com/auth/plus.login');
+        provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
         // [END addscopes]
         // [START signin]
         firebase.auth().signInWithPopup(provider).then(function(result) {
