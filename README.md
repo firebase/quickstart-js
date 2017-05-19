@@ -6,6 +6,9 @@ Samples available:
  - [Auth](auth)
    - Anonymous Auth
    - Custom Auth
+   - Phone Auth using a visible ReCaptcha
+   - Phone Auth using an invisible ReCaptcha
+   - Phone Auth using popup
    - [Google Auth in a Chrome Extensions](auth/chromextension)
    - Facebook auth using Facebook login button
    - Facebook auth using Firebase popup
