@@ -20,6 +20,7 @@ var messageForm = document.getElementById('message-form');
 var messageInput = document.getElementById('new-post-message');
 var titleInput = document.getElementById('new-post-title');
 var signInButton = document.getElementById('sign-in-button');
+var anonymousSignInButton = document.getElementById('anonymous-sign-in-button');
 var signOutButton = document.getElementById('sign-out-button');
 var splashPage = document.getElementById('page-splash');
 var addPost = document.getElementById('add-post');
@@ -365,9 +366,10 @@ function onAuthStateChanged(user) {
  */
 function newPostForCurrentUser(title, text) {
   // [START single_value_read]
+  var isAnonymous = firebase.auth().currentUser.isAnonymous;
   var userId = firebase.auth().currentUser.uid;
   return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-    var username = snapshot.val().username;
+    var username = isAnonymous ? "Anonymous User" : snapshot.val().username;
     // [START_EXCLUDE]
     return writeNewPost(firebase.auth().currentUser.uid, username,
         firebase.auth().currentUser.photoURL,
@@ -403,6 +405,11 @@ window.addEventListener('load', function() {
   signInButton.addEventListener('click', function() {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider);
+  });
+
+  // Bind anonymous Sign in button.
+  anonymousSignInButton.addEventListener('click', function() {``
+    firebase.auth().signInAnonymously();
   });
 
   // Bind Sign out button.
