@@ -9,7 +9,7 @@ Samples available:
    - Phone Auth using a visible ReCaptcha
    - Phone Auth using an invisible ReCaptcha
    - Phone Auth using popup
-   - [Google Auth in a Chrome Extensions](auth/chromextension)
+   - [Google Auth in a Chrome Extension](auth/chromextension)
    - Facebook auth using Facebook login button
    - Facebook auth using Firebase popup
    - Facebook auth using Firebase redirect
