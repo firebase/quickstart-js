@@ -62,7 +62,7 @@ Using Firebase in your own extension
 ------------------------------------
 
 The keys to using Firebase in a Chrome extension are:
- - Becasue of Chrome Extensions' [Content Security Policy](https://developer.chrome.com/extensions/contentSecurityPolicy) you need to avoid inline JavaScript in your HTML pages so you need to add the Firebase initialisation snippet in your JS file instead of inside the HTML file as we [typically instruct](https://firebase.google.com/docs/web/setup). The Firebase initialisation snippet looks like this:
+ - Because of Chrome Extensions' [Content Security Policy](https://developer.chrome.com/extensions/contentSecurityPolicy) you need to avoid inline JavaScript in your HTML pages so you need to add the Firebase initialisation snippet in your JS file instead of inside the HTML file as we [typically instruct](https://firebase.google.com/docs/web/setup). The Firebase initialisation snippet looks like this:
  
  ```javascript
  // Initialize Firebase
