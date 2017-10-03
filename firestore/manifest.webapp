@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "name": "FriendlyEats",
+  "launch_path": "/",
+  "description": "Find great places to eat!",
+  "developer": {
+    "name": "Google inc.",
+    "url": "https://firebase.google.com"
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en",
+  "permissions": {
+  },
+  "locales": {
+    "en": {
+      "name": "FriendlyEats",
+      "description": "Find great places to eat!"
+    }
+  },
+  "theme_color": "#B71C1C"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "fireats",
+  "version": "0.0.0",
+  "description": "## Introduction",
+  "main": ".",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fmt": "prettier --write scripts/* styles/*"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "firebase-tools": "https://storage.googleapis.com/firebase-preview-drop/node/firebase-tools/firebase-tools-firestore.latest.tgz",
+    "prettier": "^1.5.3"
+  }
+}
