@@ -22,6 +22,8 @@ Samples available:
    - GitHub auth using Firebase redirect
  - [Database](database)
    - Simple Social Blogging app 
+ - [Firestore](firestore)
+   - Simple Rating App
  - [Storage](storage)
    - Upload a file to Firebase Storage and display its URL
  - [Messaging](messaging)
