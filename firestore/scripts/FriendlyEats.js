@@ -200,7 +200,7 @@ window.onload = function() {
         );
       })
       .catch(function(error) {
-        console.log("ServiceWorker registration failed:", errror);
+        console.log("ServiceWorker registration failed:", error);
       });
   }
 };
