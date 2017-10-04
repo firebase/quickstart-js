@@ -1,7 +1,7 @@
 service cloud.firestore {
   match /databases/{database}/documents {
     match /{document=**} {
-      allow read, write if auth != null;
+      allow read, write: if auth != null;
     }
   }
 }
