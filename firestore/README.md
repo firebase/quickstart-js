@@ -22,6 +22,8 @@ Follow these steps to setup and run the quickstart:
     ```bash
     firebase use --add
     ```
+ 1. In the Firebase console, enable Cloud Firestore on your project by doing: **Database > TRY FIRESTORE BETA > ENABLE**
+ 
  1. Deploy the Firestore security rules:
     ```bash
     firebase deploy --only firestore
