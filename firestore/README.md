@@ -22,7 +22,7 @@ Follow these steps to setup and run the quickstart:
  1. Set the CLI to use the project you created on step 1:
     ```bash
     firebase use --add
-    ``` 
+    ```
  1. Deploy the Firestore security rules:
     ```bash
     firebase deploy --only firestore
