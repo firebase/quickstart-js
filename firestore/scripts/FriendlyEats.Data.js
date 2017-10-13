@@ -80,7 +80,7 @@ FriendlyEats.prototype.getFilteredRestaurants = function(filters, render) {
     query = query.where("city", "==", filters.city);
   }
 
-  if (filters.price != "Any") {
+  if (filters.price != "") {
     query = query.where("price", "==", filters.price.length);
   }
 
