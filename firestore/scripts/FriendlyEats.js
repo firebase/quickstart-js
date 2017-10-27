@@ -13,75 +13,78 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-"use strict";
+'use strict';
 
+/**
+ * Initializes the FriendlyEats app.
+ */
 function FriendlyEats() {
-  const self = this;
-
-  self.filters = {
-    city: "",
-    price: "",
-    category: "",
-    sort: "Rating"
+  this.filters = {
+    city: '',
+    price: '',
+    category: '',
+    sort: 'Rating'
   };
 
-  self.dialogs = {};
+  this.dialogs = {};
 
-  firebase.auth().signInAnonymously().then(function ()  {
-    self.initTemplates();
-    self.initRouter();
-    self.initReviewDialog();
-    self.initFilterDialog();
-  }).catch(function (err) {
+  firebase.auth().signInAnonymously().then(() => {
+    this.initTemplates();
+    this.initRouter();
+    this.initReviewDialog();
+    this.initFilterDialog();
+  }).catch(err => {
     console.log(err);
   });
 }
 
+/**
+ * Initializes the router for the FriendlyEats app.
+ */
 FriendlyEats.prototype.initRouter = function() {
-  const self = this;
-  self.router = new Navigo();
+  this.router = new Navigo();
 
-  self.router
+  this.router
     .on({
-      "/": function ()  {
-        self.updateQuery(self.filters);
+      '/': () => {
+        this.updateQuery(this.filters);
       }
     })
     .on({
-      "/setup": function ()  {
-        self.viewSetup();
+      '/setup': () => {
+        this.viewSetup();
       }
     })
     .on({
-      "/restaurants/*": function ()  {
-        let path = self.getCleanPath(document.location.pathname);
-        const id = path.split("/")[2];
-        self.viewRestaurant(id);
+      '/restaurants/*': () => {
+        let path = this.getCleanPath(document.location.pathname);
+        const id = path.split('/')[2];
+        this.viewRestaurant(id);
       }
     })
     .resolve();
 
   firebase
     .firestore()
-    .collection("restaurants")
+    .collection('restaurants')
     .limit(1)
-    .onSnapshot(function (snapshot) {
+    .onSnapshot(snapshot => {
       if (snapshot.empty) {
-        self.router.navigate("/setup");
+        this.router.navigate('/setup');
       }
     });
 };
 
 FriendlyEats.prototype.getCleanPath = function(dirtyPath) {
-  if (dirtyPath.startsWith("/index.html")) {
-    return dirtyPath.split("/").slice(1).join("/");
+  if (dirtyPath.startsWith('/index.html')) {
+    return dirtyPath.split('/').slice(1).join('/');
   } else {
     return dirtyPath;
   }
 };
 
 FriendlyEats.prototype.getFirebaseConfig = function() {
-  return firebase.apps[0].options_;
+  return firebase.app().options;
 };
 
 FriendlyEats.prototype.getRandomItem = function(arr) {
@@ -90,117 +93,103 @@ FriendlyEats.prototype.getRandomItem = function(arr) {
 
 FriendlyEats.prototype.data = {
   words: [
-    "Bar",
-    "Fire",
-    "Grill",
-    "Drive Thru",
-    "Place",
-    "Best",
-    "Spot",
-    "Prime",
-    "Eatin'"
+    'Bar',
+    'Fire',
+    'Grill',
+    'Drive Thru',
+    'Place',
+    'Best',
+    'Spot',
+    'Prime',
+    'Eatin\''
   ],
   cities: [
-    "Albuquerque",
-    "Arlington",
-    "Atlanta",
-    "Austin",
-    "Baltimore",
-    "Boston",
-    "Charlotte",
-    "Chicago",
-    "Cleveland",
-    "Colorado Springs",
-    "Columbus",
-    "Dallas",
-    "Denver",
-    "Detroit",
-    "El Paso",
-    "Fort Worth",
-    "Fresno",
-    "Houston",
-    "Indianapolis",
-    "Jacksonville",
-    "Kansas City",
-    "Las Vegas",
-    "Long Island",
-    "Los Angeles",
-    "Louisville",
-    "Memphis",
-    "Mesa",
-    "Miami",
-    "Milwaukee",
-    "Nashville",
-    "New York",
-    "Oakland",
-    "Oklahoma",
-    "Omaha",
-    "Philadelphia",
-    "Phoenix",
-    "Portland",
-    "Raleigh",
-    "Sacramento",
-    "San Antonio",
-    "San Diego",
-    "San Francisco",
-    "San Jose",
-    "Tucson",
-    "Tulsa",
-    "Virginia Beach",
-    "Washington",
+    'Albuquerque',
+    'Arlington',
+    'Atlanta',
+    'Austin',
+    'Baltimore',
+    'Boston',
+    'Charlotte',
+    'Chicago',
+    'Cleveland',
+    'Colorado Springs',
+    'Columbus',
+    'Dallas',
+    'Denver',
+    'Detroit',
+    'El Paso',
+    'Fort Worth',
+    'Fresno',
+    'Houston',
+    'Indianapolis',
+    'Jacksonville',
+    'Kansas City',
+    'Las Vegas',
+    'Long Island',
+    'Los Angeles',
+    'Louisville',
+    'Memphis',
+    'Mesa',
+    'Miami',
+    'Milwaukee',
+    'Nashville',
+    'New York',
+    'Oakland',
+    'Oklahoma',
+    'Omaha',
+    'Philadelphia',
+    'Phoenix',
+    'Portland',
+    'Raleigh',
+    'Sacramento',
+    'San Antonio',
+    'San Diego',
+    'San Francisco',
+    'San Jose',
+    'Tucson',
+    'Tulsa',
+    'Virginia Beach',
+    'Washington'
   ],
   categories: [
-    "Brunch",
-    "Burgers",
-    "Coffee",
-    "Deli",
-    "Dim Sum",
-    "Indian",
-    "Italian",
-    "Mediterranean",
-    "Mexican",
-    "Pizza",
-    "Ramen",
-    "Sushi",
+    'Brunch',
+    'Burgers',
+    'Coffee',
+    'Deli',
+    'Dim Sum',
+    'Indian',
+    'Italian',
+    'Mediterranean',
+    'Mexican',
+    'Pizza',
+    'Ramen',
+    'Sushi'
   ],
   ratings: [
     {
       rating: 1,
-      text: "Would never eat here again!"
+      text: 'Would never eat here again!'
     },
     {
       rating: 2,
-      text: "Not my cup of tea."
+      text: 'Not my cup of tea.'
     },
     {
       rating: 3,
-      text: "Exactly okay :/"
+      text: 'Exactly okay :/'
     },
     {
       rating: 4,
-      text: "Actually pretty good, would recommend!"
+      text: 'Actually pretty good, would recommend!'
     },
     {
       rating: 5,
-      text: "This is my favorite place. Literally."
+      text: 'This is my favorite place. Literally.'
     }
   ]
 };
 
-window.onload = function() {
+window.onload = () => {
   window.app = new FriendlyEats();
-
-  if (navigator.serviceWorker) {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then(function(registration) {
-        console.log(
-          "ServiceWorker registration successful with scope:",
-          registration.scope
-        );
-      })
-      .catch(function(error) {
-        console.log("ServiceWorker registration failed:", error);
-      });
-  }
 };

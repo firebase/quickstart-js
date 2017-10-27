@@ -23,7 +23,7 @@ Follow these steps to setup and run the quickstart:
     ```bash
     firebase use --add
     ```
- 1. Deploy the Firestore security rules:
+ 1. Deploy the Firestore security rules and indexes:
     ```bash
     firebase deploy --only firestore
     ```
