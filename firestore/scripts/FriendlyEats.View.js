@@ -110,12 +110,12 @@ FriendlyEats.prototype.viewSetup = function() {
   const button = noRestaurantsEl.querySelector('#add_mock_data');
   let addingMockData = false;
 
-  button.addEventListener('click', () => {
+  button.addEventListener('click', event => {
     if (addingMockData) return;
     addingMockData = true;
 
-    this.style.opacity = '0.4';
-    this.innerText = 'Please wait...';
+    event.target.style.opacity = '0.4';
+    event.target.innerText = 'Please wait...';
 
     this.addMockRestaurants().then(() => {
       this.rerender();
