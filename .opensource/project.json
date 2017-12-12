@@ -1,0 +1,26 @@
+{
+    "name": "Firebase Quickstarts for Web",
+    "type": "sample",
+
+    "platforms": [
+      "Web"
+    ],
+
+    "content": "README.md",
+
+    "subprojects": [],
+
+    // Other markdown pages that should be rendered nicely
+    "pages" : [
+      "auth/README.md",
+      "auth/chromextension/README.md",
+      "database/README.md",
+      "firestore/README.md",
+      "messaging/README.md",
+      "storage/README.md"
+    ],
+
+    "related": [],
+
+    "tags": []
+  }
