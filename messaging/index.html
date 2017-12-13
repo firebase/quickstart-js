@@ -75,8 +75,8 @@ limitations under the License.
 <!-- Import and configure the Firebase SDK -->
 <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
 <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
-<script src="/__/firebase/3.9.0/firebase-app.js"></script>
-<script src="/__/firebase/3.9.0/firebase-messaging.js"></script>
+<script src="/__/firebase/4.10.0/firebase-app.js"></script>
+<script src="/__/firebase/4.10.0/firebase-messaging.js"></script>
 <script src="/__/firebase/init.js"></script>
 
 <script>
@@ -84,6 +84,10 @@ limitations under the License.
   // Retrieve Firebase Messaging object.
   const messaging = firebase.messaging();
   // [END get_messaging_object]
+  // [START set_public_vapid_key]
+  // Add the public key generated from the console here.
+  messaging.usePublicVapidKey('<YOUR_PUBLIC_VAPID_KEY_HERE>');
+  // [END set_public_vapid_key]
 
   // IDs of divs that display Instance ID token UI or request permission UI.
   const tokenDivId = 'token_div';
