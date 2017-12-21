@@ -66,7 +66,7 @@ function startAuth(interactive) {
     } else if(chrome.runtime.lastError) {
       console.error(chrome.runtime.lastError);
     } else if (token) {
-      // Authrorize Firebase with the OAuth Access Token.
+      // Authorize Firebase with the OAuth Access Token.
       var credential = firebase.auth.GoogleAuthProvider.credential(null, token);
       firebase.auth().signInWithCredential(credential).catch(function(error) {
         // The OAuth token might have been invalidated. Lets' remove it from cache.
