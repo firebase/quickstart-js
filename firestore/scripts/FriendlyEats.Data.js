@@ -16,23 +16,25 @@
 'use strict';
 
 FriendlyEats.prototype.addRestaurant = function(data) {
-  const collection = firebase.firestore().collection('restaurants');
+  var collection = firebase.firestore().collection('restaurants');
   return collection.add(data);
 };
 
 FriendlyEats.prototype.getAllRestaurants = function(render) {
-  const query = firebase.firestore()
-      .collection('restaurants')
-      .orderBy('avgRating', 'desc')
-      .limit(50);
+  var query = firebase.firestore()
+    .collection('restaurants')
+    .orderBy('avgRating', 'desc')
+    .limit(50);
   this.getDocumentsInQuery(query, render);
 };
 
 FriendlyEats.prototype.getDocumentsInQuery = function(query, render) {
-  query.onSnapshot(snapshot => {
-    if (!snapshot.size) return render();
+  query.onSnapshot(function (snapshot) {
+    if (!snapshot.size) {
+      return render();
+    }
 
-    snapshot.docChanges.forEach(change => {
+    snapshot.docChanges.forEach(function(change) {
       if (change.type === 'added') {
         render(change.doc);
       }
@@ -45,7 +47,7 @@ FriendlyEats.prototype.getRestaurant = function(id) {
 };
 
 FriendlyEats.prototype.getFilteredRestaurants = function(filters, render) {
-  let query = firebase.firestore().collection('restaurants');
+  var query = firebase.firestore().collection('restaurants');
 
   if (filters.category !== 'Any') {
     query = query.where('category', '==', filters.category);
@@ -62,21 +64,22 @@ FriendlyEats.prototype.getFilteredRestaurants = function(filters, render) {
   if (filters.sort === 'Rating') {
     query = query.orderBy('avgRating', 'desc');
   } else if (filters.sort === 'Reviews') {
+    query = query.orderBy('numRatings', 'desc');
   }
 
   this.getDocumentsInQuery(query, render);
 };
 
 FriendlyEats.prototype.addRating = function(restaurantID, rating) {
-  const collection = firebase.firestore().collection('restaurants');
-  const document = collection.doc(restaurantID);
+  var collection = firebase.firestore().collection('restaurants');
+  var document = collection.doc(restaurantID);
 
-  return document.collection('ratings').add(rating).then(() => {
-    return firebase.firestore().runTransaction(transaction => {
-      return transaction.get(document).then(doc => {
-        const data = doc.data();
+  return document.collection('ratings').add(rating).then(function() {
+    return firebase.firestore().runTransaction(function(transaction) {
+      return transaction.get(document).then(function(doc) {
+        var data = doc.data();
 
-        let newAverage =
+        var newAverage =
             (data.numRatings * data.avgRating + rating.rating) /
             (data.numRatings + 1);
 

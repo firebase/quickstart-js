@@ -28,12 +28,12 @@ function FriendlyEats() {
 
   this.dialogs = {};
 
-  firebase.auth().signInAnonymously().then(() => {
+  firebase.auth().signInAnonymously().then(function() {
     this.initTemplates();
     this.initRouter();
     this.initReviewDialog();
     this.initFilterDialog();
-  }).catch(err => {
+  }).catch(function(err) {
     console.log(err);
   });
 }
@@ -46,19 +46,19 @@ FriendlyEats.prototype.initRouter = function() {
 
   this.router
     .on({
-      '/': () => {
+      '/': function() {
         this.updateQuery(this.filters);
       }
     })
     .on({
-      '/setup': () => {
+      '/setup': function() {
         this.viewSetup();
       }
     })
     .on({
-      '/restaurants/*': () => {
-        let path = this.getCleanPath(document.location.pathname);
-        const id = path.split('/')[2];
+      '/restaurants/*': function() {
+        var path = this.getCleanPath(document.location.pathname);
+        var id = path.split('/')[2];
         this.viewRestaurant(id);
       }
     })
@@ -68,7 +68,7 @@ FriendlyEats.prototype.initRouter = function() {
     .firestore()
     .collection('restaurants')
     .limit(1)
-    .onSnapshot(snapshot => {
+    .onSnapshot(function(snapshot) {
       if (snapshot.empty) {
         this.router.navigate('/setup');
       }
@@ -190,6 +190,6 @@ FriendlyEats.prototype.data = {
   ]
 };
 
-window.onload = () => {
+window.onload = function() {
   window.app = new FriendlyEats();
 };

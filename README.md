@@ -34,3 +34,7 @@ Please read and follow the steps in the [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## License
 See [LICENSE](LICENSE)
+
+## Build Status
+
+[![Build Status](https://travis-ci.org/firebase/quickstart-js.svg?branch=master)](https://travis-ci.org/firebase/quickstart-js)

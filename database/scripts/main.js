@@ -15,6 +15,8 @@
  */
 'use strict';
 
+var componentHandler = componentHandler || undefined;
+
 // Shortcuts to DOM Elements.
 var messageForm = document.getElementById('message-form');
 var messageInput = document.getElementById('new-post-message');
@@ -162,7 +164,7 @@ function createPostElement(postId, title, text, author, authorId, authorPic) {
   // [END post_value_event_listener]
 
   // Listen for the starred status.
-  var starredStatusRef = firebase.database().ref('posts/' + postId + '/stars/' + uid)
+  var starredStatusRef = firebase.database().ref('posts/' + postId + '/stars/' + uid);
   starredStatusRef.on('value', function(snapshot) {
     updateStarredByCurrentUser(postElement, snapshot.val());
   });
@@ -273,21 +275,21 @@ function startDatabaseQueries() {
       var author = data.val().author || 'Anonymous';
       var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
       containerElement.insertBefore(
-          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic),
-          containerElement.firstChild);
+        createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic),
+        containerElement.firstChild);
     });
-    postsRef.on('child_changed', function(data) {	
-		var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-		var postElement = containerElement.getElementsByClassName('post-' + data.key)[0];
-		postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = data.val().title;
-		postElement.getElementsByClassName('username')[0].innerText = data.val().author;
-		postElement.getElementsByClassName('text')[0].innerText = data.val().body;
-		postElement.getElementsByClassName('star-count')[0].innerText = data.val().starCount;
+    postsRef.on('child_changed', function(data) {
+      var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
+      var postElement = containerElement.getElementsByClassName('post-' + data.key)[0];
+      postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = data.val().title;
+      postElement.getElementsByClassName('username')[0].innerText = data.val().author;
+      postElement.getElementsByClassName('text')[0].innerText = data.val().body;
+      postElement.getElementsByClassName('star-count')[0].innerText = data.val().starCount;
     });
     postsRef.on('child_removed', function(data) {
-		var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-		var post = containerElement.getElementsByClassName('post-' + data.key)[0];
-	    post.parentElement.removeChild(post);
+      var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
+      var post = containerElement.getElementsByClassName('post-' + data.key)[0];
+      post.parentElement.removeChild(post);
     });
   };
 
@@ -370,8 +372,8 @@ function newPostForCurrentUser(title, text) {
     var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
     // [START_EXCLUDE]
     return writeNewPost(firebase.auth().currentUser.uid, username,
-        firebase.auth().currentUser.photoURL,
-        title, text);
+      firebase.auth().currentUser.photoURL,
+      title, text);
     // [END_EXCLUDE]
   });
   // [END single_value_read]

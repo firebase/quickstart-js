@@ -19,29 +19,29 @@
  * Adds a set of mock Restaurants to the Cloud Firestore.
  */
 FriendlyEats.prototype.addMockRestaurants = function() {
-  const promises = [];
+  var promises = [];
 
-  for (let i = 0; i < 20; i++) {
-    let name =
+  for (var i = 0; i < 20; i++) {
+    var name =
         this.getRandomItem(this.data.words) +
         ' ' +
         this.getRandomItem(this.data.words);
-    let category = this.getRandomItem(this.data.categories);
-    let city = this.getRandomItem(this.data.cities);
-    let price = Math.floor(Math.random() * 4) + 1;
-    let photoID = Math.floor(Math.random() * 22) + 1;
-    let photo = `https://storage.googleapis.com/firestorequickstarts.appspot.com/food_${photoID}.png`;
-    let numRatings = 0;
-    let avgRating = 0;
+    var category = this.getRandomItem(this.data.categories);
+    var city = this.getRandomItem(this.data.cities);
+    var price = Math.floor(Math.random() * 4) + 1;
+    var photoID = Math.floor(Math.random() * 22) + 1;
+    var photo = 'https://storage.googleapis.com/firestorequickstarts.appspot.com/food_' + photoID + '.png';
+    var numRatings = 0;
+    var avgRating = 0;
 
-    const promise = this.addRestaurant({
-      name,
-      category,
-      price,
-      city,
-      numRatings,
-      avgRating,
-      photo
+    var promise = this.addRestaurant({
+      name: name,
+      category: category,
+      price: price,
+      city: city,
+      numRating: numRatings,
+      avgRating: avgRating,
+      photo: photo
     });
 
     if (!promise) {
@@ -59,9 +59,9 @@ FriendlyEats.prototype.addMockRestaurants = function() {
  * Adds a set of mock Ratings to the given Restaurant.
  */
 FriendlyEats.prototype.addMockRatings = function(restaurantID) {
-  const ratingPromises = [];
-  for (let r = 0; r < 5*Math.random(); r++) {
-    const rating = this.data.ratings[
+  var ratingPromises = [];
+  for (var r = 0; r < 5*Math.random(); r++) {
+    var rating = this.data.ratings[
       parseInt(this.data.ratings.length*Math.random())
     ];
     rating.userName = 'Bot (Web)';
