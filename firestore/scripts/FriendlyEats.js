@@ -28,11 +28,12 @@ function FriendlyEats() {
 
   this.dialogs = {};
 
+  var that = this;
   firebase.auth().signInAnonymously().then(function() {
-    this.initTemplates();
-    this.initRouter();
-    this.initReviewDialog();
-    this.initFilterDialog();
+    that.initTemplates();
+    that.initRouter();
+    that.initReviewDialog();
+    that.initFilterDialog();
   }).catch(function(err) {
     console.log(err);
   });
@@ -44,22 +45,23 @@ function FriendlyEats() {
 FriendlyEats.prototype.initRouter = function() {
   this.router = new Navigo();
 
+  var that = this;
   this.router
     .on({
       '/': function() {
-        this.updateQuery(this.filters);
+        that.updateQuery(that.filters);
       }
     })
     .on({
       '/setup': function() {
-        this.viewSetup();
+        that.viewSetup();
       }
     })
     .on({
       '/restaurants/*': function() {
-        var path = this.getCleanPath(document.location.pathname);
+        var path = that.getCleanPath(document.location.pathname);
         var id = path.split('/')[2];
-        this.viewRestaurant(id);
+        that.viewRestaurant(id);
       }
     })
     .resolve();
@@ -70,7 +72,7 @@ FriendlyEats.prototype.initRouter = function() {
     .limit(1)
     .onSnapshot(function(snapshot) {
       if (snapshot.empty) {
-        this.router.navigate('/setup');
+        that.router.navigate('/setup');
       }
     });
 };

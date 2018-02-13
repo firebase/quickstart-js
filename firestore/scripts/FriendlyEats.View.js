@@ -17,8 +17,10 @@
 
 FriendlyEats.prototype.initTemplates = function() {
   this.templates = {};
+
+  var that = this;
   document.querySelectorAll('.template').forEach(function(el) {
-    this.templates[el.getAttribute('id')] = el;
+    that.templates[el.getAttribute('id')] = el;
   });
 };
 
@@ -46,42 +48,43 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
   this.replaceElement(document.querySelector('.header'), headerEl);
   this.replaceElement(document.querySelector('main'), mainEl);
 
+  var that = this;
   headerEl.querySelector('#show-filters').addEventListener('click', function() {
-    this.dialogs.filter.show();
+    that.dialogs.filter.show();
   });
 
   var renderResults = function(doc) {
     if (!doc) {
-      var headerEl = this.renderTemplate('header-base', {
+      var headerEl = that.renderTemplate('header-base', {
         hasSectionHeader: true
       });
 
-      var noResultsEl = this.renderTemplate('no-results');
+      var noResultsEl = that.renderTemplate('no-results');
 
-      this.replaceElement(
+      that.replaceElement(
         headerEl.querySelector('#section-header'),
-        this.renderTemplate('filter-display', {
+        that.renderTemplate('filter-display', {
           filter_description: filter_description
         })
       );
 
       headerEl.querySelector('#show-filters').addEventListener('click', function() {
-        this.dialogs.filter.show();
+        that.dialogs.filter.show();
       });
 
-      this.replaceElement(document.querySelector('.header'), headerEl);
-      this.replaceElement(document.querySelector('main'), noResultsEl);
+      that.replaceElement(document.querySelector('.header'), headerEl);
+      that.replaceElement(document.querySelector('main'), noResultsEl);
       return;
     }
     var data = doc.data();
     data['.id'] = doc.id;
     data['go_to_restaurant'] = function() {
-      this.router.navigate('/restaurants/' + doc.id);
+      that.router.navigate('/restaurants/' + doc.id);
     };
 
-    var el = this.renderTemplate('restaurant-card', data);
-    el.querySelector('.rating').append(this.renderRating(data.avgRating));
-    el.querySelector('.price').append(this.renderPrice(data.price));
+    var el = that.renderTemplate('restaurant-card', data);
+    el.querySelector('.rating').append(that.renderRating(data.avgRating));
+    el.querySelector('.price').append(that.renderPrice(data.price));
 
     mainEl.querySelector('#cards').append(el);
   };
@@ -114,6 +117,7 @@ FriendlyEats.prototype.viewSetup = function() {
   var button = noRestaurantsEl.querySelector('#add_mock_data');
   var addingMockData = false;
 
+  var that = this;
   button.addEventListener('click', function(event) {
     if (addingMockData) {
       return;
@@ -124,8 +128,8 @@ FriendlyEats.prototype.viewSetup = function() {
     event.target.style.opacity = '0.4';
     event.target.innerText = 'Please wait...';
 
-    this.addMockRestaurants().then(function() {
-      this.rerender();
+    that.addMockRestaurants().then(function() {
+      that.rerender();
     });
   });
 
@@ -138,7 +142,7 @@ FriendlyEats.prototype.viewSetup = function() {
     .limit(1)
     .onSnapshot(function(snapshot) {
       if (snapshot.size && !addingMockData) {
-        this.router.navigate('/');
+        that.router.navigate('/');
       }
     });
 };
@@ -147,18 +151,19 @@ FriendlyEats.prototype.initReviewDialog = function() {
   var dialog = document.querySelector('#dialog-add-review');
   this.dialogs.add_review = new mdc.dialog.MDCDialog(dialog);
 
+  var that = this;
   this.dialogs.add_review.listen('MDCDialog:accept', function() {
-    var pathname = this.getCleanPath(document.location.pathname);
+    var pathname = that.getCleanPath(document.location.pathname);
     var id = pathname.split('/')[2];
 
-    this.addRating(id, {
+    that.addRating(id, {
       rating: rating,
       text: dialog.querySelector('#text').value,
       userName: 'Anonymous (Web)',
       timestamp: new Date(),
       userId: firebase.auth().currentUser.uid
     }).then(function() {
-      this.rerender();
+      that.rerender();
     });
   });
 
@@ -186,8 +191,9 @@ FriendlyEats.prototype.initFilterDialog = function() {
   // TODO: Reset filter dialog to init state on close.
   this.dialogs.filter = new mdc.dialog.MDCDialog(document.querySelector('#dialog-filter-all'));
 
+  var that = this;
   this.dialogs.filter.listen('MDCDialog:accept', function() {
-    this.updateQuery(this.filters);
+    that.updateQuery(that.filters);
   });
 
   var dialog = document.querySelector('aside');
@@ -195,18 +201,18 @@ FriendlyEats.prototype.initFilterDialog = function() {
 
   this.replaceElement(
     dialog.querySelector('#category-list'),
-    this.renderTemplate('item-list', { items: ['Any'].concat(this.data.categories) })
+    that.renderTemplate('item-list', { items: ['Any'].concat(that.data.categories) })
   );
 
   this.replaceElement(
     dialog.querySelector('#city-list'),
-    this.renderTemplate('item-list', { items: ['Any'].concat(this.data.cities) })
+    that.renderTemplate('item-list', { items: ['Any'].concat(that.data.cities) })
   );
 
   var renderAllList = function() {
-    this.replaceElement(
+    that.replaceElement(
       dialog.querySelector('#all-filters-list'),
-      this.renderTemplate('all-filters-list', this.filters)
+      that.renderTemplate('all-filters-list', that.filters)
     );
 
     dialog.querySelectorAll('#page-all .mdc-list-item').forEach(function(el) {
@@ -239,7 +245,7 @@ FriendlyEats.prototype.initFilterDialog = function() {
 
     sel.querySelectorAll('.mdc-list-item').forEach(function(el) {
       el.addEventListener('click', function() {
-        this.filters[type] = el.innerText.trim() === 'Any'? '' : el.innerText.trim();
+        that.filters[type] = el.innerText.trim() === 'Any'? '' : el.innerText.trim();
         displaySection('page-all');
       });
     });
@@ -285,56 +291,58 @@ FriendlyEats.prototype.updateQuery = function(filters) {
 
 FriendlyEats.prototype.viewRestaurant = function(id) {
   var sectionHeaderEl;
+  var that = this;
+
   return this.getRestaurant(id)
     .then(function(doc) {
       var data = doc.data();
-      var dialog =  this.dialogs.add_review;
+      var dialog =  that.dialogs.add_review;
 
       data.show_add_review = function() {
         dialog.show();
       };
 
-      sectionHeaderEl = this.renderTemplate('restaurant-header', data);
+      sectionHeaderEl = that.renderTemplate('restaurant-header', data);
       sectionHeaderEl
         .querySelector('.rating')
-        .append(this.renderRating(data.avgRating));
+        .append(that.renderRating(data.avgRating));
 
       sectionHeaderEl
         .querySelector('.price')
-        .append(this.renderPrice(data.price));
+        .append(that.renderPrice(data.price));
       return doc.ref.collection('ratings').orderBy('timestamp', 'desc').get();
     })
     .then(function(ratings) {
       var mainEl;
 
       if (ratings.size) {
-        mainEl = this.renderTemplate('main');
+        mainEl = that.renderTemplate('main');
 
         ratings.forEach(function(rating) {
           var data = rating.data();
-          var el = this.renderTemplate('review-card', data);
-          el.querySelector('.rating').append(this.renderRating(data.rating));
+          var el = that.renderTemplate('review-card', data);
+          el.querySelector('.rating').append(that.renderRating(data.rating));
           mainEl.querySelector('#cards').append(el);
         });
       } else {
-        mainEl = this.renderTemplate('no-ratings', {
+        mainEl = that.renderTemplate('no-ratings', {
           add_mock_data: function() {
-            this.addMockRatings(id).then(function() {
-              this.rerender();
+            that.addMockRatings(id).then(function() {
+              that.rerender();
             });
           }
         });
       }
 
-      var headerEl = this.renderTemplate('header-base', {
+      var headerEl = that.renderTemplate('header-base', {
         hasSectionHeader: true
       });
 
-      this.replaceElement(document.querySelector('.header'), sectionHeaderEl);
-      this.replaceElement(document.querySelector('main'), mainEl);
+      that.replaceElement(document.querySelector('.header'), sectionHeaderEl);
+      that.replaceElement(document.querySelector('main'), mainEl);
     })
     .then(function() {
-      this.router.updatePageLinks();
+      that.router.updatePageLinks();
     })
     .catch(function(err) {
       console.warn('Error rendering page', err);
@@ -354,10 +362,11 @@ FriendlyEats.prototype.render = function(el, data) {
     return;
   }
 
+  var that = this;
   var modifiers = {
     'data-fir-foreach': function(tel) {
       var field = tel.getAttribute('data-fir-foreach');
-      var values = this.getDeepItem(data, field);
+      var values = that.getDeepItem(data, field);
 
       values.forEach(function (value, index) {
         var cloneTel = tel.cloneNode(true);
@@ -387,23 +396,23 @@ FriendlyEats.prototype.render = function(el, data) {
     },
     'data-fir-content': function(tel) {
       var field = tel.getAttribute('data-fir-content');
-      tel.innerText = this.getDeepItem(data, field);
+      tel.innerText = that.getDeepItem(data, field);
     },
     'data-fir-click': function(tel) {
       tel.addEventListener('click', function() {
         var field = tel.getAttribute('data-fir-click');
-        this.getDeepItem(data, field)();
+        that.getDeepItem(data, field)();
       });
     },
     'data-fir-if': function(tel) {
       var field = tel.getAttribute('data-fir-if');
-      if (!this.getDeepItem(data, field)) {
+      if (!that.getDeepItem(data, field)) {
         tel.style.display = 'none';
       }
     },
     'data-fir-if-not': function(tel) {
       var field = tel.getAttribute('data-fir-if-not');
-      if (this.getDeepItem(data, field)) {
+      if (that.getDeepItem(data, field)) {
         tel.style.display = 'none';
       }
     },
@@ -411,13 +420,13 @@ FriendlyEats.prototype.render = function(el, data) {
       var chunks = tel.getAttribute('data-fir-attr').split(':');
       var attr = chunks[0];
       var field = chunks[1];
-      tel.setAttribute(attr, this.getDeepItem(data, field));
+      tel.setAttribute(attr, that.getDeepItem(data, field));
     },
     'data-fir-style': function(tel) {
       var chunks = tel.getAttribute('data-fir-style').split(':');
       var attr = chunks[0];
       var field = chunks[1];
-      var value = this.getDeepItem(data, field);
+      var value = that.getDeepItem(data, field);
 
       if (attr.toLowerCase() === 'backgroundimage') {
         value = 'url(' + value + ')';
@@ -430,7 +439,7 @@ FriendlyEats.prototype.render = function(el, data) {
 
   preModifiers.forEach(function(selector) {
     var modifier = modifiers[selector];
-    this.useModifier(el, selector, modifier);
+    that.useModifier(el, selector, modifier);
   });
 
   Object.keys(modifiers).forEach(function(selector) {
@@ -439,7 +448,7 @@ FriendlyEats.prototype.render = function(el, data) {
     }
 
     var modifier = modifiers[selector];
-    this.useModifier(el, selector, modifier);
+    that.useModifier(el, selector, modifier);
   });
 };
 
