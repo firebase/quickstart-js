@@ -28,12 +28,13 @@ function FriendlyEats() {
 
   this.dialogs = {};
 
-  firebase.auth().signInAnonymously().then(() => {
-    this.initTemplates();
-    this.initRouter();
-    this.initReviewDialog();
-    this.initFilterDialog();
-  }).catch(err => {
+  var that = this;
+  firebase.auth().signInAnonymously().then(function() {
+    that.initTemplates();
+    that.initRouter();
+    that.initReviewDialog();
+    that.initFilterDialog();
+  }).catch(function(err) {
     console.log(err);
   });
 }
@@ -44,22 +45,23 @@ function FriendlyEats() {
 FriendlyEats.prototype.initRouter = function() {
   this.router = new Navigo();
 
+  var that = this;
   this.router
     .on({
-      '/': () => {
-        this.updateQuery(this.filters);
+      '/': function() {
+        that.updateQuery(that.filters);
       }
     })
     .on({
-      '/setup': () => {
-        this.viewSetup();
+      '/setup': function() {
+        that.viewSetup();
       }
     })
     .on({
-      '/restaurants/*': () => {
-        let path = this.getCleanPath(document.location.pathname);
-        const id = path.split('/')[2];
-        this.viewRestaurant(id);
+      '/restaurants/*': function() {
+        var path = that.getCleanPath(document.location.pathname);
+        var id = path.split('/')[2];
+        that.viewRestaurant(id);
       }
     })
     .resolve();
@@ -68,9 +70,9 @@ FriendlyEats.prototype.initRouter = function() {
     .firestore()
     .collection('restaurants')
     .limit(1)
-    .onSnapshot(snapshot => {
+    .onSnapshot(function(snapshot) {
       if (snapshot.empty) {
-        this.router.navigate('/setup');
+        that.router.navigate('/setup');
       }
     });
 };
@@ -190,6 +192,6 @@ FriendlyEats.prototype.data = {
   ]
 };
 
-window.onload = () => {
+window.onload = function() {
   window.app = new FriendlyEats();
 };

@@ -1,0 +1,19 @@
+{
+  "name": "quickstart-js",
+  "version": "1.0.0",
+  "description": "JavaScript quickstarts for Firebase.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firebase/quickstart-js.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/firebase/quickstart-js/issues"
+  },
+  "homepage": "https://github.com/firebase/quickstart-js#readme",
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "lerna": "^2.8.0"
+  }
+}
