@@ -15,7 +15,6 @@
  */
 'use strict';
 
-var componentHandler = componentHandler || undefined;
 
 // Shortcuts to DOM Elements.
 var messageForm = document.getElementById('message-form');
