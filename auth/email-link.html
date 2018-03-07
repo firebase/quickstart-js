@@ -150,6 +150,7 @@ limitations under the License.
       var email = window.localStorage.getItem('emailForSignIn');
       document.getElementById('email').value = email;
 
+      // Automatically signs the user-in using the link.
       handleSignIn();
 
       // Listening for auth state changes.
