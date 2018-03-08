@@ -40,18 +40,22 @@ limitations under the License.
      * Handles the sign in button press.
      */
     function toggleSignIn() {
+      // Disable the sign-in button during async sign-in tasks.
+      document.getElementById('quickstart-sign-in').disabled = true;
+
       if (firebase.auth().currentUser) {
         // [START signout]
-        firebase.auth().signOut();
+        firebase.auth().signOut().catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          handleError(error);
+          // [END_EXCLUDE]
+        });
         // [END signout]
-        // Re-enable the sign-in button.
-        document.getElementById('quickstart-sign-in').disabled = false;
       } else {
         var email = document.getElementById('email').value;
-        if (email.length < 4) {
-          alert('Please enter an email address.');
-          return;
-        }
         // Sending email with sign-in link.
         // [START authwithemail]
         var actionCodeSettings = {
@@ -60,11 +64,6 @@ limitations under the License.
           'url': window.location.href, // Here we redirect back to this same page.
           'handleCodeInApp': true // This must be true.
          };
-
-        // [START_EXCLUDE]
-        // Disable the sign-in button during async sign-in tasks.
-        document.getElementById('quickstart-sign-in').disabled = true;
-        // [END_EXCLUDE]
 
         firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings).then(function() {
           // Save the email locally so you don’t need to ask the user for it again if they open
@@ -81,15 +80,23 @@ limitations under the License.
           var errorCode = error.code;
           var errorMessage = error.message;
           // [START_EXCLUDE]
-          alert('Error: ' + errorMessage);
-          console.log(error);
-          // Re-enable the sign-in button.
-          document.getElementById('quickstart-sign-in').disabled = false;
+          handleError(error);
           // [END_EXCLUDE]
         });
         // [END authwithemail]
       }
       document.getElementById('quickstart-sign-in').disabled = true;
+    }
+
+    /**
+     * Handles Errors from various Promises..
+     */
+    function handleError(error) {
+      // Display Error.
+      alert('Error: ' + error.message);
+      console.log(error);
+      // Re-enable the sign-in button.
+      document.getElementById('quickstart-sign-in').disabled = false;
     }
 
     /**
@@ -129,10 +136,7 @@ limitations under the License.
             var errorCode = error.code;
             var errorMessage = error.message;
             // [START_EXCLUDE]
-            alert('Error: ' + errorMessage);
-            console.log(error);
-            // Re-enable the sign-in button.
-            document.getElementById('quickstart-sign-in').disabled = false;
+            handleError(error);
             // [END_EXCLUDE]
           });
         }
