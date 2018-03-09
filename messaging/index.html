@@ -96,8 +96,7 @@ limitations under the License.
   // [START refresh_token]
   // Callback fired if Instance ID token is updated.
   messaging.onTokenRefresh(function() {
-    messaging.getToken()
-    .then(function(refreshedToken) {
+    messaging.getToken().then(function(refreshedToken) {
       console.log('Token refreshed.');
       // Indicate that the new Instance ID token has not yet been sent to the
       // app server.
@@ -108,8 +107,7 @@ limitations under the License.
       // Display new Instance ID token and clear UI of all previous messages.
       resetUI();
       // [END_EXCLUDE]
-    })
-    .catch(function(err) {
+    }).catch(function(err) {
       console.log('Unable to retrieve refreshed token ', err);
       showToken('Unable to retrieve refreshed token ', err);
     });
@@ -122,7 +120,7 @@ limitations under the License.
   // - the user clicks on an app notification created by a sevice worker
   //   `messaging.setBackgroundMessageHandler` handler.
   messaging.onMessage(function(payload) {
-    console.log("Message received. ", payload);
+    console.log('Message received. ', payload);
     // [START_EXCLUDE]
     // Update the UI to include the received message.
     appendMessage(payload);
@@ -136,8 +134,7 @@ limitations under the License.
     // [START get_token]
     // Get Instance ID token. Initially this makes a network call, once retrieved
     // subsequent calls to getToken will return from cache.
-    messaging.getToken()
-    .then(function(currentToken) {
+    messaging.getToken().then(function(currentToken) {
       if (currentToken) {
         sendTokenToServer(currentToken);
         updateUIForPushEnabled(currentToken);
@@ -148,8 +145,7 @@ limitations under the License.
         updateUIForPushPermissionRequired();
         setTokenSentToServer(false);
       }
-    })
-    .catch(function(err) {
+    }).catch(function(err) {
       console.log('An error occurred while retrieving token. ', err);
       showToken('Error retrieving Instance ID token. ', err);
       setTokenSentToServer(false);
@@ -179,7 +175,7 @@ limitations under the License.
   }
 
   function isTokenSentToServer() {
-    return window.localStorage.getItem('sentToServer') == 1;
+    return window.localStorage.getItem('sentToServer') === 1;
   }
 
   function setTokenSentToServer(sent) {
@@ -189,17 +185,16 @@ limitations under the License.
   function showHideDiv(divId, show) {
     const div = document.querySelector('#' + divId);
     if (show) {
-      div.style = "display: visible";
+      div.style = 'display: visible';
     } else {
-      div.style = "display: none";
+      div.style = 'display: none';
     }
   }
 
   function requestPermission() {
     console.log('Requesting permission...');
     // [START request_permission]
-    messaging.requestPermission()
-    .then(function() {
+    messaging.requestPermission().then(function() {
       console.log('Notification permission granted.');
       // TODO(developer): Retrieve an Instance ID token for use with FCM.
       // [START_EXCLUDE]
@@ -207,8 +202,7 @@ limitations under the License.
       // should update its UI reflecting this.
       resetUI();
       // [END_EXCLUDE]
-    })
-    .catch(function(err) {
+    }).catch(function(err) {
       console.log('Unable to get permission to notify.', err);
     });
     // [END request_permission]
@@ -217,23 +211,19 @@ limitations under the License.
   function deleteToken() {
     // Delete Instance ID token.
     // [START delete_token]
-    messaging.getToken()
-    .then(function(currentToken) {
-      messaging.deleteToken(currentToken)
-      .then(function() {
+    messaging.getToken().then(function(currentToken) {
+      messaging.deleteToken(currentToken).then(function() {
         console.log('Token deleted.');
         setTokenSentToServer(false);
         // [START_EXCLUDE]
         // Once token is deleted update UI.
         resetUI();
         // [END_EXCLUDE]
-      })
-      .catch(function(err) {
+      }).catch(function(err) {
         console.log('Unable to delete token. ', err);
       });
       // [END delete_token]
-    })
-    .catch(function(err) {
+    }).catch(function(err) {
       console.log('Error retrieving Instance ID token. ', err);
       showToken('Error retrieving Instance ID token. ', err);
     });
@@ -245,7 +235,7 @@ limitations under the License.
     const messagesElement = document.querySelector('#messages');
     const dataHeaderELement = document.createElement('h5');
     const dataElement = document.createElement('pre');
-    dataElement.style = 'overflow-x:hidden;'
+    dataElement.style = 'overflow-x:hidden;';
     dataHeaderELement.textContent = 'Received message:';
     dataElement.textContent = JSON.stringify(payload, null, 2);
     messagesElement.appendChild(dataHeaderELement);
