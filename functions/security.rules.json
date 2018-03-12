@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "messages": {
+      ".read": true,
+      ".write": false
+    }
+  }
+}

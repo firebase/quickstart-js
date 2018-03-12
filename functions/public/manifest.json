@@ -1,0 +1,13 @@
+{
+  "name": "Firebase Callable Cloud Functions Web Quickstart",
+  "short_name": "Functions Web Quickstart",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [{
+  "src": "images/firebase-logo.png",
+    "sizes": "50x50",
+    "type": "image/png"
+  }],
+  "theme_color": "#B71C1C"
+}
