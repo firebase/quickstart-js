@@ -24,6 +24,8 @@ Samples available:
    - Simple Social Blogging app
  - [Firestore](firestore/README.md)
    - Simple Rating App
+ - [Functions](functions/README.md)
+   - Send requests to a Functions server-side instance and get back results.
  - [Storage](storage/README.md)
    - Upload a file to Firebase Storage and display its URL
  - [Messaging](messaging/README.md)
