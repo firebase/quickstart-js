@@ -78,7 +78,9 @@ FunctionsQuickstart.prototype.addMessage = function() {
   addMessageButton.disabled = true;
   // [START callAddMessageFunction]
   var addMessage = firebase.functions().callable('addMessage');
-  addMessage({text: messageText}).then(function() {
+  addMessage({text: messageText}).then(function(result) {
+    // Read result of the Cloud Function.
+    var sanitizedMessage = result.data.text;
     // [START_EXCLUDE]
     messageTextInput.value = '';
     addMessageButton.disabled = false;

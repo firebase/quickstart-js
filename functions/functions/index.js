@@ -91,7 +91,7 @@ exports.addMessage = functions.https.onCall((data, context) => {
     author: { uid, name, picture, email },
   }).then(() => {
     console.log('New Message written');
-    return sanitizedMessage;
+    return {text: sanitizedMessage};
   }).catch((error) => {
     // Re-throwing the error as an HttpsError so that the client gets the error details.
     throw new functions.https.HttpsError('unknown', error.message, error);
