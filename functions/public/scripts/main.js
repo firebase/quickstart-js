@@ -72,12 +72,13 @@ FunctionsQuickstart.prototype.addNumbers = function() {
 
 // Adds a message to the Realtime Database by calling the `addMessage` server-side function.
 FunctionsQuickstart.prototype.addMessage = function() {
-  var messageText = this.messageText;
+  var messageTextInput = this.messageText;
+  var messageText = messageTextInput.value
   var addMessageButton = this.addMessageButton;
   addMessageButton.disabled = true;
   // [START callAddMessageFunction]
   var addMessage = firebase.functions().callable('addMessage');
-  addMessage({text: messageText.value}).then(function() {
+  addMessage({text: messageText}).then(function() {
     // [START_EXCLUDE]
     messageText.value = '';
     addMessageButton.disabled = false;
