@@ -62,7 +62,7 @@ exports.addMessage = functions.https.onCall((data, context) => {
   // [END readMessageData]
   // [START messageHttpsErrors]
   // Checking attribute.
-  if (text instanceof String && text.length > 0) {
+  if (!(typeof text === 'string') || text.length === 0) {
     // Throwing an HttpsError so that the client gets the error details.
     throw new functions.https.HttpsError('invalid-argument', 'The function must be called with ' +
         'one arguments "text" containing the message text to add.');

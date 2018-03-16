@@ -80,7 +80,7 @@ FunctionsQuickstart.prototype.addMessage = function() {
   var addMessage = firebase.functions().callable('addMessage');
   addMessage({text: messageText}).then(function() {
     // [START_EXCLUDE]
-    messageText.value = '';
+    messageTextInput.value = '';
     addMessageButton.disabled = false;
     // [END_EXCLUDE]
   }).catch(function(error) {
