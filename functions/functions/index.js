@@ -52,16 +52,14 @@ exports.addNumbers = functions.https.onCall((data) => {
 });
 // [END allAdd]
 
-// [START allMessage]
 // [START messageFunctionTrigger]
 // Saves a message to the Firebase Realtime Database but sanitizes the text by removing swearwords.
 exports.addMessage = functions.https.onCall((data, context) => {
-// [END messageFunctionTrigger]
+  // [START_EXCLUDE]
   // [START readMessageData]
   // Message text passed from the client.
   const text = data.text;
   // [END readMessageData]
-console.log('Here is the context:', context);
   // [START messageHttpsErrors]
   // Checking attribute.
   if (text instanceof String && text.length > 0) {
@@ -99,5 +97,6 @@ console.log('Here is the context:', context);
     throw new functions.https.HttpsError('unknown', error.message, error);
   });
   // [END returnMessageAsync]
+  // [END_EXCLUDE]
 });
-// [END allMessage]
+// [END messageFunctionTrigger]
