@@ -78,9 +78,9 @@ exports.addMessage = functions.https.onCall((data, context) => {
   // [START authIntegration]
   // Authentication / user information is automatically added to the request.
   const uid = context.auth.uid;
-  const name = context.auth.token.name;
-  const picture = context.auth.token.picture;
-  const email = context.auth.token.email;
+  const name = context.auth.token.name || null;
+  const picture = context.auth.token.picture || null;
+  const email = context.auth.token.email || null;
   // [END authIntegration]
 
   // [START returnMessageAsync]
