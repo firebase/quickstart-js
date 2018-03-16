@@ -120,6 +120,7 @@ h3 {
     color: inherit;
     right: 0;
     position: absolute;
+    background-color: #328EC6;
 }
 .mdl-button .material-icons {
     margin-top: -2px;
