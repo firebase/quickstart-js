@@ -33,7 +33,7 @@ exports.addNumbers = functions.https.onCall((data) => {
 
   // [START addHttpsError]
   // Checking that attributes are present and are numbers.
-  if (Number.isNaN(firstNumber) || Number.isNaN(secondNumber)) {
+  if (!Number.isFinite(firstNumber) || !Number.isFinite(secondNumber)) {
     // Throwing an HttpsError so that the client gets the error details.
     throw new functions.https.HttpsError('invalid-argument', 'The function must be called with ' +
         'two arguments "firstNumber" and "secondNumber" which must both be numbers.');
