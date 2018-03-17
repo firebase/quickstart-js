@@ -56,13 +56,19 @@ FunctionsQuickstart.prototype.addNumbers = function() {
     var operationResult = result.data.operationResult;
     var operator = result.data.operator;
     // [START_EXCLUDE]
-    window.alert('Here is the result of the formula: ' + firstNumber + ' ' + operator + ' ' + secondNumber + ' = ' + operationResult);
+    window.alert('Here is the result of the formula: ' + firstNumber + ' '
+        + operator + ' ' + secondNumber + ' = ' + operationResult);
     addNumbersButton.disabled = false;
     // [END_EXCLUDE]
   }).catch(function(error) {
-    console.error('There was an error when calling the Cloud Function', error);
+    // Getting the Error details.
+    var code = error.code;
+    var message = error.message;
+    var details = error.details;
     // [START_EXCLUDE]
-    window.alert('There was an error when calling the Cloud Function: ' + error.message);
+    console.error('There was an error when calling the Cloud Function', error);
+    window.alert('There was an error when calling the Cloud Function:\n\nError Code: '
+        + code + '\nError Message:' + message + '\nError Details:' + details);
     addNumbersButton.disabled = false;
     // [END_EXCLUDE]
   });
@@ -82,14 +88,24 @@ FunctionsQuickstart.prototype.addMessage = function() {
     // Read result of the Cloud Function.
     var sanitizedMessage = result.data.text;
     // [START_EXCLUDE]
+    if (messageText !== sanitizedMessage) {
+      window.alert('You were naughty. Your message was sanitized to:\n\n' + sanitizedMessage);
+    }
     messageTextInput.value = '';
     addMessageButton.disabled = false;
-    // [END_EXCLUDE]
+  // [START catchError]
   }).catch(function(error) {
-    console.error('There was an error when calling the Cloud Function', error);
+    // Getting the Error details.
+    var code = error.code;
+    var message = error.message;
+    var details = error.details;
     // [START_EXCLUDE]
-    window.alert('There was an error when calling the Cloud Function: ' + error.message);
+    console.error('There was an error when calling the Cloud Function', error);
+    window.alert('There was an error when calling the Cloud Function:\n\nError Code: '
+        + code + '\nError Message:' + message + '\nError Details:' + details);
     addMessageButton.disabled = false;
+    // [END_EXCLUDE]
+  // [END catchError]
     // [END_EXCLUDE]
   });
   // [END callAddMessageFunction]
