@@ -79,14 +79,16 @@ FunctionsQuickstart.prototype.addNumbers = function() {
 // Adds a message to the Realtime Database by calling the `addMessage` server-side function.
 FunctionsQuickstart.prototype.addMessage = function() {
   var messageTextInput = this.messageText;
-  var messageText = messageTextInput.value
+  var messageText = messageTextInput.value;
   var addMessageButton = this.addMessageButton;
   addMessageButton.disabled = true;
   // [START callAddMessageFunction]
+  // [START callAddMessageFunctionWithError]
   var addMessage = firebase.functions().callable('addMessage');
   addMessage({text: messageText}).then(function(result) {
     // Read result of the Cloud Function.
     var sanitizedMessage = result.data.text;
+    // [END callAddMessageFunctionWithError]
     // [START_EXCLUDE]
     if (messageText !== sanitizedMessage) {
       window.alert('You were naughty. Your message was sanitized to:\n\n' + sanitizedMessage);
@@ -105,9 +107,9 @@ FunctionsQuickstart.prototype.addMessage = function() {
         + code + '\nError Message:' + message + '\nError Details:' + details);
     addMessageButton.disabled = false;
     // [END_EXCLUDE]
-  // [END catchError]
     // [END_EXCLUDE]
   });
+  // [END catchError]
   // [END callAddMessageFunction]
 };
 
