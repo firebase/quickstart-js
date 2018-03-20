@@ -47,7 +47,7 @@ FunctionsQuickstart.prototype.addNumbers = function() {
   var addNumbersButton = this.addNumbersButton;
   addNumbersButton.disabled = true;
   // [START callAddFunction]
-  var sendNotification = firebase.functions().callable('addNumbers');
+  var sendNotification = firebase.functions().httpsCallable('addNumbers');
   sendNotification({firstNumber: firstNumber, secondNumber: secondNumber}).then(function(result) {
     console.log('Cloud Function called successfully.', result);
     // Read results of the Cloud Function.
@@ -84,7 +84,7 @@ FunctionsQuickstart.prototype.addMessage = function() {
   addMessageButton.disabled = true;
   // [START callAddMessageFunction]
   // [START callAddMessageFunctionWithError]
-  var addMessage = firebase.functions().callable('addMessage');
+  var addMessage = firebase.functions().httpsCallable('addMessage');
   addMessage({text: messageText}).then(function(result) {
     // Read result of the Cloud Function.
     var sanitizedMessage = result.data.text;
