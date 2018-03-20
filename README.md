@@ -6,6 +6,8 @@ Samples available:
  - [Auth](auth/README.md)
    - Anonymous Auth
    - Custom Auth
+   - Email and Password auth
+   - Email Link auth
    - Phone Auth using a visible ReCaptcha
    - Phone Auth using an invisible ReCaptcha
    - Phone Auth using popup

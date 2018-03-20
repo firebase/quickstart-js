@@ -3,7 +3,8 @@ Firebase Auth Quickstarts
 
 The Firebase auth quickstart demonstrates several methods for signing in:
 
- - The [Firebase email/password quickstart](email.html) demonstrates using a Firebase stored email & password - you can both create and sign in a user.
+ - The [Firebase email and password authentication quickstart](email-password.html) demonstrates using a Firebase stored email & password to authenticate - you can both create and sign in a user.
+ - The [Firebase email link authentication quickstart](email-link.html) demonstrates using an email address to sign-in without a password, via a link sent through email - you can both create and sign in a user.
  - The Firebase phone number authentication quickstart demonstrates using Firebase phone number authentication using three different techniques: with a [visible ReCaptcha](phone.html), an [invisible ReCaptcha](phone-invisible.html) and a [simplified popup flow](phone-simple.html) (not recommended for production apps).
  - The Firebase Google Sign in quickstarts demonstrate using a Google account to authenticate to Firebase using three different techniques: with a [popup](google-popup.html), a [redirect](google-redirect.html) and an [auth token](google-credentials.html).
  - The Firebase Facebook Login quickstarts demonstrate using a Facebook account to authenticate to Firebase using three different techniques: with a [popup](facebook-popup.html), a [redirect](facebook-redirect.html) and an [auth token](facebook-credentials.html).
