@@ -93,13 +93,12 @@ exports.addMessage = functions.https.onCall((data, context) => {
     console.log('New Message written');
     // Returning the sanitized message to the client.
     return { text: sanitizedMessage };
-    // [START_EXCLUDE]
-  }).catch((error) => {
+  })
+  // [END returnMessageAsync]
+  .catch((error) => {
     // Re-throwing the error as an HttpsError so that the client gets the error details.
     throw new functions.https.HttpsError('unknown', error.message, error);
-    // [END_EXCLUDE]
   });
-  // [END returnMessageAsync]
   // [END_EXCLUDE]
 });
 // [END messageFunctionTrigger]
