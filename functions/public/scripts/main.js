@@ -89,7 +89,7 @@ FunctionsQuickstart.prototype.addMessage = function() {
     // Read result of the Cloud Function.
     var sanitizedMessage = result.data.text;
     // [END callAddMessageFunctionWithError]
-    // [START_EXCLUDE]
+    // [START_EXCLUDE silent]
     if (messageText !== sanitizedMessage) {
       window.alert('You were naughty. Your message was sanitized to:\n\n' + sanitizedMessage);
     }
