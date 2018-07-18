@@ -88,7 +88,7 @@
    color: black;
  }
  
- .location-card .mdc-card__supporting-text {padding-bottom: 14px;}
+ .location-card .mdc-card__supporting-text {padding: 7px 7px 14px 7px;}
  
  .location-card .rating {padding-bottom: 8px;}
  
