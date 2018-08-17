@@ -13,8 +13,8 @@ Follow these steps to setup and run the quickstart:
 
  1. Create a Firebase project in the [Firebase Console](https://console.firebase.google.com).
  1. In the Firebase console, enable Anonymous authentication on your project by doing: **Authentication > SIGN-IN METHOD > Anonymous > Enable > SAVE**
- 1. In the Firebase console, enable Cloud Firestore on your project by doing: **Database > TRY FIRESTORE BETA > ENABLE**
- 1. Create a new Cloud Firestore database under category Develop and select testing mode for the security rules
+ 1. In the Firebase console, enable Cloud Firestore on your project by doing: **Database > TRY FIRESTORE BETA > Create Database**
+ 1. Select testing mode for the security rules
  1. Copy/Download this repo and open this folder in a Terminal.
  1. Install the Firebase CLI if you do not have it installed on your machine:
     ```bash
