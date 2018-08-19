@@ -20,6 +20,12 @@ Follow these steps to setup and run the quickstart:
     ```bash
     npm -g i firebase-tools
     ```
+ 1. Initialize Firebase within your folder via the terminal:
+    ```bash
+    firebase init
+    ```
+ 1. Select Firestore with space-bar
+ 
  1. Set the CLI to use the project you created on step 1:
     ```bash
     firebase use --add
