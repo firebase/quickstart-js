@@ -73,21 +73,21 @@ FriendlyEats.prototype.getFilteredRestaurants = function(filters, render) {
 FriendlyEats.prototype.addRating = function(restaurantID, rating) {
   var collection = firebase.firestore().collection('restaurants');
   var document = collection.doc(restaurantID);
+  var newRatingDocument = document.collection('ratings').doc();
 
-  return document.collection('ratings').add(rating).then(function() {
-    return firebase.firestore().runTransaction(function(transaction) {
-      return transaction.get(document).then(function(doc) {
-        var data = doc.data();
+  return firebase.firestore().runTransaction(function(transaction) {
+    return transaction.get(document).then(function(doc) {
+      var data = doc.data();
 
-        var newAverage =
-            (data.numRatings * data.avgRating + rating.rating) /
-            (data.numRatings + 1);
+      var newAverage =
+          (data.numRatings * data.avgRating + rating.rating) /
+          (data.numRatings + 1);
 
-        return transaction.update(document, {
-          numRatings: data.numRatings + 1,
-          avgRating: newAverage
-        });
+      transaction.update(document, {
+        numRatings: data.numRatings + 1,
+        avgRating: newAverage
       });
+      return transaction.set(newRatingDocument, rating);
     });
   });
 };
