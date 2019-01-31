@@ -39,7 +39,7 @@ FriendlyEats.prototype.addMockRestaurants = function() {
       category: category,
       price: price,
       city: city,
-      numRating: numRatings,
+      numRatings: numRatings,
       avgRating: avgRating,
       photo: photo
     });
