@@ -30,6 +30,8 @@ Getting Started
  1. You must have the [Firebase CLI](https://firebase.google.com/docs/cli/) installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
  1. On the command line run `firebase use --add` and select the Firebase project you have created.
  1. Run `firebase serve` using the Firebase CLI tool to launch a local server and open the sample `.html` in a web browser.
+ 1. To deploy the sample app to production, run `firebase deploy`.
+    This will deploy the sample app to `https://<project_id>.firebaseapp.com`.
 
 Support
 -------
