@@ -98,7 +98,9 @@ limitations under the License.
       // [START authstatelistener]
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          // User is signed in.
+          // User is signed in. Note that unlike other providers supported by Firebase Auth, Microsoft does
+          // not provide a profile photo so user.photoURL will be null. However, it can be queried using
+          // the Microsoft Graph API: https://docs.microsoft.com/en-us/graph/api/profilephoto-get
           var displayName = user.displayName;
           var email = user.email;
           var emailVerified = user.emailVerified;
