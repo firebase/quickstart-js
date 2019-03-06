@@ -33,7 +33,7 @@ Getting Started
 
 To run the sample app locally during development:
  1. Run `firebase serve`. 
-    This will start a server locally that serves `auth/index.html` on `http://localhost:<port>`. Check the output of the command for the exact port.. 
+    This will start a server locally that serves `auth/index.html` on `http://localhost:<port>`. Check the output of the command for the exact port. 
  1. Navigate in your browser to the URL output by the `firebase serve` command. 
 
 To deploy the sample app to production:
