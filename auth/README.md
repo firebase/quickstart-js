@@ -30,12 +30,15 @@ Getting Started
  1. You must have the [Firebase CLI](https://firebase.google.com/docs/cli/) installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
  1. On the command line, `cd` into the `quickstart-js/auth` subdirectory. 
  1. Run `firebase use --add` and select your Firebase project.
- 1. Run `firebase serve` using the Firebase CLI tool to launch a local server. This will start serving `auth/index.html` on `http://localhost:5000` by default (check the output of the command for the exact port). 
+
+To run the sample app locally during development:
+ 1. Run `firebase serve`. 
+    This will start a server locally that serves `auth/index.html` on `http://localhost:<port>`. Check the output of the command for the exact port.. 
  1. Navigate in your browser to the URL output by the `firebase serve` command. 
 
-A Note About Firebase Serve
----------------
-These examples are designed to be run locally on your computer with the `firebase serve` command or remotely with Firebase Hosting. The `firebase serve` command uses HTTP when serving content locally during development, however Firebase Hosting always serves content securely over HTTPS. 
+To deploy the sample app to production:
+ 1. Run `firebase deploy`.
+    This will deploy the sample app to `https://<project_id>.firebaseapp.com`.
 
 Support
 -------
