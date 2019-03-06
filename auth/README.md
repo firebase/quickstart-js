@@ -1,7 +1,7 @@
 Firebase Auth Quickstarts
 =============================
 
-The Firebase auth quickstart demonstrates several methods for signing in:
+The Firebase Auth quickstart demonstrates several methods for signing in:
 
  - The [Firebase email and password authentication quickstart](email-password.html) demonstrates using a Firebase stored email & password to authenticate - you can both create and sign in a user.
  - The [Firebase email link authentication quickstart](email-link.html) demonstrates using an email address to sign-in without a password, via a link sent through email - you can both create and sign in a user.
@@ -28,9 +28,16 @@ Getting Started
      - For **Custom Auth**, generate a Service Account credentials in your [Firebase Console > Project Settings > Service Accounts](https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk), and click on **GENERATE NEW PRIVATE KEYS**. You will need it in the [example token generator](exampletokengenerator/auth.html).
      - For **Facebook**, **Twitter** and **GitHub** you will need to create an application as a developer on their respective developer platform, whitelist `https://<project_id>.firebaseapp.com/__/auth/handler` for auth redirects and enable and setup the app's credentials in the **Firebase Console > Authentication > SIGN-IN METHOD**.
  1. You must have the [Firebase CLI](https://firebase.google.com/docs/cli/) installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
- 1. On the command line run `firebase use --add` and select the Firebase project you have created.
- 1. Run `firebase serve` using the Firebase CLI tool to launch a local server and open the sample `.html` in a web browser.
- 1. To deploy the sample app to production, run `firebase deploy`.
+ 1. On the command line, `cd` into the `quickstart-js/auth` subdirectory. 
+ 1. Run `firebase use --add` and select your Firebase project.
+
+To run the sample app locally during development:
+ 1. Run `firebase serve`. 
+    This will start a server locally that serves `auth/index.html` on `http://localhost:<port>`. Check the output of the command for the exact port.
+ 1. Navigate in your browser to the URL output by the `firebase serve` command. 
+
+To deploy the sample app to production:
+ 1. Run `firebase deploy`.
     This will deploy the sample app to `https://<project_id>.firebaseapp.com`.
 
 Support
