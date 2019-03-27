@@ -20,6 +20,8 @@ Samples are organized into the following subdirectories and include README.md fi
    - Google auth using Firebase redirect
    - Twitter auth using Firebase popup
    - Twitter auth using Firebase redirect
+   - Microsoft auth using Firebase popup
+   - Microsoft auth using Firebase redirect  
    - GitHub auth using Firebase popup
    - GitHub auth using Firebase redirect
  - [Database](database/README.md)
