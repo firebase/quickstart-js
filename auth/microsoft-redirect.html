@@ -43,7 +43,7 @@ limitations under the License.
     function toggleSignIn() {
       if (!firebase.auth().currentUser) {
         // [START createprovider]
-        var provider = new firebase.auth.OAuthProvider('hotmail.com');
+        var provider = new firebase.auth.OAuthProvider('microsoft.com');
         // [END createprovider]
         // [START addscopes]
         provider.addScope('User.Read');
