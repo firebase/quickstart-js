@@ -30,10 +30,6 @@ function FriendlyEats() {
 
   var that = this;
 
-  firebase.firestore().settings({
-    timestampsInSnapshots: true
-  });
-
   firebase.firestore().enablePersistence()
     .then(function() {
       return firebase.auth().signInAnonymously();
