@@ -98,13 +98,10 @@ limitations under the License.
   messaging.onTokenRefresh(function() {
     messaging.getToken().then(function(refreshedToken) {
       console.log('Token refreshed.');
-      // [START_EXCLUDE]
       // Indicate that the new Instance ID token has not yet been sent to the
       // app server.
       setTokenSentToServer(false);
-      // [END_EXCLUDE]
-      // Send Instance ID token to your app server.
-      // TODO(developer): implement sendTokenToServer
+      // Send Instance ID token to app server.
       sendTokenToServer(refreshedToken);
       // [START_EXCLUDE]
       // Display new Instance ID token and clear UI of all previous messages.
@@ -112,9 +109,7 @@ limitations under the License.
       // [END_EXCLUDE]
     }).catch(function(err) {
       console.log('Unable to retrieve refreshed token ', err);
-      // [START_EXCLUDE]
       showToken('Unable to retrieve refreshed token ', err);
-      // [END_EXCLUDE]
     });
   });
   // [END refresh_token]
@@ -141,19 +136,14 @@ limitations under the License.
     // subsequent calls to getToken will return from cache.
     messaging.getToken().then(function(currentToken) {
       if (currentToken) {
-        // TODO(developer): implement sendTokenToServer
         sendTokenToServer(currentToken);
-        // [START_EXCLUDE]
         updateUIForPushEnabled(currentToken);
-        // [END_EXCLUDE]
       } else {
         // Show permission request.
         console.log('No Instance ID token available. Request permission to generate one.');
-        // [START_EXCLUDE]
         // Show permission UI.
         updateUIForPushPermissionRequired();
         setTokenSentToServer(false);
-        // [END_EXCLUDE]
       }
     }).catch(function(err) {
       console.log('An error occurred while retrieving token. ', err);
@@ -225,8 +215,8 @@ limitations under the License.
     messaging.getToken().then(function(currentToken) {
       messaging.deleteToken(currentToken).then(function() {
         console.log('Token deleted.');
-        // [START_EXCLUDE]
         setTokenSentToServer(false);
+        // [START_EXCLUDE]
         // Once token is deleted update UI.
         resetUI();
         // [END_EXCLUDE]
@@ -236,9 +226,7 @@ limitations under the License.
       // [END delete_token]
     }).catch(function(err) {
       console.log('Error retrieving Instance ID token. ', err);
-      // [START_EXCLUDE]
       showToken('Error retrieving Instance ID token. ', err);
-      // [END_EXCLUDE]
     });
 
   }
