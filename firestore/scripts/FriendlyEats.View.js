@@ -15,6 +15,8 @@
  */
 'use strict';
 
+FriendlyEats.ID_CONSTANT = 'fir-';
+
 FriendlyEats.prototype.initTemplates = function() {
   this.templates = {};
 
@@ -82,11 +84,25 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
       that.router.navigate('/restaurants/' + doc.id);
     };
 
-    var el = that.renderTemplate('restaurant-card', data);
-    el.querySelector('.rating').append(that.renderRating(data.avgRating));
-    el.querySelector('.price').append(that.renderPrice(data.price));
+    // check if restaurant card has already been rendered
+    var existingRestaurantCardEl = mainEl.querySelector('#' + that.ID_CONSTANT + doc.id);
+    var el = existingRestaurantCardEl || that.renderTemplate('restaurant-card', data);
 
-    mainEl.querySelector('#cards').append(el);
+    var ratingEl = el.querySelector('.rating');
+    var priceEl = el.querySelector('.price');
+
+    // clear out existing rating and price if they already exist
+    if (existingRestaurantCardEl) {
+      ratingEl.innerHTML = '';
+      priceEl.innerHTML = '';
+    }
+
+    ratingEl.append(that.renderRating(data.avgRating));
+    priceEl.append(that.renderPrice(data.price));
+
+    if (!existingRestaurantCardEl) {
+      mainEl.querySelector('#cards').append(el);
+    }
   };
 
   if (filters.city || filters.category || filters.price || filters.sort !== 'Rating' ) {
@@ -354,6 +370,13 @@ FriendlyEats.prototype.renderTemplate = function(id, data) {
   var el = template.cloneNode(true);
   el.removeAttribute('hidden');
   this.render(el, data);
+  
+  // set an id in case we need to access the element later
+  if (data && data['.id']) {
+    // for `querySelector` to work, ids must start with a string
+    el.id = this.ID_CONSTANT + data['.id'];
+  }
+
   return el;
 };
 
