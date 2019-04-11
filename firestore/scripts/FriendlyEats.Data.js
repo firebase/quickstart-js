@@ -35,7 +35,7 @@ FriendlyEats.prototype.getDocumentsInQuery = function(query, render) {
     }
 
     snapshot.docChanges().forEach(function(change) {
-      if (change.type === 'added') {
+      if (change.type === 'added' || change.type === 'modified') {
         render(change.doc);
       }
     });
