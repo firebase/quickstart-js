@@ -1,0 +1,17 @@
+{
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "rulesDirectory": ["tslint-plugin-prettier"],
+  "rules": {
+    "prettier": true,
+    "interface-name": [true, "never-prefix"],
+    "jsx-no-lambda": false,
+    "member-access": [true, "no-public"],
+    "no-any": true,
+    "no-console": false,
+    "no-default-export": true,
+    "no-submodule-imports": false,
+    "no-unnecessary-type-assertion": true,
+    "object-literal-sort-keys": false,
+    "prefer-method-signature": true
+  }
+}
