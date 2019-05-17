@@ -195,16 +195,18 @@ limitations under the License.
   function requestPermission() {
     console.log('Requesting permission...');
     // [START request_permission]
-    messaging.requestPermission().then(function() {
-      console.log('Notification permission granted.');
-      // TODO(developer): Retrieve an Instance ID token for use with FCM.
-      // [START_EXCLUDE]
-      // In many cases once an app has been granted notification permission, it
-      // should update its UI reflecting this.
-      resetUI();
-      // [END_EXCLUDE]
-    }).catch(function(err) {
-      console.log('Unable to get permission to notify.', err);
+    Notification.requestPermission().then(function(permission) {
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+        // TODO(developer): Retrieve an Instance ID token for use with FCM.
+        // [START_EXCLUDE]
+        // In many cases once an app has been granted notification permission,
+        // it should update its UI reflecting this.
+        resetUI();
+        // [END_EXCLUDE]
+      } else {
+        console.log('Unable to get permission to notify.');
+      }
     });
     // [END request_permission]
   }
