@@ -128,12 +128,12 @@ limitations under the License.
           document.getElementById('quickstart-account-details').textContent = 'null';
           document.getElementById('quickstart-tenant-id').textContent = 'null';
         }
-         document.getElementById('close-modal-icon').addEventListener('click', function() {
-           document.getElementById('tenant-ui-modal').close();
-         });
-         document.getElementById('sign-out').addEventListener('click', function() {
-           firebase.auth().signOut();
-         });
+        document.getElementById('close-modal-icon').addEventListener('click', function() {
+          document.getElementById('tenant-ui-modal').close();
+        });
+        document.getElementById('sign-out').addEventListener('click', function() {
+          firebase.auth().signOut();
+        });
       });
     }
 
