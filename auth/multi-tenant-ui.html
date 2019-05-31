@@ -32,6 +32,7 @@ limitations under the License.
   <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
   <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
   <script src="/__/firebase/5.0.0/firebase-app.js"></script>
+  <!-- TODO: use the public version of SDKs with multi-tenant support -->
   <script src="firebase-auth.js"></script>
   <script src="firebaseui-mt.js"></script>
   <script src="/__/firebase/init.js"></script>
@@ -44,7 +45,7 @@ limitations under the License.
      * to enable for each tenant. 
      */
     window.tenantConfig = {
-      '113169512146': {
+      'TENANT_ID1': {
         'tenantName': '<tenant-name-to-display-to-end-user>',
         'uiConfig': {
           'signInOptions': [firebase.auth.EmailAuthProvider.PROVIDER_ID],
@@ -59,7 +60,7 @@ limitations under the License.
         }
       },
       '199120875611': {
-        'tenantName': '<tenant-name-to-display-to-end-user>',
+        'TENANT_ID2': '<tenant-name-to-display-to-end-user>',
         'uiConfig': {
           'signInOptions': [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
           'credentialHelper': 'none',
