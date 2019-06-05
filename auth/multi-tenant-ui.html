@@ -43,8 +43,12 @@ limitations under the License.
      * The tenant name will be displayed on the sign-in buttons. uiConfig will
      * be used to config FirebaseUI. You can specify the provider you'd like 
      * to enable for each tenant. 
+     * 
+     * You'll need to substitute the `TENANT_ID` with the tenant IDs of your 
+     * project and `tenantName` with the display names you'd like to use for
+     * the tenant selection buttons.
      */
-    window.tenantConfig = {
+    var TENANT_CONFIG = {
       'TENANT_ID1': {
         'tenantName': '<tenant-name-to-display-to-end-user>',
         'uiConfig': {
@@ -74,18 +78,19 @@ limitations under the License.
         }
       }
     };
+    var ui = null;
 
     /**
      * Dynamically creates the tenant sign-in buttons.
      */
     function initializeSignInButtons() {
       var buttonContainer = document.getElementById('sign-in-buttons');
-      Object.keys(window.tenantConfig).forEach(function(key) {
+      Object.keys(TENANT_CONFIG).forEach(function(key) {
         var tenantId = key;
-        var tenantName = window.tenantConfig[key].tenantName;
-        var uiConfig = window.tenantConfig[key].uiConfig;
-        var button = document.createElement("button");  
-        button.classList = "mdl-button mdl-js-button mdl-button--raised";
+        var tenantName = TENANT_CONFIG[key].tenantName;
+        var uiConfig = TENANT_CONFIG[key].uiConfig;
+        var button = document.createElement('button');  
+        button.classList = 'mdl-button mdl-js-button mdl-button--raised';
         button.id = tenantId;
         button.textContent = tenantName;
         button.setAttribute('data-val', tenantId);
@@ -95,26 +100,26 @@ limitations under the License.
     }
 
     /**
-     * On click handler for multi-tenant sign-in.
-     * @param {Event} e The tenant sign-in button click event.
+     * Handles tenant selection button clicks.
+     * @param {!Event} e The tenant sign-in button click event.
      */
     function onSignInClickHandler(e) {
       var tenantId = e.target.getAttribute('data-val');
       firebase.auth().tenantId = tenantId;
-      window.ui.reset();
-      window.ui.start('#firebaseui-auth-container', window.tenantConfig[tenantId]['uiConfig']);
+      ui.reset();
+      ui.start('#firebaseui-auth-container', TENANT_CONFIG[tenantId]['uiConfig']);
       document.getElementById('quickstart-tenant-modal-title').textContent = 'Tenant ID: ' + tenantId;
       document.getElementById('tenant-ui-modal').show();
     }
 
     /**
-     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     * Handles setting up UI event listeners and registering Firebase auth listeners:
      *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
      *    out, and that is where we update the UI.
      */
     function initApp() {
       // Initialize the FirebaseUI component.
-      window.ui = new firebaseui.auth.AuthUI(firebase.auth());
+      ui = new firebaseui.auth.AuthUI(firebase.auth());
       // Dynamically initialize the tenant sign-in buttons.
       initializeSignInButtons();
       
