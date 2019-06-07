@@ -66,7 +66,18 @@ limitations under the License.
       'TENANT_ID2': {
         'tenantName': '<tenant-name-to-display-to-end-user>',
         'uiConfig': {
-          'signInOptions': [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+          'signInOptions': [{
+            // The provider ID, eg. saml.myProvider.
+            'provider': 'saml.myProvider',
+            // The provider name displayed to end users (sign in button/linking prompt).
+            // Default: provider ID
+            'providerName': 'MySAMLProvider',
+            // The color of sign in button.
+            'buttonColor': '#2F2F2F',
+            // The URL of the Identity Provider's icon. This will be displayed
+            // on the provider's sign-in button.
+            'iconUrl': '<icon-url-of-sign-in-button>'
+          }],
           'credentialHelper': 'none',
           'signInFlow': 'popup',
           'callbacks': {
