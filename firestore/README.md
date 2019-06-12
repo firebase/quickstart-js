@@ -2,7 +2,7 @@
 
 ## Introduction
 
-FriendlyEats is a restaurant recommendation app built on Cloud Firestore.
+FriendlyEats is a restaurant recommendation app built on Cloud Firestore. It has offline persistence [enabled](https://github.com/firebase/quickstart-js/blob/a4919505778ae280613662b5e0c64a0127a9d4c9/firestore/scripts/FriendlyEats.js#L33).
 For more information about Firestore visit [the docs][firestore-docs].
 
 [firestore-docs]: https://firebase.google.com/docs/firestore/
