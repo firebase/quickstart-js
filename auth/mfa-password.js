@@ -34,7 +34,7 @@ function passwordSignIn() {
   // Sign in with email and password.
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(function() {
-      alertMessage('user signed in!');
+      alertMessage('User signed in!');
     }) 
     .catch(function(error) {
       // Handle second factor sign-in.
@@ -56,7 +56,7 @@ function passwordSignUp() {
   // Sign up with email and password.
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(function() {
-      alertMessage('new user created!');
+      alertMessage('New user created!');
     }).catch(displayError);
 }
 
@@ -110,6 +110,7 @@ function updateMfaDialog() {
       showElement('sign-in-send-code-form');
       hideElement('sign-in-verification-code-form');
       renderRecaptcha('sign-in-recaptcha-container');
+      updateSignInSendCodeButtonUI();
     }
   // For multi-factor enrollment.
   } else {
@@ -158,12 +159,14 @@ function renderRecaptcha(container) {
   recaptchaVerifier = new firebase.auth.RecaptchaVerifier(container, {
     'size': 'normal',
     'callback': function(response) {
-      // reCAPTCHA solved, allow send code for enrollment.
+      // reCAPTCHA solved, allow send code for enrollment/sign-in.
       updateEnrollSendCodeButtonUI();
+      updateSignInSendCodeButtonUI();
     },
     'expired-callback': function() {
       // Response expired. Ask user to solve reCAPTCHA again.
       updateEnrollSendCodeButtonUI();
+      updateSignInSendCodeButtonUI();
     }
   });
   recaptchaVerifier.render().then(function(widgetId) {
@@ -174,15 +177,12 @@ function renderRecaptcha(container) {
 /**
  * Displays the enrolled second factors of the current user.
  * @param {!Array<!firebase.auth.MultiFactorInfo>} enrolledFactors The
- *     enrolled secnond factors of the current user.
+ *     enrolled second factors of the current user.
  */
 function showEnrolledFactors(enrolledFactors) {
   var listGroup = document.getElementById('mfa-enrolled-factors');
   // Clear the list.
   listGroup.innerHTML = '';
-  var enrolledFactors = 
-      (firebase.auth().currentUser && 
-       firebase.auth().currentUser.multiFactor.enrolledFactors) || [];
   if (enrolledFactors.length == 0) {
     listGroup.innerHTML = 'N/A';
   }
@@ -225,7 +225,7 @@ function updateMfaSignInHints(hints) {
 }
 
 /**
- * Selects the phone number on change handler for multi-factor sign-in.
+ * Handles the multi-factor hints selection for sign-in.
  * @param {!Event} e The phone number dropdown on change event.
  */
 function onSelect(e) {
@@ -272,7 +272,7 @@ function onEnrollSendCode(e) {
  */
 function onEnrollVerifyCode(e) {
   e.preventDefault();
-  if (firebase.auth().currentUser) {
+  if (firebase.auth().currentUser && phoneVerificationId) {
     var code = document.getElementById('enroll-verification-code').value;
     var credential = firebase.auth.PhoneAuthProvider.credential(
         phoneVerificationId, code);
@@ -282,7 +282,7 @@ function onEnrollVerifyCode(e) {
     // Enroll the phone second factor.
     firebase.auth().currentUser.multiFactor.enroll(multiFactorAssertion, displayName)
       .then(function () {
-      	var enrolledFactors = firebase.auth().currentUser.multiFactor.enrolledFactors;
+        var enrolledFactors = firebase.auth().currentUser.multiFactor.enrolledFactors;
         showEnrolledFactors(enrolledFactors);
         clearMfaDialog();
         alertMessage('Second factor enrolled!');
@@ -296,7 +296,7 @@ function onEnrollVerifyCode(e) {
  */
 function onSignInSendCode(e) {
   e.preventDefault();
-  if (isCaptchaOK()) {
+  if (isCaptchaOK() && mfaResolver) {
     var node = document.getElementById('mfa-hints');
     var index = node.options[node.selectedIndex].getAttribute('data-val');
     var info = mfaResolver.hints[index];
@@ -309,7 +309,10 @@ function onSignInSendCode(e) {
       .then(function(verificationId) {
         phoneVerificationId = verificationId;
         updateMfaDialog();
-      }).catch(displayMfaError);
+      }, function(error) {
+        updateSignInSendCodeButtonUI();
+        displayMfaError(error);
+      });
   }
 }
 
@@ -319,14 +322,14 @@ function onSignInSendCode(e) {
  */
 function onSignInVerifyCode(e) {
   e.preventDefault();
-  if (mfaResolver) {
+  if (mfaResolver && phoneVerificationId) {
     var code = document.getElementById('sign-in-verification-code').value;
     var credential = firebase.auth.PhoneAuthProvider.credential(
         phoneVerificationId, code);
     var multiFactorAssertion =
         firebase.auth.PhoneMultiFactorGenerator.assertion(credential);
     mfaResolver.resolveSignIn(multiFactorAssertion).then(function () {
-      alertMessage('signed in with second factor!');
+      alertMessage('Signed in with second factor!');
       clearMfaDialog();
       var enrolledFactors = firebase.auth().currentUser.multiFactor.enrolledFactors;
       showEnrolledFactors(enrolledFactors);
@@ -342,12 +345,14 @@ function onUnenroll(e) {
   var index = e.target.parentNode.getAttribute('data-val');
   if (firebase.auth().currentUser) {
     var info = firebase.auth().currentUser.multiFactor.enrolledFactors[index];
-    firebase.auth().currentUser.multiFactor.unenroll(info).then(function() {
-      alertMessage(info.phoneNumber + ' has been unenrolled!');
-      var enrolledFactors = (firebase.auth().currentUser && 
-                             firebase.auth().currentUser.multiFactor.enrolledFactors) || [];
-      showEnrolledFactors(enrolledFactors);
-    }).catch(displayError);
+    if (info) {
+      firebase.auth().currentUser.multiFactor.unenroll(info).then(function() {
+        alertMessage(info.phoneNumber + ' has been unenrolled!');
+        var enrolledFactors = (firebase.auth().currentUser &&
+                               firebase.auth().currentUser.multiFactor.enrolledFactors) || [];
+        showEnrolledFactors(enrolledFactors);
+      }).catch(displayError);
+    }
   }
 }
 
@@ -375,20 +380,27 @@ function isPhoneNumberValid() {
  * @return {boolean} Whether the ReCaptcha is in OK state.
  */
 function isCaptchaOK() {
-  if (typeof grecaptcha !== 'undefined'
-    && recaptchaWidgetId !== null) {
+  if (typeof grecaptcha !== 'undefined' &&
+      recaptchaWidgetId !== null) {
     var recaptchaResponse = grecaptcha.getResponse(recaptchaWidgetId);
-    return recaptchaResponse !== '';
+    return !!recaptchaResponse;
   }
   return false;
 }
 
 /** 
- * Updates the send code button state depending on form values state.
+ * Updates the enroll send code button state depending on form values state.
  */
 function updateEnrollSendCodeButtonUI() {
   document.getElementById('enroll-send-code-button').disabled =
     !isCaptchaOK() || !isPhoneNumberValid();
+}
+
+/** 
+ * Updates the sign in send code button state depending on form values state.
+ */
+function updateSignInSendCodeButtonUI() {
+  document.getElementById('sign-in-send-code-button').disabled = !isCaptchaOK();
 }
 
 /**
@@ -417,7 +429,10 @@ function clearMfaDialog() {
  * @param {string} elementId The ID of the element.
  */
 function showElement(elementId) {
-  document.getElementById(elementId).style.display = 'block';
+  var element = document.getElementById(elementId);
+  if (element) {
+    element.style.display = 'block';
+  }
 }
 
 /**
@@ -425,7 +440,10 @@ function showElement(elementId) {
  * @param {string} elementId The ID of the element.
  */
 function hideElement(elementId) {
-  document.getElementById(elementId).style.display = 'none';
+  var element = document.getElementById(elementId);
+  if (element) {
+    element.style.display = 'none';
+  }
 }
 
 /**
@@ -464,7 +482,7 @@ function alertMessage(msg) {
  *    out, and that is where we update the UI.
  */
 function initApp() {
-  // Listening for auth state changes.
+  // Listening for token changes.
   firebase.auth().onIdTokenChanged(function(user) {
     document.getElementById('quickstart-sign-out').disabled = true;
     document.getElementById('quickstart-enroll').disabled = true;
