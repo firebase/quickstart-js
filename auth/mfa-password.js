@@ -218,7 +218,7 @@ function showEnrolledFactors(enrolledFactors) {
 /**
  * Updates the second factor dropdown options for sign-in.
  * @param {!Array<!firebase.auth.MultiFactorInfo>} hints The sign-in
- *     second factors hints.
+ *     second factor hints.
  */
 function updateMfaSignInHints(hints) {
   var listGroup = document.getElementById('mfa-hints');
@@ -309,7 +309,7 @@ function onSignInSendCode(e) {
   e.preventDefault();
   if (isCaptchaOK() && mfaResolver) {
     var node = document.getElementById('mfa-hints');
-    var index = parseInt(node.options[node.selectedIndex].getAttribute('data-val'));
+    var index = parseInt(node.options[node.selectedIndex].getAttribute('data-val'), 10);
     var info = mfaResolver.hints[index];
     var provider = new firebase.auth.PhoneAuthProvider(firebase.auth());
     var signInRequest = {
@@ -353,7 +353,7 @@ function onSignInVerifyCode(e) {
  * @param {!Event} e The unenroll on click event.
  */
 function onUnenroll(e) {
-  var index = parseInt(e.target.parentNode.getAttribute('data-val'));
+  var index = parseInt(e.target.parentNode.getAttribute('data-val'), 10);
   if (firebase.auth().currentUser) {
     var info = firebase.auth().currentUser.multiFactor.enrolledFactors[index];
     if (info) {
