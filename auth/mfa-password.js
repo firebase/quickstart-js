@@ -174,6 +174,16 @@ function renderRecaptcha(container) {
   });
 }
 
+
+/**
+ * Displays the account details of the current user.
+ * @param {?firebase.User} user The current signed in user.
+ */
+function showAccountDetails(user) {
+  var accountDetails = user ? JSON.stringify(user, null, '  ') : null;
+  document.getElementById('quickstart-account-details').textContent = accountDetails;
+}
+
 /**
  * Displays the enrolled second factors of the current user.
  * @param {!Array<!firebase.auth.MultiFactorInfo>} enrolledFactors The
@@ -208,7 +218,7 @@ function showEnrolledFactors(enrolledFactors) {
 /**
  * Updates the second factor dropdown options for sign-in.
  * @param {!Array<!firebase.auth.MultiFactorInfo>} hints The sign-in
- *     secnond factors hints.
+ *     second factors hints.
  */
 function updateMfaSignInHints(hints) {
   var listGroup = document.getElementById('mfa-hints');
@@ -282,6 +292,7 @@ function onEnrollVerifyCode(e) {
     // Enroll the phone second factor.
     firebase.auth().currentUser.multiFactor.enroll(multiFactorAssertion, displayName)
       .then(function () {
+        showAccountDetails(firebase.auth().currentUser);
         var enrolledFactors = firebase.auth().currentUser.multiFactor.enrolledFactors;
         showEnrolledFactors(enrolledFactors);
         clearMfaDialog();
@@ -298,7 +309,7 @@ function onSignInSendCode(e) {
   e.preventDefault();
   if (isCaptchaOK() && mfaResolver) {
     var node = document.getElementById('mfa-hints');
-    var index = node.options[node.selectedIndex].getAttribute('data-val');
+    var index = parseInt(node.options[node.selectedIndex].getAttribute('data-val'));
     var info = mfaResolver.hints[index];
     var provider = new firebase.auth.PhoneAuthProvider(firebase.auth());
     var signInRequest = {
@@ -342,12 +353,13 @@ function onSignInVerifyCode(e) {
  * @param {!Event} e The unenroll on click event.
  */
 function onUnenroll(e) {
-  var index = e.target.parentNode.getAttribute('data-val');
+  var index = parseInt(e.target.parentNode.getAttribute('data-val'));
   if (firebase.auth().currentUser) {
     var info = firebase.auth().currentUser.multiFactor.enrolledFactors[index];
     if (info) {
       firebase.auth().currentUser.multiFactor.unenroll(info).then(function() {
         alertMessage(info.phoneNumber + ' has been unenrolled!');
+        showAccountDetails(firebase.auth().currentUser);
         var enrolledFactors = (firebase.auth().currentUser &&
                                firebase.auth().currentUser.multiFactor.enrolledFactors) || [];
         showEnrolledFactors(enrolledFactors);
@@ -482,25 +494,24 @@ function alertMessage(msg) {
  *    out, and that is where we update the UI.
  */
 function initApp() {
-  // Listening for token changes.
-  firebase.auth().onIdTokenChanged(function(user) {
+  // Listening for Auth state changes.
+  firebase.auth().onAuthStateChanged(function(user) {
     document.getElementById('quickstart-sign-out').disabled = true;
     document.getElementById('quickstart-enroll').disabled = true;
     document.getElementById('quickstart-verify-email').disabled = true;
     if (user) {
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
-      document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
-
       document.getElementById('quickstart-sign-out').disabled = false;
       document.getElementById('quickstart-enroll').disabled = false;
       if (!user.emailVerified) {
         document.getElementById('quickstart-verify-email').disabled = false;
       }
+      showAccountDetails(user);
       showEnrolledFactors(user.multiFactor.enrolledFactors);
     } else {
       // User is signed out.
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
-      document.getElementById('quickstart-account-details').textContent = 'null';   
+      showAccountDetails(null);
       showEnrolledFactors([]);       
     }
   });
