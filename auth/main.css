@@ -42,7 +42,7 @@ li a {
   margin-top: 20px;
   line-height: 25px;
 }
-#quickstart-sign-in-status, #sign-in-status {
+#quickstart-sign-in-status, #sign-in-status, #quickstart-tenant-id {
   font-weight: bold;
 }
 pre {
@@ -58,6 +58,15 @@ h3 {
   background-size: 40px;
   padding-left: 50px;
   color: white;
+}
+.close-icon {
+  cursor: pointer;
+  float: right; 
+  width: 20px;
+}
+.gcip-heading {
+  background: none;
+  padding-left: 10px;
 }
 #verification-code-form {
   display:none;
@@ -151,4 +160,11 @@ h3 {
   50% { color: transparent; }
   99% { color: #ff0000; }
   100% { color: #ff0000; }
+#quickstart-tenant-card {
+  min-height: 500px;
+}
+#quickstart-tenant-modal-title {
+  margin: 0px;
+  padding: 2px;
+  text-align: center;
 }
