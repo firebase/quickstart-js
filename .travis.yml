@@ -2,9 +2,8 @@ language: node_js
 node_js:
   - 'lts/*'
 install:
+  - npm ci
   - npm install -g lerna
-  - npm install -g eslint
-  - npm install -g eslint-plugin-promise
   - lerna bootstrap
 script:
-  - ./scripts/test.sh
+  - npm test
