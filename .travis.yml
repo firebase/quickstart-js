@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "7"
+  - 'lts/*'
 install:
   - npm install -g lerna
   - npm install -g eslint
