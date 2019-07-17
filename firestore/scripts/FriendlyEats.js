@@ -18,7 +18,7 @@
 /**
  * Initializes the FriendlyEats app.
  */
-function FriendlyEats() {
+function FriendlyEats() { // eslint-disable-line no-redeclare
   this.filters = {
     city: '',
     price: '',
