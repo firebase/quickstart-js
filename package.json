@@ -13,9 +13,9 @@
   },
   "homepage": "https://github.com/firebase/quickstart-js#readme",
   "devDependencies": {
-    "eslint": "^4.17.0",
-    "eslint-plugin-promise": "^3.6.0",
-    "lerna": "^2.8.0"
+    "eslint": "^6.0.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "lerna": "^3.15.0"
   },
   "scripts": {
     "test": "scripts/test.sh"
