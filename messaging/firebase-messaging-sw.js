@@ -5,7 +5,7 @@ importScripts('/__/firebase/6.3.4/firebase-app.js');
 importScripts('/__/firebase/6.3.4/firebase-messaging.js');
 importScripts('/__/firebase/init.js');
 
-var messaging = firebase.messaging();
+const messaging = firebase.messaging();
 
 /**
  * Here is is the code snippet to initialize Firebase Messaging in the Service
@@ -38,8 +38,8 @@ var messaging = firebase.messaging();
 messaging.setBackgroundMessageHandler(function(payload) {
   console.log('[firebase-messaging-sw.js] Received background message ', payload);
   // Customize notification here
-  var notificationTitle = 'Background Message Title';
-  var notificationOptions = {
+  const notificationTitle = 'Background Message Title';
+  const notificationOptions = {
     body: 'Background Message body.',
     icon: '/firebase-logo.png'
   };
