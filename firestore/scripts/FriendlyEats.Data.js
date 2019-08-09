@@ -73,7 +73,7 @@ FriendlyEats.prototype.getFilteredRestaurants = (filters, render) => {
 FriendlyEats.prototype.addRating = (restaurantID, rating) => {
     const collection = firebase.firestore().collection('restaurants');
     const document = collection.doc(restaurantID);
-    const newRatingDocument = document.collection('ratings').doc();
+    let newRatingDocument = document.collection('ratings').doc();
 
     return firebase.firestore().runTransaction((transaction) => {
         return transaction.get(document).then((doc) => {
