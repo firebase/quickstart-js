@@ -21,7 +21,7 @@ FriendlyEats.prototype.addRestaurant = (data) => {
 };
 
 FriendlyEats.prototype.getAllRestaurants = (render) => {
-    const query = firebase.firestore()
+    let query = firebase.firestore()
         .collection('restaurants')
         .orderBy('avgRating', 'desc')
         .limit(50);
@@ -79,7 +79,7 @@ FriendlyEats.prototype.addRating = (restaurantID, rating) => {
         return transaction.get(document).then((doc) => {
             const data = doc.data();
 
-            const newAverage =
+            let newAverage =
                 (data.numRatings * data.avgRating + rating.rating) /
                 (data.numRatings + 1);
 
