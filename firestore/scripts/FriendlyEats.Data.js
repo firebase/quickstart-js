@@ -16,12 +16,12 @@
 'use strict';
 
 FriendlyEats.prototype.addRestaurant = (data) => {
-    let collection = firebase.firestore().collection('restaurants');
+    const collection = firebase.firestore().collection('restaurants');
     return collection.add(data);
 };
 
 FriendlyEats.prototype.getAllRestaurants = (render) => {
-    let query = firebase.firestore()
+    const query = firebase.firestore()
         .collection('restaurants')
         .orderBy('avgRating', 'desc')
         .limit(50);
@@ -47,7 +47,7 @@ FriendlyEats.prototype.getRestaurant = (id) => {
 };
 
 FriendlyEats.prototype.getFilteredRestaurants = (filters, render) => {
-    let query = firebase.firestore().collection('restaurants');
+    const query = firebase.firestore().collection('restaurants');
 
     if (filters.category !== 'Any') {
         query = query.where('category', '==', filters.category);
@@ -71,15 +71,15 @@ FriendlyEats.prototype.getFilteredRestaurants = (filters, render) => {
 };
 
 FriendlyEats.prototype.addRating = (restaurantID, rating) => {
-    let collection = firebase.firestore().collection('restaurants');
-    let document = collection.doc(restaurantID);
-    let newRatingDocument = document.collection('ratings').doc();
+    const collection = firebase.firestore().collection('restaurants');
+    const document = collection.doc(restaurantID);
+    const newRatingDocument = document.collection('ratings').doc();
 
     return firebase.firestore().runTransaction((transaction) => {
         return transaction.get(document).then((doc) => {
-            let data = doc.data();
+            const data = doc.data();
 
-            let newAverage =
+            const newAverage =
                 (data.numRatings * data.avgRating + rating.rating) /
                 (data.numRatings + 1);
 
