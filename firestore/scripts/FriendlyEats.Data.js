@@ -64,7 +64,7 @@ FriendlyEats.prototype.getFilteredRestaurants = (filters, render) => {
   if (filters.sort === 'Rating') {
     const query = query.orderBy('avgRating', 'desc');
   } else if (filters.sort === 'Reviews') {
-    query = query.orderBy('numRatings', 'desc');
+    const query = query.orderBy('numRatings', 'desc');
   }
 
   this.getDocumentsInQuery(query, render);
