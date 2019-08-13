@@ -47,24 +47,24 @@ FriendlyEats.prototype.getRestaurant = (id) => {
 };
 
 FriendlyEats.prototype.getFilteredRestaurants = (filters, render) => {
-  const query = firebase.firestore().collection('restaurants');
+  let query = firebase.firestore().collection('restaurants');
 
   if (filters.category !== 'Any') {
-    const query = query.where('category', '==', filters.category);
+    query = query.where('category', '==', filters.category);
   }
 
   if (filters.city !== 'Any') {
-    const query = query.where('city', '==', filters.city);
+    query = query.where('city', '==', filters.city);
   }
 
   if (filters.price !== 'Any') {
-    const query = query.where('price', '==', filters.price.length);
+    query = query.where('price', '==', filters.price.length);
   }
 
   if (filters.sort === 'Rating') {
-    const query = query.orderBy('avgRating', 'desc');
+    query = query.orderBy('avgRating', 'desc');
   } else if (filters.sort === 'Reviews') {
-    const query = query.orderBy('numRatings', 'desc');
+    query = query.orderBy('numRatings', 'desc');
   }
 
   this.getDocumentsInQuery(query, render);
