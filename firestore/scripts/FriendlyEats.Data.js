@@ -79,7 +79,7 @@ FriendlyEats.prototype.addRating = (restaurantID, rating) => {
     return transaction.get(document).then((doc) => {
       const data = doc.data();
 
-      let newAverage =
+      const newAverage =
           (data.numRatings * data.avgRating + rating.rating) /
           (data.numRatings + 1);
 
