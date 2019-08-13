@@ -17,11 +17,11 @@
 
 FriendlyEats.ID_CONSTANT = 'fir-';
 
-FriendlyEats.prototype.initTemplates = function() {
+FriendlyEats.prototype.initTemplates = () => {
   this.templates = {};
 
   let that = this;
-  document.querySelectorAll('.template').forEach(function(el) {
+  document.querySelectorAll('.template').forEach((el) => {
     that.templates[el.getAttribute('id')] = el;
   });
 };
