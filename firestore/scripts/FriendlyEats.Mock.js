@@ -18,23 +18,23 @@
 /**
  * Adds a set of mock Restaurants to the Cloud Firestore.
  */
-FriendlyEats.prototype.addMockRestaurants = () => {
-  let promises = [];
+FriendlyEats.prototype.addMockRestaurants = function() {
+  var promises = [];
 
-  for (let i = 0; i < 20; i++) {
-     let name =
+  for (var i = 0; i < 20; i++) {
+    var name =
         this.getRandomItem(this.data.words) +
         ' ' +
         this.getRandomItem(this.data.words);
-    let category = this.getRandomItem(this.data.categories);
-    let city = this.getRandomItem(this.data.cities);
-    let price = Math.floor(Math.random() * 4) + 1;
-    let photoID = Math.floor(Math.random() * 22) + 1;
-    let photo = 'https://storage.googleapis.com/firestorequickstarts.appspot.com/food_' + photoID + '.png';
-    let numRatings = 0;
-    let avgRating = 0;
+    var category = this.getRandomItem(this.data.categories);
+    var city = this.getRandomItem(this.data.cities);
+    var price = Math.floor(Math.random() * 4) + 1;
+    var photoID = Math.floor(Math.random() * 22) + 1;
+    var photo = 'https://storage.googleapis.com/firestorequickstarts.appspot.com/food_' + photoID + '.png';
+    var numRatings = 0;
+    var avgRating = 0;
 
-    let promise = this.addRestaurant({
+    var promise = this.addRestaurant({
       name: name,
       category: category,
       price: price,
@@ -58,10 +58,10 @@ FriendlyEats.prototype.addMockRestaurants = () => {
 /**
  * Adds a set of mock Ratings to the given Restaurant.
  */
-FriendlyEats.prototype.addMockRatings = (restaurantID) => {
-  let ratingPromises = [];
-  for (let r = 0; r < 5*Math.random(); r++) {
-    let rating = this.data.ratings[
+FriendlyEats.prototype.addMockRatings = function(restaurantID) {
+  var ratingPromises = [];
+  for (var r = 0; r < 5*Math.random(); r++) {
+    var rating = this.data.ratings[
       parseInt(this.data.ratings.length*Math.random())
     ];
     rating.userName = 'Bot (Web)';
