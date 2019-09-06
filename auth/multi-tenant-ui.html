@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2019 Google Inc.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Identity Platform Multi-tenant Example</title>
+
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+  <link rel="stylesheet" href="main.css">
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.css" />
+
+  <!-- Import and configure the Firebase SDK -->
+  <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+  <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+  <script src="/__/firebase/6.6.0/firebase-app.js"></script>
+  <script src="/__/firebase/6.6.0/firebase-auth.js"></script>
+  <script src="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.js"></script>
+  <script src="/__/firebase/init.js"></script>
+
+  <script type="text/javascript">
+    /**
+     * The configuration object for each tenant project keyed by tenant ID.
+     * The tenant name will be displayed on the sign-in buttons. uiConfig will
+     * be used to config FirebaseUI. You can specify the provider you'd like 
+     * to enable for each tenant. 
+     * 
+     * You'll need to substitute the `TENANT_ID` with the tenant IDs of your 
+     * project and `tenantName` with the display names you'd like to use for
+     * the tenant selection buttons.
+     *
+     * For SAML, OIDC and generic OAuth providers, you'll need to configure 
+     * the `provider`, `providerName`, `buttonColor` and `iconUrl` in 
+     * `signInOptions`.
+     */
+    var TENANT_CONFIG = {
+      'TENANT_ID1': {
+        'tenantName': '<tenant-name-to-display-to-end-user>',
+        'uiConfig': {
+          'signInOptions': [firebase.auth.EmailAuthProvider.PROVIDER_ID],
+          'credentialHelper': 'none',
+          'signInFlow': 'popup',
+          'callbacks': {
+            'signInSuccessWithAuthResult': function(authResult, redirectUrl) {
+              document.getElementById('tenant-ui-modal').close();
+              return false;
+            }
+          }
+        }
+      },
+      'TENANT_ID2': {
+        'tenantName': '<tenant-name-to-display-to-end-user>',
+        'uiConfig': {
+          'signInOptions': [{
+            // The provider ID, eg. saml.myProvider.
+            'provider': 'saml.myProvider',
+            // The provider name displayed to end users (sign in button/linking prompt).
+            // Default: provider ID
+            'providerName': 'MySAMLProvider',
+            // The color of sign in button.
+            'buttonColor': '#2F2F2F',
+            // The URL of the Identity Provider's icon. This will be displayed
+            // on the provider's sign-in button.
+            'iconUrl': '<icon-url-of-sign-in-button>'
+          }],
+          'credentialHelper': 'none',
+          'signInFlow': 'popup',
+          'callbacks': {
+            'signInSuccessWithAuthResult': function(authResult, redirectUrl) {
+              document.getElementById('tenant-ui-modal').close();
+              return false;
+            }
+          }
+        }
+      }
+    };
+    var ui = null;
+    /**
+     * Dynamically creates the tenant sign-in buttons.
+     */
+    function initializeSignInButtons() {
+      var buttonContainer = document.getElementById('sign-in-buttons');
+      Object.keys(TENANT_CONFIG).forEach(function(key) {
+        var tenantId = key;
+        var tenantName = TENANT_CONFIG[key].tenantName;
+        var uiConfig = TENANT_CONFIG[key].uiConfig;
+        var button = document.createElement('button');  
+        button.classList = 'mdl-button mdl-js-button mdl-button--raised';
+        button.id = tenantId;
+        button.textContent = tenantName;
+        button.setAttribute('data-val', tenantId);
+        button.addEventListener('click', onSignInClickHandler);
+        buttonContainer.appendChild(button);
+      });
+    }
+    /**
+     * Handles tenant selection button clicks.
+     * @param {!Event} e The tenant sign-in button click event.
+     */
+    function onSignInClickHandler(e) {
+      var tenantId = e.target.getAttribute('data-val');
+      firebase.auth().tenantId = tenantId;
+      ui.reset();
+      ui.start('#firebaseui-auth-container', TENANT_CONFIG[tenantId]['uiConfig']);
+      document.getElementById('quickstart-tenant-modal-title').textContent = 'Tenant ID: ' + tenantId;
+      document.getElementById('tenant-ui-modal').show();
+    }
+    /**
+     * Handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
+     */
+    function initApp() {
+      // Initialize the FirebaseUI component.
+      ui = new firebaseui.auth.AuthUI(firebase.auth());
+      // Dynamically initialize the tenant sign-in buttons.
+      initializeSignInButtons();
+      
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+          document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+          document.getElementById('quickstart-tenant-id').textContent = user.tenantId;
+        } else {
+          document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
+          document.getElementById('quickstart-account-details').textContent = 'null';
+          document.getElementById('quickstart-tenant-id').textContent = 'null';
+        }
+        document.getElementById('close-modal-icon').addEventListener('click', function() {
+          document.getElementById('tenant-ui-modal').close();
+        });
+        document.getElementById('sign-out').addEventListener('click', function() {
+          firebase.auth().signOut();
+        });
+      });
+    }
+    window.onload = function() {
+      initApp();
+    };
+  </script>
+</head>
+<body>
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+  <!-- Header section containing title -->
+  <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+      <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop">
+        <a href="/"><h3 class="gcip-heading">Google Cloud Identity Platform</h3></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="mdl-layout__content mdl-color--grey-100">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+
+      <!-- Container for the demo -->
+      <div id="quickstart-tenant-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+        <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+          <h2 class="mdl-card__title-text">Multi-tenant with FirebaseUI</h2>
+        </div>
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+          <p>Log in to the tenant projects below:</p>
+
+          <!-- Buttons that handle tenants sign-in -->
+          <div id="sign-in-buttons">
+          </div>
+          <!--sign-out button -->
+          <button class="mdl-button mdl-js-button mdl-button--raised" id="sign-out">Sign Out</button>
+
+          <!-- Container where we'll display the user details -->
+          <div class="quickstart-user-details-container">
+            Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
+            <div>Tenant ID: <span id="quickstart-tenant-id">null</span></div>
+            <div>Firebase auth <code>currentUser</code> object value:</div>
+            <pre><code id="quickstart-account-details">null</code></pre>
+          </div>
+        </div>
+        <!--FirebaseUI container dialog -->
+        <dialog id="tenant-ui-modal" class="mdl-dialog">
+          <i id="close-modal-icon" class="material-icons close-icon">cancel</i>
+          <h4 id="quickstart-tenant-modal-title" class="mdl-card__supporting-text"></h4> 
+          <div id="firebaseui-auth-container"></div>
+        </dialog>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
