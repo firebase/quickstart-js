@@ -12,6 +12,7 @@
   limitations under the License
 -->
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,73 +43,76 @@
   <meta name="msapplication-navbutton-color" content="#303F9F"> -->
 
   <!-- Material Design Components -->
-  <link rel="stylesheet"
-  href="https://unpkg.com/material-components-web@0.39.3/dist/material-components-web.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@0.39.3/dist/material-components-web.min.css">
   <script src="https://unpkg.com/material-components-web@0.39.3/dist/material-components-web.js"></script>
 
   <!-- App Styling -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="/styles/main.css">
 </head>
+
 <body>
-<div>
-  <div class="header"></div>
+  <div>
+    <div class="header"></div>
 
-  <main></main>
+    <main></main>
 
-  <div class="dialogs"></div>
+    <div class="dialogs"></div>
 
-  <div hidden class="template" id="header-base">
+    <div hidden class="template" id="header-base">
       <header id="site-header" class="mdc-toolbar mdc-toolbar--fixed">
         <div id="title" class="mdc-toolbar__row mdc-layout-grid">
-          <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-            <span class="material-icons mdc-toolbar__icon--menu">restaurant</span>
-            <span class="mdc-toolbar__title">FriendlyEats</span>
+          <section class="mdc-toolbar__section mdc-toolbar__section--align-start first-row">
+            <div>
+              <span class="material-icons mdc-toolbar__icon--menu">restaurant</span>
+              <span class="mdc-toolbar__title">FriendlyEats</span>
+            </div>
+            <div id="user-container">
+              <div hidden id="user-pic"></div>
+              <div hidden id="user-name"></div>
+              <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                Sign-out
+              </button>
+              <button hidden id="sign-in" class="mdc-button">
+                <i class="material-icons">account_circle</i>Sign-in with Google
+              </button>
+            </div>
           </section>
-        </div>
-        <div id="user-container">
-          <div hidden id="user-pic"></div>
-          <div hidden id="user-name"></div>
-          <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-            Sign-out
-          </button>
-          <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-            <i class="material-icons">account_circle</i>Sign-in with Google
-          </button>
         </div>
         <div id="section-header" data-fir-if="hasSectionHeader"></div>
       </header>
-  </div>
-
-  <div hidden class="template" id="main-adjusted">
-    <div id="message-cards-container" class="mdc-layout-grid mdc-toolbar-fixed-adjust">
-      <div id="cards" class="mdc-layout-grid__inner"></div>
     </div>
-  </div>
 
-  <div hidden class="template" id="main">
-    <div id="message-cards-container" class="mdc-layout-grid">
-      <div id="cards" class="mdc-layout-grid__inner"></div>
-    </div>
-  </div>
-
-  <div hidden class="template" id="no-restaurants">
-    <div id="guy-container" class="mdc-toolbar-fixed-adjust">
-      <img class="guy" src="/images/guy_fireats.png" />
-      <div class="text">
-        This app is connected to the Firebase project "<b data-fir-content="projectId"></b>".<br />
-        <br />
-        Your Cloud Firestore has no documents in <b>/restaurants/</b>.
+    <div hidden class="template" id="main-adjusted">
+      <div id="message-cards-container" class="mdc-layout-grid mdc-toolbar-fixed-adjust">
+        <div id="cards" class="mdc-layout-grid__inner"></div>
       </div>
-      <br />
-      <a class="mdc-button" id="add_mock_data">
-        Add mock data
-      </a>
     </div>
-  </div>
 
-  <div hidden class="template" id="no-ratings">
+    <div hidden class="template" id="main">
+      <div id="message-cards-container" class="mdc-layout-grid">
+        <div id="cards" class="mdc-layout-grid__inner"></div>
+      </div>
+    </div>
+
+    <div hidden class="template" id="no-restaurants">
+      <div id="guy-container" class="mdc-toolbar-fixed-adjust">
+        <img class="guy" src="/images/guy_fireats.png" />
+        <div class="text">
+          This app is connected to the Firebase project "<b data-fir-content="projectId"></b>".<br />
+          <br />
+          Your Cloud Firestore has no documents in <b>/restaurants/</b>.
+        </div>
+        <br />
+        <a class="mdc-button" id="add_mock_data">
+          Add mock data
+        </a>
+      </div>
+    </div>
+
+    <div hidden class="template" id="no-ratings">
       <div id="guy-container" class="mdc-toolbar-fixed-adjust">
         <img class="guy" src="/images/guy_fireats.png" />
         <div class="text">
@@ -121,60 +125,60 @@
       </div>
     </div>
 
-  <div hidden class="template" id="no-results">
-    <div id="guy-container" class="mdc-toolbar-fixed-adjust">
-      <img class="guy" src="/images/guy_fireats.png" />
-      <div class="text">
-        There are no results for your those filters!
-      </div>
-    </div>
-  </div>
-
-  <div hidden class="template" id="filter-display">
-    <div id="filter" class="mdc-toolbar mdc-layout-grid">
-      <div id="show-filters" >
-        <div id="active-filters">
-          <i class="material-icons">filter_list</i>
-          You're seeing <b data-fir-content="filter_description"></b>
+    <div hidden class="template" id="no-results">
+      <div id="guy-container" class="mdc-toolbar-fixed-adjust">
+        <img class="guy" src="/images/guy_fireats.png" />
+        <div class="text">
+          There are no results for your those filters!
         </div>
       </div>
     </div>
-  </div>
 
-  <div hidden class="template" id="restaurant-header">
-    <header class="mdc-layout__header mdc-layout__header--transparent" data-fir-style="backgroundImage:photo">
-
-      <div class="mdc-layout-grid" style="width: 100%;">
-          <div class="mdc-layout-grid__inner">
-              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-                  <a href="/" data-navigo class="material-icons" id="close">close</a>
-              </div>
-              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 info">
-                <div class="max_width_600">
-                  <h2 data-fir-content="name"></h2>
-                  <span class="price"></span>
-                  <div class="rating"></div>
-                  <div class="details">
-                    <span class="rating"></span>
-                    <span data-fir-content="category"></span>
-                    <span class="light">●</span>
-                    <span data-fir-content="city"></span>
-                  </div>
-                  <button id="show-add-review" data-fir-click="show_add_review" class="mdc-button fab">
-                      <i class="material-icons">add</i>
-                    </button>
-                </div>
-              </div>
+    <div hidden class="template" id="filter-display">
+      <div id="filter" class="mdc-toolbar mdc-layout-grid">
+        <div id="show-filters">
+          <div id="active-filters">
+            <i class="material-icons">filter_list</i>
+            You're seeing <b data-fir-content="filter_description"></b>
           </div>
         </div>
-    </header>
-  </div>
+      </div>
+    </div>
 
-  <div hidden class="template" id="rating"></div>
-  <span hidden class="template" id="price"></span>
+    <div hidden class="template" id="restaurant-header">
+      <header class="mdc-layout__header mdc-layout__header--transparent" data-fir-style="backgroundImage:photo">
 
-  <div hidden class="template mdc-layout-grid__cell--span-12" id="review-card">
-    <div class="review max_width_600">
+        <div class="mdc-layout-grid" style="width: 100%;">
+          <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+              <a href="/" data-navigo class="material-icons" id="close">close</a>
+            </div>
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 info">
+              <div class="max_width_600">
+                <h2 data-fir-content="name"></h2>
+                <span class="price"></span>
+                <div class="rating"></div>
+                <div class="details">
+                  <span class="rating"></span>
+                  <span data-fir-content="category"></span>
+                  <span class="light">●</span>
+                  <span data-fir-content="city"></span>
+                </div>
+                <button id="show-add-review" data-fir-click="show_add_review" class="mdc-button fab">
+                  <i class="material-icons">add</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <div hidden class="template" id="rating"></div>
+    <span hidden class="template" id="price"></span>
+
+    <div hidden class="template mdc-layout-grid__cell--span-12" id="review-card">
+      <div class="review max_width_600">
         <div class="header">
           <div class="author">
             <span class="light" data-fir-content="userName"></span>
@@ -182,102 +186,103 @@
           <div class="rating"></div>
         </div>
         <div data-fir-content="text"></div>
-    </div>
-  </div>
-
-  <div hidden class="template mdc-layout-grid__cell mdc-layout-grid__cell--span-4" id="restaurant-card">
-    <div class="location-card mdc-card mdc-shadow--2dp" data-fir-click="go_to_restaurant">
-      <div class="mdc-card__title" data-fir-style="backgroundImage:photo"></div>
-      <div class="mdc-card__supporting-text">
-        <h2 data-fir-content="name">...</h2>
-        <span class="info price"></span>
-        <div class="details">
-          <div class="rating"></div>
-        </div>
-        <div class="details">
-          <span class="info" data-fir-content="category"></span>
-          <span class="light">●</span>
-          <span class="info" data-fir-content="city"></span>
-        </div>
-
       </div>
     </div>
-  </div>
 
-  <i hidden class="template material-icons" id="star-border-icon">star_border</i>
-  <i hidden class="template material-icons" id="star-icon">star</i>
+    <div hidden class="template mdc-layout-grid__cell mdc-layout-grid__cell--span-4" id="restaurant-card">
+      <div class="location-card mdc-card mdc-shadow--2dp" data-fir-click="go_to_restaurant">
+        <div class="mdc-card__title" data-fir-style="backgroundImage:photo"></div>
+        <div class="mdc-card__supporting-text">
+          <h2 data-fir-content="name">...</h2>
+          <span class="info price"></span>
+          <div class="details">
+            <div class="rating"></div>
+          </div>
+          <div class="details">
+            <span class="info" data-fir-content="category"></span>
+            <span class="light">●</span>
+            <span class="info" data-fir-content="city"></span>
+          </div>
 
-  <ul hidden class="template mdc-list" id="item-list">
+        </div>
+      </div>
+    </div>
+
+    <i hidden class="template material-icons" id="star-border-icon">star_border</i>
+    <i hidden class="template material-icons" id="star-icon">star</i>
+
+    <ul hidden class="template mdc-list" id="item-list">
       <li class="mdc-list-item" data-mdc-auto-init="MDCRipple" data-fir-foreach="items" data-fir-content="~"></li>
-  </ul>
+    </ul>
 
-  <ul hidden class="template mdc-list" id="all-filters-list">
-    <li id="show-page-category" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
-      <i class="material-icons">fastfood</i>
-      <span data-fir-if-not="category">Any Category</span>
-      <b data-fir-content="category"></b>
-    </li>
-    <li id="show-page-city" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
-      <i class="material-icons">location_on</i>
-      <span data-fir-if-not="city">Any Location</span>
-      <b data-fir-content="city"></b>
-    </li>
-    <li id="show-page-price" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
-      <i class="material-icons">monetization_on</i>
-      <span data-fir-if-not="price">Any Price</span>
-      <b data-fir-content="price"></b>
-    </li>
-    <li id="show-page-sort" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
-      <i class="material-icons">sort</i>
-      <b data-fir-content="sort"></b>
-    </li>
-  </ul>
+    <ul hidden class="template mdc-list" id="all-filters-list">
+      <li id="show-page-category" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+        <i class="material-icons">fastfood</i>
+        <span data-fir-if-not="category">Any Category</span>
+        <b data-fir-content="category"></b>
+      </li>
+      <li id="show-page-city" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+        <i class="material-icons">location_on</i>
+        <span data-fir-if-not="city">Any Location</span>
+        <b data-fir-content="city"></b>
+      </li>
+      <li id="show-page-price" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+        <i class="material-icons">monetization_on</i>
+        <span data-fir-if-not="price">Any Price</span>
+        <b data-fir-content="price"></b>
+      </li>
+      <li id="show-page-sort" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+        <i class="material-icons">sort</i>
+        <b data-fir-content="sort"></b>
+      </li>
+    </ul>
 
-  <aside id="dialog-filter-all" class="mdc-dialog">
-    <div class="mdc-dialog__surface">
-      <div class="page" id="page-all">
-        <header class="mdc-dialog__header">
-          <i class="material-icons">filter_list</i>
-          <h2 id="mdc-dialog-with-list-label" class="mdc-dialog__header__title">
-            Filter
-          </h2>
-        </header>
-        <section class="mdc-dialog__body mdc-dialog__body--scrollable">
-          <div id="all-filters-list"></div>
-        </section>
-        <footer class="mdc-dialog__footer">
-          <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">Accept</button>
-        </footer>
-      </div>
-      <div class="page" id="page-category">
-        <header class="mdc-dialog__header">
-          <i class="material-icons">fastfood</i>
-          <h2 id="mdc-dialog-with-list-label" class="mdc-dialog__header__title">
-            Category
-          </h2>
-        </header>
-        <section class="mdc-dialog__body mdc-dialog__body--scrollable">
-          <div id="category-list"></div>
-        </section>
-        <footer class="mdc-dialog__footer">
-          <button type="button" class="mdc-button mdc-dialog__footer__button back">Back</button>
-        </footer>
-      </div>
-      <div class="page" id="page-city">
-        <header class="mdc-dialog__header">
-          <i class="material-icons">location_on</i>
-          <h2 id="mdc-dialog-with-list-label" class="mdc-dialog__header__title">
-            Location
-          </h2>
-        </header>
-        <section class="mdc-dialog__body mdc-dialog__body--scrollable">
-          <div id="city-list"></div>
-        </section>
-        <footer class="mdc-dialog__footer">
-          <button type="button" class="mdc-button mdc-dialog__footer__button back">Back</button>
-        </footer>
-      </div>
-      <div class="page" id="page-price">
+    <aside id="dialog-filter-all" class="mdc-dialog">
+      <div class="mdc-dialog__surface">
+        <div class="page" id="page-all">
+          <header class="mdc-dialog__header">
+            <i class="material-icons">filter_list</i>
+            <h2 id="mdc-dialog-with-list-label" class="mdc-dialog__header__title">
+              Filter
+            </h2>
+          </header>
+          <section class="mdc-dialog__body mdc-dialog__body--scrollable">
+            <div id="all-filters-list"></div>
+          </section>
+          <footer class="mdc-dialog__footer">
+            <button type="button"
+              class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">Accept</button>
+          </footer>
+        </div>
+        <div class="page" id="page-category">
+          <header class="mdc-dialog__header">
+            <i class="material-icons">fastfood</i>
+            <h2 id="mdc-dialog-with-list-label" class="mdc-dialog__header__title">
+              Category
+            </h2>
+          </header>
+          <section class="mdc-dialog__body mdc-dialog__body--scrollable">
+            <div id="category-list"></div>
+          </section>
+          <footer class="mdc-dialog__footer">
+            <button type="button" class="mdc-button mdc-dialog__footer__button back">Back</button>
+          </footer>
+        </div>
+        <div class="page" id="page-city">
+          <header class="mdc-dialog__header">
+            <i class="material-icons">location_on</i>
+            <h2 id="mdc-dialog-with-list-label" class="mdc-dialog__header__title">
+              Location
+            </h2>
+          </header>
+          <section class="mdc-dialog__body mdc-dialog__body--scrollable">
+            <div id="city-list"></div>
+          </section>
+          <footer class="mdc-dialog__footer">
+            <button type="button" class="mdc-button mdc-dialog__footer__button back">Back</button>
+          </footer>
+        </div>
+        <div class="page" id="page-price">
           <header class="mdc-dialog__header">
             <i class="material-icons">monetization_on</i>
             <h2 id="mdc-dialog-with-list-label" class="mdc-dialog__header__title">
@@ -303,44 +308,43 @@
               </li>
             </ul>
           </section>
-        <footer class="mdc-dialog__footer">
-          <button type="button" class="mdc-button mdc-dialog__footer__button back">Back</button>
-        </footer>
+          <footer class="mdc-dialog__footer">
+            <button type="button" class="mdc-button mdc-dialog__footer__button back">Back</button>
+          </footer>
+        </div>
+        <div class="page" id="page-sort">
+          <header class="mdc-dialog__header">
+            <i class="material-icons">sort</i>
+            <h2 id="mdc-dialog-with-list-label" class="mdc-dialog__header__title">
+              Sort By
+            </h2>
+          </header>
+          <section class="mdc-dialog__body mdc-dialog__body--scrollable">
+            <ul class="mdc-list">
+              <li class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+                Rating
+              </li>
+              <li class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+                Reviews
+              </li>
+            </ul>
+          </section>
+          <footer class="mdc-dialog__footer">
+            <button type="button" class="mdc-button mdc-dialog__footer__button back">Back</button>
+          </footer>
+        </div>
       </div>
-      <div class="page" id="page-sort">
+      <div class="mdc-dialog__backdrop"></div>
+    </aside>
+
+    <aside id="dialog-add-review" class="mdc-dialog">
+      <div class="mdc-dialog__surface">
         <header class="mdc-dialog__header">
-          <i class="material-icons">sort</i>
-          <h2 id="mdc-dialog-with-list-label" class="mdc-dialog__header__title">
-            Sort By
+          <h2 id="my-mdc-dialog-label" class="mdc-dialog__header__title">
+            Add a Review
           </h2>
         </header>
-        <section class="mdc-dialog__body mdc-dialog__body--scrollable">
-          <ul class="mdc-list">
-            <li class="mdc-list-item" data-mdc-auto-init="MDCRipple">
-              Rating
-            </li>
-            <li class="mdc-list-item" data-mdc-auto-init="MDCRipple">
-              Reviews
-            </li>
-          </ul>
-        </section>
-        <footer class="mdc-dialog__footer">
-          <button type="button" class="mdc-button mdc-dialog__footer__button back">Back</button>
-        </footer>
-      </div>
-    </div>
-    <div class="mdc-dialog__backdrop"></div>
-  </aside>
-
-  <aside id="dialog-add-review"
-    class="mdc-dialog">
-    <div class="mdc-dialog__surface">
-      <header class="mdc-dialog__header">
-        <h2 id="my-mdc-dialog-label" class="mdc-dialog__header__title">
-          Add a Review
-        </h2>
-      </header>
-      <section class="mdc-dialog__body">
+        <section class="mdc-dialog__body">
           <div class="star-input">
             <i class="material-icons">star_border</i>
             <i class="material-icons">star_border</i>
@@ -349,29 +353,32 @@
             <i class="material-icons">star_border</i>
           </div>
           <textarea id="text"></textarea>
-      </section>
-      <footer class="mdc-dialog__footer">
-        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
-        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">Save</button>
-      </footer>
-    </div>
-    <div class="mdc-dialog__backdrop"></div>
-  </aside>
-</div>
+        </section>
+        <footer class="mdc-dialog__footer">
+          <button type="button"
+            class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
+          <button type="button"
+            class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">Save</button>
+        </footer>
+      </div>
+      <div class="mdc-dialog__backdrop"></div>
+    </aside>
+  </div>
 
-<!-- <script src="/scripts/firebase-app.js"></script>
+  <!-- <script src="/scripts/firebase-app.js"></script>
 <script src="/scripts/firebase-auth.js"></script>
 <script src="/scripts/firebase-firestore.js"></script> -->
-<script src="/__/firebase/6.6.0/firebase-app.js"></script>
-<script src="/__/firebase/6.6.0/firebase-auth.js"></script>
-<script src="/__/firebase/6.6.0/firebase-firestore.js"></script>
-<script src="/__/firebase/init.js"></script>
+  <script src="/__/firebase/6.6.0/firebase-app.js"></script>
+  <script src="/__/firebase/6.6.0/firebase-auth.js"></script>
+  <script src="/__/firebase/6.6.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/init.js"></script>
 
-<script src="//unpkg.com/navigo@6"></script>
+  <script src="//unpkg.com/navigo@6"></script>
 
-<script src="/scripts/FriendlyEats.js"></script>
-<script src="/scripts/FriendlyEats.View.js"></script>
-<script src="/scripts/FriendlyEats.Mock.js"></script>
-<script src="/scripts/FriendlyEats.Data.js"></script>
+  <script src="/scripts/FriendlyEats.js"></script>
+  <script src="/scripts/FriendlyEats.View.js"></script>
+  <script src="/scripts/FriendlyEats.Mock.js"></script>
+  <script src="/scripts/FriendlyEats.Data.js"></script>
 </body>
+
 </html>

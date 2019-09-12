@@ -231,7 +231,11 @@
    background-color: white !important;
  }
 
-   header .mdc-button .material-icons {font-size: 22px;}
+ header .mdc-button .material-icons {font-size: 22px;}
+
+ header .first-row {
+   justify-content: space-between;
+ }
 
  #show-filters {
    background-color: white;
