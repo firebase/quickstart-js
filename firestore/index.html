@@ -67,6 +67,16 @@
             <span class="mdc-toolbar__title">FriendlyEats</span>
           </section>
         </div>
+        <div id="user-container">
+          <div hidden id="user-pic"></div>
+          <div hidden id="user-name"></div>
+          <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+            Sign-out
+          </button>
+          <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+            <i class="material-icons">account_circle</i>Sign-in with Google
+          </button>
+        </div>
         <div id="section-header" data-fir-if="hasSectionHeader"></div>
       </header>
   </div>
@@ -349,9 +359,12 @@
   </aside>
 </div>
 
-<script src="/__/firebase/5.5.8/firebase-app.js"></script>
-<script src="/__/firebase/5.5.8/firebase-auth.js"></script>
-<script src="/__/firebase/5.5.8/firebase-firestore.js"></script>
+<!-- <script src="/scripts/firebase-app.js"></script>
+<script src="/scripts/firebase-auth.js"></script>
+<script src="/scripts/firebase-firestore.js"></script> -->
+<script src="/__/firebase/6.6.0/firebase-app.js"></script>
+<script src="/__/firebase/6.6.0/firebase-auth.js"></script>
+<script src="/__/firebase/6.6.0/firebase-firestore.js"></script>
 <script src="/__/firebase/init.js"></script>
 
 <script src="//unpkg.com/navigo@6"></script>
