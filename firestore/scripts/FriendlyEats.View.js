@@ -15,20 +15,20 @@
  */
 'use strict';
 
-FriendlyEats.prototype.initTemplates = function() {
+FriendlyEats.prototype.initTemplates = function () {
   this.templates = {};
 
   var that = this;
-  document.querySelectorAll('.template').forEach(function(el) {
+  document.querySelectorAll('.template').forEach(function (el) {
     that.templates[el.getAttribute('id')] = el;
   });
 };
 
-FriendlyEats.prototype.viewHome = function() {
+FriendlyEats.prototype.viewHome = function () {
   this.getAllRestaurants();
 };
 
-FriendlyEats.prototype.viewList = function(filters, filter_description) {
+FriendlyEats.prototype.viewList = function (filters, filter_description) {
   if (!filter_description) {
     filter_description = 'any type of food with any price in any city.';
   }
@@ -36,7 +36,7 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
   var mainEl = this.renderTemplate('main-adjusted');
   var headerEl = this.renderTemplate('header-base', {
     hasSectionHeader: true
-  });
+  }, true);
 
   this.replaceElement(
     headerEl.querySelector('#section-header'),
@@ -49,15 +49,15 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
   this.replaceElement(document.querySelector('main'), mainEl);
 
   var that = this;
-  headerEl.querySelector('#show-filters').addEventListener('click', function() {
+  headerEl.querySelector('#show-filters').addEventListener('click', function () {
     that.dialogs.filter.show();
   });
 
-  var renderResults = function(doc) {
+  var renderResults = function (doc) {
     if (!doc) {
       var headerEl = that.renderTemplate('header-base', {
         hasSectionHeader: true
-      });
+      }, true);
 
       var noResultsEl = that.renderTemplate('no-results');
 
@@ -68,7 +68,7 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
         })
       );
 
-      headerEl.querySelector('#show-filters').addEventListener('click', function() {
+      headerEl.querySelector('#show-filters').addEventListener('click', function () {
         that.dialogs.filter.show();
       });
 
@@ -78,7 +78,7 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
     }
     var data = doc.data();
     data['.id'] = doc.id;
-    data['go_to_restaurant'] = function() {
+    data['go_to_restaurant'] = function () {
       that.router.navigate('/restaurants/' + doc.id);
     };
 
@@ -89,7 +89,7 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
     mainEl.querySelector('#cards').append(el);
   };
 
-  if (filters.city || filters.category || filters.price || filters.sort !== 'Rating' ) {
+  if (filters.city || filters.category || filters.price || filters.sort !== 'Rating') {
     this.getFilteredRestaurants({
       city: filters.city || 'Any',
       category: filters.category || 'Any',
@@ -106,10 +106,10 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
   mdc.autoInit();
 };
 
-FriendlyEats.prototype.viewSetup = function() {
+FriendlyEats.prototype.viewSetup = function () {
   var headerEl = this.renderTemplate('header-base', {
     hasSectionHeader: false
-  });
+  }, true);
 
   var config = this.getFirebaseConfig();
   var noRestaurantsEl = this.renderTemplate('no-restaurants', config);
@@ -118,7 +118,7 @@ FriendlyEats.prototype.viewSetup = function() {
   var addingMockData = false;
 
   var that = this;
-  button.addEventListener('click', function(event) {
+  button.addEventListener('click', function (event) {
     if (addingMockData) {
       return;
     }
@@ -128,7 +128,7 @@ FriendlyEats.prototype.viewSetup = function() {
     event.target.style.opacity = '0.4';
     event.target.innerText = 'Please wait...';
 
-    that.addMockRestaurants().then(function() {
+    that.addMockRestaurants().then(function () {
       that.rerender();
     });
   });
@@ -140,19 +140,19 @@ FriendlyEats.prototype.viewSetup = function() {
     .firestore()
     .collection('restaurants')
     .limit(1)
-    .onSnapshot(function(snapshot) {
+    .onSnapshot(function (snapshot) {
       if (snapshot.size && !addingMockData) {
         that.router.navigate('/');
       }
     });
 };
 
-FriendlyEats.prototype.initReviewDialog = function() {
+FriendlyEats.prototype.initReviewDialog = function () {
   var dialog = document.querySelector('#dialog-add-review');
   this.dialogs.add_review = new mdc.dialog.MDCDialog(dialog);
 
   var that = this;
-  this.dialogs.add_review.listen('MDCDialog:accept', function() {
+  this.dialogs.add_review.listen('MDCDialog:accept', function () {
     var pathname = that.getCleanPath(document.location.pathname);
     var id = pathname.split('/')[2];
 
@@ -162,18 +162,18 @@ FriendlyEats.prototype.initReviewDialog = function() {
       userName: 'Anonymous (Web)',
       timestamp: new Date(),
       userId: firebase.auth().currentUser.uid
-    }).then(function() {
+    }).then(function () {
       that.rerender();
     });
   });
 
   var rating = 0;
 
-  dialog.querySelectorAll('.star-input i').forEach(function(el) {
-    var rate = function() {
+  dialog.querySelectorAll('.star-input i').forEach(function (el) {
+    var rate = function () {
       var after = false;
       rating = 0;
-      [].slice.call(el.parentNode.children).forEach(function(child) {
+      [].slice.call(el.parentNode.children).forEach(function (child) {
         if (!after) {
           rating++;
           child.innerText = 'star';
@@ -187,12 +187,12 @@ FriendlyEats.prototype.initReviewDialog = function() {
   });
 };
 
-FriendlyEats.prototype.initFilterDialog = function() {
+FriendlyEats.prototype.initFilterDialog = function () {
   // TODO: Reset filter dialog to init state on close.
   this.dialogs.filter = new mdc.dialog.MDCDialog(document.querySelector('#dialog-filter-all'));
 
   var that = this;
-  this.dialogs.filter.listen('MDCDialog:accept', function() {
+  this.dialogs.filter.listen('MDCDialog:accept', function () {
     that.updateQuery(that.filters);
   });
 
@@ -209,26 +209,26 @@ FriendlyEats.prototype.initFilterDialog = function() {
     that.renderTemplate('item-list', { items: ['Any'].concat(that.data.cities) })
   );
 
-  var renderAllList = function() {
+  var renderAllList = function () {
     that.replaceElement(
       dialog.querySelector('#all-filters-list'),
       that.renderTemplate('all-filters-list', that.filters)
     );
 
-    dialog.querySelectorAll('#page-all .mdc-list-item').forEach(function(el) {
-      el.addEventListener('click', function() {
+    dialog.querySelectorAll('#page-all .mdc-list-item').forEach(function (el) {
+      el.addEventListener('click', function () {
         var id = el.id.split('-').slice(1).join('-');
         displaySection(id);
       });
     });
   };
 
-  var displaySection = function(id) {
+  var displaySection = function (id) {
     if (id === 'page-all') {
       renderAllList();
     }
 
-    pages.forEach(function(sel) {
+    pages.forEach(function (sel) {
       if (sel.id === id) {
         sel.style.display = 'block';
       } else {
@@ -237,29 +237,29 @@ FriendlyEats.prototype.initFilterDialog = function() {
     });
   };
 
-  pages.forEach(function(sel) {
+  pages.forEach(function (sel) {
     var type = sel.id.split('-')[1];
     if (type === 'all') {
       return;
     }
 
-    sel.querySelectorAll('.mdc-list-item').forEach(function(el) {
-      el.addEventListener('click', function() {
-        that.filters[type] = el.innerText.trim() === 'Any'? '' : el.innerText.trim();
+    sel.querySelectorAll('.mdc-list-item').forEach(function (el) {
+      el.addEventListener('click', function () {
+        that.filters[type] = el.innerText.trim() === 'Any' ? '' : el.innerText.trim();
         displaySection('page-all');
       });
     });
   });
 
   displaySection('page-all');
-  dialog.querySelectorAll('.back').forEach(function(el) {
-    el.addEventListener('click', function() {
+  dialog.querySelectorAll('.back').forEach(function (el) {
+    el.addEventListener('click', function () {
       displaySection('page-all');
     });
   });
 };
 
-FriendlyEats.prototype.updateQuery = function(filters) {
+FriendlyEats.prototype.updateQuery = function (filters) {
   var query_description = '';
 
   if (filters.category !== '') {
@@ -289,16 +289,16 @@ FriendlyEats.prototype.updateQuery = function(filters) {
   this.viewList(filters, query_description);
 };
 
-FriendlyEats.prototype.viewRestaurant = function(id) {
+FriendlyEats.prototype.viewRestaurant = function (id) {
   var sectionHeaderEl;
   var that = this;
 
   return this.getRestaurant(id)
-    .then(function(doc) {
+    .then(function (doc) {
       var data = doc.data();
-      var dialog =  that.dialogs.add_review;
+      var dialog = that.dialogs.add_review;
 
-      data.show_add_review = function() {
+      data.show_add_review = function () {
         dialog.show();
       };
 
@@ -312,13 +312,13 @@ FriendlyEats.prototype.viewRestaurant = function(id) {
         .append(that.renderPrice(data.price));
       return doc.ref.collection('ratings').orderBy('timestamp', 'desc').get();
     })
-    .then(function(ratings) {
+    .then(function (ratings) {
       var mainEl;
 
       if (ratings.size) {
         mainEl = that.renderTemplate('main');
 
-        ratings.forEach(function(rating) {
+        ratings.forEach(function (rating) {
           var data = rating.data();
           var el = that.renderTemplate('review-card', data);
           el.querySelector('.rating').append(that.renderRating(data.rating));
@@ -326,45 +326,41 @@ FriendlyEats.prototype.viewRestaurant = function(id) {
         });
       } else {
         mainEl = that.renderTemplate('no-ratings', {
-          add_mock_data: function() {
-            that.addMockRatings(id).then(function() {
+          add_mock_data: function () {
+            that.addMockRatings(id).then(function () {
               that.rerender();
             });
           }
         });
       }
 
-      var headerEl = that.renderTemplate('header-base', {
-        hasSectionHeader: true
-      });
-
       that.replaceElement(document.querySelector('.header'), sectionHeaderEl);
       that.replaceElement(document.querySelector('main'), mainEl);
     })
-    .then(function() {
+    .then(function () {
       that.router.updatePageLinks();
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.warn('Error rendering page', err);
     });
 };
 
-FriendlyEats.prototype.renderTemplate = function(id, data) {
+FriendlyEats.prototype.renderTemplate = function (id, data, noclone) {
   var template = this.templates[id];
-  var el = template.cloneNode(true);
+  var el = noclone? template : template.cloneNode(true);
   el.removeAttribute('hidden');
   this.render(el, data);
   return el;
 };
 
-FriendlyEats.prototype.render = function(el, data) {
+FriendlyEats.prototype.render = function (el, data) {
   if (!data) {
     return;
   }
 
   var that = this;
   var modifiers = {
-    'data-fir-foreach': function(tel) {
+    'data-fir-foreach': function (tel) {
       var field = tel.getAttribute('data-fir-foreach');
       var values = that.getDeepItem(data, field);
 
@@ -372,12 +368,12 @@ FriendlyEats.prototype.render = function(el, data) {
         var cloneTel = tel.cloneNode(true);
         tel.parentNode.append(cloneTel);
 
-        Object.keys(modifiers).forEach(function(selector) {
+        Object.keys(modifiers).forEach(function (selector) {
           var children = Array.prototype.slice.call(
             cloneTel.querySelectorAll('[' + selector + ']')
           );
           children.push(cloneTel);
-          children.forEach(function(childEl) {
+          children.forEach(function (childEl) {
             var currentVal = childEl.getAttribute(selector);
 
             if (!currentVal) {
@@ -394,35 +390,35 @@ FriendlyEats.prototype.render = function(el, data) {
 
       tel.parentNode.removeChild(tel);
     },
-    'data-fir-content': function(tel) {
+    'data-fir-content': function (tel) {
       var field = tel.getAttribute('data-fir-content');
       tel.innerText = that.getDeepItem(data, field);
     },
-    'data-fir-click': function(tel) {
-      tel.addEventListener('click', function() {
+    'data-fir-click': function (tel) {
+      tel.addEventListener('click', function () {
         var field = tel.getAttribute('data-fir-click');
         that.getDeepItem(data, field)();
       });
     },
-    'data-fir-if': function(tel) {
+    'data-fir-if': function (tel) {
       var field = tel.getAttribute('data-fir-if');
       if (!that.getDeepItem(data, field)) {
         tel.style.display = 'none';
       }
     },
-    'data-fir-if-not': function(tel) {
+    'data-fir-if-not': function (tel) {
       var field = tel.getAttribute('data-fir-if-not');
       if (that.getDeepItem(data, field)) {
         tel.style.display = 'none';
       }
     },
-    'data-fir-attr': function(tel) {
+    'data-fir-attr': function (tel) {
       var chunks = tel.getAttribute('data-fir-attr').split(':');
       var attr = chunks[0];
       var field = chunks[1];
       tel.setAttribute(attr, that.getDeepItem(data, field));
     },
-    'data-fir-style': function(tel) {
+    'data-fir-style': function (tel) {
       var chunks = tel.getAttribute('data-fir-style').split(':');
       var attr = chunks[0];
       var field = chunks[1];
@@ -437,12 +433,12 @@ FriendlyEats.prototype.render = function(el, data) {
 
   var preModifiers = ['data-fir-foreach'];
 
-  preModifiers.forEach(function(selector) {
+  preModifiers.forEach(function (selector) {
     var modifier = modifiers[selector];
     that.useModifier(el, selector, modifier);
   });
 
-  Object.keys(modifiers).forEach(function(selector) {
+  Object.keys(modifiers).forEach(function (selector) {
     if (preModifiers.indexOf(selector) !== -1) {
       return;
     }
@@ -452,18 +448,18 @@ FriendlyEats.prototype.render = function(el, data) {
   });
 };
 
-FriendlyEats.prototype.useModifier = function(el, selector, modifier) {
+FriendlyEats.prototype.useModifier = function (el, selector, modifier) {
   el.querySelectorAll('[' + selector + ']').forEach(modifier);
 };
 
-FriendlyEats.prototype.getDeepItem = function(obj, path) {
-  path.split('/').forEach(function(chunk) {
+FriendlyEats.prototype.getDeepItem = function (obj, path) {
+  path.split('/').forEach(function (chunk) {
     obj = obj[chunk];
   });
   return obj;
 };
 
-FriendlyEats.prototype.renderRating = function(rating) {
+FriendlyEats.prototype.renderRating = function (rating) {
   var el = this.renderTemplate('rating', {});
   for (var r = 0; r < 5; r += 1) {
     var star;
@@ -477,7 +473,7 @@ FriendlyEats.prototype.renderRating = function(rating) {
   return el;
 };
 
-FriendlyEats.prototype.renderPrice = function(price) {
+FriendlyEats.prototype.renderPrice = function (price) {
   var el = this.renderTemplate('price', {});
   for (var r = 0; r < price; r += 1) {
     el.append('$');
@@ -485,11 +481,11 @@ FriendlyEats.prototype.renderPrice = function(price) {
   return el;
 };
 
-FriendlyEats.prototype.replaceElement = function(parent, content) {
+FriendlyEats.prototype.replaceElement = function (parent, content) {
   parent.innerHTML = '';
   parent.append(content);
 };
 
-FriendlyEats.prototype.rerender = function() {
+FriendlyEats.prototype.rerender = function () {
   this.router.navigate(document.location.pathname + '?' + new Date().getTime());
 };
