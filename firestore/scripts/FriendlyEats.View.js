@@ -161,6 +161,7 @@ FriendlyEats.prototype.initReviewDialog = function () {
     var id = pathname.split('/')[2];
 
     if (that.checkSignedInWithMessage()) {
+      firebase.analytics().logEvent('add_review', { restaurant_id: id });
       that.addRating(id, {
         rating: rating,
         text: dialog.querySelector('#text').value,
@@ -170,7 +171,15 @@ FriendlyEats.prototype.initReviewDialog = function () {
       }).then(function () {
         that.rerender();
       });
+    } else {
+      firebase.analytics().logEvent('submit_review_before_login');
     }
+  });
+
+  this.dialogs.add_review.listen('MDCDialog:cancel', function () {
+    var pathname = that.getCleanPath(document.location.pathname);
+    var id = pathname.split('/')[2];
+    firebase.analytics().logEvent('cancel_review', { restaurant_id: id});
   });
 
   var rating = 0;
@@ -199,6 +208,12 @@ FriendlyEats.prototype.initFilterDialog = function () {
 
   var that = this;
   this.dialogs.filter.listen('MDCDialog:accept', function () {
+    firebase.analytics().logEvent('apply_filter', {
+      cuisine: that.filters.category,
+      location: that.filters.city,
+      price: that.filters.price,
+      sorting: that.filters.sort
+    });
     that.updateQuery(that.filters);
   });
 
@@ -298,13 +313,18 @@ FriendlyEats.prototype.updateQuery = function (filters) {
 FriendlyEats.prototype.viewRestaurant = function (id) {
   var sectionHeaderEl;
   var that = this;
-
+  firebase.analytics().logEvent('open_restaurant_listing', {
+    restaurant_id: id
+  });
   return this.getRestaurant(id)
     .then(function (doc) {
       var data = doc.data();
       var dialog = that.dialogs.add_review;
 
       data.show_add_review = function () {
+        firebase.analytics().logEvent('start_review', {
+          restaurant_id: id
+        });
         dialog.show();
       };
 

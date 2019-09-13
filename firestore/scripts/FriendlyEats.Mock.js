@@ -18,14 +18,14 @@
 /**
  * Adds a set of mock Restaurants to the Cloud Firestore.
  */
-FriendlyEats.prototype.addMockRestaurants = function() {
+FriendlyEats.prototype.addMockRestaurants = function () {
   var promises = [];
 
   for (var i = 0; i < 20; i++) {
     var name =
-        this.getRandomItem(this.data.words) +
-        ' ' +
-        this.getRandomItem(this.data.words);
+      this.getRandomItem(this.data.words) +
+      ' ' +
+      this.getRandomItem(this.data.words);
     var category = this.getRandomItem(this.data.categories);
     var city = this.getRandomItem(this.data.cities);
     var description = this.getRandomItem(this.data.descriptions);
@@ -60,16 +60,20 @@ FriendlyEats.prototype.addMockRestaurants = function() {
 /**
  * Adds a set of mock Ratings to the given Restaurant.
  */
-FriendlyEats.prototype.addMockRatings = function(restaurantID) {
-  var ratingPromises = [];
-  for (var r = 0; r < 5*Math.random(); r++) {
-    var rating = this.data.ratings[
-      parseInt(this.data.ratings.length*Math.random())
-    ];
-    rating.userName = 'Bot (Web)';
-    rating.timestamp = new Date();
-    rating.userId = firebase.auth().currentUser.uid;
-    ratingPromises.push(this.addRating(restaurantID, rating));
+FriendlyEats.prototype.addMockRatings = function (restaurantID) {
+  if (this.checkSignedInWithMessage()) {
+    var ratingPromises = [];
+    for (var r = 0; r < 5 * Math.random(); r++) {
+      var rating = this.data.ratings[
+        parseInt(this.data.ratings.length * Math.random())
+      ];
+      rating.userName = 'Bot (Web)';
+      rating.timestamp = new Date();
+      rating.userId = firebase.auth().currentUser.uid;
+      ratingPromises.push(this.addRating(restaurantID, rating));
+    }
+    return Promise.all(ratingPromises);
   }
-  return Promise.all(ratingPromises);
+
+  return Promise.reject('Failed to add mock rating');
 };

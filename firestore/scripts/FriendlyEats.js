@@ -55,6 +55,8 @@ function initFirebaseAuth() {
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 function authStateObserver(user) {
   if (user) { // User is signed in!
+    firebase.analytics().setUserId(user.email);
+    firebase.analytics().logEvent("login", { method: 'google' });
     // Get the signed-in user's profile pic and name.
     var profilePicUrl = getProfilePicUrl();
     var userName = getUserName();
@@ -74,6 +76,7 @@ function authStateObserver(user) {
     // We save the Firebase Messaging Device token and enable notifications.
     //  saveMessagingDeviceToken();
   } else { // User is signed out!
+    firebase.analytics().logEvent('logout');
     // Hide user's profile and sign-out button.
     userNameElement.setAttribute('hidden', 'true');
     userPicElement.setAttribute('hidden', 'true');
@@ -100,12 +103,17 @@ function FriendlyEats() {
 
   var that = this;
 
+  // init firebase anaytics
+  firebase.analytics();
+
+  // init firebase auth
+  initFirebaseAuth();
+
   firebase.firestore().enablePersistence({ synchronizeTabs: true })
     // .then(function() {
     //   return firebase.auth().signInAnonymously();
     // })
     .then(function () {
-      initFirebaseAuth();
       that.initTemplates();
       that.initRouter();
       that.initReviewDialog();
