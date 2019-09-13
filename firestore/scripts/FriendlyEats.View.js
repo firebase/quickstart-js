@@ -147,6 +147,10 @@ FriendlyEats.prototype.viewSetup = function () {
     });
 };
 
+FriendlyEats.prototype.initMustSignInSnackBar = function () {
+  this.snackbars.must_sign_in = new mdc.snackbar.MDCSnackbar(document.querySelector('.mdc-snackbar'));
+}
+
 FriendlyEats.prototype.initReviewDialog = function () {
   var dialog = document.querySelector('#dialog-add-review');
   this.dialogs.add_review = new mdc.dialog.MDCDialog(dialog);
@@ -156,15 +160,17 @@ FriendlyEats.prototype.initReviewDialog = function () {
     var pathname = that.getCleanPath(document.location.pathname);
     var id = pathname.split('/')[2];
 
-    that.addRating(id, {
-      rating: rating,
-      text: dialog.querySelector('#text').value,
-      userName: 'Anonymous (Web)',
-      timestamp: new Date(),
-      userId: firebase.auth().currentUser.uid
-    }).then(function () {
-      that.rerender();
-    });
+    if (that.checkSignedInWithMessage()) {
+      that.addRating(id, {
+        rating: rating,
+        text: dialog.querySelector('#text').value,
+        userName: firebase.auth().currentUser.displayName,
+        timestamp: new Date(),
+        userId: firebase.auth().currentUser.uid
+      }).then(function () {
+        that.rerender();
+      });
+    }
   });
 
   var rating = 0;
@@ -347,7 +353,7 @@ FriendlyEats.prototype.viewRestaurant = function (id) {
 
 FriendlyEats.prototype.renderTemplate = function (id, data, noclone) {
   var template = this.templates[id];
-  var el = noclone? template : template.cloneNode(true);
+  var el = noclone ? template : template.cloneNode(true);
   el.removeAttribute('hidden');
   this.render(el, data);
   return el;
@@ -489,3 +495,22 @@ FriendlyEats.prototype.replaceElement = function (parent, content) {
 FriendlyEats.prototype.rerender = function () {
   this.router.navigate(document.location.pathname + '?' + new Date().getTime());
 };
+
+FriendlyEats.prototype.checkSignedInWithMessage = function () {
+  // Return true if the user is signed in Firebase
+  if (!!firebase.auth().currentUser) {
+    return true;
+  }
+
+  this.snackbars.must_sign_in.show({
+    message: 'You must sign-in first',
+    timeout: 2000
+  });
+  // // Display a message to the user using a Toast.
+  // var data = {
+  //   message: 'You must sign-in first',
+  //   timeout: 2000
+  // };
+  // signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+  return false;
+}

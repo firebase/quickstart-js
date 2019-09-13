@@ -96,6 +96,7 @@ function FriendlyEats() {
   };
 
   this.dialogs = {};
+  this.snackbars = {};
 
   var that = this;
 
@@ -109,6 +110,7 @@ function FriendlyEats() {
       that.initRouter();
       that.initReviewDialog();
       that.initFilterDialog();
+      that.initMustSignInSnackBar();
     }).catch(function (err) {
       console.log(err);
     });
