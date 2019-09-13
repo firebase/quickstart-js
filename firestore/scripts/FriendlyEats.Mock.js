@@ -28,6 +28,7 @@ FriendlyEats.prototype.addMockRestaurants = function() {
         this.getRandomItem(this.data.words);
     var category = this.getRandomItem(this.data.categories);
     var city = this.getRandomItem(this.data.cities);
+    var description = this.getRandomItem(this.data.descriptions);
     var price = Math.floor(Math.random() * 4) + 1;
     var photoID = Math.floor(Math.random() * 22) + 1;
     var photo = 'https://storage.googleapis.com/firestorequickstarts.appspot.com/food_' + photoID + '.png';
@@ -37,6 +38,7 @@ FriendlyEats.prototype.addMockRestaurants = function() {
     var promise = this.addRestaurant({
       name: name,
       category: category,
+      description: description,
       price: price,
       city: city,
       numRatings: numRatings,

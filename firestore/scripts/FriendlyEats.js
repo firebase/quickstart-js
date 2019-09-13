@@ -266,6 +266,19 @@ FriendlyEats.prototype.data = {
       rating: 5,
       text: 'This is my favorite place. Literally.'
     }
+  ],
+  descriptions: [
+    'A seafood restaurant in Sea World',
+    'Bacon is red, steak can be blue',
+    `World's leading restaurant of fried chicken`,
+    'Open bar every Monday 7am - 9am',
+    'The finest Pizzeria in town',
+    'Authentic NY-style bagels with real cream cheese',
+    `We don't take reservations`,
+    'Absolute Guest Satisfaction.',
+    'A restaurant with a mission to end world hunger',
+    'Great food, big portions and cheap prices',
+    'Chic restaurant that offers karaoke'
   ]
 };
 

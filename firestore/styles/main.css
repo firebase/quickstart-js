@@ -469,7 +469,7 @@ b.light {
 }
 
 #restaurant-header .info {
-  height: 76px;
+  height: 100px;
 }
 
 #restaurant-header .mdc-layout-grid {
@@ -584,4 +584,10 @@ aside textarea:focus {
   line-height: 36px;
   padding-right: 10px;
   padding-left: 20px;
+}
+
+#restaurant-card .description {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
