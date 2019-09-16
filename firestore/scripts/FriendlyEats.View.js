@@ -161,7 +161,7 @@ FriendlyEats.prototype.initReviewDialog = function () {
     var id = pathname.split('/')[2];
 
     if (that.checkSignedInWithMessage()) {
-      firebase.analytics().logEvent('add_review', { restaurant_id: id });
+      firebase.analytics().logEvent('submit_review', { restaurant_id: id });
       that.addRating(id, {
         rating: rating,
         text: dialog.querySelector('#text').value,
