@@ -73,8 +73,8 @@ function authStateObserver(user) {
     // Hide sign-in button.
     signInButtonElement.setAttribute('hidden', 'true');
 
-    // We save the Firebase Messaging Device token and enable notifications.
-    //  saveMessagingDeviceToken();
+    // enable notifications after log in.
+    initMessaging();
   } else { // User is signed out!
     firebase.analytics().logEvent('logout');
     // Hide user's profile and sign-out button.
@@ -85,6 +85,38 @@ function authStateObserver(user) {
     // Show sign-in button.
     signInButtonElement.removeAttribute('hidden');
   }
+}
+
+function initMessaging() {
+  firebase.messaging().getToken().then(function (currentToken) {
+    if (currentToken) {
+      console.log('Got FCM device token:', currentToken);
+    } else {
+      // Need to request permissions to show notifications.
+      requestNotificationsPermissions();
+    }
+  }).catch(function (error) {
+    console.error('Unable to get messaging token.', error);
+  });
+
+  firebase.messaging().onMessage(payload => {
+    console.log('Message received. ', payload);
+    // fire analytics event
+    firebase.analytics().logEvent('notification_received');
+  });
+}
+
+// Requests permissions to show notifications.
+function requestNotificationsPermissions() {
+  console.log('Requesting notifications permission...');
+  firebase.analytics().logEvent('request_notification_permission');
+  firebase.messaging().requestPermission().then(function () {
+    // Notification permission granted.
+    firebase.analytics().logEvent('notification_permission_granted');
+  }).catch(function (error) {
+    console.error('Unable to get permission to notify.', error);
+    firebase.analytics().logEvent('notification_permission_denied');
+  });
 }
 
 /**
@@ -110,9 +142,6 @@ function FriendlyEats() {
   initFirebaseAuth();
 
   firebase.firestore().enablePersistence({ synchronizeTabs: true })
-    // .then(function() {
-    //   return firebase.auth().signInAnonymously();
-    // })
     .then(function () {
       that.initTemplates();
       that.initRouter();
