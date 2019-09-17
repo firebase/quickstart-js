@@ -355,13 +355,14 @@ FriendlyEats.prototype.viewRestaurant = function (id) {
           mainEl.querySelector('#cards').append(el);
         });
       } else {
-        mainEl = that.renderTemplate('no-ratings', {
-          add_mock_data: function () {
-            that.addMockRatings(id).then(function () {
-              that.rerender();
-            });
-          }
-        });
+        // disable add mock rating
+        // mainEl = that.renderTemplate('no-ratings', {
+        //   add_mock_data: function () {
+        //     that.addMockRatings(id).then(function () {
+        //       that.rerender();
+        //     });
+        //   }
+        // });
       }
 
       that.replaceElement(document.querySelector('.header'), sectionHeaderEl);
