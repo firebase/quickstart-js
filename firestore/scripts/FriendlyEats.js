@@ -74,7 +74,7 @@ function authStateObserver(user) {
     signInButtonElement.setAttribute('hidden', 'true');
 
     // enable notifications after log in.
-    initMessaging();
+   // initMessaging();
   } else { // User is signed out!
     firebase.analytics().logEvent('logout');
     // Hide user's profile and sign-out button.
@@ -85,25 +85,6 @@ function authStateObserver(user) {
     // Show sign-in button.
     signInButtonElement.removeAttribute('hidden');
   }
-}
-
-function initMessaging() {
-  firebase.messaging().getToken().then(function (currentToken) {
-    if (currentToken) {
-      console.log('Got FCM device token:', currentToken);
-    } else {
-      // Need to request permissions to show notifications.
-      requestNotificationsPermissions();
-    }
-  }).catch(function (error) {
-    console.error('Unable to get messaging token.', error);
-  });
-
-  firebase.messaging().onMessage(payload => {
-    console.log('Message received. ', payload);
-    // fire analytics event
-    firebase.analytics().logEvent('notification_received');
-  });
 }
 
 // Requests permissions to show notifications.
@@ -117,6 +98,11 @@ function requestNotificationsPermissions() {
     console.error('Unable to get permission to notify.', error);
     firebase.analytics().logEvent('notification_permission_denied');
   });
+}
+
+function initRemoteConfig() {
+  var remoteConfig = firebase.remoteConfig();
+  remoteConfig.settings.minimumFetchIntervalMillis = 0;
 }
 
 /**
@@ -134,9 +120,17 @@ function FriendlyEats() {
   this.snackbars = {};
 
   var that = this;
+  // init unfinished review dialog
+  this.dialogs.unfinshedReview = new mdc.dialog.MDCDialog(document.querySelector('#dialog-unfinished-review'));
 
   // init firebase anaytics
   firebase.analytics();
+
+  // init remote config
+  initRemoteConfig();
+
+  // init initFCM
+  this.initFCM();
 
   // init firebase auth
   initFirebaseAuth();
@@ -148,9 +142,63 @@ function FriendlyEats() {
       that.initReviewDialog();
       that.initFilterDialog();
       that.initMustSignInSnackBar();
+      that.initUnfinishedSnackBar();
+      // show welcome dialog if user had unfinished review
+      // that.showUnfinsihedDialog();
+      that.showUnfinsihedSnackBar();
     }).catch(function (err) {
       console.log(err);
     });
+}
+
+FriendlyEats.prototype.showUnfinsihedDialog = function () {
+  const that = this;
+  const remoteConfig = firebase.remoteConfig()
+  remoteConfig.fetchAndActivate().then(() => {
+    const unfinished = remoteConfig.getBoolean('unfinished_reviews');
+    if (unfinished) {
+      that.dialogs.unfinshedReview.show();
+    }
+  });
+}
+
+FriendlyEats.prototype.showUnfinsihedSnackBar = function() {
+  const remoteConfig = firebase.remoteConfig()
+  remoteConfig.fetchAndActivate().then(() => {
+    const unfinished = remoteConfig.getBoolean('unfinished_reviews');
+    if (unfinished) {
+      this.snackbars.welcome_unfinished_review.show({
+        message: 'Welcome back! We would love it if you could finish the review.',
+        timeout: 5000
+      });
+    }
+  });
+}
+/**
+ * Initialize FCM
+ */
+FriendlyEats.prototype.initFCM = function() {
+  const that = this;
+  firebase.messaging().getToken().then(function (currentToken) {
+    if (currentToken) {
+      console.log('Got FCM device token:', currentToken);
+    } else {
+      // Need to request permissions to show notifications.
+      requestNotificationsPermissions();
+    }
+  }).catch(function (error) {
+    console.error('Unable to get messaging token.', error);
+  });
+
+  firebase.messaging().onMessage(payload => {
+    console.log('Message received. ', payload);
+    // fire analytics event
+    firebase.analytics().logEvent('notification_received');
+
+    // show welcome dialog if user had unfinished review
+    // that.showUnfinsihedDialog();
+    that.showUnfinsihedSnackBar();
+  });
 }
 
 /**

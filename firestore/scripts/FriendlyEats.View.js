@@ -148,7 +148,11 @@ FriendlyEats.prototype.viewSetup = function () {
 };
 
 FriendlyEats.prototype.initMustSignInSnackBar = function () {
-  this.snackbars.must_sign_in = new mdc.snackbar.MDCSnackbar(document.querySelector('.mdc-snackbar'));
+  this.snackbars.must_sign_in = new mdc.snackbar.MDCSnackbar(document.querySelector('.must-sign-in'));
+}
+
+FriendlyEats.prototype.initUnfinishedSnackBar = function () {
+  this.snackbars.welcome_unfinished_review = new mdc.snackbar.MDCSnackbar(document.querySelector('.welcome-unfinished-review'));
 }
 
 FriendlyEats.prototype.initReviewDialog = function () {

@@ -58,14 +58,19 @@
     <div class="header"></div>
 
     <main></main>
-
     <div class="dialogs"></div>
-    <div class="mdc-snackbar mdc-snackbar--align-start" aria-live="assertive" aria-atomic="true" aria-hidden="true">
+    <div class="mdc-snackbar mdc-snackbar--align-start must-sign-in" aria-live="assertive" aria-atomic="true" aria-hidden="true">
       <div class="mdc-snackbar__text"></div>
       <div class="mdc-snackbar__action-wrapper">
         <button type="button" class="mdc-snackbar__action-button"></button>
       </div>
     </div>
+    <div class="mdc-snackbar mdc-snackbar--align-start welcome-unfinished-review" aria-live="assertive" aria-atomic="true" aria-hidden="true">
+        <div class="mdc-snackbar__text"></div>
+        <div class="mdc-snackbar__action-wrapper">
+          <button type="button" class="mdc-snackbar__action-button"></button>
+        </div>
+      </div>
 
     <div hidden class="template" id="header-base">
       <header id="site-header" class="mdc-toolbar mdc-toolbar--fixed">
@@ -368,6 +373,24 @@
             class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
           <button type="button"
             class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">Save</button>
+        </footer>
+      </div>
+      <div class="mdc-dialog__backdrop"></div>
+    </aside>
+
+    <aside id="dialog-unfinished-review" class="mdc-dialog">
+      <div class="mdc-dialog__surface">
+        <header class="mdc-dialog__header">
+          <h2 id="my-mdc-dialog-label" class="mdc-dialog__header__title">
+            Welcome back!
+          </h2>
+        </header>
+        <section id="my-mdc-dialog-description" class="mdc-dialog__body">
+          We would love it if you could finish the review.
+        </section>
+        <footer class="mdc-dialog__footer">
+          <button type="button"
+            class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Dismiss</button>
         </footer>
       </div>
       <div class="mdc-dialog__backdrop"></div>
