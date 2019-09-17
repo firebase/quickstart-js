@@ -144,8 +144,8 @@ function FriendlyEats() {
       that.initMustSignInSnackBar();
       that.initUnfinishedSnackBar();
       // show welcome dialog if user had unfinished review
-      // that.showUnfinsihedDialog();
-      that.showUnfinsihedSnackBar();
+      that.showUnfinsihedDialog();
+      // that.showUnfinsihedSnackBar();
     }).catch(function (err) {
       console.log(err);
     });
