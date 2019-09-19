@@ -21,6 +21,9 @@ var userNameElement = document.getElementById('user-name');
 var signInButtonElement = document.getElementById('sign-in');
 var signOutButtonElement = document.getElementById('sign-out');
 
+// console log fid for debugging
+firebase.installations().getId().then(token => console.log('fid is', token));
+
 // Returns the signed-in user's profile Pic URL.
 function getProfilePicUrl() {
   return firebase.auth().currentUser.photoURL || '/images/profile_placeholder.png';
