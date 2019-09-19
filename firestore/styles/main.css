@@ -591,3 +591,7 @@ aside textarea:focus {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+html, body {
+  height: 100%;
+}

@@ -33,6 +33,10 @@ FriendlyEats.prototype.viewList = function (filters, filter_description) {
     filter_description = 'any type of food with any price in any city.';
   }
 
+  // make height dynamic
+  const body = document.getElementById('body-div');
+  body.style.height = null;
+
   var mainEl = this.renderTemplate('main-adjusted');
   var headerEl = this.renderTemplate('header-base', {
     hasSectionHeader: true
@@ -42,7 +46,7 @@ FriendlyEats.prototype.viewList = function (filters, filter_description) {
     headerEl.querySelector('#section-header'),
     this.renderTemplate('filter-display', {
       filter_description: filter_description
-    })
+    }, true)
   );
 
   this.replaceElement(document.querySelector('.header'), headerEl);
@@ -65,7 +69,7 @@ FriendlyEats.prototype.viewList = function (filters, filter_description) {
         headerEl.querySelector('#section-header'),
         that.renderTemplate('filter-display', {
           filter_description: filter_description
-        })
+        }, true)
       );
 
       headerEl.querySelector('#show-filters').addEventListener('click', function () {
@@ -183,7 +187,7 @@ FriendlyEats.prototype.initReviewDialog = function () {
   this.dialogs.add_review.listen('MDCDialog:cancel', function () {
     var pathname = that.getCleanPath(document.location.pathname);
     var id = pathname.split('/')[2];
-    firebase.analytics().logEvent('cancel_review', { restaurant_id: id});
+    firebase.analytics().logEvent('cancel_review', { restaurant_id: id });
   });
 
   var rating = 0;
@@ -317,6 +321,11 @@ FriendlyEats.prototype.updateQuery = function (filters) {
 FriendlyEats.prototype.viewRestaurant = function (id) {
   var sectionHeaderEl;
   var that = this;
+
+  // make ratings take the full screen
+  const body = document.getElementById('body-div');
+  body.style.height = '100%';
+
   firebase.analytics().logEvent('open_restaurant_listing', {
     restaurant_id: id
   });
@@ -355,14 +364,13 @@ FriendlyEats.prototype.viewRestaurant = function (id) {
           mainEl.querySelector('#cards').append(el);
         });
       } else {
-        // disable add mock rating
-        // mainEl = that.renderTemplate('no-ratings', {
-        //   add_mock_data: function () {
-        //     that.addMockRatings(id).then(function () {
-        //       that.rerender();
-        //     });
-        //   }
-        // });
+        mainEl = that.renderTemplate('no-ratings', {
+          add_mock_data: function () {
+            that.addMockRatings(id).then(function () {
+              that.rerender();
+            });
+          }
+        });
       }
 
       that.replaceElement(document.querySelector('.header'), sectionHeaderEl);

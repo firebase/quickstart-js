@@ -101,8 +101,20 @@ function requestNotificationsPermissions() {
 }
 
 function initRemoteConfig() {
-  var remoteConfig = firebase.remoteConfig();
+  const remoteConfig = firebase.remoteConfig();
   remoteConfig.settings.minimumFetchIntervalMillis = 0;
+
+  remoteConfig.fetchAndActivate().then(() => {
+    const dark = remoteConfig.getBoolean('dark');
+    if (dark) {
+        const body = document.getElementById('body-div');
+        const header = document.getElementById('site-header');
+        const filter = document.getElementById('filter')
+        body.style.backgroundColor = 'black';
+        header.style.backgroundColor = 'darkorange';
+        filter.style.backgroundColor = 'darkorange';
+    }
+  });
 }
 
 /**
@@ -153,7 +165,7 @@ function FriendlyEats() {
 
 FriendlyEats.prototype.showUnfinsihedDialog = function () {
   const that = this;
-  const remoteConfig = firebase.remoteConfig()
+  const remoteConfig = firebase.remoteConfig();
   remoteConfig.fetchAndActivate().then(() => {
     const unfinished = remoteConfig.getBoolean('unfinished_reviews');
     if (unfinished) {
