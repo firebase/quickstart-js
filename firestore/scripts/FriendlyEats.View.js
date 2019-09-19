@@ -159,6 +159,10 @@ FriendlyEats.prototype.initUnfinishedSnackBar = function () {
   this.snackbars.welcome_unfinished_review = new mdc.snackbar.MDCSnackbar(document.querySelector('.welcome-unfinished-review'));
 }
 
+FriendlyEats.prototype.initNotificationSnackBar = function () {
+  this.snackbars.notification = new mdc.snackbar.MDCSnackbar(document.querySelector('.notification'));
+}
+
 FriendlyEats.prototype.initReviewDialog = function () {
   var dialog = document.querySelector('#dialog-add-review');
   this.dialogs.add_review = new mdc.dialog.MDCDialog(dialog);

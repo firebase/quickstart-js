@@ -77,7 +77,7 @@ function authStateObserver(user) {
     signInButtonElement.setAttribute('hidden', 'true');
 
     // enable notifications after log in.
-   // initMessaging();
+    // initMessaging();
   } else { // User is signed out!
     firebase.analytics().logEvent('logout');
     // Hide user's profile and sign-out button.
@@ -110,12 +110,12 @@ function initRemoteConfig() {
   remoteConfig.fetchAndActivate().then(() => {
     const dark = remoteConfig.getBoolean('dark');
     if (dark) {
-        const body = document.getElementById('body-div');
-        const header = document.getElementById('site-header');
-        const filter = document.getElementById('filter')
-        body.style.backgroundColor = 'black';
-        header.style.backgroundColor = 'darkorange';
-        filter.style.backgroundColor = 'darkorange';
+      const body = document.getElementById('body-div');
+      const header = document.getElementById('site-header');
+      const filter = document.getElementById('filter')
+      body.style.backgroundColor = 'black';
+      header.style.backgroundColor = 'darkorange';
+      filter.style.backgroundColor = 'darkorange';
     }
   });
 }
@@ -140,12 +140,19 @@ function FriendlyEats() {
 
   // init firebase anaytics
   firebase.analytics();
+  firebase.analytics().setUserProperties({
+    env: self.location.host.indexOf('localhost') !== -1 ? 'dev' : 'prod'
+  });
 
   // init remote config
   initRemoteConfig();
 
   // init initFCM
-  this.initFCM();
+  try {
+    this.initFCM();
+  } catch (e) {
+    console.log('FCM failed to initialize', e);
+  }
 
   // init firebase auth
   initFirebaseAuth();
@@ -158,6 +165,7 @@ function FriendlyEats() {
       that.initFilterDialog();
       that.initMustSignInSnackBar();
       that.initUnfinishedSnackBar();
+      that.initNotificationSnackBar();
       // show welcome dialog if user had unfinished review
       that.showUnfinsihedDialog();
       // that.showUnfinsihedSnackBar();
@@ -177,7 +185,7 @@ FriendlyEats.prototype.showUnfinsihedDialog = function () {
   });
 }
 
-FriendlyEats.prototype.showUnfinsihedSnackBar = function() {
+FriendlyEats.prototype.showUnfinsihedSnackBar = function () {
   const remoteConfig = firebase.remoteConfig()
   remoteConfig.fetchAndActivate().then(() => {
     const unfinished = remoteConfig.getBoolean('unfinished_reviews');
@@ -189,10 +197,19 @@ FriendlyEats.prototype.showUnfinsihedSnackBar = function() {
     }
   });
 }
+
+FriendlyEats.prototype.showNotificationSnackBar = function (message) {
+  this.snackbars.notification.show({
+    message: `New Message: ${message}`,
+    timeout: 10000,
+    actionText: 'Dismiss',
+    actionHandler: function(){}
+  });
+}
 /**
  * Initialize FCM
  */
-FriendlyEats.prototype.initFCM = function() {
+FriendlyEats.prototype.initFCM = function () {
   const that = this;
   firebase.messaging().getToken().then(function (currentToken) {
     if (currentToken) {
@@ -209,10 +226,10 @@ FriendlyEats.prototype.initFCM = function() {
     console.log('Message received. ', payload);
     // fire analytics event
     firebase.analytics().logEvent('notification_received');
-
+    that.showNotificationSnackBar((payload.notification && payload.notification.body) || 'You received a new message');
     // show welcome dialog if user had unfinished review
     // that.showUnfinsihedDialog();
-    that.showUnfinsihedSnackBar();
+    // that.showUnfinsihedSnackBar();
   });
 }
 
