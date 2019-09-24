@@ -3,8 +3,6 @@ Firebase Auth w/ Google Sign-In in Chrome Extensions
 
 This sample demonstrates how to authorize a user with Firebase in a Chrome extension using Google Sign-In and setup the Chrome extension to allow the use of the Realtime Database and Firebase Storage.
 
-Feel free to try out a demo version of the Chrome Extension directly: https://chrome.google.com/webstore/detail/firebase-auth-in-chrome-e/ehflheedljfngcklcnigfonmllgkadbb
-
 Introduction
 ------------
 
