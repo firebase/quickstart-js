@@ -6,11 +6,11 @@ function loadNextPage() {
     var query = db.collection('name')
     var documentArray;
     var documentArrayLength ;
-    if (documentArray.length === 0) {} else {
+    if (documentArray.length === 0) {} else { //if document contains no item then we are just getting the items from database
         documentArrayLength = documentArray.length - 1;
         query = query.startAfter(documentArray[documentArrayLength]);
     }
-    query.limit(10).orderBy('timestamp', 'desc').get().then((snapshot) => {
+    query.limit(10).orderBy('timestamp', 'desc').get().then((snapshot) => {// getting docs from newest to oldest
         itemExist = false;
         snapshot.forEach((document) => {
             documentArray.forEach((item) => {
@@ -22,7 +22,7 @@ function loadNextPage() {
                 documentArray.push(document);
                 console.log(document);
             } else {
-                console.log('item already exist not adding more');
+                console.log('Item already exist not adding more');
             }
         })
     })
