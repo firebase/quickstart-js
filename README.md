@@ -34,7 +34,7 @@ Samples are organized into the following subdirectories and include README.md fi
    - Upload a file to Firebase Storage and display its URL
  - [Messaging](messaging/README.md)
    - Send notifications
- - [Pagination](pagination/README.md)
+ - [Pagination]
    - Make infinite scroll pagination
 
 ## How to make contributions?
