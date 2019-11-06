@@ -18,7 +18,18 @@
 /**
  * Initializes the FriendlyEats app.
  */
+// Uncomment these lines to run the locally hosted page against the Cloud Firestore emulator
+// if (window.location.hostname === 'localhost') {
+//   console.log('localhost detected!');
+//   firebase.firestore().settings({
+//     host: 'localhost:8080',
+//     ssl: false
+//   });
+// }
+
 function FriendlyEats() { // eslint-disable-line no-redeclare
+
+  this.userFavorites = [];
   this.filters = {
     city: '',
     price: '',
@@ -29,10 +40,13 @@ function FriendlyEats() { // eslint-disable-line no-redeclare
   this.dialogs = {};
 
   var that = this;
-
   firebase.firestore().enablePersistence()
     .then(function() {
+      console.log('Ready to sign you in anonymously! Firebase auth is ' , firebase.auth());
       return firebase.auth().signInAnonymously();
+    })
+    .then(function() {
+      that.updateUserInfo();
     })
     .then(function() {
       that.initTemplates();
@@ -55,6 +69,11 @@ FriendlyEats.prototype.initRouter = function() {
     .on({
       '/': function() {
         that.updateQuery(that.filters);
+      }
+    })
+    .on({
+      '/favorites': function() {
+        that.viewFavorites();
       }
     })
     .on({
@@ -88,6 +107,23 @@ FriendlyEats.prototype.getCleanPath = function(dirtyPath) {
   } else {
     return dirtyPath;
   }
+};
+
+FriendlyEats.prototype.updateUserInfo = function() {
+  var userID = firebase.auth().currentUser.uid;
+  var userData = {'lastLoginTime': Date()};
+  console.log('Your userID is ', userID);
+
+  // It seems like I don't need to set that=this... right?
+  var updateInfo =  firebase.firestore().doc(`/users/${userID}`).set(userData, {merge: true});
+  var getFavorites = firebase.firestore().doc(`/users/${userID}`).onSnapshot((doc) => {
+    var userData = doc.data();
+    if (userData.favorites) {
+      this.userFavorites = userData.favorites;
+      console.log('User favorites are ', userData.favorites);
+    }
+  });
+  return Promise.all([updateInfo, getFavorites]);
 };
 
 FriendlyEats.prototype.getFirebaseConfig = function() {
@@ -198,5 +234,7 @@ FriendlyEats.prototype.data = {
 };
 
 window.onload = function() {
+
   window.app = new FriendlyEats();
+
 };

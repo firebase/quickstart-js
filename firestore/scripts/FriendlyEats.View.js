@@ -30,14 +30,24 @@ FriendlyEats.prototype.viewHome = function() {
   this.getAllRestaurants();
 };
 
-FriendlyEats.prototype.viewList = function(filters, filter_description) {
+FriendlyEats.prototype.viewFavorites = function() {
+  this.viewList(null, null, true);
+};
+
+
+FriendlyEats.prototype.viewList = function(filters, filter_description, isFavorites = false) {
+
   if (!filter_description) {
     filter_description = 'any type of food with any price in any city.';
+  }
+  if (isFavorites) {
+    filter_description = 'Your favorite restaurants';
   }
 
   var mainEl = this.renderTemplate('main-adjusted');
   var headerEl = this.renderTemplate('header-base', {
-    hasSectionHeader: true
+    hasSectionHeader: true,
+    favorites: isFavorites
   });
 
   this.replaceElement(
@@ -55,8 +65,8 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
     that.dialogs.filter.show();
   });
 
-  var renderResults = function(doc) {
-    if (!doc) {
+  var renderResults = function(restaurant) {
+    if (!restaurant) {
       var headerEl = that.renderTemplate('header-base', {
         hasSectionHeader: true
       });
@@ -78,34 +88,28 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
       that.replaceElement(document.querySelector('main'), noResultsEl);
       return;
     }
-    var data = doc.data();
-    data['.id'] = doc.id;
-    data['go_to_restaurant'] = function() {
-      that.router.navigate('/restaurants/' + doc.id);
-    };
+    var restData;
+    var restID;
 
-    // check if restaurant card has already been rendered
-    var existingRestaurantCardEl = mainEl.querySelector('#' + that.ID_CONSTANT + doc.id);
-    var el = existingRestaurantCardEl || that.renderTemplate('restaurant-card', data);
-
-    var ratingEl = el.querySelector('.rating');
-    var priceEl = el.querySelector('.price');
-
-    // clear out existing rating and price if they already exist
-    if (existingRestaurantCardEl) {
-      ratingEl.innerHTML = '';
-      priceEl.innerHTML = '';
+    if (isFavorites) {
+      restID = restaurant['.id'];
+      restData = restaurant;
+      restData['go_to_restaurant'] = function() {
+        that.router.navigate('/restaurants/' + restID + '?fromFavorites=true');
+      }; 
+    } else {
+      restID = restaurant.id;
+      restData = restaurant.data();
+      restData['go_to_restaurant'] = function() {
+        that.router.navigate('/restaurants/' + restID);
+      };
     }
-
-    ratingEl.append(that.renderRating(data.avgRating));
-    priceEl.append(that.renderPrice(data.price));
-
-    if (!existingRestaurantCardEl) {
-      mainEl.querySelector('#cards').append(el);
-    }
+    that.renderRestaurantCard(mainEl, restID, restData);
   };
 
-  if (filters.city || filters.category || filters.price || filters.sort !== 'Rating' ) {
+  if (isFavorites) {
+    this.getFavorites(renderResults);
+  } else if (filters.city || filters.category || filters.price || filters.sort !== 'Rating' ) {
     this.getFilteredRestaurants({
       city: filters.city || 'Any',
       category: filters.category || 'Any',
@@ -121,6 +125,32 @@ FriendlyEats.prototype.viewList = function(filters, filter_description) {
 
   mdc.autoInit();
 };
+
+
+FriendlyEats.prototype.renderRestaurantCard = function(mainEl, id, data) {
+
+  // check if restaurant card has already been rendered
+  var existingRestaurantCardEl = mainEl.querySelector('#' + this.ID_CONSTANT + id);
+  var el = existingRestaurantCardEl || this.renderTemplate('restaurant-card', data);
+
+  var ratingEl = el.querySelector('.rating');
+  var priceEl = el.querySelector('.price');
+
+  // clear out existing rating and price if they already exist
+  if (existingRestaurantCardEl) {
+    ratingEl.innerHTML = '';
+    priceEl.innerHTML = '';
+  }
+
+  ratingEl.append(this.renderRating(data.avgRating));
+  priceEl.append(this.renderPrice(data.price));
+
+  if (!existingRestaurantCardEl) {
+    mainEl.querySelector('#cards').append(el);
+  }
+
+};
+
 
 FriendlyEats.prototype.viewSetup = function() {
   var headerEl = this.renderTemplate('header-base', {
@@ -312,10 +342,31 @@ FriendlyEats.prototype.viewRestaurant = function(id) {
   return this.getRestaurant(id)
     .then(function(doc) {
       var data = doc.data();
+      if (that.userFavorites.indexOf(id) >= 0) {
+        console.log('This is a favorite restaurant');
+        data['isFavorite'] = true;
+      }
+
+      // This seems really old-school. Wonder if there's a better way
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('fromFavorites')) {
+        console.log('You visited here form your favorites location');
+        data['fromFavorites'] = true;
+      }
       var dialog =  that.dialogs.add_review;
 
       data.show_add_review = function() {
         dialog.show();
+      };
+
+      data.add_to_favorites = function() {
+        that.addToFavorites(id);
+        that.rerender();
+      };
+
+      data.remove_from_favorites = function() {
+        that.removeFromFavorites(id);
+        that.rerender();
       };
 
       sectionHeaderEl = that.renderTemplate('restaurant-header', data);

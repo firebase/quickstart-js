@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 'use strict';
+const functions = firebase.functions();
+// Uncomment this line if you want to use the local emulator for functions
+// functions.useFunctionsEmulator('http://localhost:5001');
 
 FriendlyEats.prototype.addRestaurant = function (data) {
   const collection = firebase.firestore().collection('restaurants');
@@ -70,11 +73,41 @@ FriendlyEats.prototype.getFilteredRestaurants = function (filters, render) {
   this.getDocumentsInQuery(query, render);
 };
 
+FriendlyEats.prototype.getFavorites = function(render) {
+  const getFavoritesFunction = functions.httpsCallable('getFavorites_v0');
+  console.log('UserID is still ' + firebase.auth().currentUser.uid);  
+  getFavoritesFunction({uid: firebase.auth().currentUser.uid}).then(function(result) {
+    const restaurantDocs = result.data;
+    restaurantDocs.forEach((restaurantDoc) => {
+      render(restaurantDoc);
+    });
+    console.log(restaurantDocs);
+  });
+
+};
+
+
+FriendlyEats.prototype.addToFavorites = function(restaurantID) {
+  const currUserID = firebase.auth().currentUser.uid;
+  const userDoc = firebase.firestore().collection('users').doc(currUserID);
+  userDoc.update({
+    favorites: firebase.firestore.FieldValue.arrayUnion(restaurantID)
+  });  
+};
+
+FriendlyEats.prototype.removeFromFavorites = function(restaurantID) {
+  const currUserID = firebase.auth().currentUser.uid;
+  const userDoc = firebase.firestore().collection('users').doc(currUserID);
+  userDoc.update({
+    favorites: firebase.firestore.FieldValue.arrayRemove(restaurantID)
+  });
+};
+
+
 FriendlyEats.prototype.addRating = function (restaurantID, rating) {
   const collection = firebase.firestore().collection('restaurants');
   const document = collection.doc(restaurantID);
   const newRatingDocument = document.collection('ratings').doc();
-
   return firebase.firestore().runTransaction((transaction) => {
     return transaction.get(document).then((doc) => {
       const data = doc.data();

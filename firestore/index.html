@@ -66,6 +66,20 @@
             <span class="material-icons mdc-toolbar__icon--menu">restaurant</span>
             <span class="mdc-toolbar__title">FriendlyEats</span>
           </section>
+          <span data-fir-if-not="favorites">
+            <div id="favorites-button">
+              <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
+                <a href="/favorites" data-navigo class="material-icons mdc-icon-button" aria-label="My favorites">favorites</a>
+              </section>
+            </div>
+          </span>
+          <span data-fir-if="favorites">
+            <div id="close-button">
+              <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
+                <a href="/" data-navigo class="material-icons mdc-icon-button" aria-label="Undo">undo</a>
+              </section>
+            </div>
+          </span>
         </div>
         <div id="section-header" data-fir-if="hasSectionHeader"></div>
       </header>
@@ -136,13 +150,28 @@
 
       <div class="mdc-layout-grid" style="width: 100%;">
           <div class="mdc-layout-grid__inner">
-              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+              <div data-fir-if="fromFavorites" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                  <a href="/favorites" data-navigo class="material-icons" id="close">close</a>
+              </div>
+              <div data-fir-if-not="fromFavorites" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
                   <a href="/" data-navigo class="material-icons" id="close">close</a>
               </div>
               <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 info">
                 <div class="max_width_600">
                   <h2 data-fir-content="name"></h2>
                   <span class="price"></span>
+                  <span data-fir-if="isFavorite">
+                    <button id="remove-from-favorites" class="mdc-button" aria-hidden="true" data-fir-click="remove_from_favorites">
+                      <span class="mcd-button__label">Remove</span>                   
+                      <i class="material-icons mdc-button__icon">favorite</i>
+                    </button>
+                  </span>
+                  <span data-fir-if-not="isFavorite">
+                      <button id="add-to-favorites" class="mdc-button" aria-hidden="true" data-fir-click="add_to_favorites">
+                        <span class="mcd-button__label">Add</span>                   
+                        <i class="material-icons mdc-button__icon">favorite</i>
+                      </button>
+                    </span>
                   <div class="rating"></div>
                   <div class="details">
                     <span class="rating"></span>
@@ -349,9 +378,11 @@
   </aside>
 </div>
 
-<script src="/__/firebase/6.5.0/firebase-app.js"></script>
-<script src="/__/firebase/6.5.0/firebase-auth.js"></script>
-<script src="/__/firebase/6.5.0/firebase-firestore.js"></script>
+
+<script src="/__/firebase/6.6.0/firebase-app.js"></script>
+<script src="/__/firebase/6.6.0/firebase-auth.js"></script>
+<script src="/__/firebase/6.6.0/firebase-functions.js"></script>
+<script src="/__/firebase/6.6.0/firebase-firestore.js"></script>
 <script src="/__/firebase/init.js"></script>
 
 <script src="//unpkg.com/navigo@6"></script>

@@ -5,3 +5,8 @@
 **/*.bak
 .idea
 .firebaserc
+/firestore/Todds Notes
+.DS_Store
+/firestore/functions/src/super_secret
+/firestore/functions/lib
+/firestore/functions/src/UseForOtherScreencast
