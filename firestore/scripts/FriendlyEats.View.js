@@ -44,6 +44,8 @@ FriendlyEats.prototype.viewList = function(filters, filter_description, isFavori
     filter_description = 'Your favorite restaurants';
   }
 
+  this.fromFavorites = isFavorites;
+
   var mainEl = this.renderTemplate('main-adjusted');
   var headerEl = this.renderTemplate('header-base', {
     hasSectionHeader: true,
@@ -94,16 +96,13 @@ FriendlyEats.prototype.viewList = function(filters, filter_description, isFavori
     if (isFavorites) {
       restID = restaurant['.id'];
       restData = restaurant;
-      restData['go_to_restaurant'] = function() {
-        that.router.navigate('/restaurants/' + restID + '?fromFavorites=true');
-      }; 
     } else {
       restID = restaurant.id;
       restData = restaurant.data();
-      restData['go_to_restaurant'] = function() {
-        that.router.navigate('/restaurants/' + restID);
-      };
     }
+    restData.go_to_restaurant = function() {
+      that.router.navigate('/restaurants/' + restID);
+    };
     that.renderRestaurantCard(mainEl, restID, restData);
   };
 
@@ -344,14 +343,11 @@ FriendlyEats.prototype.viewRestaurant = function(id) {
       var data = doc.data();
       if (that.userFavorites.indexOf(id) >= 0) {
         console.log('This is a favorite restaurant');
-        data['isFavorite'] = true;
+        data.isFavorite = true;
       }
 
-      // This seems really old-school. Wonder if there's a better way
-      var urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('fromFavorites')) {
-        console.log('You visited here form your favorites location');
-        data['fromFavorites'] = true;
+      if (that.fromFavorites) {
+        data.fromFavorites = true;
       }
       var dialog =  that.dialogs.add_review;
 

@@ -37,6 +37,8 @@ function FriendlyEats() { // eslint-disable-line no-redeclare
     sort: 'Rating'
   };
 
+  this.fromFavorites = false;
+
   this.dialogs = {};
 
   var that = this;
@@ -111,12 +113,12 @@ FriendlyEats.prototype.getCleanPath = function(dirtyPath) {
 
 FriendlyEats.prototype.updateUserInfo = function() {
   var userID = firebase.auth().currentUser.uid;
-  var userData = {'lastLoginTime': Date()};
+  var userData = {lastLoginTime: new Date()};
   console.log('Your userID is ', userID);
 
   // It seems like I don't need to set that=this... right?
   var updateInfo =  firebase.firestore().doc(`/users/${userID}`).set(userData, {merge: true});
-  var getFavorites = firebase.firestore().doc(`/users/${userID}`).onSnapshot((doc) => {
+  var getFavorites = firebase.firestore().doc(`/users/${userID}`).onSnapshot(doc => {
     var userData = doc.data();
     if (userData.favorites) {
       this.userFavorites = userData.favorites;
