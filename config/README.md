@@ -8,11 +8,11 @@ Introduction
 ------------
 
 This is a simple example of using Remote Config to override in-app default
-values by defining service-side parameter values in the Firebase console. This
+values by defining server-side parameter values in the Firebase console. This
 example demonstrates a small subset of the capilities of Firebase Remote
 Config. To learn more about how you can use Firebase Remote Config in your app,
 see
-[Firebase Remote Config Introduction](https://firebase.google.com/docs/remote-config/).
+[the Firebase Remote Config introduction](https://firebase.google.com/docs/remote-config/).
 
 Getting started
 ---------------
@@ -40,9 +40,9 @@ Config service
 
 In-app default values are set using a JSON object using the `setDefaults` method.
 Then, you can override only those values that you need to change from the
-Firebase console. This lets you use Remote Config for any default value that you
-might want to override in the future, without the need to set all of those
-values in the Firebase console.
+Firebase console or the REST API. This lets you use Remote Config for any default
+value that you might want to override in the future, without the need to set all of
+those values in the Firebase console.
 
 ### Fetch values from the Remote Config service ###
 
@@ -66,9 +66,8 @@ using a small (even 0) value for `minimumFetchIntervalInSeconds`, you can make m
 more requests per hour, so you can test your app with different Remote Config
 parameter values during development.
 
-- To learn more about fetching data from remote config, see the Remote Config
-  Frequently Asked Question (FAQ) on
-  [fetching and activating parameter values](https://firebase.google.com/support/faq#remote-config-values).
+- To learn more about fetching data from remote config, see [the Firebase Remote Config
+  loading strategies](https://firebase.google.com/docs/remote-config/loading).
 - To learn about parameters and conditions that you can use to change the
   behavior and appearance of your app for segments of your userbase, see
   [Remote Config Parameters and Conditions](https://firebase.google.com/docs/remote-config/parameters).
