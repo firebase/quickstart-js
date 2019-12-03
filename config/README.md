@@ -66,7 +66,7 @@ using a small (even 0) value for `minimumFetchIntervalInSeconds`, you can make m
 more requests per hour, so you can test your app with different Remote Config
 parameter values during development.
 
-- To learn more about fetching data from remote config, see [the Firebase Remote Config
+- To learn more about fetching data from remote config, see [Firebase Remote Config
   loading strategies](https://firebase.google.com/docs/remote-config/loading).
 - To learn about parameters and conditions that you can use to change the
   behavior and appearance of your app for segments of your userbase, see
