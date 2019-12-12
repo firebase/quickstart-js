@@ -99,7 +99,7 @@ limitations under the License.
     // [END get_config_values]
 
     const welcome_element = document.getElementById('welcome_message');
-    welcome_element.innerText = val.value + ' (' + val.source + ')';
+    welcome_element.innerText = val._value + ' (' + val._source + ')';
   }
 
   function fetchConfig() {
