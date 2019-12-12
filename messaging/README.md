@@ -23,6 +23,8 @@ Getting Started
 1. Click **REQUEST PERMISSION** button to request permission for the app to send notifications to the browser.
 1. Use the generated Instance ID token (IID Token) to send an HTTP request to FCM that delivers the message to the web application, inserting appropriate values for [`YOUR-SERVER-KEY`](https://console.firebase.google.com/project/_/settings/cloudmessaging) and `YOUR-IID-TOKEN`.
 
+NOTE: If your payload has a `notification` object, `setBackgroundMessageHandler` will not trigger. Read [here](https://firebase.google.com/docs/cloud-messaging/js/receive) for more information.
+
 ### HTTP
 ```
 POST /fcm/send HTTP/1.1
