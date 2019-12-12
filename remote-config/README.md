@@ -17,17 +17,18 @@ see
 Getting started
 ---------------
 
-1. [Add Firebase to your Web Project](https://firebase.google.com/docs/web/setup).
-2. [Create a Remote Config project for the quickstart sample](https://firebase.google.com/docs/remote-config/android#create_a_product_name_project_for_the_quickstart_sample),
-  defining the parameter values and parameter keys used by the sample.
-    `welcome_message`
-3. Add the config object to index.html. See TODO in index.html.
-3. Run the sample with the server of your choice. For example, for Python's
-   SimpleHttpServer run `python -m SimpleHTTPServer 8080` from the sample
-   directory.
-4. Change the parameter value in the Firebase Console (the value of
-  `welcome_message`).
-5. Tap **Fetch Remote Welcome** in the app to fetch new parameter values and see
+1. Follow step 1 and 2 [here](https://firebase.google.com/docs/web/setup#register-app) to register a web app with your Firebase project
+1. Set up Remote Config for your Firebase project:
+    1. In the Firebase console, open your project
+    1. Select Remote Config from the menu to view the Remote Config dashboard
+    1. Define a parameter with key `welcome_message` and default value `Hello World`
+    1. Click "Add parameter", and then click "Publish changes"
+1. You must have the Firebase CLI installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
+1. On the command line run `firebase use --add` and select the Firebase project you have created
+1. On the command line run `firebase serve` using the Firebase CLI tool to serve your web app
+1. Change the parameter value in the Firebase Console (the value of
+  `welcome_message`), and then click "Publish changes"
+1. Tap **Fetch Remote Welcome** in the app to fetch new parameter values and see
   the resulting change in the app.
 
 Best practices
