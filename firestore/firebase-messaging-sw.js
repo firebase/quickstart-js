@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-importScripts('/__/firebase/7.8.1/firebase-app.js');
-importScripts('/__/firebase/7.8.1/firebase-messaging.js');
+importScripts('/__/firebase/7.8.2/firebase-app.js');
+importScripts('/__/firebase/7.8.2/firebase-messaging.js');
 importScripts('/__/firebase/init.js');
 
 firebase.messaging();
