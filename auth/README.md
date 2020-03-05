@@ -14,7 +14,7 @@ The Firebase Auth quickstart demonstrates several methods for signing in:
  - The [Firebase Anonymous auth quickstart](anon.html) demonstrates how to authenticate to Firebase anonymously.
  - The [Firebase custom auth quickstart](customauth.html) demonstrates how to authenticate to Firebase with a user who has been authenticated from your own pre-existing authentication system. This is done by generating a token in a specific format, which is signed using the private key from a service account downloaded from the Google Developer Console. This token can then be passed to your client application which uses it to authenticate to Firebase. We provide an [example token generator](exampletokengenerator/auth.html) for demonstration purposes. Note: Generating tokens in production should be done server side.
 
-We also provide the [code for a Chrome Extension](chromeextension) showing how to setup and authorize Firebase in a Chrome extension.
+We also provide the [code for a Chrome Extension](chromextension) showing how to setup and authorize Firebase in a Chrome extension.
 
 Introduction
 ------------
