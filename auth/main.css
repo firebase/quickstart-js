@@ -84,6 +84,7 @@ h3 {
 #sign-in-card {
   z-index: 2;
 }
+<<<<<<< HEAD
 .recaptcha-container {
   transform: scale(0.9);
   transform-origin:0 0;
@@ -160,6 +161,8 @@ h3 {
   50% { color: transparent; }
   99% { color: #ff0000; }
   100% { color: #ff0000; }
+=======
+>>>>>>> 212931e9b3cb654296202a9b04f6d4d013bf4d8c
 #quickstart-tenant-card {
   min-height: 500px;
 }

@@ -3,8 +3,6 @@ Firebase Auth w/ Google Sign-In in Chrome Extensions
 
 This sample demonstrates how to authorize a user with Firebase in a Chrome extension using Google Sign-In and setup the Chrome extension to allow the use of the Realtime Database and Firebase Storage.
 
-Feel free to try out a demo version of the Chrome Extension directly: https://chrome.google.com/webstore/detail/lpgchdfbjddonaolofeijjackhnhnlla
-
 Introduction
 ------------
 
@@ -78,11 +76,11 @@ The keys to using Firebase in a Chrome extension are:
    - Create a new OAuth Client ID in your project's [Developers Console](https://console.developers.google.com/apis/credentials/oauthclient?project=_), Select **Chrome App** and enter your Chrome Extension/App ID.
    - In your project's Firebase Console, enable the **Google** authentication method in the **Auth** section > **SIGN IN METHOD** tab.
    - Add the Client ID you created to the whitelist using the **Whitelist client IDs from external projects (optional)**
- - Use the chrome.identity API to get a Google OAuth token as described in https://developer.chrome.com/apps/app_identity and then use this token to authorize Firebase using [Auth.signInAndRetrieveDataWithCredential()](https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signInAndRetrieveDataWithCredential):
+ - Use the chrome.identity API to get a Google OAuth token as described in https://developer.chrome.com/apps/app_identity and then use this token to authorize Firebase using [Auth.signInWithCredential()](https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signInWithCredential):
 
  ```javascript
  var credential = firebase.auth.GoogleAuthProvider.credential(null, token);
- firebase.auth().signInAndRetrieveDataWithCredential(credential);
+ firebase.auth().signInWithCredential(credential);
  ```
 
  - Add the following content security policy to your `manifest.json` to allow importing the Firebase SDK and accessing the Realtime Database as well as Firebase Storage:

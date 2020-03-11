@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2019 Google Inc.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Remote Config Example</title>
+
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+  <!-- Header section containing title -->
+  <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+      <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop">
+        <h3>Firebase Remote Config</h3>
+      </div>
+    </div>
+  </header>
+
+  <main class="mdl-layout__content mdl-color--grey-100">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+
+      <!-- Container for the Table of content -->
+      <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+          <!-- div to display button to fetch latest config -->
+          <div id="fetch_div">
+            <h4>Welcome Message:</h4>
+            <p id="welcome_message">loading...</p>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                    onclick="fetchConfig()">Fetch Remote Welcome</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Import and configure the Firebase SDK -->
+<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+<!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+<script src="/__/firebase/7.10.0/firebase-app.js"></script>
+<script src="/__/firebase/7.10.0/firebase-remote-config.js"></script>
+<script src="/__/firebase/init.js"></script>
+<script>
+  // [START get_remote_config_instance]
+  const remoteConfig = firebase.remoteConfig();
+  // [END get_remote_config_instance]
+
+  // [START enable_dev_mode]
+  remoteConfig.settings = {
+    minimumFetchIntervalMillis: 3600000,
+  };
+  // [END enable_dev_mode]
+  // [START set_default_values]
+  remoteConfig.defaultConfig = ({
+    'welcome_message': 'Welcome',
+  });
+  // [END set_default_values]
+
+  remoteConfig.ensureInitialized()
+  .then(() => {
+    console.log('Firebase Remote Config is initialized');
+    showWelcomeMessage();
+  })
+  .catch((err) => {
+    console.error('Firebase Remote Config failed to initialize', err);
+  });
+
+  function showWelcomeMessage() {
+    // If you are only interested in the value then you can get it
+    // directly using one of the typed getters:
+    //
+    // const msg = remoteConfig.getString('welcome_message');
+
+    // To get the value and source of the parameter use `getValue`.
+    // [START get_config_values]
+    const val = remoteConfig.getValue('welcome_message');
+    // [END get_config_values]
+
+    const welcome_element = document.getElementById('welcome_message');
+    welcome_element.innerText = val._value + ' (' + val._source + ')';
+  }
+
+  function fetchConfig() {
+    const welcome_element = document.getElementById('welcome_message');
+    welcome_element.innerText = 'loading...';
+    // [START fetch_config_with_callback]
+    remoteConfig.fetchAndActivate()
+      .then(() => {
+        showWelcomeMessage();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    // [END fetch_config_with_callback]
+  }
+</script>
+</body>
+</html>

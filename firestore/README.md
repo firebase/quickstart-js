@@ -2,7 +2,7 @@
 
 ## Introduction
 
-FriendlyEats is a restaurant recommendation app built on Cloud Firestore.
+FriendlyEats is a restaurant recommendation app built on Cloud Firestore. It has offline persistence [enabled](https://github.com/firebase/quickstart-js/blob/a4919505778ae280613662b5e0c64a0127a9d4c9/firestore/scripts/FriendlyEats.js#L33).
 For more information about Firestore visit [the docs][firestore-docs].
 
 [firestore-docs]: https://firebase.google.com/docs/firestore/
@@ -13,7 +13,8 @@ Follow these steps to setup and run the quickstart:
 
  1. Create a Firebase project in the [Firebase Console](https://console.firebase.google.com).
  1. In the Firebase console, enable Anonymous authentication on your project by doing: **Authentication > SIGN-IN METHOD > Anonymous > Enable > SAVE**
- 1. In the Firebase console, enable Cloud Firestore on your project by doing: **Database > TRY FIRESTORE BETA > ENABLE**
+ 1. In the Firebase console, enable Cloud Firestore on your project by doing: **Database > Create Database**
+ 1. Select testing mode for the security rules
  1. Copy/Download this repo and open this folder in a Terminal.
  1. Install the Firebase CLI if you do not have it installed on your machine:
     ```bash

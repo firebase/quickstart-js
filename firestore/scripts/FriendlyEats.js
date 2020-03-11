@@ -18,7 +18,7 @@
 /**
  * Initializes the FriendlyEats app.
  */
-function FriendlyEats() {
+function FriendlyEats() { // eslint-disable-line no-redeclare
   this.filters = {
     city: '',
     price: '',
@@ -29,14 +29,19 @@ function FriendlyEats() {
   this.dialogs = {};
 
   var that = this;
-  firebase.auth().signInAnonymously().then(function() {
-    that.initTemplates();
-    that.initRouter();
-    that.initReviewDialog();
-    that.initFilterDialog();
-  }).catch(function(err) {
-    console.log(err);
-  });
+
+  firebase.firestore().enablePersistence()
+    .then(function() {
+      return firebase.auth().signInAnonymously();
+    })
+    .then(function() {
+      that.initTemplates();
+      that.initRouter();
+      that.initReviewDialog();
+      that.initFilterDialog();
+    }).catch(function(err) {
+      console.log(err);
+    });
 }
 
 /**
