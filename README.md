@@ -24,6 +24,7 @@ Samples are organized into the following subdirectories and include README.md fi
    - Microsoft auth using Firebase redirect
    - GitHub auth using Firebase popup
    - GitHub auth using Firebase redirect
+   - Multi-factor authentication with SMS(currently only available for [Google Cloud Identity Platform](https://cloud.google.com/identity-platform/docs/web/mfa) projects)
  - [Database](database/README.md)
    - Simple Social Blogging app
  - [Firestore](firestore/README.md)
