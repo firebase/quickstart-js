@@ -24,6 +24,7 @@ var mfaResolver = null;
 var phoneVerificationId = null;
 var recaptchaVerifier = null;
 var recaptchaWidgetId = null;
+var grecaptcha;
 
 /**
  * Signs in the user with email and password.
@@ -264,7 +265,7 @@ function onEnrollSendCode(e) {
         };
         // Send code for enrollment.
         return provider.verifyPhoneNumber(
-            phoneInfoOptions, recaptchaVerifier);
+          phoneInfoOptions, recaptchaVerifier);
       }).then(function(verificationId) {
         phoneVerificationId = verificationId;
         // Update the multi-factor dialog to verify the sent code.
@@ -285,7 +286,7 @@ function onEnrollVerifyCode(e) {
   if (firebase.auth().currentUser && phoneVerificationId) {
     var code = document.getElementById('enroll-verification-code').value;
     var credential = firebase.auth.PhoneAuthProvider.credential(
-        phoneVerificationId, code);
+      phoneVerificationId, code);
     var multiFactorAssertion =
         firebase.auth.PhoneMultiFactorGenerator.assertion(credential);
     var displayName = document.getElementById('enroll-display-name').value || undefined;
@@ -336,7 +337,7 @@ function onSignInVerifyCode(e) {
   if (mfaResolver && phoneVerificationId) {
     var code = document.getElementById('sign-in-verification-code').value;
     var credential = firebase.auth.PhoneAuthProvider.credential(
-        phoneVerificationId, code);
+      phoneVerificationId, code);
     var multiFactorAssertion =
         firebase.auth.PhoneMultiFactorGenerator.assertion(credential);
     mfaResolver.resolveSignIn(multiFactorAssertion).then(function () {
@@ -382,7 +383,7 @@ function onCancel(e) {
  * @return {boolean} Whether the phone number is valid.
  */
 function isPhoneNumberValid() {
-  var pattern = /^\+[0-9\s\-\(\)]+$/;
+  var pattern = /^\+[0-9\s\-()]+$/;
   var phoneNumber = document.getElementById('phone-number').value;
   return phoneNumber.search(pattern) !== -1;
 }
