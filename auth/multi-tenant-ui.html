@@ -37,15 +37,15 @@ limitations under the License.
     /**
      * The configuration object for each tenant project keyed by tenant ID.
      * The tenant name will be displayed on the sign-in buttons. uiConfig will
-     * be used to config FirebaseUI. You can specify the provider you'd like 
-     * to enable for each tenant. 
-     * 
-     * You'll need to substitute the `TENANT_ID` with the tenant IDs of your 
+     * be used to config FirebaseUI. You can specify the provider you'd like
+     * to enable for each tenant.
+     *
+     * You'll need to substitute the `TENANT_ID` with the tenant IDs of your
      * project and `tenantName` with the display names you'd like to use for
      * the tenant selection buttons.
      *
-     * For SAML, OIDC and generic OAuth providers, you'll need to configure 
-     * the `provider`, `providerName`, `buttonColor` and `iconUrl` in 
+     * For SAML, OIDC and generic OAuth providers, you'll need to configure
+     * the `provider`, `providerName`, `buttonColor` and `iconUrl` in
      * `signInOptions`.
      */
     var TENANT_CONFIG = {
@@ -99,7 +99,7 @@ limitations under the License.
         var tenantId = key;
         var tenantName = TENANT_CONFIG[key].tenantName;
         var uiConfig = TENANT_CONFIG[key].uiConfig;
-        var button = document.createElement('button');  
+        var button = document.createElement('button');
         button.classList = 'mdl-button mdl-js-button mdl-button--raised';
         button.id = tenantId;
         button.textContent = tenantName;
@@ -130,7 +130,7 @@ limitations under the License.
       ui = new firebaseui.auth.AuthUI(firebase.auth());
       // Dynamically initialize the tenant sign-in buttons.
       initializeSignInButtons();
-      
+
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
@@ -194,7 +194,7 @@ limitations under the License.
         <!--FirebaseUI container dialog -->
         <dialog id="tenant-ui-modal" class="mdl-dialog">
           <i id="close-modal-icon" class="material-icons close-icon">cancel</i>
-          <h4 id="quickstart-tenant-modal-title" class="mdl-card__supporting-text"></h4> 
+          <h4 id="quickstart-tenant-modal-title" class="mdl-card__supporting-text"></h4>
           <div id="firebaseui-auth-container"></div>
         </dialog>
       </div>

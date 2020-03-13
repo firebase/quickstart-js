@@ -11,6 +11,7 @@ The Firebase Auth quickstart demonstrates several methods for signing in:
  - The Firebase Twitter Login quickstarts demonstrate using a Twitter account to authenticate to Firebase using two different techniques: with a [popup](twitter-popup.html) and a [redirect](twitter-redirect.html).
   - The Firebase Microsoft Login quickstarts demonstrate using a Microsoft account to authenticate to Firebase using two different techniques: with a [popup](microsoft-popup.html) and a [redirect](microsoft-redirect.html).
  - The Firebase GitHub Login quickstarts demonstrate using a GitHub account to authenticate to Firebase using two different techniques: with a [popup](github-popup.html) and a [redirect](github-redirect.html).
+ - The [multi-factor authentication quickstart](mfa-password.html) demonstrates using email & password as the first factor and phone number as the second factor to authenticate - you can both enroll for the second factor and sign in with the second factor. Note: Multi-factor authentication with SMS is currently only available for [Google Cloud Identity Platform](https://cloud.google.com/identity-platform/docs/web/mfa) projects.
  - The [Firebase Anonymous auth quickstart](anon.html) demonstrates how to authenticate to Firebase anonymously.
  - The [Firebase custom auth quickstart](customauth.html) demonstrates how to authenticate to Firebase with a user who has been authenticated from your own pre-existing authentication system. This is done by generating a token in a specific format, which is signed using the private key from a service account downloaded from the Google Developer Console. This token can then be passed to your client application which uses it to authenticate to Firebase. We provide an [example token generator](exampletokengenerator/auth.html) for demonstration purposes. Note: Generating tokens in production should be done server side.
 
@@ -30,13 +31,13 @@ Getting Started
      - For **Custom Auth**, generate a Service Account credentials in your [Firebase Console > Project Settings > Service Accounts](https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk), and click on **GENERATE NEW PRIVATE KEYS**. You will need it in the [example token generator](exampletokengenerator/auth.html).
      - For **Facebook**, **Twitter** and **GitHub** you will need to create an application as a developer on their respective developer platform, whitelist `https://<project_id>.firebaseapp.com/__/auth/handler` for auth redirects and enable and setup the app's credentials in the **Firebase Console > Authentication > SIGN-IN METHOD**.
  1. You must have the [Firebase CLI](https://firebase.google.com/docs/cli/) installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
- 1. On the command line, `cd` into the `quickstart-js/auth` subdirectory. 
+ 1. On the command line, `cd` into the `quickstart-js/auth` subdirectory.
  1. Run `firebase use --add` and select your Firebase project.
 
 To run the sample app locally during development:
- 1. Run `firebase serve`. 
+ 1. Run `firebase serve`.
     This will start a server locally that serves `auth/index.html` on `http://localhost:<port>`. Check the output of the command for the exact port.
- 1. Navigate in your browser to the URL output by the `firebase serve` command. 
+ 1. Navigate in your browser to the URL output by the `firebase serve` command.
 
 To deploy the sample app to production:
  1. Run `firebase deploy`.
