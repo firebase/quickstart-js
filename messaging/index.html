@@ -73,11 +73,24 @@ limitations under the License.
 </div>
 
 <!-- Import and configure the Firebase SDK -->
-<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
-<!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
-<script src="/__/firebase/7.14.2/firebase-app.js"></script>
-<script src="/__/firebase/7.14.2/firebase-messaging.js"></script>
-<script src="/__/firebase/init.js"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-messaging.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDRpp5p8ZubZJ15xkeuDKxG9UL7NoRI64c",
+    authDomain: "pulse-dev-265816.firebaseapp.com",
+    databaseURL: "https://pulse-dev-265816.firebaseio.com",
+    projectId: "pulse-dev-265816",
+    storageBucket: "pulse-dev-265816.appspot.com",
+    messagingSenderId: "551532418776",
+    appId: "1:551532418776:web:fdbc5d66e6ba4f3c0ce9ad"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
 
 <script>
   // [START get_messaging_object]
@@ -86,7 +99,8 @@ limitations under the License.
   // [END get_messaging_object]
   // [START set_public_vapid_key]
   // Add the public key generated from the console here.
-  messaging.usePublicVapidKey('<YOUR_PUBLIC_VAPID_KEY_HERE>');
+  // PULSE DEV VAPID KEY!
+  messaging.usePublicVapidKey('BDEY-KpaWHEPvhc9XxV5cWFDUuQMq37Dy9RcOaseMr7ZneO9UVpCnBNreFwKaaPRfo-L09R-6awQto4p2gtsL5Q');
   // [END set_public_vapid_key]
 
   // IDs of divs that display Instance ID token UI or request permission UI.
