@@ -1,36 +1,23 @@
 // Import and configure the Firebase SDK
-// These scripts are made available when the app is served or deployed on Firebase Hosting
-// If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup
-importScripts('/__/firebase/7.14.2/firebase-app.js');
-importScripts('/__/firebase/7.14.2/firebase-messaging.js');
-importScripts('/__/firebase/init.js');
+// [START initialize_firebase_in_sw]
+// Give the service worker access to Firebase Messaging.
+// Note that you can only use Firebase Messaging here, other Firebase libraries
+// are not available in the service worker.
+importScripts('https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/7.14.2/firebase-messaging.js');
 
-const messaging = firebase.messaging();
-
-/**
- * Here is is the code snippet to initialize Firebase Messaging in the Service
- * Worker when your app is not hosted on Firebase Hosting.
-
- // [START initialize_firebase_in_sw]
- // Give the service worker access to Firebase Messaging.
- // Note that you can only use Firebase Messaging here, other Firebase libraries
- // are not available in the service worker.
- importScripts('https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js');
- importScripts('https://www.gstatic.com/firebasejs/7.14.2/firebase-messaging.js');
-
- // Initialize the Firebase app in the service worker by passing in
- // your app's Firebase config object.
- // https://firebase.google.com/docs/web/setup#config-object
- firebase.initializeApp({
-   apiKey: 'api-key',
-   authDomain: 'project-id.firebaseapp.com',
-   databaseURL: 'https://project-id.firebaseio.com',
-   projectId: 'project-id',
-   storageBucket: 'project-id.appspot.com',
-   messagingSenderId: 'sender-id',
-   appId: 'app-id',
-   measurementId: 'G-measurement-id',
- });
+// Initialize the Firebase app in the service worker by passing in
+// your app's Firebase config object.
+// https://firebase.google.com/docs/web/setup#config-object
+firebase.initializeApp({
+  apiKey: "AIzaSyDRpp5p8ZubZJ15xkeuDKxG9UL7NoRI64c",
+  authDomain: "pulse-dev-265816.firebaseapp.com",
+  databaseURL: "https://pulse-dev-265816.firebaseio.com",
+  projectId: "pulse-dev-265816",
+  storageBucket: "pulse-dev-265816.appspot.com",
+  messagingSenderId: "551532418776",
+  appId: "1:551532418776:web:fdbc5d66e6ba4f3c0ce9ad"
+});
 
  // Retrieve an instance of Firebase Messaging so that it can handle background
  // messages.
