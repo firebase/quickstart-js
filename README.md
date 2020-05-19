@@ -39,6 +39,11 @@ Samples are organized into the following subdirectories and include README.md fi
 ## How to make contributions?
 Please read and follow the steps in the [CONTRIBUTING.md](CONTRIBUTING.md)
 
+## Try Firebase Quickstarts
+You can try the Firebase quickstart samples in Gitpod, a one-click online IDE for GitHub:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/firebase/quickstart-js)
+
 ## License
 See [LICENSE](LICENSE)
 
