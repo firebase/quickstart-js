@@ -53,6 +53,8 @@ limitations under the License.
         firebase.auth().signInWithPopup(provider).then(function(result) {
           // This gives you a Microsoft Access Token. You can use it to access the Microsoft API.
           var token = result.credential.accessToken;
+          // You can also retrieve the OAuth ID token.
+          var idToken = result.credential.idToken;
           // The signed-in user info.
           var user = result.user;
           // [START_EXCLUDE]
