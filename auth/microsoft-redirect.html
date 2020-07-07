@@ -76,6 +76,8 @@ limitations under the License.
         if (result.credential) {
           // This gives you a Microsoft Access Token. You can use it to access the Microsoft API.
           var token = result.credential.accessToken;
+          // You can also retrieve the OAuth ID token.
+          var idToken = result.credential.idToken;
           // [START_EXCLUDE]
           document.getElementById('quickstart-oauthtoken').textContent = token;
         } else {
