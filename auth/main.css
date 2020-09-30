@@ -160,6 +160,7 @@ h3 {
   50% { color: transparent; }
   99% { color: #ff0000; }
   100% { color: #ff0000; }
+}
 #quickstart-tenant-card {
   min-height: 500px;
 }
