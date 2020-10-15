@@ -1,9 +1,5 @@
 {
   "globals": {
     "importScripts": true
-  },
-  "rules": {
-    "prettier/prettier": ["error", { "singleQuote": true }],
-    "quotes": ["error", "single"]
   }
 }
