@@ -184,7 +184,7 @@ limitations under the License.
   }
 
   function deleteToken() {
-    // Delete re token.
+    // Delete registraion token.
     // [START delete_token]
     messaging.getToken().then((currentToken) => {
       messaging.deleteToken(currentToken).then(() => {
