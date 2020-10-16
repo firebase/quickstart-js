@@ -1,5 +1,5 @@
 {
-  "globals": {
-      "importScripts": true
-  }
+    "globals": {
+        "importScripts": true
+    }
 }
