@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <!--
 Copyright (c) 2016 Google Inc.
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
 http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -84,35 +81,10 @@ limitations under the License.
   // Retrieve Firebase Messaging object.
   const messaging = firebase.messaging();
   // [END get_messaging_object]
-  // [START set_public_vapid_key]
-  // Add the public key generated from the console here.
-  messaging.usePublicVapidKey('<YOUR_PUBLIC_VAPID_KEY_HERE>');
-  // [END set_public_vapid_key]
 
   // IDs of divs that display Instance ID token UI or request permission UI.
   const tokenDivId = 'token_div';
   const permissionDivId = 'permission_div';
-
-  // [START refresh_token]
-  // Callback fired if Instance ID token is updated.
-  messaging.onTokenRefresh(() => {
-    messaging.getToken().then((refreshedToken) => {
-      console.log('Token refreshed.');
-      // Indicate that the new Instance ID token has not yet been sent to the
-      // app server.
-      setTokenSentToServer(false);
-      // Send Instance ID token to app server.
-      sendTokenToServer(refreshedToken);
-      // [START_EXCLUDE]
-      // Display new Instance ID token and clear UI of all previous messages.
-      resetUI();
-      // [END_EXCLUDE]
-    }).catch((err) => {
-      console.log('Unable to retrieve refreshed token ', err);
-      showToken('Unable to retrieve refreshed token ', err);
-    });
-  });
-  // [END refresh_token]
 
   // [START receive_message]
   // Handle incoming messages. Called when:
@@ -134,7 +106,7 @@ limitations under the License.
     // [START get_token]
     // Get Instance ID token. Initially this makes a network call, once retrieved
     // subsequent calls to getToken will return from cache.
-    messaging.getToken().then((currentToken) => {
+    messaging.getToken({vapidKey: '<YOUR_PUBLIC_VAPID_KEY_HERE>'}).then((currentToken) => {
       if (currentToken) {
         sendTokenToServer(currentToken);
         updateUIForPushEnabled(currentToken);
@@ -236,12 +208,12 @@ limitations under the License.
   // Add a message to the messages element.
   function appendMessage(payload) {
     const messagesElement = document.querySelector('#messages');
-    const dataHeaderELement = document.createElement('h5');
+    const dataHeaderElement = document.createElement('h5');
     const dataElement = document.createElement('pre');
     dataElement.style = 'overflow-x:hidden;';
-    dataHeaderELement.textContent = 'Received message:';
+    dataHeaderElement.textContent = 'Received message:';
     dataElement.textContent = JSON.stringify(payload, null, 2);
-    messagesElement.appendChild(dataHeaderELement);
+    messagesElement.appendChild(dataHeaderElement);
     messagesElement.appendChild(dataElement);
   }
 
