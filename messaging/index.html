@@ -44,9 +44,9 @@ limitations under the License.
       <!-- Container for the Table of content -->
       <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          <!-- div to display the generated Instance ID token -->
+          <!-- div to display the generated registration token -->
           <div id="token_div" style="display: none;">
-            <h4>Instance ID Token</h4>
+            <h4>Registration Token</h4>
             <p id="token" style="word-break: break-all;"></p>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                     onclick="deleteToken()">Delete Token</button>
@@ -82,7 +82,7 @@ limitations under the License.
   const messaging = firebase.messaging();
   // [END get_messaging_object]
 
-  // IDs of divs that display Instance ID token UI or request permission UI.
+  // IDs of divs that display registration token UI or request permission UI.
   const tokenDivId = 'token_div';
   const permissionDivId = 'permission_div';
 
@@ -104,7 +104,7 @@ limitations under the License.
     clearMessages();
     showToken('loading...');
     // [START get_token]
-    // Get Instance ID token. Initially this makes a network call, once retrieved
+    // Get registration token. Initially this makes a network call, once retrieved
     // subsequent calls to getToken will return from cache.
     messaging.getToken({vapidKey: '<YOUR_PUBLIC_VAPID_KEY_HERE>'}).then((currentToken) => {
       if (currentToken) {
@@ -112,14 +112,14 @@ limitations under the License.
         updateUIForPushEnabled(currentToken);
       } else {
         // Show permission request.
-        console.log('No Instance ID token available. Request permission to generate one.');
+        console.log('No registration token available. Request permission to generate one.');
         // Show permission UI.
         updateUIForPushPermissionRequired();
         setTokenSentToServer(false);
       }
     }).catch((err) => {
       console.log('An error occurred while retrieving token. ', err);
-      showToken('Error retrieving Instance ID token. ', err);
+      showToken('Error retrieving registration token. ', err);
       setTokenSentToServer(false);
     });
     // [END get_token]
@@ -132,7 +132,7 @@ limitations under the License.
     tokenElement.textContent = currentToken;
   }
 
-  // Send the Instance ID token your application server, so that it can:
+  // Send the registration token your application server, so that it can:
   // - send messages back to this app
   // - subscribe/unsubscribe the token from topics
   function sendTokenToServer(currentToken) {
@@ -170,7 +170,7 @@ limitations under the License.
     Notification.requestPermission().then((permission) => {
       if (permission === 'granted') {
         console.log('Notification permission granted.');
-        // TODO(developer): Retrieve an Instance ID token for use with FCM.
+        // TODO(developer): Retrieve a registration token for use with FCM.
         // [START_EXCLUDE]
         // In many cases once an app has been granted notification permission,
         // it should update its UI reflecting this.
@@ -184,7 +184,7 @@ limitations under the License.
   }
 
   function deleteToken() {
-    // Delete Instance ID token.
+    // Delete re token.
     // [START delete_token]
     messaging.getToken().then((currentToken) => {
       messaging.deleteToken(currentToken).then(() => {
@@ -199,8 +199,8 @@ limitations under the License.
       });
       // [END delete_token]
     }).catch((err) => {
-      console.log('Error retrieving Instance ID token. ', err);
-      showToken('Error retrieving Instance ID token. ', err);
+      console.log('Error retrieving registration token. ', err);
+      showToken('Error retrieving registration token. ', err);
     });
 
   }
