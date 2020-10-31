@@ -144,7 +144,6 @@ limitations under the License.
       console.log('Token already sent to server so won\'t send it again ' +
           'unless it changes');
     }
-
   }
 
   function isTokenSentToServer() {
@@ -184,7 +183,7 @@ limitations under the License.
   }
 
   function deleteToken() {
-    // Delete registraion token.
+    // Delete registration token.
     // [START delete_token]
     messaging.getToken().then((currentToken) => {
       messaging.deleteToken(currentToken).then(() => {
@@ -202,7 +201,6 @@ limitations under the License.
       console.log('Error retrieving registration token. ', err);
       showToken('Error retrieving registration token. ', err);
     });
-
   }
 
   // Add a message to the messages element.
