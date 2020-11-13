@@ -41,9 +41,7 @@ limitations under the License.
      */
     function toggleSignIn() {
       if (firebase.auth().currentUser) {
-        // [START signout]
         firebase.auth().signOut();
-        // [END signout]
       } else {
         var token = document.getElementById('tokentext').value;
         if (token.length < 10) {
@@ -51,20 +49,16 @@ limitations under the License.
           return;
         }
         // Sign in with custom token generated following previous instructions.
-        // [START authwithtoken]
         firebase.auth().signInWithCustomToken(token).catch(function(error) {
           // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
-          // [START_EXCLUDE]
           if (errorCode === 'auth/invalid-custom-token') {
             alert('The token you provided is not valid.');
           } else {
             console.error(error);
           }
-          // [END_EXCLUDE]
         });
-        // [END authwithtoken]
       }
       document.getElementById('quickstart-sign-in').disabled = true;
     }
@@ -77,7 +71,6 @@ limitations under the License.
      */
     function initApp() {
       // Listening for auth state changes.
-      // [START authstatelistener]
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
@@ -88,24 +81,17 @@ limitations under the License.
           var isAnonymous = user.isAnonymous;
           var uid = user.uid;
           var providerData = user.providerData;
-          // [START_EXCLUDE]
           document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
           document.getElementById('quickstart-sign-in').textContent = 'Sign out';
           document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
-          // [END_EXCLUDE]
         } else {
           // User is signed out.
-          // [START_EXCLUDE]
           document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
           document.getElementById('quickstart-sign-in').textContent = 'Sign in';
           document.getElementById('quickstart-account-details').textContent = 'null';
-          // [END_EXCLUDE]
         }
-        // [START_EXCLUDE]
         document.getElementById('quickstart-sign-in').disabled = false;
-        // [END_EXCLUDE]
       });
-      // [END authstatelistener]
 
       document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
     }

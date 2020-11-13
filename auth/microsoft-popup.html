@@ -80,9 +80,7 @@ limitations under the License.
         });
         // [END signin]
       } else {
-        // [START signout]
         firebase.auth().signOut();
-        // [END signout]
       }
       // [START_EXCLUDE]
       document.getElementById('quickstart-sign-in').disabled = true;
@@ -97,7 +95,6 @@ limitations under the License.
      */
     function initApp() {
       // Listening for auth state changes.
-      // [START authstatelistener]
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in. Note that unlike other providers supported by Firebase Auth, Microsoft does
@@ -109,25 +106,18 @@ limitations under the License.
           var isAnonymous = user.isAnonymous;
           var uid = user.uid;
           var providerData = user.providerData;
-          // [START_EXCLUDE]
           document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
           document.getElementById('quickstart-sign-in').textContent = 'Log out';
           document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
-          // [END_EXCLUDE]
         } else {
           // User is signed out.
-          // [START_EXCLUDE]
           document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
           document.getElementById('quickstart-sign-in').textContent = 'Log in with Microsoft';
           document.getElementById('quickstart-account-details').textContent = 'null';
           document.getElementById('quickstart-oauthtoken').textContent = 'null';
-          // [END_EXCLUDE]
         }
-        // [START_EXCLUDE]
         document.getElementById('quickstart-sign-in').disabled = false;
-        // [END_EXCLUDE]
       });
-      // [END authstatelistener]
 
       document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
     }
