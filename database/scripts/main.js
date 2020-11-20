@@ -36,7 +36,6 @@ var listeningFirebaseRefs = [];
 /**
  * Saves a new post to the Firebase DB.
  */
-// [START write_fan_out]
 function writeNewPost(uid, username, picture, title, body) {
   // A post entry.
   var postData = {
@@ -58,12 +57,10 @@ function writeNewPost(uid, username, picture, title, body) {
 
   return firebase.database().ref().update(updates);
 }
-// [END write_fan_out]
 
 /**
  * Star/unstar post.
  */
-// [START post_stars_transaction]
 function toggleStar(postRef, uid) {
   postRef.transaction(function(post) {
     if (post) {
@@ -81,7 +78,6 @@ function toggleStar(postRef, uid) {
     return post;
   });
 }
-// [END post_stars_transaction]
 
 /**
  * Creates a post element.
@@ -139,7 +135,6 @@ function createPostElement(postId, title, text, author, authorId, authorPic) {
       (authorPic || './silhouette.jpg') + '")';
 
   // Listen for comments.
-  // [START child_event_listener_recycler]
   var commentsRef = firebase.database().ref('post-comments/' + postId);
   commentsRef.on('child_added', function(data) {
     addCommentElement(postElement, data.key, data.val().text, data.val().author);
@@ -152,15 +147,12 @@ function createPostElement(postId, title, text, author, authorId, authorPic) {
   commentsRef.on('child_removed', function(data) {
     deleteComment(postElement, data.key);
   });
-  // [END child_event_listener_recycler]
 
   // Listen for likes counts.
-  // [START post_value_event_listener]
   var starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
   starCountRef.on('value', function(snapshot) {
     updateStarCount(postElement, snapshot.val());
   });
-  // [END post_value_event_listener]
 
   // Listen for the starred status.
   var starredStatusRef = firebase.database().ref('posts/' + postId + '/stars/' + uid);
@@ -260,13 +252,9 @@ function deleteComment(postElement, id) {
  * Starts listening for new posts and populates posts lists.
  */
 function startDatabaseQueries() {
-  // [START my_top_posts_query]
   var myUserId = firebase.auth().currentUser.uid;
   var topUserPostsRef = firebase.database().ref('user-posts/' + myUserId).orderByChild('starCount');
-  // [END my_top_posts_query]
-  // [START recent_posts_query]
   var recentPostsRef = firebase.database().ref('posts').limitToLast(100);
-  // [END recent_posts_query]
   var userPostsRef = firebase.database().ref('user-posts/' + myUserId);
 
   var fetchPosts = function(postsRef, sectionElement) {
@@ -306,7 +294,6 @@ function startDatabaseQueries() {
 /**
  * Writes the user's data to the database.
  */
-// [START basic_write]
 function writeUserData(userId, name, email, imageUrl) {
   firebase.database().ref('users/' + userId).set({
     username: name,
@@ -314,7 +301,6 @@ function writeUserData(userId, name, email, imageUrl) {
     profile_picture : imageUrl
   });
 }
-// [END basic_write]
 
 /**
  * Cleanups the UI and removes all Firebase listeners.
