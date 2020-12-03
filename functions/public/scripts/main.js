@@ -46,7 +46,6 @@ FunctionsQuickstart.prototype.addNumbers = function() {
   var secondNumber = parseFloat(this.secondNumber.value);
   var addNumbersButton = this.addNumbersButton;
   addNumbersButton.disabled = true;
-  // [START callAddFunction]
   var sendNotification = firebase.functions().httpsCallable('addNumbers');
   sendNotification({firstNumber: firstNumber, secondNumber: secondNumber}).then(function(result) {
     console.log('Cloud Function called successfully.', result);
@@ -55,24 +54,19 @@ FunctionsQuickstart.prototype.addNumbers = function() {
     var secondNumber = result.data.secondNumber;
     var operationResult = result.data.operationResult;
     var operator = result.data.operator;
-    // [START_EXCLUDE]
     window.alert('Here is the result of the formula: ' + firstNumber + ' '
         + operator + ' ' + secondNumber + ' = ' + operationResult);
     addNumbersButton.disabled = false;
-    // [END_EXCLUDE]
   }).catch(function(error) {
     // Getting the Error details.
     var code = error.code;
     var message = error.message;
     var details = error.details;
-    // [START_EXCLUDE]
     console.error('There was an error when calling the Cloud Function', error);
     window.alert('There was an error when calling the Cloud Function:\n\nError Code: '
         + code + '\nError Message:' + message + '\nError Details:' + details);
     addNumbersButton.disabled = false;
-    // [END_EXCLUDE]
   });
-  // [END callAddFunction]
 };
 
 
@@ -82,35 +76,25 @@ FunctionsQuickstart.prototype.addMessage = function() {
   var messageText = messageTextInput.value;
   var addMessageButton = this.addMessageButton;
   addMessageButton.disabled = true;
-  // [START callAddMessageFunction]
-  // [START callAddMessageFunctionWithError]
   var addMessage = firebase.functions().httpsCallable('addMessage');
   addMessage({text: messageText}).then(function(result) {
     // Read result of the Cloud Function.
     var sanitizedMessage = result.data.text;
-    // [END callAddMessageFunctionWithError]
-    // [START_EXCLUDE silent]
     if (messageText !== sanitizedMessage) {
       window.alert('You were naughty. Your message was sanitized to:\n\n' + sanitizedMessage);
     }
     messageTextInput.value = '';
     addMessageButton.disabled = false;
-  // [START catchError]
   }).catch(function(error) {
     // Getting the Error details.
     var code = error.code;
     var message = error.message;
     var details = error.details;
-    // [START_EXCLUDE]
     console.error('There was an error when calling the Cloud Function', error);
     window.alert('There was an error when calling the Cloud Function:\n\nError Code: '
         + code + '\nError Message:' + message + '\nError Details:' + details);
     addMessageButton.disabled = false;
-    // [END_EXCLUDE]
-    // [END_EXCLUDE]
   });
-  // [END catchError]
-  // [END callAddMessageFunction]
 };
 
 // Start the Firebase signs-in flow via Google account.
