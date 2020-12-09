@@ -63,20 +63,15 @@ limitations under the License.
 <script src="/__/firebase/8.1.2/firebase-remote-config.js"></script>
 <script src="/__/firebase/init.js"></script>
 <script>
-  // [START get_remote_config_instance]
   const remoteConfig = firebase.remoteConfig();
-  // [END get_remote_config_instance]
 
-  // [START enable_dev_mode]
   remoteConfig.settings = {
     minimumFetchIntervalMillis: 3600000,
   };
-  // [END enable_dev_mode]
-  // [START set_default_values]
+
   remoteConfig.defaultConfig = ({
     'welcome_message': 'Welcome',
   });
-  // [END set_default_values]
 
   remoteConfig.ensureInitialized()
   .then(() => {
@@ -94,9 +89,7 @@ limitations under the License.
     // const msg = remoteConfig.getString('welcome_message');
 
     // To get the value and source of the parameter use `getValue`.
-    // [START get_config_values]
     const val = remoteConfig.getValue('welcome_message');
-    // [END get_config_values]
 
     const welcome_element = document.getElementById('welcome_message');
     welcome_element.innerText = val._value + ' (' + val._source + ')';
@@ -105,7 +98,6 @@ limitations under the License.
   function fetchConfig() {
     const welcome_element = document.getElementById('welcome_message');
     welcome_element.innerText = 'loading...';
-    // [START fetch_config_with_callback]
     remoteConfig.fetchAndActivate()
       .then(() => {
         showWelcomeMessage();
@@ -113,7 +105,6 @@ limitations under the License.
       .catch((err) => {
         console.error(err);
       });
-    // [END fetch_config_with_callback]
   }
 </script>
 </body>
