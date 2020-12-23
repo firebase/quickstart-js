@@ -44,19 +44,13 @@ limitations under the License.
       /**
        * Function called when clicking the Login/Logout button.
        */
-      // [START buttoncallback]
       function toggleSignIn() {
         if (!firebase.auth().currentUser) {
-          // [START createprovider]
           var provider = new firebase.auth.OAuthProvider('apple.com');
-          // [END createprovider]
 
-          // [START addscopes]
           provider.addScope('email');
           provider.addScope('name');
-          // [END addscopes]
 
-          // [START signin]
           firebase
             .auth()
             .signInWithPopup(provider)
@@ -68,11 +62,9 @@ limitations under the License.
               var accessToken = result.credential.accessToken;
               var idToken = result.credential.idToken;
 
-              // [START_EXCLUDE]
               document.getElementById(
                 'quickstart-oauthtoken'
               ).textContent = idToken;
-              // [END_EXCLUDE]
             })
             .catch(function(error) {
               // Handle Errors here.
@@ -82,7 +74,6 @@ limitations under the License.
               var email = error.email;
               // The firebase.auth.AuthCredential type that was used.
               var credential = error.credential;
-              // [START_EXCLUDE]
               if (
                 errorCode === 'auth/account-exists-with-different-credential'
               ) {
@@ -94,17 +85,12 @@ limitations under the License.
               } else {
                 console.error(error);
               }
-              // [END_EXCLUDE]
             });
-          // [END signin]
         } else {
           firebase.auth().signOut();
         }
-        // [START_EXCLUDE]
         document.getElementById('quickstart-sign-in').disabled = true;
-        // [END_EXCLUDE]
       }
-      // [END buttoncallback]
 
       /**
        * initApp handles setting up UI event listeners and registering Firebase auth listeners:

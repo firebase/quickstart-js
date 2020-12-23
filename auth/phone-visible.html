@@ -144,29 +144,21 @@ limitations under the License.
     document.getElementById('verification-code-form').addEventListener('submit', onVerifyCodeSubmit);
     document.getElementById('cancel-verify-code-button').addEventListener('click', cancelVerification);
 
-    // [START appVerifier]
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
       'size': 'normal',
       'callback': function(response) {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // [START_EXCLUDE]
         updateSignInButtonUI();
-        // [END_EXCLUDE]
       },
       'expired-callback': function() {
         // Response expired. Ask user to solve reCAPTCHA again.
-        // [START_EXCLUDE]
         updateSignInButtonUI();
-        // [END_EXCLUDE]
       }
     });
-    // [END appVerifier]
 
-    // [START renderCaptcha]
     recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
-    // [END renderCaptcha]
   };
 
   /**
@@ -177,7 +169,6 @@ limitations under the License.
     if (isCaptchaOK() && isPhoneNumberValid()) {
       window.signingIn = true;
       updateSignInButtonUI();
-      // [START signin]
       var phoneNumber = getPhoneNumberFromUserInput();
       var appVerifier = window.recaptchaVerifier;
       firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
@@ -185,25 +176,20 @@ limitations under the License.
             // SMS sent. Prompt user to type the code from the message, then sign the
             // user in with confirmationResult.confirm(code).
             window.confirmationResult = confirmationResult;
-            // [START_EXCLUDE silent]
             window.signingIn = false;
             updateSignInButtonUI();
             updateVerificationCodeFormUI();
             updateVerifyCodeButtonUI();
             updateSignInFormUI();
-            // [END_EXCLUDE]
           }).catch(function (error) {
             // Error; SMS not sent
-            // [START_EXCLUDE]
             console.error('Error during signInWithPhoneNumber', error);
             window.alert('Error during signInWithPhoneNumber:\n\n'
                 + error.code + '\n\n' + error.message);
             window.signingIn = false;
             updateSignInFormUI();
             updateSignInButtonUI();
-            // [END_EXCLUDE]
           });
-      // [END signin]
     }
   }
 
@@ -215,28 +201,22 @@ limitations under the License.
     if (!!getCodeFromUserInput()) {
       window.verifyingCode = true;
       updateVerifyCodeButtonUI();
-      // [START verifyCode]
       var code = getCodeFromUserInput();
       confirmationResult.confirm(code).then(function (result) {
         // User signed in successfully.
         var user = result.user;
-        // [START_EXCLUDE]
         window.verifyingCode = false;
         window.confirmationResult = null;
         updateVerificationCodeFormUI();
-        // [END_EXCLUDE]
       }).catch(function (error) {
         // User couldn't sign in (bad verification code?)
-        // [START_EXCLUDE]
         console.error('Error while checking the verification code', error);
         window.alert('Error while checking the verification code:\n\n'
             + error.code + '\n\n' + error.message);
         window.verifyingCode = false;
         updateSignInButtonUI();
         updateVerifyCodeButtonUI();
-        // [END_EXCLUDE]
       });
-      // [END verifyCode]
     }
   }
 
@@ -286,9 +266,7 @@ limitations under the License.
   function isCaptchaOK() {
     if (typeof grecaptcha !== 'undefined'
         && typeof window.recaptchaWidgetId !== 'undefined') {
-      // [START getRecaptchaResponse]
       var recaptchaResponse = grecaptcha.getResponse(window.recaptchaWidgetId);
-      // [END getRecaptchaResponse]
       return recaptchaResponse !== '';
     }
     return false;

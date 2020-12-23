@@ -140,7 +140,6 @@ limitations under the License.
     document.getElementById('verification-code-form').addEventListener('submit', onVerifyCodeSubmit);
     document.getElementById('cancel-verify-code-button').addEventListener('click', cancelVerification);
 
-    // [START appVerifier]
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
       'size': 'invisible',
       'callback': function(response) {
@@ -148,7 +147,6 @@ limitations under the License.
         onSignInSubmit();
       }
     });
-    // [END appVerifier]
 
     recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;

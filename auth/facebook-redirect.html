@@ -39,26 +39,16 @@ limitations under the License.
     /**
      * Function called when clicking the Login/Logout button.
      */
-    // [START buttoncallback]
     function toggleSignIn() {
       if (!firebase.auth().currentUser) {
-        // [START createprovider]
         var provider = new firebase.auth.FacebookAuthProvider();
-        // [END createprovider]
-        // [START addscopes]
         provider.addScope('user_likes');
-        // [END addscopes]
-        // [START signin]
         firebase.auth().signInWithRedirect(provider);
-        // [END signin]
       } else {
         firebase.auth().signOut();
       }
-      // [START_EXCLUDE]
       document.getElementById('quickstart-sign-in').disabled = true;
-      // [END_EXCLUDE]
     }
-    // [END buttoncallback]
 
     /**
      * initApp handles setting up UI event listeners and registering Firebase auth listeners:
@@ -69,16 +59,13 @@ limitations under the License.
      */
     function initApp() {
       // Result from Redirect auth flow.
-      // [START getidptoken]
       firebase.auth().getRedirectResult().then(function(result) {
         if (result.credential) {
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
           var token = result.credential.accessToken;
-          // [START_EXCLUDE]
           document.getElementById('quickstart-oauthtoken').textContent = token;
         } else {
           document.getElementById('quickstart-oauthtoken').textContent = 'null';
-          // [END_EXCLUDE]
         }
         // The signed-in user info.
         var user = result.user;
@@ -90,7 +77,6 @@ limitations under the License.
         var email = error.email;
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
-        // [START_EXCLUDE]
         if (errorCode === 'auth/account-exists-with-different-credential') {
           alert('You have already signed up with a different auth provider for that email.');
           // If you are using multiple auth providers on your app you should handle linking
@@ -98,9 +84,7 @@ limitations under the License.
         } else {
           console.error(error);
         }
-        // [END_EXCLUDE]
       });
-      // [END getidptoken]
 
       // Listening for auth state changes.
       firebase.auth().onAuthStateChanged(function(user) {
