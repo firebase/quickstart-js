@@ -68,9 +68,7 @@ limitations under the License.
     document.getElementById('phone-number').addEventListener('keyup', updateSignInButtonUI);
     document.getElementById('phone-number').addEventListener('change', updateSignInButtonUI);
 
-    // [START appVerifier]
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-    // [END appVerifier]
   };
 
   /**
