@@ -16,7 +16,7 @@
 'use strict';
 
 /**
- * Adds a set of mock Restaurants to the Cloud Firestore.
+ * Adds a set of mock Restaurants to the Firestore.
  */
 FriendlyEats.prototype.addMockRestaurants = function() {
   var promises = [];
