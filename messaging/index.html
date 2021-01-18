@@ -77,33 +77,26 @@ limitations under the License.
 <script src="/__/firebase/init.js"></script>
 
 <script>
-  // [START get_messaging_object]
   // Retrieve Firebase Messaging object.
   const messaging = firebase.messaging();
-  // [END get_messaging_object]
 
   // IDs of divs that display registration token UI or request permission UI.
   const tokenDivId = 'token_div';
   const permissionDivId = 'permission_div';
 
-  // [START receive_message]
   // Handle incoming messages. Called when:
   // - a message is received while the app has focus
   // - the user clicks on an app notification created by a service worker
   //   `messaging.onBackgroundMessage` handler.
   messaging.onMessage((payload) => {
     console.log('Message received. ', payload);
-    // [START_EXCLUDE]
     // Update the UI to include the received message.
     appendMessage(payload);
-    // [END_EXCLUDE]
   });
-  // [END receive_message]
 
   function resetUI() {
     clearMessages();
     showToken('loading...');
-    // [START get_token]
     // Get registration token. Initially this makes a network call, once retrieved
     // subsequent calls to getToken will return from cache.
     messaging.getToken({vapidKey: '<YOUR_PUBLIC_VAPID_KEY_HERE>'}).then((currentToken) => {
@@ -122,7 +115,6 @@ limitations under the License.
       showToken('Error retrieving registration token. ', err);
       setTokenSentToServer(false);
     });
-    // [END get_token]
   }
 
 
@@ -165,38 +157,30 @@ limitations under the License.
 
   function requestPermission() {
     console.log('Requesting permission...');
-    // [START request_permission]
     Notification.requestPermission().then((permission) => {
       if (permission === 'granted') {
         console.log('Notification permission granted.');
         // TODO(developer): Retrieve a registration token for use with FCM.
-        // [START_EXCLUDE]
         // In many cases once an app has been granted notification permission,
         // it should update its UI reflecting this.
         resetUI();
-        // [END_EXCLUDE]
       } else {
         console.log('Unable to get permission to notify.');
       }
     });
-    // [END request_permission]
   }
 
   function deleteToken() {
     // Delete registration token.
-    // [START delete_token]
     messaging.getToken().then((currentToken) => {
       messaging.deleteToken(currentToken).then(() => {
         console.log('Token deleted.');
         setTokenSentToServer(false);
-        // [START_EXCLUDE]
         // Once token is deleted update UI.
         resetUI();
-        // [END_EXCLUDE]
       }).catch((err) => {
         console.log('Unable to delete token. ', err);
       });
-      // [END delete_token]
     }).catch((err) => {
       console.log('Error retrieving registration token. ', err);
       showToken('Error retrieving registration token. ', err);
