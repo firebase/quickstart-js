@@ -42,6 +42,8 @@ const messaging = firebase.messaging();
 // implement this optional method.
 // Keep in mind that FCM will still show notification messages automatically 
 // and you should use data messages for custom notifications.
+// For more info see: 
+// https://firebase.google.com/docs/cloud-messaging/concept-options
 messaging.onBackgroundMessage(function(payload) {
   console.log('[firebase-messaging-sw.js] Received background message ', payload);
   // Customize notification here
