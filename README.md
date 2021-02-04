@@ -44,4 +44,7 @@ See [LICENSE](LICENSE)
 
 ## Build Status
 
-[![Build Status](https://travis-ci.org/firebase/quickstart-js.svg?branch=master)](https://travis-ci.org/firebase/quickstart-js)
+[![Actions Status][gh-actions-badge]][gh-actions]
+
+[gh-actions]: https://github.com/firebase/quickstart-js/actions
+[gh-actions-badge]: https://github.com/firebase/quickstart-js/workflows/CI%20Tests/badge.svg
