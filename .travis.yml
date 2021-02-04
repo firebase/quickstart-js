@@ -1,9 +1,0 @@
-language: node_js
-node_js:
-  - 'lts/*'
-install:
-  - npm ci
-  - npm install -g lerna
-  - lerna bootstrap
-script:
-  - npm test
