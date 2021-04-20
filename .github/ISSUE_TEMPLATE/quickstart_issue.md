@@ -13,7 +13,7 @@ template_path=.github/ISSUE_TEMPLATE/quickstart_issue.md
 
 Are you in the right place?
 
-  * If you think you have found a **bug in the Firebase Android SDK** please file the issue here:
+  * If you think you have found a **bug in the Firebase JS SDK** please file the issue here:
     https://github.com/firebase/firebase-js-sdk  
 -->
 
