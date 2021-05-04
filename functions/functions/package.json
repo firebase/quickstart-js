@@ -10,17 +10,17 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
-    "firebase-admin": "~9.7.0",
-    "firebase-functions": "^3.13.2",
     "bad-words": "^1.3.1",
-    "capitalize-sentence": "^0.1.2"
+    "capitalize-sentence": "^0.1.2",
+    "firebase-admin": "~9.7.0",
+    "firebase-functions": "^3.13.2"
   },
   "devDependencies": {
     "eslint": "^4.12.0",
     "eslint-plugin-promise": "^3.6.0"
   },
   "engines": {
-    "node": "8"
+    "node": "12"
   },
   "private": true
 }
