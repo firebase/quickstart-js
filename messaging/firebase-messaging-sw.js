@@ -1,8 +1,8 @@
 // Import and configure the Firebase SDK
 // These scripts are made available when the app is served or deployed on Firebase Hosting
 // If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup
-importScripts('/__/firebase/8.6.8/firebase-app.js');
-importScripts('/__/firebase/8.6.8/firebase-messaging.js');
+importScripts('/__/firebase/8.7.0/firebase-app.js');
+importScripts('/__/firebase/8.7.0/firebase-messaging.js');
 importScripts('/__/firebase/init.js');
 
 const messaging = firebase.messaging();
@@ -14,8 +14,8 @@ const messaging = firebase.messaging();
  // Give the service worker access to Firebase Messaging.
  // Note that you can only use Firebase Messaging here. Other Firebase libraries
  // are not available in the service worker.
- importScripts('https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js');
- importScripts('https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js');
+ importScripts('https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js');
+ importScripts('https://www.gstatic.com/firebasejs/8.7.0/firebase-messaging.js');
 
  // Initialize the Firebase app in the service worker by passing in
  // your app's Firebase config object.
