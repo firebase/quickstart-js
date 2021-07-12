@@ -1,0 +1,8 @@
+image:
+  file: .gitpod.Dockerfile
+tasks:
+  - init: |
+      clear
+      if [ -z "$FIREBASE_TOKEN" ]; then
+        BROWSER="" firebase login --no-localhost
+      fi
