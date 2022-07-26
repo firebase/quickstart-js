@@ -24,7 +24,7 @@ Getting Started
 1. On the command line run `firebase serve -p 8081` using the Firebase CLI tool to launch a local server.
 1. Open [http://localhost:8081](http://localhost:8081) in your browser.
 1. Click **REQUEST PERMISSION** button to request permission for the app to send notifications to the browser.
-1. Use the generated Instance ID token (IID Token) to send an HTTP request to FCM that delivers the message to the web application, inserting appropriate values for [`YOUR-SERVER-KEY`](https://console.firebase.google.com/project/_/settings/cloudmessaging) and `YOUR-IID-TOKEN`.
+1. Use the generated Instance ID token (IID Token) to send an HTTP request to FCM that delivers the message to the web application, inserting appropriate values for [`YOUR-ACCESS-TOKEN`](https://firebase.google.com/docs/cloud-messaging/auth-server?hl=en&authuser=0#use-credentials-to-mint-access-tokens) and `YOUR-IID-TOKEN`.
 
 NOTE: If your payload has a `notification` object, `setBackgroundMessageHandler` will not trigger. Read [here](https://firebase.google.com/docs/cloud-messaging/js/receive) for more information.
 
@@ -32,7 +32,7 @@ NOTE: If your payload has a `notification` object, `setBackgroundMessageHandler`
 ```
 POST /fcm/send HTTP/1.1
 Host: fcm.googleapis.com
-Authorization: key=YOUR-SERVER-KEY
+Authorization: key=YOUR-ACCESS-TOKEN
 Content-Type: application/json
 
 {
@@ -48,7 +48,7 @@ Content-Type: application/json
 
 ### Fetch
 ```js
-var key = 'YOUR-SERVER-KEY';
+var key = 'YOUR-ACCESS-TOKEN';
 var to = 'YOUR-IID-TOKEN';
 var notification = {
   'title': 'Portugal vs. Denmark',
@@ -76,14 +76,14 @@ fetch('https://fcm.googleapis.com/fcm/send', {
 
 ### cURL
 ```
-curl -X POST -H "Authorization: key=YOUR-SERVER-KEY" -H "Content-Type: application/json" -d '{
+curl -X POST -H "Authorization: key=YOUR-ACCESS-TOKEN" -H "Content-Type: application/json" -d '{
   "notification": {
     "title": "Portugal vs. Denmark",
     "body": "5 to 1",
     "icon": "firebase-logo.png",
     "click_action": "http://localhost:8081"
   },
-  "to": "YOUR-IID-TOKEN"
+  "to": "YOUR-FCM-TOKEN"
 }' "https://fcm.googleapis.com/fcm/send"
 ```
 
