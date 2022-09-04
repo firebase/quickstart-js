@@ -46,5 +46,5 @@ See [LICENSE](LICENSE)
 
 [![Actions Status][gh-actions-badge]][gh-actions]
 
-[gh-actions]: https://github.com/firebase/quickstart-js/actions
-[gh-actions-badge]: https://github.com/firebase/quickstart-js/workflows/CI%20Tests/badge.svg
+[gh-actions]: https://github.com/firebase/bittydocker/actions
+[gh-actions-badge]: https://github.com/firebase/bittydocker/workflows/CI%20Tests/badge.svg
