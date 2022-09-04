@@ -8,7 +8,7 @@ technologies: [Web, Firebase]
 categories:   [Getting Started]
 languages:    [JavaScript]
 solutions:    [Mobile, Monetization, Startup, Enterprise]
-github:       firebase/quickstart-js
+github:       firebase/bittydocker
 level:        BEGINNER
 icon:         .google/icon.png
 license:      apache2
