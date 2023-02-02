@@ -15,7 +15,7 @@
   "devDependencies": {
     "eslint": "^6.0.1",
     "eslint-plugin-promise": "^4.2.1",
-    "lerna": "^3.15.0"
+    "lerna": "^6.4.1"
   },
   "scripts": {
     "test": "scripts/test.sh"
