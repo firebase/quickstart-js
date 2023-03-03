@@ -11,11 +11,15 @@
   "bugs": {
     "url": "https://github.com/firebase/quickstart-js/issues"
   },
+  "engines" : { 
+    "npm" : ">=9.0.0 <10.0.0",
+    "node" : ">=19.0.0 <20.0.0"
+  },
   "homepage": "https://github.com/firebase/quickstart-js#readme",
   "devDependencies": {
     "eslint": "^6.0.1",
     "eslint-plugin-promise": "^4.2.1",
-    "lerna": "^3.15.0"
+    "lerna": "^6.0.0"
   },
   "scripts": {
     "test": "scripts/test.sh"
