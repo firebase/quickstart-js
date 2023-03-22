@@ -62,12 +62,16 @@ limitations under the License.
 <script src="/__/firebase/9.14.0/firebase-app-compat.js"></script>
 <script src="/__/firebase/9.14.0/firebase-remote-config.js"></script>
 <script src="/__/firebase/init.js"></script>
-<script>
-  const remoteConfig = firebase.remoteConfig();
-
-  remoteConfig.settings = {
-    minimumFetchIntervalMillis: 3600000,
-  };
+<script type="module">
+  import { initializeApp } from './node_modules/firebase/firebase-app.js'
+  import { getValue, getRemoteConfig, fetchAndActivate, connectRemoteConfigEmulator } from './node_modules/firebase/firebase-remote-config.js'
+  const firebaseConfig = {
+    // Your Firebase configs
+};
+  const app = initializeApp(firebaseConfig);
+const remoteConfig = getRemoteConfig(app);
+remoteConfig.settings.minimumFetchIntervalMillis = 0;
+connectRemoteConfigEmulator(remoteConfig, 'http://127.0.0.1:9399')
 
   remoteConfig.defaultConfig = ({
     'welcome_message': 'Welcome',
@@ -89,7 +93,7 @@ limitations under the License.
     // const msg = remoteConfig.getString('welcome_message');
 
     // To get the value and source of the parameter use `getValue`.
-    const val = remoteConfig.getValue('welcome_message');
+    const val = await getValue(remoteConfig, "welcome_message")._value;
 
     const welcome_element = document.getElementById('welcome_message');
     welcome_element.innerText = val._value + ' (' + val._source + ')';
@@ -98,14 +102,14 @@ limitations under the License.
   function fetchConfig() {
     const welcome_element = document.getElementById('welcome_message');
     welcome_element.innerText = 'loading...';
-    remoteConfig.fetchAndActivate()
-      .then(() => {
-        showWelcomeMessage();
-      })
-      .catch((err) => {
+    fetchAndActivate(remoteConfig)
+    .then(async () => {
+      showWelcomeMessage();
+    }).catch((err) => {
         console.error(err);
       });
   }
+
 </script>
 </body>
 </html>
