@@ -49,3 +49,7 @@ Thumbs.db
 # Firebase environment vars
 src/environments/*
 .firebaserc
+
+# VSCode and editor ignores
+.vscode/*
+.editorconfig
