@@ -1,0 +1,13 @@
+#title-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+
+.dialog-container {
+  min-width: 640px;
+  max-width: 865px;
+  width: calc(100% - 30px);
+  margin: 0 auto;
+  height: 300px;
+}

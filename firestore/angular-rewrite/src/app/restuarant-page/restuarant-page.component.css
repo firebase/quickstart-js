@@ -1,0 +1,48 @@
+* {
+  color: white;
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: bold;
+  display: inline;
+}
+
+.max-width-600 {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.block {
+  display: block;
+}
+
+.price {
+  margin-left: 10px;
+  font-weight: normal;
+}
+
+.header-category-city {
+  font-size: 15px;
+  font-weight: normal;
+  display: block;
+  line-height: 10px;
+}
+
+#rating {
+  font-size: 15px;
+}
+
+#info-container {
+  height: 86px;
+}
+
+#close-row {
+  height: 40px;
+}
+
+#close-icon {
+  text-shadow: #111 1px 1px 2px;
+  transform: scale(1.5);
+}
