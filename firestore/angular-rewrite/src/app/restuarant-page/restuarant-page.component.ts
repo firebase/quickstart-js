@@ -19,7 +19,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Firestore, doc, docData, } from '@angular/fire/firestore';
 import { Restaurant } from '../restaurant-card/restaurant';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-restuarant-page',
@@ -34,8 +33,8 @@ export class RestuarantPageComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') as string;
     this.restaurantID = id;
-
     const docRef = doc(this.firestore, `restaurants/${id}`);
+
     this.restaurantData = docData(docRef, { idField: "id" }) as Observable<Restaurant>;
     console.log(this.restaurantData)
   }
