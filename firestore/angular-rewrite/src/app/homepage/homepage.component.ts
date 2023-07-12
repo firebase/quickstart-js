@@ -39,7 +39,12 @@ export class HomepageComponent {
       data: this.sortingData
     });
 
-    dialogRef.afterClosed().subscribe(result => this.sortingData = result);
+    dialogRef.afterClosed().subscribe(result => {
+      this.sortingData = result;
+      // Get restaurants according to new sorting options
+      let query = this.store.collection('restaurants');
+
+    });
 
   }
 
