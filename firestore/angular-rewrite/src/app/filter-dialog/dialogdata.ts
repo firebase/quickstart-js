@@ -15,23 +15,24 @@
  */
 
 
-// TODO(abradham): Move to separate file to make accessible to emulators
+// TODO(abradham): Move to separate file to make accessible for emulators
 export interface DialogData {
     sortBy: string;
-    category: string | null;
-    city: string | null;
-    price: number | null;
+    category: string;
+    city: string;
+    price: number;
 }
 
 export const DEFAULT_SORT_DATA: DialogData = {
-    sortBy: "rating",
-    category: null,
-    city: null,
-    price: null
+    sortBy: 'ratings',
+    category: 'Any',
+    city: 'Any',
+    price: 4
 
 }
 
 export const filterCities = [
+    'Any',
     'Albuquerque',
     'Arlington',
     'Atlanta',
@@ -82,6 +83,7 @@ export const filterCities = [
 ]
 
 export const filterCategories = [
+    'Any',
     'Brunch',
     'Burgers',
     'Coffee',

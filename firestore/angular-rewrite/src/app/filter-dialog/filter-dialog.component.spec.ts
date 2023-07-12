@@ -17,6 +17,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterDialogComponent } from './filter-dialog.component';
+import { filterCities } from './dialogdata';
 
 describe('FilterDialogComponent', () => {
   let component: FilterDialogComponent;

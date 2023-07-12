@@ -21,7 +21,7 @@ import { Restaurant } from '../restaurant-card/restaurant';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
-import { DEFAULT_SORT_DATA } from '../filter-dialog/dialogdata';
+import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 
 @Component({
   selector: 'app-homepage',
@@ -32,11 +32,15 @@ import { DEFAULT_SORT_DATA } from '../filter-dialog/dialogdata';
 export class HomepageComponent {
   title = 'FriendlyEats-Homepage';
   restaurants = this.store.collection('restaurants').valueChanges({ idField: 'id' }) as Observable<Restaurant[]>;
+  sortingData: DialogData = DEFAULT_SORT_DATA;
 
   openDialog(): void {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
-      data: DEFAULT_SORT_DATA
+      data: this.sortingData
     });
+
+    dialogRef.afterClosed().subscribe(result => this.sortingData = result);
+
   }
 
   constructor(public dialog: MatDialog, private router: Router, private store: AngularFirestore) { }

@@ -15,12 +15,51 @@
  -->
 
 <div class="dialog-container">
-  <div id="title-section">
+  <div class="internal-padding" id="title-section">
     <mat-icon>filter_list</mat-icon>
-    <p>Filter</p>
+    <h2>Filter</h2>
   </div>
   <mat-divider></mat-divider>
-  <div id="list-section">List</div>
+  <div id="list-section">
+    <mat-form-field>
+      <mat-label>City</mat-label>
+      <mat-select [(value)]="selectedSortOptions.city">
+        <mat-option *ngFor="let city of cities" [value]="city">
+          {{city}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Category</mat-label>
+      <mat-select [(value)]="selectedSortOptions.category">
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Price Range</mat-label>
+    <mat-select [(value)]="selectedSortOptions.price">
+      <mat-option *ngFor="let num of [1, 2, 3, 4]" [value]="num">
+        {{"$".repeat(num)}}
+      </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Sort By</mat-label>
+  <mat-select [(value)]="selectedSortOptions.sortBy">
+    <mat-option *ngFor="let val of ['ratings', 'reviews']" [value]="val">
+      {{val}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+  </div>
   <mat-divider></mat-divider>
-  <div id="button-section">Button Section</div>
+  <mat-dialog-actions>
+    <button mat-flat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-flat-button (click)="onApplyClick()">Apply</button>
+  </mat-dialog-actions>
 </div>
