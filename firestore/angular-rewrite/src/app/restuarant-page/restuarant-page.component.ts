@@ -38,6 +38,5 @@ export class RestuarantPageComponent implements OnInit {
     const docRef = doc(this.firestore, `restaurants/${id}`);
 
     this.restaurantData = docData(docRef, { idField: "id" }) as Observable<Restaurant>;
-    console.log(this.restaurantData)
   }
 }

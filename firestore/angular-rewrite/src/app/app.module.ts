@@ -38,7 +38,6 @@ import { ReviewListComponent } from './review-list/review-list.component';
 import { MatDividerModule } from "@angular/material/divider";
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component'
 import { MatDialogModule } from '@angular/material/dialog';
-import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -59,7 +58,6 @@ import { AngularFireModule } from '@angular/fire/compat';
     MatIconModule,
     MatDividerModule,
     MatDialogModule,
-    AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
