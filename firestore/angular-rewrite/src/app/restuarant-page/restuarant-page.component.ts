@@ -26,7 +26,6 @@ import { Restaurant } from '../restaurant-card/restaurant';
   styleUrls: ['./restuarant-page.component.css']
 })
 export class RestuarantPageComponent implements OnInit {
-  restaurantID: string = "";
   restaurantData: Observable<Restaurant> = new Observable();
   private firestore: Firestore = inject(Firestore);
 
@@ -34,7 +33,6 @@ export class RestuarantPageComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') as string;
-    this.restaurantID = id;
     const docRef = doc(this.firestore, `restaurants/${id}`);
 
     this.restaurantData = docData(docRef, { idField: "id" }) as Observable<Restaurant>;

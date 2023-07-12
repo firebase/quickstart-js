@@ -16,8 +16,8 @@
 
 import { Component, OnInit, Input, inject } from '@angular/core';
 import { Rating } from './ratings';
-import { Observable } from 'rxjs'; import { Firestore, collection, collectionData } from '@angular/fire/firestore';
-;
+import { Observable } from 'rxjs';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-review-list',
@@ -30,7 +30,7 @@ export class ReviewListComponent implements OnInit {
   reviews: Observable<Rating[]> = new Observable();
 
   ngOnInit(): void {
-    const ratingsRef = collection(this.firestore, `/restaurants/mRz0oeRzFU2Id9he90co/ratings`);
+    const ratingsRef = collection(this.firestore, `/restaurants/${this.restaurantID}/ratings`);
     this.reviews = collectionData(ratingsRef, { idField: 'id' }) as Observable<Rating[]>;
   }
 }
