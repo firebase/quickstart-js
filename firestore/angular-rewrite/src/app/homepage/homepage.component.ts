@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Component, inject } from '@angular/core';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Restaurant } from '../restaurant-card/restaurant';
 import { Observable } from 'rxjs';
@@ -30,8 +30,10 @@ import { DEFAULT_SORT_DATA } from '../filter-dialog/dialogdata';
 })
 
 export class HomepageComponent {
+  private store: Firestore = inject(Firestore);
+  private restaurantsCollectionRef = collection(this.store, 'restaurants');
   title = 'FriendlyEats-Homepage';
-  restaurants = this.store.collection('restaurants').valueChanges({ idField: 'id' }) as Observable<Restaurant[]>;
+  restaurants = collectionData(this.restaurantsCollectionRef, { idField: 'id' }) as Observable<Restaurant[]>;
 
   openDialog(): void {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
@@ -39,5 +41,5 @@ export class HomepageComponent {
     });
   }
 
-  constructor(public dialog: MatDialog, private router: Router, private store: AngularFirestore) { }
+  constructor(public dialog: MatDialog, private router: Router,) { }
 }

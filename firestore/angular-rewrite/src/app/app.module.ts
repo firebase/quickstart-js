@@ -31,8 +31,6 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { provideStorage, getStorage } from '@angular/fire/storage'
 import { environment } from 'src/environments/environment';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { HomepageComponent } from './homepage/homepage.component';
 import { RestuarantPageComponent } from './restuarant-page/restuarant-page.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,6 +38,7 @@ import { ReviewListComponent } from './review-list/review-list.component';
 import { MatDividerModule } from "@angular/material/divider";
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component'
 import { MatDialogModule } from '@angular/material/dialog';
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -61,7 +60,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDividerModule,
     MatDialogModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
