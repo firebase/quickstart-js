@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Firestore, doc, docData, } from '@angular/fire/firestore';
@@ -28,7 +28,9 @@ import { Restaurant } from '../restaurant-card/restaurant';
 export class RestuarantPageComponent implements OnInit {
   restaurantID: string = "";
   restaurantData: Observable<Restaurant> = new Observable();
-  constructor(private route: ActivatedRoute, private firestore: Firestore = Inject(Firestore)) { }
+  private firestore: Firestore = inject(Firestore);
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') as string;
