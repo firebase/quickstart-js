@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
+
+// TODO(abradham): Move to separate file to make accessible to emulators
 export interface DialogData {
     sortBy: string;
     category: string | null;
     city: string | null;
     price: number | null;
+}
+
+export const DEFAULT_SORT_DATA: DialogData = {
+    sortBy: "rating",
+    category: null,
+    city: null,
+    price: null
+
 }
 
 export const filterCities = [

@@ -17,7 +17,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Rating } from './ratings';
-import { Observable, switchMap } from 'rxjs';;
+import { Observable } from 'rxjs';;
 
 @Component({
   selector: 'app-review-list',
@@ -31,8 +31,9 @@ export class ReviewListComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.restaurantID) {
-      this.reviews = this.firestore.collection(`/restaurants/mRz0oeRzFU2Id9he90co/ratings`).valueChanges({ idField: 'id' }) as Observable<Rating[]>;
-      console.log(this.restaurantID)
+      this.reviews = this.firestore
+        .collection(`/restaurants/mRz0oeRzFU2Id9he90co/ratings`)
+        .valueChanges({ idField: 'id' }) as Observable<Rating[]>;
     }
   }
 }
