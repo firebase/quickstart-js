@@ -16,8 +16,7 @@
 
 .dialog-container {
   position: relative;
-  min-width: 640px;
-  max-width: 865px;
+  min-width: 350px;
   width: "calc(100% - 30px)";
   margin: 0 auto;
 }

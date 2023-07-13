@@ -15,7 +15,7 @@
  */
 
 import { Component, inject } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, query, where, QueryConstraint, orderBy, CollectionReference, DocumentData } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Restaurant } from '../restaurant-card/restaurant';
 import { Observable } from 'rxjs';
@@ -36,6 +36,28 @@ export class HomepageComponent {
   sortingData: DialogData = DEFAULT_SORT_DATA;
   restaurants = collectionData(this.restaurantsCollectionRef, { idField: 'id' }) as Observable<Restaurant[]>;
 
+  private fetchWithUpdatedFilters = () => {
+    let constraints: QueryConstraint[] = []
+
+    if (this.sortingData.city !== "Any") {
+      constraints.push(where('city', '==', this.sortingData.city))
+    }
+    if (this.sortingData.category !== "Any") {
+      constraints.push(where('category', '==', this.sortingData.category))
+    }
+    if (this.sortingData.price !== -1) {
+      constraints.push(where('price', '==', this.sortingData.price))
+    }
+    if (this.sortingData.sortBy == "Rating") {
+      constraints.push(orderBy('numRatings', 'desc'));
+    } else {
+      constraints.push(orderBy('avgRating', 'desc'));
+    }
+
+
+    this.restaurants = collectionData(query(this.restaurantsCollectionRef, ...constraints), { idField: 'id' }) as Observable<Restaurant[]>;
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
       data: this.sortingData
@@ -43,12 +65,9 @@ export class HomepageComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       this.sortingData = result;
-      // Get restaurants according to new sorting options
-      let query = this.store.collection('restaurants');
-
+      this.fetchWithUpdatedFilters()
     });
 
   }
-
   constructor(public dialog: MatDialog, private router: Router,) { }
 }

@@ -42,8 +42,8 @@
   <mat-form-field>
     <mat-label>Price Range</mat-label>
     <mat-select [(value)]="selectedSortOptions.price">
-      <mat-option *ngFor="let num of [1, 2, 3, 4]" [value]="num">
-        {{"$".repeat(num)}}
+      <mat-option *ngFor="let num of [-1, 1, 2, 3, 4]" [value]="num">
+        {{num !== -1 ? "$".repeat(num) : 'Any'}}
       </mat-option>
     </mat-select>
 </mat-form-field>
@@ -51,7 +51,7 @@
 <mat-form-field>
   <mat-label>Sort By</mat-label>
   <mat-select [(value)]="selectedSortOptions.sortBy">
-    <mat-option *ngFor="let val of ['ratings', 'reviews']" [value]="val">
+    <mat-option *ngFor="let val of ['Rating', 'Reviews']" [value]="val">
       {{val}}
     </mat-option>
   </mat-select>
@@ -60,6 +60,6 @@
   <mat-divider></mat-divider>
   <mat-dialog-actions id="action-buttons">
     <button mat-flat-button (click)="onCancelClick()">Cancel</button>
-    <button mat-flat-button (click)="onApplyClick()">Apply</button>
+    <button mat-flat-button (click)="onApplyClick()" color="primary">Apply</button>
   </mat-dialog-actions>
 </div>

@@ -17,18 +17,17 @@
 
 // TODO(abradham): Move to separate file to make accessible for emulators
 export interface DialogData {
-    sortBy: string;
+    sortBy: "Rating" | "Reviews";
     category: string;
     city: string;
     price: number;
 }
 
 export const DEFAULT_SORT_DATA: DialogData = {
-    sortBy: 'ratings',
+    sortBy: 'Rating',
     category: 'Any',
     city: 'Any',
-    price: 4
-
+    price: -1
 }
 
 export const filterCities = [
