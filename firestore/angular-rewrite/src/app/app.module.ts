@@ -38,6 +38,8 @@ import { ReviewListComponent } from './review-list/review-list.component';
 import { MatDividerModule } from "@angular/material/divider";
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component'
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { SubmitReviewModalComponent } from './submit-review-modal/submit-review-modal.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     HomepageComponent,
     RestuarantPageComponent,
     ReviewListComponent,
-    FilterDialogComponent
+    FilterDialogComponent,
+    SubmitReviewModalComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     MatDividerModule,
     MatDialogModule,
+    MatButtonModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
