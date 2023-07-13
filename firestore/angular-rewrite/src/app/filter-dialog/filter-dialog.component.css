@@ -42,3 +42,15 @@
   justify-content: flex-end;
   padding: 25px;
 }
+
+.form-field-with-icon {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  color: #727272
+}
+
+.form-field {
+  flex-grow: 1;
+}
