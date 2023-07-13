@@ -12,18 +12,49 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+*/
+
+i {
+  transform: scale(1.2);
+}
+
+.dialog-container {
+  position: relative;
+  min-width: 350px;
+  width: "calc(100% - 30px)";
+  margin: 0 auto;
+}
 
 #title-section {
   display: flex;
   flex-direction: row;
   justify-content: left;
+  text-align:center;
+  gap: 20px;
+  padding: 20px 20px 0px;
 }
 
-.dialog-container {
-  min-width: 640px;
-  max-width: 865px;
-  width: calc(100% - 30px);
-  margin: 0 auto;
-  height: 300px;
+#list-section {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+#action-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 25px;
+}
+
+.form-field-with-icon {
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+  width: 100%;
+  color: #727272;
+}
+
+.form-field {
+  flex-grow: 1;
 }
