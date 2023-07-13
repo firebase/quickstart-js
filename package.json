@@ -22,6 +22,7 @@
     "lerna": "^6.6.1"
   },
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "test": "scripts/test.sh"
   }
 }
