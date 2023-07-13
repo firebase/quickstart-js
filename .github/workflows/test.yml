@@ -29,8 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          npm install -g lerna
-          lerna bootstrap
+          npm run bootstrap
       
       - name: Run tests
         run: npm test
