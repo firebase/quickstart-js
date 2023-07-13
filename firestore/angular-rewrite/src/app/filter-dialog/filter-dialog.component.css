@@ -12,7 +12,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+*/
+
+i {
+  transform: scale(1.2);
+}
 
 .dialog-container {
   position: relative;
@@ -46,9 +50,9 @@
 .form-field-with-icon {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  gap: 15px;
   width: 100%;
-  color: #727272
+  color: #727272;
 }
 
 .form-field {
