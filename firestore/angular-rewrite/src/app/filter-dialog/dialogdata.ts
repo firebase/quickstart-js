@@ -17,7 +17,7 @@
 
 // TODO(abradham): Move to separate file to make accessible for emulators
 export interface DialogData {
-    sortBy: "Rating" | "Reviews";
+    sortBy: 'Rating' | 'Reviews';
     category: string;
     city: string;
     price: number;

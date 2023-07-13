@@ -49,16 +49,16 @@ export class HomepageComponent {
   private fetchWithUpdatedFilters = () => {
     const constraints: QueryConstraint[] = []
 
-    if (this.sortingData.city !== "Any") {
+    if (this.sortingData.city !== 'Any') {
       constraints.push(where('city', '==', this.sortingData.city))
     }
-    if (this.sortingData.category !== "Any") {
+    if (this.sortingData.category !== 'Any') {
       constraints.push(where('category', '==', this.sortingData.category))
     }
     if (this.sortingData.price !== -1) {
       constraints.push(where('price', '==', this.sortingData.price))
     }
-    if (this.sortingData.sortBy === "Rating") {
+    if (this.sortingData.sortBy === 'Rating') {
       constraints.push(orderBy('numRatings', 'desc'));
     } else {
       constraints.push(orderBy('avgRating', 'desc'));
