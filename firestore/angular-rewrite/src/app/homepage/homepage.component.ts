@@ -15,7 +15,15 @@
  */
 
 import { Component, inject } from '@angular/core';
-import { Firestore, collection, collectionData, query, where, QueryConstraint, orderBy, CollectionReference, DocumentData } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  query,
+  where,
+  QueryConstraint,
+  orderBy
+} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Restaurant } from '../restaurant-card/restaurant';
 import { Observable } from 'rxjs';
@@ -34,7 +42,9 @@ export class HomepageComponent {
   private restaurantsCollectionRef = collection(this.store, 'restaurants');
   title = 'FriendlyEats-Homepage';
   sortingData: DialogData = DEFAULT_SORT_DATA;
-  restaurants = collectionData(this.restaurantsCollectionRef, { idField: 'id' }) as Observable<Restaurant[]>;
+  restaurants = collectionData(
+    this.restaurantsCollectionRef,
+    { idField: 'id' }) as Observable<Restaurant[]>;
 
   private fetchWithUpdatedFilters = () => {
     let constraints: QueryConstraint[] = []
@@ -55,7 +65,9 @@ export class HomepageComponent {
     }
 
 
-    this.restaurants = collectionData(query(this.restaurantsCollectionRef, ...constraints), { idField: 'id' }) as Observable<Restaurant[]>;
+    this.restaurants = collectionData(
+      query(this.restaurantsCollectionRef, ...constraints),
+      { idField: 'id' }) as Observable<Restaurant[]>;
   }
 
   openDialog(): void {
