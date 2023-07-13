@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "friendly-eats-quickstart",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}
