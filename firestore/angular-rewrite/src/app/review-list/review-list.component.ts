@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { Rating } from './ratings';
-import { Observable } from 'rxjs';;
+import { Observable } from 'rxjs';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-review-list',
@@ -26,14 +26,11 @@ import { Observable } from 'rxjs';;
 })
 export class ReviewListComponent implements OnInit {
   @Input() restaurantID: string | null = null;
+  private firestore: Firestore = inject(Firestore);
   reviews: Observable<Rating[]> = new Observable();
-  constructor(private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
-    if (this.restaurantID) {
-      this.reviews = this.firestore
-        .collection(`/restaurants/mRz0oeRzFU2Id9he90co/ratings`)
-        .valueChanges({ idField: 'id' }) as Observable<Rating[]>;
-    }
+    const ratingsRef = collection(this.firestore, `/restaurants/${this.restaurantID}/ratings`);
+    this.reviews = collectionData(ratingsRef, { idField: 'id' }) as Observable<Rating[]>;
   }
 }

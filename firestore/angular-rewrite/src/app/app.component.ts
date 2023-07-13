@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Component, Inject } from '@angular/core';
 import { Router } from "@angular/router";
 
 
@@ -26,8 +25,9 @@ import { Router } from "@angular/router";
 })
 export class AppComponent {
   title = 'friendly-eats-quickstart';
+
   gotoRestaurantPage = () => {
     this.router.navigate(['/first-component']);
   }
-  constructor(private router: Router, private store: AngularFirestore) { }
+  constructor(private router: Router) { }
 }
