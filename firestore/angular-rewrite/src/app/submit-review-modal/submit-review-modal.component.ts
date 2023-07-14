@@ -45,8 +45,12 @@ export class SubmitReviewModalComponent {
   }
 
   public async onSubmitClick() {
-    const collectionRef = collection(this.firestore, `restaurants/${this.restaurantId}/ratings`);
-    await addDoc(collectionRef, { ...this.review, userName: "Anonymous" } as Rating)
+    const collectionRef = collection(
+      this.firestore,
+      `restaurants/${this.restaurantId}/ratings`);
+
+    await addDoc(collectionRef,
+      { ...this.review, userName: "Anonymous" } as Rating)
     this.dialogRef.close();
   }
 }

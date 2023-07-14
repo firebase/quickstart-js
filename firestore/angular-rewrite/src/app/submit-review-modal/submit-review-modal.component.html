@@ -36,11 +36,14 @@
     </div>
     
     <mat-form-field id="review-input-field">
-        <textarea matInput placeholder="Review Text" [(ngModel)]="review.text"></textarea>
+        <textarea matInput placeholder="Review Text" [(ngModel)]="review.text">
+        </textarea>
     </mat-form-field>
     
     <mat-dialog-actions id="action-buttons">
         <button mat-flat-button (click)="onCancelClick()">Cancel</button>
-        <button mat-flat-button color="primary" (click)="onSubmitClick()">Submit</button>
+        <button mat-flat-button color="primary" (click)="onSubmitClick()">
+            Submit
+        </button>
     </mat-dialog-actions>
 </div>
