@@ -38,8 +38,13 @@ import { ReviewListComponent } from './review-list/review-list.component';
 import { MatDividerModule } from "@angular/material/divider";
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component'
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
 import { SubmitReviewModalComponent } from './submit-review-modal/submit-review-modal.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -61,7 +66,12 @@ import { SubmitReviewModalComponent } from './submit-review-modal/submit-review-
     MatIconModule,
     MatDividerModule,
     MatDialogModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatInputModule,
     MatButtonModule,
+    BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

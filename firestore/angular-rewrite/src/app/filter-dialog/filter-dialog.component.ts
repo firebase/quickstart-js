@@ -14,23 +14,37 @@
  * limitations under the License.
  */
 
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogData } from './dialogdata';
+import { DialogData, filterCategories, filterCities } from './dialogdata';
 
 
 @Component({
   selector: 'app-filter-dialog',
   templateUrl: './filter-dialog.component.html',
   styleUrls: ['./filter-dialog.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class FilterDialogComponent {
+  cities: string[] = filterCities;
+  categories: string[] = filterCategories;
+  selectedSortOptions: DialogData = structuredClone(this.data);
+
   constructor(
     public dialogRef: MatDialogRef<FilterDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
+  ) {
+    this.dialogRef.backdropClick().subscribe(_ =>
+      dialogRef.close(this.data)
+    );
   }
+
+  onApplyClick(): void {
+    this.dialogRef.close(this.selectedSortOptions);
+  }
+
+  onCancelClick(): void {
+    this.dialogRef.close(this.data);
+  }
+
 }

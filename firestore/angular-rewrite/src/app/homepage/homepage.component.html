@@ -21,7 +21,7 @@
       <span>FriendlyEats</span>
     </mat-toolbar-row>
 
-    <mat-toolbar-row class="hover-change contained center-self" id="filter-bar">
+    <mat-toolbar-row (click)="openDialog()" class="hover-change contained center-self" id="filter-bar">
       <div id="filter-items">
         <mat-icon>filter_list</mat-icon>
         <span>

@@ -15,13 +15,21 @@
  */
 
 import { Component, inject } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  query,
+  where,
+  QueryConstraint,
+  orderBy
+} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Restaurant } from '../restaurant-card/restaurant';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
-import { DEFAULT_SORT_DATA } from '../filter-dialog/dialogdata';
+import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 
 @Component({
   selector: 'app-homepage',
@@ -33,13 +41,45 @@ export class HomepageComponent {
   private store: Firestore = inject(Firestore);
   private restaurantsCollectionRef = collection(this.store, 'restaurants');
   title = 'FriendlyEats-Homepage';
-  restaurants = collectionData(this.restaurantsCollectionRef, { idField: 'id' }) as Observable<Restaurant[]>;
+  sortingData: DialogData = DEFAULT_SORT_DATA;
+  restaurants = collectionData(
+    this.restaurantsCollectionRef,
+    { idField: 'id' }) as Observable<Restaurant[]>;
+
+  private fetchWithUpdatedFilters = () => {
+    const constraints: QueryConstraint[] = []
+
+    if (this.sortingData.city !== 'Any') {
+      constraints.push(where('city', '==', this.sortingData.city))
+    }
+    if (this.sortingData.category !== 'Any') {
+      constraints.push(where('category', '==', this.sortingData.category))
+    }
+    if (this.sortingData.price !== -1) {
+      constraints.push(where('price', '==', this.sortingData.price))
+    }
+    if (this.sortingData.sortBy === 'Rating') {
+      constraints.push(orderBy('numRatings', 'desc'));
+    } else {
+      constraints.push(orderBy('avgRating', 'desc'));
+    }
+
+
+    this.restaurants = collectionData(
+      query(this.restaurantsCollectionRef, ...constraints),
+      { idField: 'id' }) as Observable<Restaurant[]>;
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
-      data: DEFAULT_SORT_DATA
+      data: this.sortingData
     });
-  }
 
+    dialogRef.afterClosed().subscribe(result => {
+      this.sortingData = result;
+      this.fetchWithUpdatedFilters()
+    });
+
+  }
   constructor(public dialog: MatDialog, private router: Router,) { }
 }
