@@ -19,6 +19,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Firestore, doc, docData, } from '@angular/fire/firestore';
 import { Restaurant } from '../restaurant-card/restaurant';
+import { MatDialog } from '@angular/material/dialog';
+import { SubmitReviewModalComponent } from '../submit-review-modal/submit-review-modal.component';
 
 @Component({
   selector: 'app-restuarant-page',
@@ -29,7 +31,11 @@ export class RestuarantPageComponent implements OnInit {
   restaurantData: Observable<Restaurant> = new Observable();
   private firestore: Firestore = inject(Firestore);
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, public dialog: MatDialog) { }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(SubmitReviewModalComponent);
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') as string;

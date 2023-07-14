@@ -1,4 +1,27 @@
 .add-dialog-container {
     display: flex;
     flex-direction: column;
+    position: relative;
+    margin: 0 auto;
+    padding: 25px;
+    gap: 20px;
+}
+
+.star-rating {
+    color: #feb22c;
+    transform: scale(1.4);
+}
+
+#star-rating-container {
+    align-self: center;
+    display: flex;
+    gap: 20px;
+}
+
+#review-input-field {
+    width: 60vw;
+}
+
+#action-buttons {
+    align-self: flex-end;
 }

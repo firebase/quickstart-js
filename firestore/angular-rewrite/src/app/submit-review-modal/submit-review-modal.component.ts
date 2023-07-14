@@ -1,4 +1,8 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+
+import { Firestore } from '@angular/fire/firestore';
+import { Rating } from '../review-list/ratings';
 
 @Component({
   selector: 'app-submit-review-modal',
@@ -8,5 +12,14 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 })
 
 export class SubmitReviewModalComponent {
+  private firestore: Firestore = inject(Firestore);
+  public review: Rating = {
+    rating: 5,
+    text: ""
+  }
+  constructor(
+    public dialogRef: MatDialogRef<SubmitReviewModalComponent>,
+  ) { }
 
+  public submitNewReview() { }
 }

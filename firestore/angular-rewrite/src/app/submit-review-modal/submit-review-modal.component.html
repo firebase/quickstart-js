@@ -1,8 +1,40 @@
+<!--
+   * Copyright 2023 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *      http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+-->
+
 <div class="add-dialog-container">
     <h2>Add a review!</h2>
-    <div class="star-rating-container"></div>
-    <mat-dialog-actions>
-        <button>Cancel</button>
-        <button>Save</button>
+    <div id="star-rating-container">
+        <i hidden class="template material-icons star-rating"
+        id="star-border-icon" (mouseenter)="review.rating = 1">star</i>
+        <i hidden class="template material-icons star-rating"
+        id="star-border-icon" (mouseenter)="review.rating = 2">star</i>
+        <i hidden class="template material-icons star-rating"
+        id="star-border-icon" (mouseenter)="review.rating = 3">star</i>
+        <i hidden class="template material-icons star-rating"
+        id="star-border-icon" (mouseenter)="review.rating = 4">star</i>
+        <i hidden class="template material-icons star-rating"
+        id="star-border-icon" (mouseenter)="review.rating = 5">star</i>
+    </div>
+    
+    <mat-form-field id="review-input-field">
+        <textarea matInput placeholder="Review Text"></textarea>
+    </mat-form-field>
+    
+    <mat-dialog-actions id="action-buttons">
+        <button mat-flat-button>Cancel</button>
+        <button mat-flat-button color="primary">Submit</button>
     </mat-dialog-actions>
 </div>
