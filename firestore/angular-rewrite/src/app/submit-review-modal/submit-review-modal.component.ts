@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, ViewEncapsulation, inject, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { Rating } from '../review-list/ratings';
 
 @Component({
@@ -29,6 +29,7 @@ import { Rating } from '../review-list/ratings';
 
 export class SubmitReviewModalComponent {
   private firestore: Firestore = inject(Firestore);
+  private restaurantId = this.data;
   public review: Rating = {
     rating: 5,
     text: ""
@@ -36,15 +37,16 @@ export class SubmitReviewModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<SubmitReviewModalComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: string,
   ) { }
 
   onCancelClick() {
     this.dialogRef.close();
   }
 
-  onSubmitClick() {
+  public async onSubmitClick() {
+    const collectionRef = collection(this.firestore, `restaurants/${this.restaurantId}/ratings`);
+    await addDoc(collectionRef, { ...this.review, userName: "Anonymous" } as Rating)
     this.dialogRef.close();
   }
-
-  public submitNewReview() { }
 }

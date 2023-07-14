@@ -30,16 +30,17 @@ import { SubmitReviewModalComponent } from '../submit-review-modal/submit-review
 export class RestuarantPageComponent implements OnInit {
   restaurantData: Observable<Restaurant> = new Observable();
   private firestore: Firestore = inject(Firestore);
+  public restaurantId = "";
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog) { }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(SubmitReviewModalComponent);
+    this.dialog.open(SubmitReviewModalComponent, { data: this.restaurantId });
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id') as string;
-    const docRef = doc(this.firestore, `restaurants/${id}`);
+    this.restaurantId = this.route.snapshot.paramMap.get('id') as string;
+    const docRef = doc(this.firestore, `restaurants/${this.restaurantId}`);
 
     this.restaurantData = docData(docRef, { idField: "id" }) as Observable<Restaurant>;
   }
