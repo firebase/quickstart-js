@@ -1,0 +1,4 @@
+.add-dialog-container {
+    display: flex;
+    flex-direction: column;
+}
