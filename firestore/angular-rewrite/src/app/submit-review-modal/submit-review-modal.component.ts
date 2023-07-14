@@ -32,7 +32,7 @@ export class SubmitReviewModalComponent {
   private restaurantId = this.data;
   public review: Rating = {
     rating: 5,
-    text: ""
+    text: ''
   }
 
   constructor(
@@ -50,7 +50,7 @@ export class SubmitReviewModalComponent {
       `restaurants/${this.restaurantId}/ratings`);
 
     await addDoc(collectionRef,
-      { ...this.review, userName: "Anonymous" } as Rating)
+      { ...this.review, userName: 'Anonymous' } as Rating)
     this.dialogRef.close();
   }
 }
