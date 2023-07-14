@@ -44,6 +44,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { connectFirestoreEmulator, enableIndexedDbPersistence } from '@firebase/firestore';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,11 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() => {
+      const firestore = getFirestore();
+      connectFirestoreEmulator(firestore, 'localhost', 8080);
+      return firestore;
+    }),
     provideFunctions(() => getFunctions()),
     provideStorage(() => getStorage()),
   ],
