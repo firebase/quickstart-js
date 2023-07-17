@@ -1,0 +1,8 @@
+{
+  "version": "12.4.0",
+  "firestore": {
+    "version": "1.17.4",
+    "path": "firestore_export",
+    "metadata_file": "firestore_export/firestore_export.overall_export_metadata"
+  }
+}
