@@ -1,0 +1,19 @@
+{
+  "name": "download _1png",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689616860712,
+  "contentType": "application/octet-stream",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "eeac9934-caed-4439-b799-7c589b62b17b"
+  ],
+  "etag": "jjJ6kX6kT9S5pujtwnR8KiBAgDg",
+  "customMetadata": {},
+  "timeCreated": "2023-07-17T18:01:00.712Z",
+  "updated": "2023-07-17T18:01:00.712Z",
+  "size": 2720,
+  "md5Hash": "27uZc3JSoDeJwlaOPjmuhA==",
+  "crc32c": "2013511222"
+}
