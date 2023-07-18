@@ -71,11 +71,11 @@ import { connectFirestoreEmulator, enableIndexedDbPersistence } from '@firebase/
     MatInputModule,
     MatButtonModule,
     BrowserAnimationsModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirebaseApp(() => initializeApp(environment.local)),
     provideAuth(() => getAuth()),
     provideFirestore(() => {
       const firestore = getFirestore();
-      connectFirestoreEmulator(firestore, 'localhost', 8080);
+      connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
       return firestore;
     }),
     provideFunctions(() => getFunctions()),

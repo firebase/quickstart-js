@@ -20,7 +20,7 @@
  * enable connection to demo project and emulators.
 */
 export const environment = {
-    firebase: {
+    local: {
         projectId: 'demo-friendly-eats',
         apiKey: '[FIREBASE_API_KEY]'
     }

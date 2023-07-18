@@ -22,4 +22,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Running the Emulators
 The command to start the local emulators is:
-`firebase emulators:start --import./exported-firestore --export-on-exit=./exported-firestore`
+`firebase emulators:start --import./exported-firestore [--export-on-exit=./exported-firestore]`
+(Only the `--export-on-exit` flag only if you want to persist changes after each run of the emulators. Otherwise, you will get a fresh dataset each execution.)
