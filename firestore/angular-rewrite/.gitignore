@@ -46,10 +46,6 @@ Thumbs.db
 *-debug.log
 .runtimeconfig.json
 
-# Firebase environment vars
-# src/environments/*
-# .firebaserc
-
 # VSCode and editor ignores
 .vscode/*
 .editorconfig
