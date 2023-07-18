@@ -32,7 +32,7 @@ import {
 export class RestuarantPageComponent implements OnInit {
   restaurantData: Observable<Restaurant> = new Observable();
   private firestore: Firestore = inject(Firestore);
-  public restaurantId = "";
+  private restaurantId = "";
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog) { }
 

@@ -19,19 +19,19 @@
 
     <div id="star-rating-container">
         <i hidden class="template material-icons star-rating" 
-        [style.color]="review.rating >= 1 ? '#feb22c' : 'gray'"
+        [style.color]="determineStarColor(1)"
         id="star-border-icon" (mouseenter)="review.rating = 1">star</i>
         <i hidden class="template material-icons star-rating" 
-        [style.color]="review.rating >= 2 ? '#feb22c' : 'gray'"
+        [style.color]="determineStarColor(2)"
         id="star-border-icon" (mouseenter)="review.rating = 2">star</i>
         <i hidden class="template material-icons star-rating" 
-        [style.color]="review.rating >= 3  ? '#feb22c' : 'gray'"
+        [style.color]="determineStarColor(3)"
         id="star-border-icon" (mouseenter)="review.rating = 3">star</i>
         <i hidden class="template material-icons star-rating" 
-        [style.color]="review.rating >= 4 ? '#feb22c' : 'gray'"
+        [style.color]="determineStarColor(4)"
         id="star-border-icon" (mouseenter)="review.rating = 4">star</i>
         <i hidden class="template material-icons star-rating" 
-        [style.color]="review.rating >= 5 ? '#feb22c' : 'gray'"
+        [style.color]="determineStarColor(5)"
         id="star-border-icon" (mouseenter)="review.rating = 5">star</i>
     </div>
     

@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, inject, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, ViewEncapsulation, inject, Inject } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
-import { Rating } from '../review-list/ratings';
+import { Firestore, collection, addDoc } from "@angular/fire/firestore";
+
+import { Rating } from "../review-list/ratings";
 
 @Component({
-  selector: 'app-submit-review-modal',
-  templateUrl: './submit-review-modal.component.html',
-  styleUrls: ['./submit-review-modal.component.css'],
+  selector: "app-submit-review-modal",
+  templateUrl: "./submit-review-modal.component.html",
+  styleUrls: ["./submit-review-modal.component.css"],
   encapsulation: ViewEncapsulation.None
 })
-
 export class SubmitReviewModalComponent {
   private firestore: Firestore = inject(Firestore);
   private restaurantId = this.data;
   public review: Rating = {
     rating: 5,
-    text: ''
-  }
+    text: ""
+  };
 
   constructor(
     public dialogRef: MatDialogRef<SubmitReviewModalComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: string,
+    @Inject(MAT_DIALOG_DATA) private data: string
   ) { }
 
   onCancelClick() {
@@ -47,10 +47,17 @@ export class SubmitReviewModalComponent {
   public async onSubmitClick() {
     const collectionRef = collection(
       this.firestore,
-      `restaurants/${this.restaurantId}/ratings`);
+      `restaurants/${this.restaurantId}/ratings`
+    );
 
-    await addDoc(collectionRef,
-      { ...this.review, userName: 'Anonymous' } as Rating)
+    await addDoc(collectionRef, {
+      ...this.review,
+      userName: "Anonymous"
+    } as Rating);
     this.dialogRef.close();
+  }
+
+  public determineStarColor(starIndex: number): string {
+    return starIndex <= this.review.rating ? "#feb22c" : "gray";
   }
 }
