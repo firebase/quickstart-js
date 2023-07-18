@@ -19,6 +19,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Firestore, doc, docData, } from '@angular/fire/firestore';
 import { Restaurant } from '../restaurant-card/restaurant';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  SubmitReviewModalComponent
+} from '../submit-review-modal/submit-review-modal.component';
 
 @Component({
   selector: 'app-restuarant-page',
@@ -28,13 +32,19 @@ import { Restaurant } from '../restaurant-card/restaurant';
 export class RestuarantPageComponent implements OnInit {
   restaurantData: Observable<Restaurant> = new Observable();
   private firestore: Firestore = inject(Firestore);
+  private restaurantId = "";
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, public dialog: MatDialog) { }
+
+  openDialog(): void {
+    this.dialog.open(SubmitReviewModalComponent, { data: this.restaurantId });
+  }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id') as string;
-    const docRef = doc(this.firestore, `restaurants/${id}`);
+    this.restaurantId = this.route.snapshot.paramMap.get('id') as string;
+    const docRef = doc(this.firestore, `restaurants/${this.restaurantId}`);
 
-    this.restaurantData = docData(docRef, { idField: "id" }) as Observable<Restaurant>;
+    this.restaurantData = docData(
+      docRef, { idField: "id" }) as Observable<Restaurant>;
   }
 }
