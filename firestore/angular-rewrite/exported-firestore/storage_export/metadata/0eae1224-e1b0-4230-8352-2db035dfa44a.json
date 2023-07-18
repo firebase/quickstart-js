@@ -1,0 +1,19 @@
+{
+  "name": "brunch.jpg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689694888252,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "5eb0b5b0-394a-467c-9594-c793768a5375"
+  ],
+  "etag": "aamZYJ28jn8eeT2HZLyNSJMMDVg",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:41:28.252Z",
+  "updated": "2023-07-18T15:41:28.252Z",
+  "size": 608818,
+  "md5Hash": "1vyR4dLp1rgz6xdgxR9lqw==",
+  "crc32c": "1823603992"
+}
