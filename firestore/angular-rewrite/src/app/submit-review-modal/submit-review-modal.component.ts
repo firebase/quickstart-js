@@ -15,9 +15,8 @@
  */
 
 import { Component, ViewEncapsulation, inject, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-
 import { Firestore, collection, addDoc } from "@angular/fire/firestore";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 import { Rating } from "../review-list/ratings";
 
@@ -38,7 +37,7 @@ export class SubmitReviewModalComponent {
   constructor(
     public dialogRef: MatDialogRef<SubmitReviewModalComponent>,
     @Inject(MAT_DIALOG_DATA) private data: string
-  ) { }
+  ) {}
 
   onCancelClick() {
     this.dialogRef.close();
