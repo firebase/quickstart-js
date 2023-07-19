@@ -38,6 +38,7 @@ import { ReviewListComponent } from './review-list/review-list.component';
 import { MatDividerModule } from "@angular/material/divider";
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component'
 import { MatDialogModule } from '@angular/material/dialog';
+import { SubmitReviewModalComponent } from './submit-review-modal/submit-review-modal.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
@@ -45,6 +46,7 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { connectFirestoreEmulator, enableIndexedDbPersistence } from '@firebase/firestore';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { connectFirestoreEmulator, enableIndexedDbPersistence } from '@firebase/
     HomepageComponent,
     RestuarantPageComponent,
     ReviewListComponent,
-    FilterDialogComponent
+    FilterDialogComponent,
+    SubmitReviewModalComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +75,7 @@ import { connectFirestoreEmulator, enableIndexedDbPersistence } from '@firebase/
     MatButtonModule,
     BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.local)),
+    FormsModule
     provideAuth(() => getAuth()),
     provideFirestore(() => {
       const firestore = getFirestore();
