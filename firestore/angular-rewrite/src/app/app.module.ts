@@ -75,7 +75,10 @@ import { connectFirestoreEmulator, enableIndexedDbPersistence } from '@firebase/
     provideAuth(() => getAuth()),
     provideFirestore(() => {
       const firestore = getFirestore();
-      connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
+
+      if (firestore.app.options.projectId === "demo-friendly-eats")
+        connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
+
       return firestore;
     }),
     provideFunctions(() => getFunctions()),
