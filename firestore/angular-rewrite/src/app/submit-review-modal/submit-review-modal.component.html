@@ -73,6 +73,6 @@
   </mat-dialog-actions>
 </div>
 
-<div id="no-user-container">
+<div id="no-user-container" *ngIf="!auth.currentUser">
   <h2 id="no-user-text">Must be signed in to submit a review!</h2>
 </div>
