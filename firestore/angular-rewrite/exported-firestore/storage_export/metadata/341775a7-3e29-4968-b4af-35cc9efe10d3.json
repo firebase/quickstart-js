@@ -1,0 +1,19 @@
+{
+  "name": "mexican.jpg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689694888032,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "b2aa552f-cce9-4bd3-8e4d-1429606e2f05"
+  ],
+  "etag": "rgJ/6AsbOV6ovFo4RTFhBqjjqW8",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:41:28.032Z",
+  "updated": "2023-07-18T15:41:28.032Z",
+  "size": 144354,
+  "md5Hash": "AKhhy0l84oIZixmYGml50A==",
+  "crc32c": "3237864262"
+}

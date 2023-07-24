@@ -16,9 +16,15 @@
 
 <header>
   <mat-toolbar id="toolbar">
-    <mat-toolbar-row class="contained center-self">
-      <mat-icon>restaurant</mat-icon>
-      <span>FriendlyEats</span>
+    <mat-toolbar-row class="contained center-self" id="title-row">
+      <div id="toolbar-left">
+        <mat-icon>restaurant</mat-icon>
+        <span>FriendlyEats</span>
+      </div>
+      <div id="toolbar-right">
+          <button mat-flat-button id="sign-in-button" (click)="signInWithFirebase()" *ngIf="!auth.currentUser">Sign In</button>
+          <button mat-flat-button id="sign-in-button" (click)="signOutWithFirebase()" *ngIf="auth.currentUser">Sign Out</button>
+      </div>
     </mat-toolbar-row>
 
     <mat-toolbar-row (click)="openDialog()" class="hover-change contained center-self" id="filter-bar">

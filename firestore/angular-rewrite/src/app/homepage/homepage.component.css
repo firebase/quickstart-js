@@ -25,6 +25,22 @@
   color: white;
 }
 
+#title-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.toolbar-right {
+  float: right;
+}
+
+#toolbar-left {
+  display: flex;
+  gap: 10px;
+}
+
 .header-base {
   display: flex;
   justify-content: center;

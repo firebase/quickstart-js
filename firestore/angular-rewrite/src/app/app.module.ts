@@ -26,7 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { provideStorage, getStorage } from '@angular/fire/storage'
@@ -75,12 +75,18 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.local)),
-    FormsModule
-    provideAuth(() => getAuth()),
+    FormsModule,
+    provideAuth(() => {
+      const auth = getAuth();
+      if (auth.app.options.projectId === 'demo-friendly-eats')
+        connectAuthEmulator(auth, 'http://localhost:9099');
+
+      return auth;
+    }),
     provideFirestore(() => {
       const firestore = getFirestore();
 
-      if (firestore.app.options.projectId === "demo-friendly-eats")
+      if (firestore.app.options.projectId === 'demo-friendly-eats')
         connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
 
       return firestore;

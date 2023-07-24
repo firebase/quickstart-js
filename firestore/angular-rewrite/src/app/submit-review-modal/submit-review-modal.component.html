@@ -14,36 +14,65 @@
    * limitations under the License.
 -->
 
-<div class="add-dialog-container">
-    <h2>Add a review!</h2>
+<div class="add-dialog-container" *ngIf="auth.currentUser">
+  <h2>Add a review!</h2>
 
-    <div id="star-rating-container">
-        <i hidden class="template material-icons star-rating" 
-        [style.color]="determineStarColor(1)"
-        id="star-border-icon" (mouseenter)="review.rating = 1">star</i>
-        <i hidden class="template material-icons star-rating" 
-        [style.color]="determineStarColor(2)"
-        id="star-border-icon" (mouseenter)="review.rating = 2">star</i>
-        <i hidden class="template material-icons star-rating" 
-        [style.color]="determineStarColor(3)"
-        id="star-border-icon" (mouseenter)="review.rating = 3">star</i>
-        <i hidden class="template material-icons star-rating" 
-        [style.color]="determineStarColor(4)"
-        id="star-border-icon" (mouseenter)="review.rating = 4">star</i>
-        <i hidden class="template material-icons star-rating" 
-        [style.color]="determineStarColor(5)"
-        id="star-border-icon" (mouseenter)="review.rating = 5">star</i>
-    </div>
-    
-    <mat-form-field id="review-input-field">
-        <textarea matInput placeholder="Review Text" [(ngModel)]="review.text">
-        </textarea>
-    </mat-form-field>
-    
-    <mat-dialog-actions id="action-buttons">
-        <button mat-flat-button (click)="onCancelClick()">Cancel</button>
-        <button mat-flat-button color="primary" (click)="onSubmitClick()">
-            Submit
-        </button>
-    </mat-dialog-actions>
+  <div id="star-rating-container">
+    <i
+      hidden
+      class="template material-icons star-rating"
+      [style.color]="determineStarColor(1)"
+      id="star-border-icon"
+      (mouseenter)="review.rating = 1"
+      >star</i
+    >
+    <i
+      hidden
+      class="template material-icons star-rating"
+      [style.color]="determineStarColor(2)"
+      id="star-border-icon"
+      (mouseenter)="review.rating = 2"
+      >star</i
+    >
+    <i
+      hidden
+      class="template material-icons star-rating"
+      [style.color]="determineStarColor(3)"
+      id="star-border-icon"
+      (mouseenter)="review.rating = 3"
+      >star</i
+    >
+    <i
+      hidden
+      class="template material-icons star-rating"
+      [style.color]="determineStarColor(4)"
+      id="star-border-icon"
+      (mouseenter)="review.rating = 4"
+      >star</i
+    >
+    <i
+      hidden
+      class="template material-icons star-rating"
+      [style.color]="determineStarColor(5)"
+      id="star-border-icon"
+      (mouseenter)="review.rating = 5"
+      >star</i
+    >
+  </div>
+
+  <mat-form-field id="review-input-field">
+    <textarea matInput placeholder="Review Text" [(ngModel)]="review.text">
+    </textarea>
+  </mat-form-field>
+
+  <mat-dialog-actions id="action-buttons">
+    <button mat-flat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="onSubmitClick()">
+      Submit
+    </button>
+  </mat-dialog-actions>
+</div>
+
+<div id="no-user-container">
+  <h2 id="no-user-text">Must be signed in to submit a review!</h2>
 </div>

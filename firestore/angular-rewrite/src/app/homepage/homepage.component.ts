@@ -22,7 +22,7 @@ import {
   query,
   where,
   QueryConstraint,
-  orderBy
+  orderBy,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Restaurant } from '../restaurant-card/restaurant';
@@ -30,6 +30,7 @@ import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
+import { Auth, signInAnonymously, signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-homepage',
@@ -39,6 +40,7 @@ import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 
 export class HomepageComponent {
   private store: Firestore = inject(Firestore);
+  public auth: Auth = inject(Auth);
   private restaurantsCollectionRef = collection(this.store, 'restaurants');
   title = 'FriendlyEats-Homepage';
   sortingData: DialogData = DEFAULT_SORT_DATA;
@@ -81,5 +83,14 @@ export class HomepageComponent {
     });
 
   }
+
+  public signInWithFirebase() {
+    signInAnonymously(this.auth);
+  }
+
+  public signOutWithFirebase() {
+    signOut(this.auth);
+  }
+
   constructor(public dialog: MatDialog, private router: Router,) { }
 }
