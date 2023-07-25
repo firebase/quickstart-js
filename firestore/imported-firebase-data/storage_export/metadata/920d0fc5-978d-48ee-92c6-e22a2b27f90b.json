@@ -1,0 +1,19 @@
+{
+  "name": "italian.jpeg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689693024623,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "b8d2996d-6092-4655-bb22-3ad99282f184"
+  ],
+  "etag": "lxmMnGme410vGWDxr4fiFKNUGK8",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:10:24.623Z",
+  "updated": "2023-07-18T15:10:24.623Z",
+  "size": 15539,
+  "md5Hash": "oNgXaywYyPOeKpsGUPC5dQ==",
+  "crc32c": "3182900455"
+}
