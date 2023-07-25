@@ -93,10 +93,6 @@ export class HomepageComponent {
     this.dialog.open(SignInModalComponent, { data: { isCreatingAccount: true } });
   }
 
-  public signInWithFirebase() {
-    signInAnonymously(this.auth);
-  }
-
   public signOutWithFirebase() {
     signOut(this.auth);
   }
