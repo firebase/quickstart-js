@@ -23,6 +23,8 @@
   background-color: #3367d6;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.4);
   color: white;
+  width: 100%;
+  padding: 0 20px;
 }
 
 #title-row {
@@ -80,6 +82,9 @@
   font-size: 15px;
   letter-spacing: normal;
   line-height: 1;
+  white-space: pre-wrap;
+  position: relative;
+  gap: 10px;
 }
 
 #empty-restaurants-container {
