@@ -7,32 +7,15 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-export interface Rating {
-    id?: string;
-    rating: number;
-    text: string;
-    timestamp?: Date;
-    userId?: string;
-    userName?: string;
-}
-
-interface Restaurant {
-    id: string;
-    avgRating: number;
-    category: string;
-    city: string;
-    name: string;
-    numRatings: number;
-    photo: string;
-    price: number;
-}
-
 import {
     onDocumentWritten,
 } from "firebase-functions/v2/firestore";
 import * as logger from "firebase-functions/logger";
 import { getFirestore } from "firebase-admin/firestore";
 import { initializeApp } from "firebase-admin/app";
+
+import { Restaurant } from '../../types/restaurant';
+import { Rating } from '../../types/ratings';
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript

@@ -25,7 +25,7 @@ import {
   orderBy,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Restaurant } from '../restaurant-card/restaurant';
+import { Restaurant } from '../../../types/restaurant';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
