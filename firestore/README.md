@@ -20,6 +20,14 @@ Follow these steps to setup and run the quickstart:
     ```bash
     npm -g i firebase-tools
     ```
+ 1. Login to Firebase
+    ```bash
+    firebase login
+    ```
+ 1. Initialize Firebase
+    ```bash
+    firebase init
+    ```
  1. Set the CLI to use the project you created on step 1:
     ```bash
     firebase use --add
