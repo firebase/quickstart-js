@@ -1,0 +1,19 @@
+{
+  "name": "indian.jpg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689694888121,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "c4e5ae0f-342d-4570-beb5-c06f092ee87f"
+  ],
+  "etag": "Prdr5i2F0Qrr/nq8sJ59tO42teg",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:41:28.121Z",
+  "updated": "2023-07-18T15:41:28.121Z",
+  "size": 776651,
+  "md5Hash": "fn7HURB+a0sY854FLQZXjw==",
+  "crc32c": "1636089573"
+}

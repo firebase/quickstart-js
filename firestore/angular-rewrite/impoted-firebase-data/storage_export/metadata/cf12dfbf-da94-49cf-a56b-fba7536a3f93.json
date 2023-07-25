@@ -1,0 +1,19 @@
+{
+  "name": "pizza.jpg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689694888208,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "1d18a8a0-b0e5-435d-8d86-e79240129ffe"
+  ],
+  "etag": "5EZr63XMgOV95g1w5GzbZHuuek8",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:41:28.208Z",
+  "updated": "2023-07-18T15:41:28.208Z",
+  "size": 3213540,
+  "md5Hash": "8UP4E+Tw7blb0ro8U0aJrQ==",
+  "crc32c": "4151352808"
+}
