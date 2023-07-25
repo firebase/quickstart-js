@@ -22,12 +22,13 @@
         <span>FriendlyEats</span>
       </div>
       <div id="toolbar-right">
-          <button mat-flat-button id="sign-in-button" (click)="signInWithFirebase()" *ngIf="!auth.currentUser">Sign In</button>
-          <button mat-flat-button id="sign-in-button" (click)="signOutWithFirebase()" *ngIf="auth.currentUser">Sign Out</button>
+          <button mat-flat-button class="sign-in-button" (click)="openSignInDialog()" *ngIf="!auth.currentUser">Sign In</button>
+          <button mat-flat-button class="sign-in-button" (click)="openCreateAccountDialog()" *ngIf="!auth.currentUser">Create Account</button>
+          <button mat-flat-button class="sign-in-button" (click)="signOutWithFirebase()" *ngIf="auth.currentUser">Sign Out</button>
       </div>
     </mat-toolbar-row>
 
-    <mat-toolbar-row (click)="openDialog()" class="hover-change contained center-self" id="filter-bar">
+    <mat-toolbar-row (click)="openFilterDialog()" class="hover-change contained center-self" id="filter-bar">
       <div id="filter-items">
         <mat-icon>filter_list</mat-icon>
         <span>
@@ -40,7 +41,8 @@
 </header>
 <div id="empty-restaurants-container" *ngIf="(restaurants | async)?.length === 0">
   <img src="assets/guy_fireats.png" width="300" height="300">
-  <b>No Restaurants To Display!</b>
+  <b *ngIf="auth">No Restaurants To Display!</b>
+  <b *ngIf="!auth">Sign in to see restaurants!</b>
 </div>
 
 <!-- TODO(abradham): Refactor to use more concise material grid styling-->

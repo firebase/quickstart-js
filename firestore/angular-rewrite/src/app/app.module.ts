@@ -45,8 +45,9 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
-import { connectFirestoreEmulator, enableIndexedDbPersistence } from '@firebase/firestore';
+import { connectFirestoreEmulator } from '@firebase/firestore';
 import { FormsModule } from '@angular/forms';
+import { SignInModalComponent } from './sign-in-modal/sign-in-modal.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { FormsModule } from '@angular/forms';
     RestuarantPageComponent,
     ReviewListComponent,
     FilterDialogComponent,
-    SubmitReviewModalComponent
+    SubmitReviewModalComponent,
+    SignInModalComponent,
   ],
   imports: [
     BrowserModule,

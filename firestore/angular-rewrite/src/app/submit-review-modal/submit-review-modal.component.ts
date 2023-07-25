@@ -53,7 +53,7 @@ export class SubmitReviewModalComponent {
 
     await addDoc(collectionRef, {
       ...this.review,
-      userName: "Anonymous"
+      userName: this.auth.currentUser ? this.auth.currentUser.email : 'Anonymous'
     } as Rating);
     this.dialogRef.close();
   }

@@ -38,6 +38,10 @@
   float: right;
 }
 
+.sign-in-button {
+  margin-left: 15px;
+}
+
 #toolbar-left {
   display: flex;
   gap: 10px;

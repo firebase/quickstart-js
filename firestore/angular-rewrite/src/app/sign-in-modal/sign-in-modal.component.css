@@ -1,0 +1,32 @@
+#modal-container {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 250px;
+}
+
+#title-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.action-button {
+  float: right;
+}
+
+.gray {
+  color: gray;
+}
+
+#failed-sign-in {
+  color: red;
+}
