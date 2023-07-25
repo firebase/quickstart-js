@@ -1,0 +1,58 @@
+<!--
+ * Copyright 2023 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
+<header>
+  <mat-toolbar id="toolbar">
+    <mat-toolbar-row class="contained center-self" id="title-row">
+      <div id="toolbar-left">
+        <mat-icon>restaurant</mat-icon>
+        <span>FriendlyEats</span>
+      </div>
+      <div id="toolbar-right">
+          <button mat-flat-button class="sign-in-button" (click)="openSignInDialog()" *ngIf="!auth.currentUser">Sign In</button>
+          <button mat-flat-button class="sign-in-button" (click)="openCreateAccountDialog()" *ngIf="!auth.currentUser">Create Account</button>
+          <button mat-flat-button class="sign-in-button" (click)="signOutWithFirebase()" *ngIf="auth.currentUser">Sign Out</button>
+      </div>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row (click)="openFilterDialog()" class="hover-change contained center-self" id="filter-bar">
+      <div id="filter-items">
+        <mat-icon>filter_list</mat-icon>
+        <span>
+          Filter restaurants by
+          <b>Location, Price, Rating, and Category</b>
+        </span>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</header>
+<div id="empty-restaurants-container" *ngIf="(restaurants | async)?.length === 0">
+  <img src="assets/guy_fireats.png" width="300" height="300">
+  <b *ngIf="auth">No Restaurants To Display!</b>
+  <b *ngIf="!auth">Sign in to see restaurants!</b>
+</div>
+
+<!-- TODO(abradham): Refactor to use more concise material grid styling-->
+<div class="mdc-layout-grid contained">
+  <div class="mdc-layout-grid__inner">
+    <div
+      class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone"
+      *ngFor="let restaurant of restaurants | async"
+    >
+      <app-restaurant-card [restuarant]="restaurant" />
+    </div>
+  </div>
+</div>

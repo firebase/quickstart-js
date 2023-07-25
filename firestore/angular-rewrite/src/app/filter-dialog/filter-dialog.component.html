@@ -1,0 +1,75 @@
+<!--
+   * Copyright 2023 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *      http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   -->
+   
+   <div class="dialog-container">
+    <div class="internal-padding" id="title-section">
+       <mat-icon>filter_list</mat-icon>
+       <h2>Filter</h2>
+    </div>
+    <mat-divider></mat-divider>
+    <div id="list-section">
+       <div class="form-field-with-icon">
+          <i class="template material-icons">location_on</i>
+          <mat-form-field class="form-field">
+             <mat-label>City</mat-label>
+             <mat-select [(value)]="selectedSortOptions.city">
+             <mat-option *ngFor="let city of cities" [value]="city">
+             {{city}}
+             </mat-option>
+             </mat-select>
+          </mat-form-field>
+       </div>
+       <div class="form-field-with-icon">
+          <i class="template material-icons">fastfood</i>
+          <mat-form-field class="form-field">
+             <mat-label>Category</mat-label>
+             <mat-select [(value)]="selectedSortOptions.category">
+             <mat-option *ngFor="let category of categories" [value]="category">
+             {{category}}
+             </mat-option>
+             </mat-select>
+          </mat-form-field>
+       </div>
+       <div class="form-field-with-icon">
+          <i class="template material-icons">monetization_on</i>
+          <mat-form-field class="form-field">
+             <mat-label>Price Range</mat-label>
+             <mat-select [(value)]="selectedSortOptions.price">
+             <mat-option *ngFor="let num of [-1, 1, 2, 3, 4]" [value]="num">
+             {{num !== -1 ? "$".repeat(num) : 'Any'}}
+             </mat-option>
+             </mat-select>
+          </mat-form-field>
+       </div>
+       <div class="form-field-with-icon">
+          <i class="template material-icons">sort</i>
+          <mat-form-field class="form-field">
+             <mat-label>Sort By</mat-label>
+             <mat-select [(value)]="selectedSortOptions.sortBy">
+             <mat-option *ngFor="let val of ['Rating', 'Reviews']" [value]="val">
+             {{val}}
+             </mat-option>
+             </mat-select>
+          </mat-form-field>
+       </div>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-dialog-actions id="action-buttons">
+       <button mat-flat-button (click)="onCancelClick()">Cancel</button>
+       <button mat-flat-button (click)="onApplyClick()" color="primary">Apply</button>
+    </mat-dialog-actions>
+ </div>
+ 
