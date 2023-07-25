@@ -14,9 +14,9 @@
  * limitations under the License.
  -->
 
- <!-- TODO(abradham): Refactor to use more concise material grid styling-->
+<!-- TODO(abradham): Refactor to use more concise material grid styling-->
 <div
-  class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-2-phone"
+  class="restaurant-card-container"
   *ngIf="restuarant"
   (click)="onCardClicked()"
 >
@@ -25,6 +25,7 @@
       mat-card-image
       [src]="restuarant.photo"
       alt="Photo of the restuarant"
+      id="mat-card-image"
     />
 
     <mat-card-content class="card-info">
@@ -36,12 +37,12 @@
       </div>
       <div class="star-icon-row">
         <ng-container *ngFor="let _ of [].constructor(restuarant.avgRating)">
-          <mat-icon class="" id="rating">grade</mat-icon>
+          <i hidden class="template material-icons rating-star">star</i>
         </ng-container>
         <ng-container
           *ngFor="let _ of [].constructor(5 - restuarant.avgRating)"
         >
-          <mat-icon class="material-icons-outlined" id="rating">grade</mat-icon>
+          <i hidden class="template material-icons rating-star">star_border</i>
         </ng-container>
         <mat-card-subtitle
           >{{ restuarant.category }} ● {{ restuarant.city }}

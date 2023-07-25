@@ -38,15 +38,16 @@
     </mat-toolbar-row>
   </mat-toolbar>
 </header>
-<p class="empty-label" *ngIf="(restaurants | async)?.length === 0">
-  No restaurants to display!
-</p>
+<div id="empty-restaurants-container" *ngIf="(restaurants | async)?.length === 0">
+  <img src="assets/guy_fireats.png" width="300" height="300">
+  <b>No Restaurants To Display!</b>
+</div>
 
 <!-- TODO(abradham): Refactor to use more concise material grid styling-->
 <div class="mdc-layout-grid contained">
-  <div class="mdc-layout-grid__inner">
+  <div class="mdc-layout-grid__inner center-children">
     <div
-      class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-2-phone"
+      class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone"
       *ngFor="let restaurant of restaurants | async"
     >
       <app-restaurant-card [restuarant]="restaurant" />
