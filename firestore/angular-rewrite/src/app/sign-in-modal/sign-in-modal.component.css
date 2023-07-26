@@ -14,29 +14,35 @@
  * limitations under the License.
  */
 
-.info-header {
+#modal-container {
+  padding: 40px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 250px;
 }
 
-.price {
+#title-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.action-button {
   float: right;
-  position: relative;
 }
 
-.card-info {
-  padding-block: 20px;
+.gray {
+  color: gray;
 }
 
-.restaurant-card {
-  cursor: pointer;
-}
-
-.rating-star {
-  color: #feb22c;
-}
-
-#mat-card-image {
-  height: 250px;
+#failed-sign-in {
+  color: red;
 }

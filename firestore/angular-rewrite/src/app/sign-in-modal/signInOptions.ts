@@ -14,29 +14,6 @@
  * limitations under the License.
  */
 
-.info-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.price {
-  float: right;
-  position: relative;
-}
-
-.card-info {
-  padding-block: 20px;
-}
-
-.restaurant-card {
-  cursor: pointer;
-}
-
-.rating-star {
-  color: #feb22c;
-}
-
-#mat-card-image {
-  height: 250px;
+export interface SignInOptions {
+    isCreatingAccount: boolean;
 }

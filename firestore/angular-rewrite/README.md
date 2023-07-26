@@ -1,27 +1,55 @@
-# FriendlyEatsQuickstart Angular
+# Firestore Quickstart
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.3.
+## Introduction
 
-## Running the Application with Emulators
+FriendlyEats is a restaurant recommendation app built on Firestore. It was built with the [Angular](https://angular.io/) Javascript framework, and makes use of [Firebase's Local Emulator Suite](https://firebase.google.com/docs/emulator-suite) so that the quickstart can be run without needing to create a project in the [Firebase Console](https://console.firebase.google.com).
 
-The command to start the project and run the local emulators is:
-`firebase --project demo-friendly-eats emulators:exec --import./exported-firestore [--export-on-exit=./exported-firestore]`
-(Only the `--export-on-exit` flag only if you want to persist changes after each run of the emulators. Otherwise, you will get a fresh dataset each execution.)
+For more information about Firestore visit [the docs][firestore-docs].
 
-## Running the Angular App Only
+[firestore-docs]: https://firebase.google.com/docs/firestore/
 
-Run `ng serve` to serve the Angular frontend without the emulated Firebase backend. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Setup and run the app locally:
 
-## Code scaffolding
+Follow these steps to setup and run the quickstart:
+ 1. Install the Angular CLI if you do not already have it installed on your machine:
+   ```
+   npm install -g @angular/cli
+   ```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+ 1. Install the Firebase CLI if you do not have it installed on your machine:
+    ```bash
+    npm -g i firebase-tools
+    ```
+ 1. Initialize initialize / download the required emulators with the Firebase CLI
+    ```bash
+    firebase init emulators
+    ```
+    
+    When prompted, select the `Firestore`, `Storage`, `Functions`, and `Authentication` Emulators.
 
-## Build
+ 1. Install all project dependencies
+   ```bash
+   # In the current directory
+   npm install
+   ``` 
+   
+   ```bash
+   # In ./functions
+   npm install
+   npm run build
+   ```
+    *Note, when modifying the contents of `functions/src`, be sure to run `npm run build` in the `functions/` directory so that Typescript changes can be compiled bundled into the next emulator run.*
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+ 1. Run and serve the project locally:
+    ```bash
+    firebase --project demo-friendly-eats emulators:exec --import ./imported-firestore-data 'ng serve'
+    ```
+ 1. As indicated, open [http://localhost:4200](http://localhost:4200) in your browser and try out the app!
+ 
+## Support
 
-## Further help
+- [Firebase Support](https://firebase.google.com/support/)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## License
 
-
+© Google, 2023. Licensed under an [Apache-2](../LICENSE) license.

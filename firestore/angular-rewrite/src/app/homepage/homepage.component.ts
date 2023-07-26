@@ -22,14 +22,16 @@ import {
   query,
   where,
   QueryConstraint,
-  orderBy
+  orderBy,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Restaurant } from '../restaurant-card/restaurant';
+import { Restaurant } from '../../../types/restaurant';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
+import { Auth, signInAnonymously, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { SignInModalComponent } from '../sign-in-modal/sign-in-modal.component';
 
 @Component({
   selector: 'app-homepage',
@@ -39,6 +41,7 @@ import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 
 export class HomepageComponent {
   private store: Firestore = inject(Firestore);
+  public auth: Auth = inject(Auth);
   private restaurantsCollectionRef = collection(this.store, 'restaurants');
   title = 'FriendlyEats-Homepage';
   sortingData: DialogData = DEFAULT_SORT_DATA;
@@ -70,7 +73,7 @@ export class HomepageComponent {
       { idField: 'id' }) as Observable<Restaurant[]>;
   }
 
-  openDialog(): void {
+  openFilterDialog(): void {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
       data: this.sortingData
     });
@@ -81,5 +84,18 @@ export class HomepageComponent {
     });
 
   }
+
+  openSignInDialog(): void {
+    this.dialog.open(SignInModalComponent, { data: { isCreatingAccount: false } });
+  }
+
+  openCreateAccountDialog(): void {
+    this.dialog.open(SignInModalComponent, { data: { isCreatingAccount: true } });
+  }
+
+  public signOutWithFirebase() {
+    signOut(this.auth);
+  }
+
   constructor(public dialog: MatDialog, private router: Router,) { }
 }

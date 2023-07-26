@@ -14,29 +14,24 @@
  * limitations under the License.
  */
 
-.info-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-.price {
-  float: right;
-  position: relative;
-}
+import { SignInModalComponent } from './sign-in-modal.component';
 
-.card-info {
-  padding-block: 20px;
-}
+describe('SignInModalComponent', () => {
+  let component: SignInModalComponent;
+  let fixture: ComponentFixture<SignInModalComponent>;
 
-.restaurant-card {
-  cursor: pointer;
-}
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [SignInModalComponent]
+    });
+    fixture = TestBed.createComponent(SignInModalComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-.rating-star {
-  color: #feb22c;
-}
-
-#mat-card-image {
-  height: 250px;
-}
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

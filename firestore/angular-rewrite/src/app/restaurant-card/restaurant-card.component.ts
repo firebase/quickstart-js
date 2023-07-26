@@ -19,7 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Restaurant } from './restaurant';
+import { Restaurant } from '../../../types/restaurant';
 import { Router } from '@angular/router';
 
 @Component({
