@@ -45,6 +45,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { connectFirestoreEmulator, enableIndexedDbPersistence } from '@firebase/firestore';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -73,10 +74,17 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatButtonModule,
     BrowserAnimationsModule,
-    FormsModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirebaseApp(() => initializeApp(environment.local)),
+    FormsModule
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() => {
+      const firestore = getFirestore();
+
+      if (firestore.app.options.projectId === "demo-friendly-eats")
+        connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
+
+      return firestore;
+    }),
     provideFunctions(() => getFunctions()),
     provideStorage(() => getStorage()),
   ],
