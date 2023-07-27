@@ -29,26 +29,35 @@ const db = getFirestore();
 
 export const updateNumRatings = onDocumentWritten(
     "restaurants/{restaurtantID}/ratings/{ratingID}", async (event) => {
-        logger.info(`Updatuing the numRatings and avgRatings for restuarant ${event.params.restaurtantID}`);
+        logger.info(
+            `Updatuing the numRatings and avgRatings for restuarant
+             ${event.params.restaurtantID}`);
 
         // Get num reviews from restaurant and compare to actual num reviews
         let numRatingsReported: number;
         let actualRatings: Rating[] = [];
         let restaurantData: Restaurant;
-        const restuarantDocRef = db.doc(`restaurants/${event.params.restaurtantID}`);
+        const restuarantDocRef = db.doc(
+            `restaurants/${event.params.restaurtantID}`);
 
-        logger.info(`Fetching data for restaurant ${event.params.restaurtantID}`);
+        logger.info(`Fetching data for restaurant 
+                    ${event.params.restaurtantID}`);
+
         return restuarantDocRef.get().then(snapshot => {
             restaurantData = snapshot.data() as Restaurant;
             numRatingsReported = restaurantData.numRatings;
         }).then(() => {
-            return db.collection(`restaurants/${event.params.restaurtantID}/ratings`).get().then(snapshot => {
-                logger.info(`Fetching list of reviews for restuarant ${event.params.restaurtantID}`);
-                const rawRatingDocs = snapshot.docs
-                rawRatingDocs.forEach(doc => {
-                    actualRatings.push(doc.data() as Rating);
-                });
-            })
+            return db.collection(`restaurants/${event.params.restaurtantID}/ratings`)
+                .get().then(
+                    snapshot => {
+                        logger.info(`Fetching list of reviews for restuarant 
+                                    ${event.params.restaurtantID}`);
+
+                        const rawRatingDocs = snapshot.docs
+                        rawRatingDocs.forEach(doc => {
+                            actualRatings.push(doc.data() as Rating);
+                        });
+                    })
         }).finally(() => {
             if (numRatingsReported !== actualRatings.length) {
                 // Calculate New Average Review
