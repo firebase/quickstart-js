@@ -80,15 +80,15 @@ import { SignInModalComponent } from './sign-in-modal/sign-in-modal.component';
     FormsModule,
     provideAuth(() => {
       const auth = getAuth();
-      if (auth.app.options.projectId === 'demo-friendly-eats')
-        connectAuthEmulator(auth, 'http://localhost:9099');
+      if (auth.app.options.projectId!.indexOf('demo') === 0)
+        connectAuthEmulator(auth, 'http://127.0.0.1:9099');
 
       return auth;
     }),
     provideFirestore(() => {
       const firestore = getFirestore();
 
-      if (firestore.app.options.projectId === 'demo-friendly-eats')
+      if (firestore.app.options.projectId!.indexOf('demo') === 0)
         connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
 
       return firestore;

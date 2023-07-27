@@ -78,6 +78,40 @@
   color: white;
 }
 
+#grid-parent {
+  display: flex;
+  justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#inner-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  margin: 25px;
+}
+
+@media(max-width: 1024px){
+  #inner-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 20px;
+  }
+}
+
+@media(max-width: 600px){
+  #inner-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+.grid-cell {
+  grid-column: span 4;
+}
+
 #filter-items {
   display: flex;
   align-items: center;

@@ -46,10 +46,10 @@
 </div>
 
 <!-- TODO(abradham): Refactor to use more concise material grid styling-->
-<div class="mdc-layout-grid contained">
-  <div class="mdc-layout-grid__inner">
+<div id="grid-parent">
+  <div class="contained" id="inner-grid">
     <div
-      class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone"
+      class="grid-cell"
       *ngFor="let restaurant of restaurants | async"
     >
       <app-restaurant-card [restuarant]="restaurant" />

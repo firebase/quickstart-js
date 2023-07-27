@@ -30,7 +30,7 @@ import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
-import { Auth, signInAnonymously, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, signOut } from '@angular/fire/auth';
 import { SignInModalComponent } from '../sign-in-modal/sign-in-modal.component';
 
 @Component({

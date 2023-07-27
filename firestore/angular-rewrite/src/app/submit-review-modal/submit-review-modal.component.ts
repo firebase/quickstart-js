@@ -39,7 +39,7 @@ export class SubmitReviewModalComponent {
   constructor(
     public dialogRef: MatDialogRef<SubmitReviewModalComponent>,
     @Inject(MAT_DIALOG_DATA) private data: string
-  ) { }
+  ) {}
 
   onCancelClick() {
     this.dialogRef.close();

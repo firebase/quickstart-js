@@ -35,13 +35,16 @@
         <span class="price">{{ "$".repeat(restuarant.price) }}</span>
       </div>
       <div class="star-icon-row">
+        <!-- Draw n filled in stars, where n = restaurant.avgRating -->
         <ng-container *ngFor="let _ of [].constructor(restuarant.avgRating)">
-          <i hidden class="template material-icons rating-star">star</i>
+          <i class="template material-icons rating-star">star</i>
         </ng-container>
+
+        <!-- Draw 5-n hollow stars, where n = restaurant.avgRating -->
         <ng-container
           *ngFor="let _ of [].constructor(5 - restuarant.avgRating)"
         >
-          <i hidden class="template material-icons rating-star">star_border</i>
+          <i class="template material-icons rating-star">star_border</i>
         </ng-container>
         <mat-card-subtitle
           >{{ restuarant.category }} ● {{ restuarant.city }}
