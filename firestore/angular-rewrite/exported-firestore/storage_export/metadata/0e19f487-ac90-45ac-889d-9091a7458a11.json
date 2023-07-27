@@ -1,0 +1,19 @@
+{
+  "name": "deli.jpg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689694888228,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "7691d4a8-8617-43ac-8a0b-1536f8aa1709"
+  ],
+  "etag": "u1E1oVnbi+NVS/eS2T+MYXJKY6k",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:41:28.228Z",
+  "updated": "2023-07-18T15:41:28.228Z",
+  "size": 230591,
+  "md5Hash": "zJIFhUtfl2N1h6ljA8l3pg==",
+  "crc32c": "2374145283"
+}

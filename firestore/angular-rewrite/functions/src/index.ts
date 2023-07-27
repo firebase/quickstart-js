@@ -34,56 +34,37 @@ export const updateNumRatings = onDocumentWritten(
              ${event.params.restaurtantID}`);
 
         // Get num reviews from restaurant and compare to actual num reviews
-        let numRatingsReported: number;
-        let actualRatings: Rating[] = [];
-        let restaurantData: Restaurant;
         const restuarantDocRef = db.doc(
             `restaurants/${event.params.restaurtantID}`);
-
         logger.info(`Fetching data for restaurant 
                     ${event.params.restaurtantID}`);
 
-        return restuarantDocRef.get().then(snapshot => {
-            restaurantData = snapshot.data() as Restaurant;
-            numRatingsReported = restaurantData.numRatings;
-        }).then(() => {
-            return db.collection(`restaurants/${event.params.restaurtantID}/ratings`)
-                .get().then(
-                    snapshot => {
-                        logger.info(`Fetching list of reviews for restuarant 
-                                    ${event.params.restaurtantID}`);
+        const restaurantDocFromFirebase = await restuarantDocRef.get();
+        const restaurantData = restaurantDocFromFirebase.data() as Restaurant;
+        const numRatingsReported = restaurantData.numRatings;
+        const fetchedRatingDocs = await db.collection(`restaurants/${event.params.restaurtantID}/ratings`).get()
+        const actualRatings: Rating[] = []
+        fetchedRatingDocs.forEach(rating => actualRatings.push(rating.data() as Rating))
 
-                        const rawRatingDocs = snapshot.docs
-                        rawRatingDocs.forEach(doc => {
-                            actualRatings.push(doc.data() as Rating);
-                        });
-                    })
-        }).finally(() => {
-            if (numRatingsReported !== actualRatings.length) {
-                // Calculate New Average Review
-                let sumOfRatings = 0;
-                actualRatings.forEach(currentRating => {
-                    sumOfRatings += currentRating.rating;
-                })
-                logger.info(`Calculated sum of ratings: ${sumOfRatings}`)
 
-                const newAvgRating = Math.round(sumOfRatings / actualRatings.length);
-                logger.info(`Calculated newAvgRating: ${newAvgRating}`)
-
-                // Crete restuarant obj. w/ updated info
-                const newRestaurant: Restaurant = {
-                    ...restaurantData,
-                    avgRating: newAvgRating,
-                    numRatings: actualRatings.length
-                }
-
-                logger.info(`Setting updated avg. and num reviews for restaurant ${event.params.restaurtantID}`);
-
-                // Set restaurant obj to have updated info
-                return restuarantDocRef.set(newRestaurant);
+        // Finally, do all our checks
+        if (numRatingsReported !== actualRatings.length) {
+            // Calculate average review
+            let sumOfRatings = 0;
+            actualRatings.forEach(currentRating => sumOfRatings += currentRating.rating)
+            const newAvgRating = Math.round(sumOfRatings / actualRatings.length);
+            const newRestaurant: Restaurant = {
+                ...restaurantData,
+                avgRating: newAvgRating,
+                numRatings: actualRatings.length
             }
-            return;
-        })
 
+            // Save result to Firestore
+            return restuarantDocRef.set(newRestaurant)
+        }
+
+        // Returns null if document already accounted for
+        return;
     }
 )
+
