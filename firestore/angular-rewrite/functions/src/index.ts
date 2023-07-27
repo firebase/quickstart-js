@@ -46,8 +46,11 @@ export const updateNumRatings = onDocumentWritten(
         const actualRatings: Rating[] = []
         fetchedRatingDocs.forEach(rating => actualRatings.push(rating.data() as Rating))
 
-
-        // Finally, do all our checks
+        /**
+         * In the case of a race condition, restuarant.numRatings will be 
+         * corrected on the next write to the `ratings` collection
+         */
+        assert(numRatingsReported < actualRatings.length)
         if (numRatingsReported !== actualRatings.length) {
             // Calculate average review
             let sumOfRatings = 0;
