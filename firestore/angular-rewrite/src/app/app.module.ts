@@ -26,7 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { provideStorage, getStorage } from '@angular/fire/storage'
@@ -45,8 +45,9 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
-import { connectFirestoreEmulator, enableIndexedDbPersistence } from '@firebase/firestore';
+import { connectFirestoreEmulator } from '@firebase/firestore';
 import { FormsModule } from '@angular/forms';
+import { SignInModalComponent } from './sign-in-modal/sign-in-modal.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { FormsModule } from '@angular/forms';
     RestuarantPageComponent,
     ReviewListComponent,
     FilterDialogComponent,
-    SubmitReviewModalComponent
+    SubmitReviewModalComponent,
+    SignInModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,12 +77,18 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.local)),
-    FormsModule
-    provideAuth(() => getAuth()),
+    FormsModule,
+    provideAuth(() => {
+      const auth = getAuth();
+      if (auth.app.options.projectId!.indexOf('demo') === 0)
+        connectAuthEmulator(auth, 'http://127.0.0.1:9099');
+
+      return auth;
+    }),
     provideFirestore(() => {
       const firestore = getFirestore();
 
-      if (firestore.app.options.projectId === "demo-friendly-eats")
+      if (firestore.app.options.projectId!.indexOf('demo') === 0)
         connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
 
       return firestore;

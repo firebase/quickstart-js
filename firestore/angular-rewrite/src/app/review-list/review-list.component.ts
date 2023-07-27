@@ -15,7 +15,7 @@
  */
 
 import { Component, OnInit, Input, inject } from '@angular/core';
-import { Rating } from './ratings';
+import { Rating } from '../../../types/ratings';
 import { Observable } from 'rxjs';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 

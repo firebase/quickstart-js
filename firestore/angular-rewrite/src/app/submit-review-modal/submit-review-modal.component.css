@@ -15,29 +15,39 @@
  */
 
 .add-dialog-container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin: 0 auto;
-    padding: 25px;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 0 auto;
+  padding: 25px;
+  gap: 20px;
 }
 
 .star-rating {
-    transform: scale(1.4);
+  transform: scale(1.4);
 }
 
 #star-rating-container {
-    align-self: center;
-    display: flex;
-    gap: 20px;
-    cursor: pointer;
+  align-self: center;
+  display: flex;
+  gap: 20px;
+  cursor: pointer;
 }
 
 #review-input-field {
-    width: 60vw;
+  width: 60vw;
 }
 
 #action-buttons {
-    align-self: flex-end;
+  align-self: flex-end;
+}
+
+#no-rating-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#no-user-text {
+  padding: 100px;
 }
