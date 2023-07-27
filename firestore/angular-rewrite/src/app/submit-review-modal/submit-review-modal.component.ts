@@ -18,7 +18,7 @@ import { Component, ViewEncapsulation, inject, Inject } from "@angular/core";
 import { Firestore, collection, addDoc } from "@angular/fire/firestore";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
-import { Rating } from "../../../types/ratings";
+import { Rating } from "../../types/ratings";
 
 @Component({
   selector: "app-submit-review-modal",

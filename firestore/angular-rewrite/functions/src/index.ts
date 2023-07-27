@@ -21,8 +21,8 @@ import * as logger from "firebase-functions/logger";
 import { getFirestore } from "firebase-admin/firestore";
 import { initializeApp } from "firebase-admin/app";
 
-import { Restaurant } from '../../types/restaurant';
-import { Rating } from '../../types/ratings';
+import { Restaurant } from '../../src/types/restaurant';
+import { Rating } from '../../src/types/ratings';
 import { strict as assert } from 'assert';
 
 initializeApp();
