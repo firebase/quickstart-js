@@ -23,6 +23,7 @@ import { initializeApp } from "firebase-admin/app";
 
 import { Restaurant } from '../../types/restaurant';
 import { Rating } from '../../types/ratings';
+import { strict as assert } from 'assert';
 
 initializeApp();
 const db = getFirestore();
@@ -30,44 +31,47 @@ const db = getFirestore();
 export const updateNumRatings = onDocumentWritten(
     "restaurants/{restaurtantID}/ratings/{ratingID}", async (event) => {
         logger.info(
-            `Updatuing the numRatings and avgRatings for restuarant
-             ${event.params.restaurtantID}`);
+            `Updating the numRatings and avgRatings for restuarant ` +
+            `${event.params.restaurtantID}`);
 
         // Get num reviews from restaurant and compare to actual num reviews
         const restuarantDocRef = db.doc(
             `restaurants/${event.params.restaurtantID}`);
-        logger.info(`Fetching data for restaurant 
-                    ${event.params.restaurtantID}`);
 
+        logger.info(`Fetching data for restaurant ` +
+            `${event.params.restaurtantID}`);
         const restaurantDocFromFirebase = await restuarantDocRef.get();
         const restaurantData = restaurantDocFromFirebase.data() as Restaurant;
         const numRatingsReported = restaurantData.numRatings;
-        const fetchedRatingDocs = await db.collection(`restaurants/${event.params.restaurtantID}/ratings`).get()
+        const fetchedRatingDocs = (await db.collection(`restaurants/${event.params.restaurtantID}/ratings`).get()).docs
         const actualRatings: Rating[] = []
         fetchedRatingDocs.forEach(rating => actualRatings.push(rating.data() as Rating))
 
         /**
-         * In the case of a race condition, restuarant.numRatings will be 
-         * corrected on the next write to the `ratings` collection
+         * In general, since the application only allows for the creation of
+         * new reviews (and not the deletion of existing reviews), we can 
+         * expect that when this function is triggered the number of reviews
+         * listed in the `restaurant.numRatings` field will be strictly less
+         * than the actual length of the `ratings` sub-collection. In the case
+         * of a race condition, restuarant.numRatings will be corrected on the
+         * next write to the `ratings` collection. 
          */
         assert(numRatingsReported < actualRatings.length)
-        if (numRatingsReported !== actualRatings.length) {
-            // Calculate average review
-            let sumOfRatings = 0;
-            actualRatings.forEach(currentRating => sumOfRatings += currentRating.rating)
-            const newAvgRating = Math.round(sumOfRatings / actualRatings.length);
-            const newRestaurant: Restaurant = {
-                ...restaurantData,
-                avgRating: newAvgRating,
-                numRatings: actualRatings.length
-            }
 
-            // Save result to Firestore
-            return restuarantDocRef.set(newRestaurant)
+        // Calculate average review
+        let sumOfRatings = 0;
+        actualRatings.forEach(currentRating => sumOfRatings += currentRating.rating)
+        const newAvgRating = Math.round(sumOfRatings / actualRatings.length);
+        const newRestaurant: Restaurant = {
+            ...restaurantData,
+            avgRating: newAvgRating,
+            numRatings: actualRatings.length
         }
 
-        // Returns null if document already accounted for
-        return;
+        // Save result to Firestore
+        logger.info(`Saving new avgRating: ${actualRatings.length}` +
+            ` for restaurant ${event.params.restaurtantID}`)
+        return restuarantDocRef.set(newRestaurant)
     }
 )
 

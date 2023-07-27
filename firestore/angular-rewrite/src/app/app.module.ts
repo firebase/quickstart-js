@@ -75,7 +75,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.local)),
-    FormsModule
+    FormsModule,
     provideAuth(() => getAuth()),
     provideFirestore(() => {
       const firestore = getFirestore();
