@@ -30,25 +30,19 @@ Follow these steps to setup and run the quickstart:
     ```bash
     npm -g i firebase-tools
     ```
- 1. Initialize initialize / download the required emulators with the Firebase CLI
-    ```bash
-    firebase init emulators
-    ```
-    
-    When prompted, select the `Firestore`, `Storage`, `Functions`, and `Authentication` Emulators.
 
  1. Install and build all project dependencies
     ```bash
-    npm install && (cd functions && npm install && npm run build)
+    npm install && (cd functions && npm install)
     ```
 
    ***Note:** When modifying the contents of `functions/src`, be sure to run `npm run build` in the `functions/` directory so that Typescript changes can be compiled bundled into the next emulator run.*
 
  1. Run and serve the project locally:
     ```bash
-    firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data 'ng serve'
+    npm start
     ```
- 1. As indicated, open [http://127.0.0.1:4200](http://127.0.0.1:4200) in your browser and try out the app!
+ 1. Open [http://127.0.0.1:4200](http://127.0.0.1:4200) in your browser and try out the app!
  
 ## Support
 
