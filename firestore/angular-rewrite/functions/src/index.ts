@@ -30,10 +30,6 @@ const db = getFirestore();
 
 export const updateNumRatings = onDocumentWritten(
     "restaurants/{restaurtantID}/ratings/{ratingID}", async (event) => {
-        logger.info(
-            `Updating the numRatings and avgRatings for restuarant ` +
-            `${event.params.restaurtantID}`);
-
         // Get num reviews from restaurant and compare to actual num reviews
         const restuarantDocRef = db.doc(
             `restaurants/${event.params.restaurtantID}`);
@@ -42,10 +38,10 @@ export const updateNumRatings = onDocumentWritten(
             `${event.params.restaurtantID}`);
         const restaurantDocFromFirebase = await restuarantDocRef.get();
         const restaurantData = restaurantDocFromFirebase.data() as Restaurant;
-        const numRatingsReported = restaurantData.numRatings;
-        const fetchedRatingDocs = (await db.collection(`restaurants/${event.params.restaurtantID}/ratings`).get()).docs
-        const actualRatings: Rating[] = []
-        fetchedRatingDocs.forEach(rating => actualRatings.push(rating.data() as Rating))
+        const fetchedRatingDocs = (await db.collection(
+            `restaurants/${event.params.restaurtantID}/ratings`).get()).docs
+        const actualRatings: Rating[] = fetchedRatingDocs.map(
+            rating => rating.data() as Rating);
 
         /**
          * In general, since the application only allows for the creation of
@@ -56,11 +52,12 @@ export const updateNumRatings = onDocumentWritten(
          * of a race condition, restuarant.numRatings will be corrected on the
          * next write to the `ratings` collection. 
          */
-        assert(numRatingsReported < actualRatings.length)
+        assert(restaurantData.numRatings < actualRatings.length)
 
         // Calculate average review
-        let sumOfRatings = 0;
-        actualRatings.forEach(currentRating => sumOfRatings += currentRating.rating)
+        const sumOfRatings = actualRatings.reduce(
+            (currentSum, currentRating) => currentSum + currentRating.rating,
+            0);
         const newAvgRating = Math.round(sumOfRatings / actualRatings.length);
         const newRestaurant: Restaurant = {
             ...restaurantData,
