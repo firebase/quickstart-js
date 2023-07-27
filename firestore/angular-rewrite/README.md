@@ -22,9 +22,9 @@ Before following the steps to build and run this quickstart you will need:
 Follow these steps to setup and run the quickstart:
 
  1. Install the Angular CLI if you do not already have it installed on your machine:
-   ```
-   npm install -g @angular/cli
-   ```
+    ``` bash
+    npm install -g @angular/cli
+    ```
 
  1. Install the Firebase CLI if you do not have it installed on your machine:
     ```bash
@@ -38,11 +38,11 @@ Follow these steps to setup and run the quickstart:
     When prompted, select the `Firestore`, `Storage`, `Functions`, and `Authentication` Emulators.
 
  1. Install and build all project dependencies
-   ```bash
-   npm install && (cd functions && npm install && npm run build)
-   ```
+    ```bash
+    npm install && (cd functions && npm install && npm run build)
+    ```
 
-   *Note, when modifying the contents of `functions/src`, be sure to run `npm run build` in the `functions/` directory so that Typescript changes can be compiled bundled into the next emulator run.*
+   ***Note:** When modifying the contents of `functions/src`, be sure to run `npm run build` in the `functions/` directory so that Typescript changes can be compiled bundled into the next emulator run.*
 
  1. Run and serve the project locally:
     ```bash
