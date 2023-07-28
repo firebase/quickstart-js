@@ -63,6 +63,7 @@ Follow these steps to have a working version of the quickstart running with the 
  ![Photo of `environments.ts` file with mock firebase web config info copied](images/environments-ts.png)
 
  4. On line 79 of `src/app/app.module.ts`, change your environment from `environments.local` to `environments.prod` in the `provideFirebaseApp` function call
+
  ![Photo of `environments.prod` selection in `src/app/app.module.ts`](images/ProdAppModule.png)
 
  5. Back in the Firebase console, enable email and password authentication on your project by doing: **Authentication > SIGN-IN METHOD > Email > Email/Password > SAVE**
@@ -72,7 +73,7 @@ Follow these steps to have a working version of the quickstart running with the 
  6. In the Firebase console, enable Firestore on your project by clicking **Create Database** in the **Cloud Firestore** section of the console and answering all prompts.
 
    * When prompted, select "Start in Test Mode"
-   
+
  ![Photo of Firebase Firestore Setup](images/EnableFirestore.png)
 
  7. Simmilarly, enable Cloud Storage on your project by clicking **Get Started** in the **Storage** section of the console and answering all prompts.
@@ -82,16 +83,19 @@ Follow these steps to have a working version of the quickstart running with the 
  ![Photo of Firebase Storage Setup](images/EnableStorage.png)
 
  8. Set the CLI to use the project you created in Step 1:
+
  ```bash
  firebase --use add
  ```
 
  9. Deploy the firebase security rules and indexes
+
  ```bash
  firebase deploy --only firestore
  ```
 
- 10. Run your angular app locally and see your working app!
+ 10. Serve your Angular app and see it connect to the Firebase Console!
+
  ```bash
  ng serve
  ```
