@@ -85,7 +85,7 @@ Follow these steps to have a working version of the quickstart running with the 
  firebase --use add
  ```
 
- 8. Serve your Angular app and see it connect to the Firebase Console!
+ 8. Serve your Angular app and see it connect to the Firebase Console by opening [http://localhost:4200](http://localhost:4200) in your browser!
 
  ```bash
  npm run production
