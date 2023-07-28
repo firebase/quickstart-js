@@ -18,7 +18,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Firestore, doc, docData, } from '@angular/fire/firestore';
-import { Restaurant } from '../../../types/restaurant';
+import { Restaurant } from '../../types/restaurant';
 import { MatDialog } from '@angular/material/dialog';
 import {
   SubmitReviewModalComponent

@@ -19,7 +19,7 @@ import { Firestore, collection, addDoc } from "@angular/fire/firestore";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog"
 import { Auth } from '@angular/fire/auth';
 
-import { Rating } from "../../../types/ratings";
+import { Rating } from "../../types/ratings";
 
 @Component({
   selector: "app-submit-review-modal",
@@ -39,7 +39,7 @@ export class SubmitReviewModalComponent {
   constructor(
     public dialogRef: MatDialogRef<SubmitReviewModalComponent>,
     @Inject(MAT_DIALOG_DATA) private data: string
-  ) {}
+  ) { }
 
   onCancelClick() {
     this.dialogRef.close();
