@@ -92,7 +92,7 @@ Follow these steps to have a working version of the quickstart running with the 
  9. Deploy the firebase security rules and indexes
 
  ```bash
- firebase deploy --only firestore[,functions]
+ firebase deploy --only firestore
  ```
 
  > **Note:** If you've opted to set up a billing plan and wish to deploy functions as well, replace this command with simply `firebase deploy`.
