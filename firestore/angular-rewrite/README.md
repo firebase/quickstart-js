@@ -69,13 +69,16 @@ Follow these steps to have a working version of the quickstart running with the 
 
  ![Photo of the enable email/password screen on Firebase Authentication page](images/Enable-Email.png)
 
- 6. In the Firebase console, enable Firestore on your project by clicking **Create Database** in the Cloud Firestore section of the console and answering all prompts.
+ 6. In the Firebase console, enable Firestore on your project by clicking **Create Database** in the **Cloud Firestore** section of the console and answering all prompts.
+
+   * When prompted, select "Start in Test Mode"
+   
+ ![Photo of Firebase Firestore Setup](images/EnableFirestore.png)
+
+ 7. Simmilarly, enable Cloud Storage on your project by clicking **Get Started** in the **Storage** section of the console and answering all prompts.
 
    * When prompted, select "Start in Test Mode"
 
- 7. Simmilarly, enable Cloud Storage on your project by clicking **Get Started** in the Storage section of the console and answering all prompts.
-
-   * When prompted, select "Start in Test Mode"
  ![Photo of Firebase Storage Setup](images/EnableStorage.png)
 
  8. Set the CLI to use the project you created in Step 1:
