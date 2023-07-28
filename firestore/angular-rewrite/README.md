@@ -85,19 +85,12 @@ Follow these steps to have a working version of the quickstart running with the 
  firebase --use add
  ```
 
- 8. Deploy the firebase security rules and indexes
-
- ```bash
- firebase deploy --only firestore
- ```
-
- > **Note:** If you've opted to set up a billing plan and wish to deploy functions as well, replace this command with simply `firebase deploy`.
-
- 9. Serve your Angular app and see it connect to the Firebase Console!
+ 8. Serve your Angular app and see it connect to the Firebase Console!
 
  ```bash
  npm run production
  ```
+ > **Note:** If you've opted to set up a billing plan and wish to deploy functions as well, replace the `firebase deploy --only firestore` on line 8 of `package.json` with `firebase deploy`.
 
 ## Support
 
