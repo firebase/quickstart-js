@@ -37,7 +37,7 @@ Follow these steps to setup and run the quickstart:
     npm install && (cd functions && npm install)
     ```
 
-   > **Note:** When modifying the contents of `functions/src`, be sure to run `npm run build` in the `functions/` directory so that Typescript changes can be compiled and present in the next emulator run.
+    > **Note:** When modifying the contents of `functions/src`, be sure to run `npm run build` in the `functions/` directory so that Typescript changes can be compiled and present in the next emulator run.
 
  1. Run and serve the project locally:
     ```bash
@@ -49,7 +49,7 @@ Follow these steps to setup and run the quickstart:
 
 Follow these steps to have a working version of the quickstart running with the Firebase console:
 
-   > **Note:** While **Authentication**, **Storage**, and **Firestore** are offered as free services through the Firebase console, using Firebase **Functions** on the Firebase Console requires a billing plan. The following instructions, therefore, exclude those steps needed to deploy and host functions on the Firebase Console. All other application functionality is conserved.
+   > **Note:** In the original application (that runs on the emulators), there is a Firebase Function that updates the `avgRating` field of a restaurant whenever that restaurant recieves a review. While **Authentication**, **Storage**, and **Firestore** are offered as free services through the Firebase console, using Firebase **Functions** on the Firebase Console requires a billing plan. There is a [free tier billing plan](https://firebase.google.com/pricing) that allows up to 2 million free function calls per month, but enabling this plan requires presenting payment information to Firebase. The following instructions, therefore, exclude those steps needed to deploy and host functions on the Firebase Console. All application functionality, other than the auto-updating `avgRating` field for restaurants, is conserved.
 
  1. Create a new Firebase project in the [Firebase Console](https://console.firebase.google.com)
 
@@ -92,7 +92,7 @@ Follow these steps to have a working version of the quickstart running with the 
  9. Deploy the firebase security rules and indexes
 
  ```bash
- firebase deploy --only firestore
+ firebase deploy --only firestore[,functions]
  ```
 
  > **Note:** If you've opted to set up a billing plan and wish to deploy functions as well, replace this command with simply `firebase deploy`.
