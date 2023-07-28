@@ -43,7 +43,7 @@ Follow these steps to setup and run the quickstart:
     ```bash
     npm start
     ```
- 1. Open [http://127.0.0.1:4200](http://127.0.0.1:4200) in your browser and try out the app!
+ 1. Open [http://localhost:4200](http://localhost:4200) in your browser and try out the app!
 
 ## Configure and run the app with the Firebase Console:
 
