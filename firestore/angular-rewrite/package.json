@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "(cd functions && npm run build) && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data 'ng serve'",
+    "emulators": "(cd functions && npm run build) && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data 'ng serve -c local'",
+    "production": "ng serve -c production",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

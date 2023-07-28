@@ -27,19 +27,18 @@
           },
           "configurations": {
             "production": {
-              "budgets": [
+              "fileReplacements": [
                 {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             },
             "development": {
               "buildOptimizer": false,
@@ -48,9 +47,17 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "local": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "local"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -58,11 +65,11 @@
             "production": {
               "browserTarget": "friendly-eats-quickstart:build:production"
             },
-            "development": {
-              "browserTarget": "friendly-eats-quickstart:build:development"
+            "local":{
+              "browserTarget": "friendly-eats-quickstart:build:local"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "local"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

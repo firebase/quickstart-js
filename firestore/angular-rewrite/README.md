@@ -59,37 +59,33 @@ Follow these steps to have a working version of the quickstart running with the 
 
  ![Photo of firebaseConfig object](images/CopyWebConfig.png)
 
- 3. With the `firebaseConfig` copied, navigate to `src/environments/environments.ts` and paste the contents of the object into the `prod` field:
+ 3. With the `firebaseConfig` copied, navigate to `src/environments/environments.prod.ts` and paste the contents of the object into the `environment` object:
 
- ![Photo of `environments.ts` file with mock firebase web config info copied](images/environments-ts.png)
+ ![Photo of `environments.prod.ts` file with mock firebase web config info copied](images/environment-prod-ts.png)
 
- 4. On line 79 of `src/app/app.module.ts`, change your environment from `environments.local` to `environments.prod` in the `provideFirebaseApp` function call
-
- ![Photo of `environments.prod` selection in `src/app/app.module.ts`](images/ProdAppModule.png)
-
- 5. Back in the Firebase console, enable email and password authentication on your project by doing: **Authentication > SIGN-IN METHOD > Email > Email/Password > SAVE**
+ 4. Back in the Firebase console, enable email and password authentication on your project by doing: **Authentication > SIGN-IN METHOD > Email > Email/Password > SAVE**
 
  ![Photo of the enable email/password screen on Firebase Authentication page](images/Enable-Email.png)
 
- 6. In the Firebase console, enable Firestore on your project by clicking **Create Database** in the **Cloud Firestore** section of the console and answering all prompts.
+ 5. In the Firebase console, enable Firestore on your project by clicking **Create Database** in the **Cloud Firestore** section of the console and answering all prompts.
 
    * When prompted, select "Start in Test Mode"
 
  ![Photo of Firebase Firestore Setup](images/EnableFirestore.png)
 
- 7. Simmilarly, enable Cloud Storage on your project by clicking **Get Started** in the **Storage** section of the console and answering all prompts.
+ 6. Simmilarly, enable Cloud Storage on your project by clicking **Get Started** in the **Storage** section of the console and answering all prompts.
 
    * When prompted, select "Start in Test Mode"
 
  ![Photo of Firebase Storage Setup](images/EnableStorage.png)
 
- 8. Set the CLI to use the project you created in Step 1:
+ 7. Set the CLI to use the project you created in Step 1:
 
  ```bash
  firebase --use add
  ```
 
- 9. Deploy the firebase security rules and indexes
+ 8. Deploy the firebase security rules and indexes
 
  ```bash
  firebase deploy --only firestore
@@ -97,10 +93,10 @@ Follow these steps to have a working version of the quickstart running with the 
 
  > **Note:** If you've opted to set up a billing plan and wish to deploy functions as well, replace this command with simply `firebase deploy`.
 
- 10. Serve your Angular app and see it connect to the Firebase Console!
+ 9. Serve your Angular app and see it connect to the Firebase Console!
 
  ```bash
- ng serve
+ npm run production
  ```
 
 ## Support

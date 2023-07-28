@@ -16,10 +16,9 @@
 
 
 /**  If connecting to a live Firebase project (one that you set up in the 
- * Firebase console) put your config vars into the `environment.prod.ts` file.
+ * Firebase console) put your config vars into the the object in this file.
  * Otherwise, leave untouched to enable connection to demo project and emulators.
 */
-export const environment = {
-    projectId: 'demo-friendly-eats',
-    apiKey: '[FIREBASE_API_KEY]'
-}
+export const environment = {}
+
+
