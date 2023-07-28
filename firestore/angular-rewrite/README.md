@@ -95,6 +95,8 @@ Follow these steps to have a working version of the quickstart running with the 
  firebase deploy --only firestore
  ```
 
+ > **Note:** If you've opted to set up a billing plan and wish to deploy functions as well, replace this command with simply `firebase deploy`.
+
  10. Serve your Angular app and see it connect to the Firebase Console!
 
  ```bash
