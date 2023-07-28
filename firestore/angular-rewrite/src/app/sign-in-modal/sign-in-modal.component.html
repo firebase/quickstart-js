@@ -1,0 +1,71 @@
+<!--
+ * Copyright 2023 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<div id="modal-container">
+  <div id="title-section">
+    <mat-icon>lock</mat-icon>
+    <h2
+      [innerHTML]="data.isCreatingAccount ? 'Create Account' : 'Sign In'"
+    ></h2>
+    <mat-divider />
+  </div>
+  <div *ngIf="failedSignIn" id="failed-sign-in">
+    <p
+      [innerHTML]="
+        data.isCreatingAccount
+          ? '* Account creation failed; Please try again!'
+          : '* User sign in failed; Please try again!'
+      "
+    ></p>
+  </div>
+  <div class="form-container">
+    <mat-form-field class="form-field">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        [(ngModel)]="userEmail"
+        [value]="userEmail"
+        placeholder="Email@example.com"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [(ngModel)]="userPassword"
+        [value]="userPassword"
+        type="password"
+        placeholder="Password"
+        required
+      />
+    </mat-form-field>
+    <div id="button-row">
+      <button
+        mat-flat-button
+        color="primary"
+        class="action-button"
+        (click)="launchAuthAction()"
+        [innerHTML]="data.isCreatingAccount ? 'Create Account' : 'Sign In'"
+      ></button>
+      <button mat-flat-button class="action-button" (click)="closeDialog()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

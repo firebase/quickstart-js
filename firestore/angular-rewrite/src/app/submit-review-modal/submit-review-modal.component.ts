@@ -16,7 +16,8 @@
 
 import { Component, ViewEncapsulation, inject, Inject } from "@angular/core";
 import { Firestore, collection, addDoc } from "@angular/fire/firestore";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog"
+import { Auth } from '@angular/fire/auth';
 
 import { Rating } from "../../types/ratings";
 
@@ -29,6 +30,7 @@ import { Rating } from "../../types/ratings";
 export class SubmitReviewModalComponent {
   private firestore: Firestore = inject(Firestore);
   private restaurantId = this.data;
+  public auth = inject(Auth);
   public review: Rating = {
     rating: 5,
     text: ""
@@ -51,7 +53,7 @@ export class SubmitReviewModalComponent {
 
     await addDoc(collectionRef, {
       ...this.review,
-      userName: "Anonymous"
+      userName: this.auth.currentUser ? this.auth.currentUser.email : 'Anonymous'
     } as Rating);
     this.dialogRef.close();
   }

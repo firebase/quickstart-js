@@ -1,0 +1,19 @@
+{
+  "name": "coffee.jpg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689694888103,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "d075ad8b-9f05-4244-b322-38dc0b9f1e8a"
+  ],
+  "etag": "edTOpBSB23z/cREWyo8t5Vmt3dc",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:41:28.103Z",
+  "updated": "2023-07-18T15:41:28.103Z",
+  "size": 744527,
+  "md5Hash": "zWrYl1o+lWr5RjS5Tw3BZg==",
+  "crc32c": "330202550"
+}
