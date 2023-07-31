@@ -21,6 +21,6 @@
  * For more information about generating, finding, or using project config
  * objects, visit https://support.google.com/firebase/answer/7015592.
 */
-export const environment = {}
+export const projectConfig = {}
 
 

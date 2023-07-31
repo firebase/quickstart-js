@@ -19,7 +19,7 @@
  * Firebase console) put your config vars into the `environment.prod.ts` file.
  * Otherwise, leave untouched to enable connection to demo project and emulators.
 */
-export const environment = {
+export const projectConfig = {
     projectId: 'demo-friendly-eats',
     apiKey: '[FIREBASE_API_KEY]'
 }
