@@ -23,5 +23,5 @@
 
 export const environment = {
   projectId: 'demo-friendly-eats',
-  apiKey: '[FIREBASE_API_KEY]'
+  apiKey: 'API_KEY_UNUSED'
 }
