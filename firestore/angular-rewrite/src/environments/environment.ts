@@ -20,10 +20,8 @@
  * and change the `initializeApp` value in `app.module.ts` to `environment.prod`. 
  * Otherwise, leave untouched to enable connection to demo project and emulators.
 */
+
 export const environment = {
-    local: {
-        projectId: 'demo-friendly-eats',
-        apiKey: '[FIREBASE_API_KEY]'
-    },
-    prod: {}
+  projectId: 'demo-friendly-eats',
+  apiKey: '[FIREBASE_API_KEY]'
 }

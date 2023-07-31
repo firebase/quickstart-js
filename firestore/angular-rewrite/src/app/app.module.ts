@@ -76,7 +76,7 @@ import { SignInModalComponent } from './sign-in-modal/sign-in-modal.component';
     MatInputModule,
     MatButtonModule,
     BrowserAnimationsModule,
-    provideFirebaseApp(() => initializeApp(environment.local)),
+    provideFirebaseApp(() => initializeApp(environment)),
     FormsModule,
     provideAuth(() => {
       const auth = getAuth();
