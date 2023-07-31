@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "(cd functions && npm run build) && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data 'ng serve'",
-    "emulators": "(cd functions && npm run build) && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data 'ng serve -c local'",
-    "production": "(cd functions && npm run build) && firebase deploy --only firestore && ng serve -c production",
+    "start": "npm run pre-build && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data 'ng serve'",
+    "emulators": "npm run pre-build && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data 'ng serve -c local'",
+    "production": "npm run pre-build && firebase deploy --only firestore && ng serve -c production",
+    "pre-build": "(cd functions && npm run build)",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
