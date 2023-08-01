@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "(cd functions && npm run build) && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data 'ng serve'",
+    "populate-emulators": "cp src/environments/environment.ts scripts/environment.js && node scripts/PopulateFirestore.js",
+    "populate-production": "cp src/environments/environment.prod.ts scripts/environment.js && node scripts/PopulateFirestore.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
