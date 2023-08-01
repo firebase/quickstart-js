@@ -94,6 +94,7 @@ const generateMockRestaurants = () => {
     var city = getRandomItem(data.cities);
     var price = Math.floor(Math.random() * 4) + 1;
     var photoID = Math.floor(Math.random() * 22) + 1;
+    // TODO(abradham): Modify to be able to use local emulated storage bucket
     var photo =
       'https://storage.googleapis.com/firestorequickstarts.appspot.com/food_' +
       photoID +
