@@ -36,10 +36,10 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 
-import { environment } from './environment.js';
+import { projectConfig } from './environment.js';
 import { data } from './MockRestaurantData.js';
 
-const app = initializeApp(environment);
+const app = initializeApp(projectConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 

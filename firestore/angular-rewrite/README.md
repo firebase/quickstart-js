@@ -110,6 +110,8 @@ Follow these steps to have a working version of the quickstart running with the 
  ```bash
  npm run populate-production
  ```
+
+ > **Note:** To ensure that the script runs as intended, make sure  that you have correctly populated the `environemnt.prod.ts` file with your Firebase credentials.
  
 ## Support
 
