@@ -92,6 +92,16 @@ Follow these steps to have a working version of the quickstart running with the 
  ```
  > **Note:** If you've opted to set up a billing plan and wish to deploy functions as well, replace the `firebase deploy --only firestore` on line 8 of `package.json` with `firebase deploy`.
 
+ 11. (Optional) Populate production Firestore with mock data
+
+ Now that the application is live on the Firebase console, you likely want to add some data to your production Firestore database so that you can see the application in action. Rather than manually adding restaurants and reviews, a convenice script is available to populate your production Firestore database. Run the following command (defined in the `Firestore/` directory's `package.json`) to add mock data:
+
+ ```bash
+ npm run populate-production
+ ```
+
+ > **Note:** To ensure that the script runs as intended, make sure  that you have correctly populated the `environemnt.prod.ts` file with your Firebase credentials.
+ 
 ## Support
 
 - [Firebase Support](https://firebase.google.com/support/)

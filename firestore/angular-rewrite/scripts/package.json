@@ -1,0 +1,12 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "A script to send mock data to the prod firebase console",
+  "main": "PopulateFirestore.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "type": "module"
+}
