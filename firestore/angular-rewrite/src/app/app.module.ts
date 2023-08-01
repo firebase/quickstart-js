@@ -30,7 +30,7 @@ import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { provideStorage, getStorage } from '@angular/fire/storage'
-import { projectConfig } from 'src/environments/environment';
+import { projectConfig } from '../environments/environment.default';
 import { HomepageComponent } from './homepage/homepage.component';
 import { RestuarantPageComponent } from './restuarant-page/restuarant-page.component';
 import { MatIconModule } from '@angular/material/icon';
