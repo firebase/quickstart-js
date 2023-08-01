@@ -22,5 +22,3 @@
  * objects, visit https://support.google.com/firebase/answer/7015592.
 */
 export const projectConfig = {}
-
-
