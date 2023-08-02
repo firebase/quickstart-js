@@ -47,5 +47,4 @@ Thumbs.db
 .runtimeconfig.json
 
 # VSCode and editor ignores
-.vscode/*
 .editorconfig
