@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run pre-build && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data 'ng serve'",
-    "emulators": "npm run pre-build && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data 'ng serve -c local'",
+    "start": "npm run pre-build && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data --ui 'ng serve'",
+    "emulators": "npm run pre-build && firebase --project demo-friendly-eats emulators:exec --import ./imported-firebase-data --ui 'ng serve -c local'",
     "production": "npm run pre-build && firebase deploy --only firestore && npm run check-config",
     "check-config":"grep -q \"projectId\" \"src/environments/environment.prod.ts\" && ng serve -c production || echo \"No project id in configuration file!\"",
     "pre-build": "(cd functions && npm run build)",
