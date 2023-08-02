@@ -1,0 +1,20 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "command": "npm start",
+            "type": "node-terminal",
+            "request": "launch",
+            "name": "Launch Quickstart [Emulators]"
+        },
+
+        {
+            "cwd": "${workspaceFolder}",
+            "command": "npm run production",
+            "type": "node-terminal",
+            "request": "launch",
+            "name": "Launch Quickstart [Production]"
+        }
+
+    ]
+}
