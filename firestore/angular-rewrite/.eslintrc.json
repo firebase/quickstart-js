@@ -1,8 +1,0 @@
-{
-    "globals": {
-        "Navigo": true,
-        "mdc": true,
-        "importScripts": true,
-        "FriendlyEats": true
-    }
-}
