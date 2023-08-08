@@ -1,0 +1,19 @@
+{
+  "name": "ramen.jpg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689694888002,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "0e8c45de-024d-43f1-a1e4-efd189ae3904"
+  ],
+  "etag": "K2djG0J4YDZTwkoE/wJil/Z9dxc",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:41:28.002Z",
+  "updated": "2023-07-18T15:41:28.002Z",
+  "size": 43885,
+  "md5Hash": "vdeRdWARyJig6nkObwRI2Q==",
+  "crc32c": "2523739467"
+}

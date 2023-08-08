@@ -1,0 +1,19 @@
+{
+  "name": "dim_sum.jpg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689694888076,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "674e29c0-8805-410a-93b1-92cb69afd507"
+  ],
+  "etag": "DvQpmX2WICi/IjXfJOK29xIyX40",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:41:28.076Z",
+  "updated": "2023-07-18T15:41:28.076Z",
+  "size": 1314722,
+  "md5Hash": "STwXM41JACAIQ5doU6OJ7A==",
+  "crc32c": "756714563"
+}
