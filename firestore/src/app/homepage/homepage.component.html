@@ -42,7 +42,6 @@
 <div id="empty-restaurants-container" *ngIf="(restaurants | async)?.length === 0">
   <img src="assets/guy_fireats.png" width="300" height="300">
   <b *ngIf="auth">No Restaurants To Display!</b>
-  <b *ngIf="!auth">Sign in to see restaurants!</b>
 </div>
 
 <!-- TODO(abradham): Refactor to use more concise material grid styling-->
