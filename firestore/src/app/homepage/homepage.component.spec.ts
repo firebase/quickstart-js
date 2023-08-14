@@ -17,14 +17,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomepageComponent } from './homepage.component';
+import { HomepageFirestore, MockHomepageFirestore } from './hompage.service';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { projectConfig } from 'src/environments/environment.default';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 describe('HomepageComponent', () => {
   let component: HomepageComponent;
   let fixture: ComponentFixture<HomepageComponent>;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HomepageComponent]
+      imports: [MatDialogModule,
+        provideFirebaseApp(() => initializeApp(projectConfig)),
+        provideFirestore(() => getFirestore()),
+        provideAuth(() => getAuth())],
+      declarations: [HomepageComponent],
+      providers: [
+        {
+          provide: HomepageFirestore,
+          useClass: MockHomepageFirestore
+        },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} }
+      ],
     });
     fixture = TestBed.createComponent(HomepageComponent);
     component = fixture.componentInstance;
@@ -35,6 +52,7 @@ describe('HomepageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('show image on no reviews', () => {
+  it('should get resturants when service called', () => {
+    expect(component.restaurants).toBeDefined;
   })
 });

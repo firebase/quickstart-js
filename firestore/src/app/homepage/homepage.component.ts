@@ -16,15 +16,10 @@
 
 import { Component, inject } from '@angular/core';
 import {
-  Firestore,
-  collection,
-  collectionData,
-  query,
   where,
   QueryConstraint,
   orderBy,
 } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
 import { Restaurant } from '../../types/restaurant';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,22 +27,26 @@ import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component'
 import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 import { Auth, signOut } from '@angular/fire/auth';
 import { SignInModalComponent } from '../sign-in-modal/sign-in-modal.component';
+import { DefaultHomepageFirestore, HomepageFirestore } from './hompage.service';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.css']
+  styleUrls: ['./homepage.component.css'],
+  providers: [
+    {
+      provide: HomepageFirestore,
+      useClass: DefaultHomepageFirestore
+    },
+  ]
 })
 
 export class HomepageComponent {
-  private store: Firestore = inject(Firestore);
   public auth: Auth = inject(Auth);
-  private restaurantsCollectionRef = collection(this.store, 'restaurants');
+  private homepageFirestore: HomepageFirestore = inject(HomepageFirestore);
   title = 'FriendlyEats-Homepage';
   sortingData: DialogData = DEFAULT_SORT_DATA;
-  restaurants = collectionData(
-    this.restaurantsCollectionRef,
-    { idField: 'id' }) as Observable<Restaurant[]>;
+  restaurants = this.homepageFirestore.getRestaurantCollectionData() as Observable<Restaurant[]>;
 
   private fetchWithUpdatedFilters = () => {
     const constraints: QueryConstraint[] = []
@@ -68,9 +67,7 @@ export class HomepageComponent {
     }
 
 
-    this.restaurants = collectionData(
-      query(this.restaurantsCollectionRef, ...constraints),
-      { idField: 'id' }) as Observable<Restaurant[]>;
+    this.restaurants = this.homepageFirestore.getRestaurntsGivenConstraints(constraints);
   }
 
   openFilterDialog(): void {
@@ -97,5 +94,5 @@ export class HomepageComponent {
     signOut(this.auth);
   }
 
-  constructor(public dialog: MatDialog, private router: Router,) { }
+  constructor(public dialog: MatDialog) { }
 }
