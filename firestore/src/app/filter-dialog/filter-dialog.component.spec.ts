@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterDialogComponent } from './filter-dialog.component';
@@ -24,6 +26,12 @@ describe('FilterDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} }
+      ],
+
       declarations: [FilterDialogComponent]
     });
     fixture = TestBed.createComponent(FilterDialogComponent);

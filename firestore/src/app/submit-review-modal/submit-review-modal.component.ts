@@ -25,7 +25,12 @@ import { Rating } from "../../types/ratings";
   selector: "app-submit-review-modal",
   templateUrl: "./submit-review-modal.component.html",
   styleUrls: ["./submit-review-modal.component.css"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} }
+  ]
+
 })
 export class SubmitReviewModalComponent {
   private firestore: Firestore = inject(Firestore);

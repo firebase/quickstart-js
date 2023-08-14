@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from "@angular/router";
 
 
@@ -24,10 +24,5 @@ import { Router } from "@angular/router";
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'friendly-eats-quickstart';
-
-  gotoRestaurantPage = () => {
-    this.router.navigate(['/first-component']);
-  }
   constructor(private router: Router) { }
 }

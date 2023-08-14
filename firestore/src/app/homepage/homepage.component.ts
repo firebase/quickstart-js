@@ -20,8 +20,6 @@ import {
   QueryConstraint,
   orderBy,
 } from '@angular/fire/firestore';
-import { Restaurant } from '../../types/restaurant';
-import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
@@ -46,7 +44,7 @@ export class HomepageComponent {
   private homepageFirestore: HomepageFirestore = inject(HomepageFirestore);
   title = 'FriendlyEats-Homepage';
   sortingData: DialogData = DEFAULT_SORT_DATA;
-  restaurants = this.homepageFirestore.getRestaurantCollectionData() as Observable<Restaurant[]>;
+  restaurants = this.homepageFirestore.getRestaurantCollectionData();
 
   private fetchWithUpdatedFilters = () => {
     const constraints: QueryConstraint[] = []

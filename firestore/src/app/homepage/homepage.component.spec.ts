@@ -23,6 +23,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { projectConfig } from 'src/environments/environment.default';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('HomepageComponent', () => {
   let component: HomepageComponent;
@@ -30,6 +32,8 @@ describe('HomepageComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MatDialogModule,
+        MatToolbarModule,
+        MatIconModule,
         provideFirebaseApp(() => initializeApp(projectConfig)),
         provideFirestore(() => getFirestore()),
         provideAuth(() => getAuth())],

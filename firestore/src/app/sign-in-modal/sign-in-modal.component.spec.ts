@@ -14,9 +14,21 @@
  * limitations under the License.
  */
 
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignInModalComponent } from './sign-in-modal.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { projectConfig } from 'src/environments/environment.default';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { of } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 describe('SignInModalComponent', () => {
   let component: SignInModalComponent;
@@ -24,6 +36,24 @@ describe('SignInModalComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [MatDialogModule,
+        MatIconModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        FormsModule,
+        provideFirebaseApp(() => initializeApp(projectConfig)),
+        provideFirestore(() => getFirestore()),
+        provideAuth(() => getAuth())],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        {
+          provide: MatDialogRef, useValue: {
+            backdropClick: () => {
+              return of(MouseEvent)
+            }
+          }
+        }
+      ],
       declarations: [SignInModalComponent]
     });
     fixture = TestBed.createComponent(SignInModalComponent);
