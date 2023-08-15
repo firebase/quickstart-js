@@ -1,0 +1,19 @@
+{
+  "name": "burgers.jpeg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689694888258,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "dc593cfe-99e4-4a74-bc66-d9fe72ffa3b3"
+  ],
+  "etag": "gcw3qKoOnIimOySQyPQcrZU6CcM",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:41:28.259Z",
+  "updated": "2023-07-18T15:41:28.259Z",
+  "size": 9236,
+  "md5Hash": "fz1SHQxrhvfG3YdsDdPlWQ==",
+  "crc32c": "852285886"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "mediterranean.jpg",
+  "bucket": "demo-friendly-eats.appspot.com",
+  "metageneration": 1,
+  "generation": 1689694888044,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "f4a19c66-1971-41fb-a86f-ec4a23426107"
+  ],
+  "etag": "huSojcNQhH3Ox+Y7QTHxGWQmad8",
+  "customMetadata": {},
+  "timeCreated": "2023-07-18T15:41:28.044Z",
+  "updated": "2023-07-18T15:41:28.044Z",
+  "size": 257022,
+  "md5Hash": "CAQK2e93udFPOThvJi+saw==",
+  "crc32c": "348446368"
+}
