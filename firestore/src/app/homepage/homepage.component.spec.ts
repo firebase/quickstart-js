@@ -18,17 +18,20 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomepageComponent } from './homepage.component';
 import { HomepageFirestore, MockHomepageFirestore } from './hompage.service';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { projectConfig } from 'src/environments/environment.default';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { DebugElement, ElementRef } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('HomepageComponent', () => {
   let component: HomepageComponent;
   let fixture: ComponentFixture<HomepageComponent>;
+  let debugElement: DebugElement;
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MatDialogModule,
@@ -49,6 +52,7 @@ describe('HomepageComponent', () => {
     });
     fixture = TestBed.createComponent(HomepageComponent);
     component = fixture.componentInstance;
+    debugElement = fixture.debugElement;
     fixture.detectChanges();
   });
 
@@ -56,7 +60,14 @@ describe('HomepageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get resturants when service called', () => {
-    expect(component.restaurants).toBeDefined;
-  })
+  it('should call service and get restuarants on init', () => {
+    /** 
+     * Tests to see that the #empty-restaurants-container div has not
+     * been rendered. This div is rendered only when no restaurants have been 
+     * retrieved from Firestore (or, in this case, the MockHomepageFirestore 
+     * element).
+     * */
+    const emptyRestaurantsDiv = fixture.debugElement.query(By.css("#empty-restaurants-container"));
+    expect(emptyRestaurantsDiv).toBeNull();
+  });
 });

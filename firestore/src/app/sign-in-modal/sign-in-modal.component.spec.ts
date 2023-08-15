@@ -27,8 +27,9 @@ import { of } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SignInModalComponent', () => {
   let component: SignInModalComponent;
@@ -41,6 +42,8 @@ describe('SignInModalComponent', () => {
         MatDividerModule,
         MatFormFieldModule,
         FormsModule,
+        MatInputModule,
+        BrowserAnimationsModule,
         provideFirebaseApp(() => initializeApp(projectConfig)),
         provideFirestore(() => getFirestore()),
         provideAuth(() => getAuth())],

@@ -64,7 +64,6 @@ export class HomepageComponent {
       constraints.push(orderBy('avgRating', 'desc'));
     }
 
-
     this.restaurants = this.homepageFirestore.getRestaurntsGivenConstraints(constraints);
   }
 

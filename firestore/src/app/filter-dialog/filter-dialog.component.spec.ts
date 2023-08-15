@@ -19,6 +19,12 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/materia
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterDialogComponent } from './filter-dialog.component';
+import { of } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('FilterDialogComponent', () => {
   let component: FilterDialogComponent;
@@ -26,10 +32,16 @@ describe('FilterDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MatDialogModule],
+      imports: [MatDialogModule, MatIconModule, MatDividerModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
+        {
+          provide: MatDialogRef, useValue: {
+            backdropClick: () => {
+              return of(MouseEvent);
+            }
+          }
+        }
       ],
 
       declarations: [FilterDialogComponent]
