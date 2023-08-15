@@ -15,9 +15,36 @@
  */
 
 import { Injectable } from "@angular/core";
-import { Firestore, QueryConstraint, collection, collectionData, query } from "@angular/fire/firestore";
-import { Observable, of } from "rxjs";
+import {
+    Firestore,
+    QueryConstraint,
+    collection,
+    collectionData,
+    query
+} from "@angular/fire/firestore";
+import { Observable } from "rxjs";
 import { Restaurant } from "types/restaurant";
+
+
+/**
+ * The `HomepageFirestore` service class provides functionality that allows
+ * the Homepage component to recieve data from the Firestore database.
+ * The class is marked with the @Injectable decorator, which allows it to be
+ * injected into the Homepage component via the `inject()` function. The
+ * benefit of injecting this service class, as opposed to calling the Firestore
+ * methods from directly within the Homepage component, is that injection 
+ * allows for the component's UI logic to be decoupled from its datafetching
+ * logic. This decoupling enables the HomepageComponent to be unit tested with
+ * a mock implementation of this datafetching class that simply returns 
+ * predefined data without needing to establish a connection to a running 
+ * instance of Firestore (as showcased by the MockHomepageFirestore implemented 
+ * in `homepage.component.spec.ts`). Such decoupling, and the ability to be 
+ * unit tested, would not be possible if the HomepageComponent's Firestore 
+ * methods had been written directly into the`homepage.component.ts` file.
+ * 
+ * For more information about dependency injection and unit testing in Angular
+ * visit the Angular docs: https://angular.io/guide/dependency-injection
+ */
 
 @Injectable()
 export abstract class HomepageFirestore {
@@ -28,7 +55,8 @@ export abstract class HomepageFirestore {
 
     abstract getRestaurantCollectionData(): Observable<Restaurant[]>;
 
-    abstract getRestaurntsGivenConstraints(constraints: QueryConstraint[]): Observable<Restaurant[]>;
+    abstract getRestaurntsGivenConstraints(constraints: QueryConstraint[]):
+        Observable<Restaurant[]>;
 }
 
 
@@ -36,45 +64,15 @@ export abstract class HomepageFirestore {
 export class DefaultHomepageFirestore extends HomepageFirestore {
     override getRestaurantCollectionData(): Observable<Restaurant[]> {
         const restaurantsCollectionRef = collection(this.store, 'restaurants');
-        return collectionData(restaurantsCollectionRef, { idField: 'id' }) as Observable<Restaurant[]>;
+        return collectionData(restaurantsCollectionRef,
+            { idField: 'id' }) as Observable<Restaurant[]>;
     }
 
-    override getRestaurntsGivenConstraints(constraints: QueryConstraint[]): Observable<Restaurant[]> {
+    override getRestaurntsGivenConstraints(
+        constraints: QueryConstraint[]): Observable<Restaurant[]> {
+
         const restaurantsCollectionRef = collection(this.store, 'restaurants');
         return collectionData(query(restaurantsCollectionRef, ...constraints),
             { idField: 'id' }) as Observable<Restaurant[]>;
-    }
-}
-
-@Injectable()
-export class MockHomepageFirestore extends HomepageFirestore {
-    override getRestaurantCollectionData(): Observable<Restaurant[]> {
-        const mockRestaurants: Restaurant[] = [{
-            id: "Mock 1",
-            avgRating: 3,
-            category: "Italian",
-            city: "Atlanta",
-            name: "Mock Eats 1",
-            numRatings: 0,
-            photo: "Mock Photo URL",
-            price: 1
-        }]
-
-        return of(mockRestaurants);
-    }
-
-    override getRestaurntsGivenConstraints(constraints: QueryConstraint[]): Observable<Restaurant[]> {
-        const mockRestaurants: Restaurant[] = [{
-            id: "Mock 1",
-            avgRating: 3,
-            category: "Italian",
-            city: "Atlanta",
-            name: "Mock Eats 1",
-            numRatings: 0,
-            photo: "Mock Photo URL",
-            price: 1
-        }]
-
-        return of(mockRestaurants);
     }
 }

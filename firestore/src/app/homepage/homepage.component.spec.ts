@@ -17,12 +17,56 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomepageComponent } from './homepage.component';
-import { HomepageFirestore, MockHomepageFirestore } from './hompage.service';
+import { HomepageFirestore } from './hompage.service';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { projectConfig } from 'src/environments/environment.default';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { QueryConstraint, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Restaurant } from 'types/restaurant';
+
+
+/**
+ * This is a mock implementation of the `HomepageFirestore` class that returns
+ * mock restaurant data without calling Firestore methods. For more information
+ * about this class, and dependency inject in Angular more generally, see the 
+ * comment on line 29 of `homepage.service.ts`.
+ */
+@Injectable()
+class MockHomepageFirestore extends HomepageFirestore {
+  override getRestaurantCollectionData(): Observable<Restaurant[]> {
+    const mockRestaurants: Restaurant[] = [{
+      id: "Mock 1",
+      avgRating: 3,
+      category: "Italian",
+      city: "Atlanta",
+      name: "Mock Eats 1",
+      numRatings: 0,
+      photo: "Mock Photo URL",
+      price: 1
+    }]
+
+    return of(mockRestaurants);
+  }
+
+  override getRestaurntsGivenConstraints(
+    constraints: QueryConstraint[]): Observable<Restaurant[]> {
+    const mockRestaurants: Restaurant[] = [{
+      id: "Mock 1",
+      avgRating: 3,
+      category: "Italian",
+      city: "Atlanta",
+      name: "Mock Eats 1",
+      numRatings: 0,
+      photo: "Mock Photo URL",
+      price: 1
+    }]
+
+    return of(mockRestaurants);
+  }
+}
 
 describe('HomepageComponent', () => {
   let component: HomepageComponent;
