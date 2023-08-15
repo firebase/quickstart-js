@@ -14,24 +14,72 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HomepageComponent } from './homepage.component';
-import { HomepageFirestore, MockHomepageFirestore } from './hompage.service';
+import { HomepageFirestore } from './hompage.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { projectConfig } from 'src/environments/environment.default';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { QueryConstraint, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { DebugElement, ElementRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { By } from '@angular/platform-browser';
+
+import { DEFAULT_SORT_DATA } from '../filter-dialog/dialogdata';
+import { Observable, of } from 'rxjs';
+import { Restaurant } from 'types/restaurant';
+
+@Injectable()
+class MockHomepageFirestore extends HomepageFirestore {
+  override getRestaurantCollectionData(): Observable<Restaurant[]> {
+    const mockRestaurants: Restaurant[] = [{
+      id: "Mock 1",
+      avgRating: 3,
+      category: "Italian",
+      city: "Atlanta",
+      name: "Mock Eats 1",
+      numRatings: 0,
+      photo: "Mock Photo URL",
+      price: 1
+    }]
+
+    return of(mockRestaurants);
+  }
+
+  override getRestaurntsGivenConstraints(constraints: QueryConstraint[]): Observable<Restaurant[]> {
+    const mockRestaurants: Restaurant[] = [{
+      id: "Mock 1",
+      avgRating: 3,
+      category: "Italian",
+      city: "Atlanta",
+      name: "Mock Eats 1",
+      numRatings: 0,
+      photo: "Mock Photo URL",
+      price: 1
+    },
+    {
+      id: "Mock 2",
+      avgRating: 3,
+      category: "Korean",
+      city: "Los Angeles",
+      name: "Mock Eats 2",
+      numRatings: 0,
+      photo: "Mock Photo URL",
+      price: 2
+    }]
+
+    return of(mockRestaurants);
+  }
+}
+
 
 describe('HomepageComponent', () => {
   let component: HomepageComponent;
   let fixture: ComponentFixture<HomepageComponent>;
-  let debugElement: DebugElement;
+  let mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MatDialogModule,
@@ -52,7 +100,7 @@ describe('HomepageComponent', () => {
     });
     fixture = TestBed.createComponent(HomepageComponent);
     component = fixture.componentInstance;
-    debugElement = fixture.debugElement;
+    component.dialog = mockDialog;
     fixture.detectChanges();
   });
 
@@ -60,14 +108,35 @@ describe('HomepageComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  /** 
+   * Tests to see that the #empty-restaurants-container div has not
+   * been rendered. This div is rendered only when no restaurants have been 
+   * retrieved from Firestore (or, in this case, the MockHomepageFirestore 
+   * element).
+   * */
   it('should call service and get restuarants on init', () => {
-    /** 
-     * Tests to see that the #empty-restaurants-container div has not
-     * been rendered. This div is rendered only when no restaurants have been 
-     * retrieved from Firestore (or, in this case, the MockHomepageFirestore 
-     * element).
-     * */
     const emptyRestaurantsDiv = fixture.debugElement.query(By.css("#empty-restaurants-container"));
     expect(emptyRestaurantsDiv).toBeNull();
   });
+
+  it('should get new data when filters change', waitForAsync(() => {
+    let mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['afterClosed']);
+    mockDialogRef.afterClosed.and.returnValue(of({ ...DEFAULT_SORT_DATA, price: 2 }));
+    mockDialog.open.and.returnValue(mockDialogRef);
+
+    component.openFilterDialog();
+    component.restaurants.subscribe(
+      result => expect(result).toEqual([{
+        id: "Mock 2",
+        avgRating: 3,
+        category: "Korean",
+        city: "Los Angeles",
+        name: "Mock Eats 2",
+        numRatings: 0,
+        photo: "Mock Photo URL",
+        price: 2
+      }])
+    );
+  }));
+
 });

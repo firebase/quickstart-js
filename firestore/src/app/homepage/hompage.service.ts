@@ -45,36 +45,3 @@ export class DefaultHomepageFirestore extends HomepageFirestore {
             { idField: 'id' }) as Observable<Restaurant[]>;
     }
 }
-
-@Injectable()
-export class MockHomepageFirestore extends HomepageFirestore {
-    override getRestaurantCollectionData(): Observable<Restaurant[]> {
-        const mockRestaurants: Restaurant[] = [{
-            id: "Mock 1",
-            avgRating: 3,
-            category: "Italian",
-            city: "Atlanta",
-            name: "Mock Eats 1",
-            numRatings: 0,
-            photo: "Mock Photo URL",
-            price: 1
-        }]
-
-        return of(mockRestaurants);
-    }
-
-    override getRestaurntsGivenConstraints(constraints: QueryConstraint[]): Observable<Restaurant[]> {
-        const mockRestaurants: Restaurant[] = [{
-            id: "Mock 1",
-            avgRating: 3,
-            category: "Italian",
-            city: "Atlanta",
-            name: "Mock Eats 1",
-            numRatings: 0,
-            photo: "Mock Photo URL",
-            price: 1
-        }]
-
-        return of(mockRestaurants);
-    }
-}
