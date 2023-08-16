@@ -21,6 +21,9 @@ import {
   orderBy,
 } from '@angular/fire/firestore';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Restaurant } from '../../types/restaurant';
+import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 import { Auth, signOut } from '@angular/fire/auth';
@@ -46,7 +49,8 @@ export class HomepageComponent {
   private homepageFirestore: HomepageFirestore = inject(HomepageFirestore);
   title = 'FriendlyEats-Homepage';
   sortingData: DialogData = DEFAULT_SORT_DATA;
-  restaurants = this.homepageFirestore.getRestaurantCollectionData();
+  restaurants = this.homepageFirestore
+    .getRestaurantCollectionData() as Observable<Restaurant[]>;
 
   private fetchWithUpdatedFilters = () => {
     const constraints: QueryConstraint[] = []
@@ -66,7 +70,8 @@ export class HomepageComponent {
       constraints.push(orderBy('avgRating', 'desc'));
     }
 
-    this.restaurants = this.homepageFirestore.getRestaurntsGivenConstraints(constraints);
+    this.restaurants = this.homepageFirestore
+      .getRestaurantsGivenConstraints(constraints);
   }
 
   openFilterDialog(): void {
@@ -82,11 +87,13 @@ export class HomepageComponent {
   }
 
   openSignInDialog(): void {
-    this.dialog.open(SignInModalComponent, { data: { isCreatingAccount: false } });
+    this.dialog.open(SignInModalComponent,
+      { data: { isCreatingAccount: false } });
   }
 
   openCreateAccountDialog(): void {
-    this.dialog.open(SignInModalComponent, { data: { isCreatingAccount: true } });
+    this.dialog.open(SignInModalComponent,
+      { data: { isCreatingAccount: true } });
   }
 
   public signOutWithFirebase() {
