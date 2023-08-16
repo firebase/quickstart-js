@@ -48,27 +48,27 @@ import { Restaurant } from "types/restaurant";
 
 @Injectable()
 export abstract class HomepageFirestore {
-    store: Firestore;
-    constructor(store: Firestore) {
-        this.store = store;
-    }
-
     abstract getRestaurantCollectionData(): Observable<Restaurant[]>;
 
-    abstract getRestaurntsGivenConstraints(constraints: QueryConstraint[]):
+    abstract getRestaurantsGivenConstraints(constraints: QueryConstraint[]):
         Observable<Restaurant[]>;
 }
 
 
 @Injectable()
 export class DefaultHomepageFirestore extends HomepageFirestore {
+    store: Firestore;
+    constructor(store: Firestore) {
+        super();
+        this.store = store;
+    }
     override getRestaurantCollectionData(): Observable<Restaurant[]> {
         const restaurantsCollectionRef = collection(this.store, 'restaurants');
         return collectionData(restaurantsCollectionRef,
             { idField: 'id' }) as Observable<Restaurant[]>;
     }
 
-    override getRestaurntsGivenConstraints(
+    override getRestaurantsGivenConstraints(
         constraints: QueryConstraint[]): Observable<Restaurant[]> {
 
         const restaurantsCollectionRef = collection(this.store, 'restaurants');

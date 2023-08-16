@@ -67,7 +67,7 @@ export class HomepageComponent {
     }
 
 
-    this.restaurants = this.homepageFirestore.getRestaurntsGivenConstraints(constraints);
+    this.restaurants = this.homepageFirestore.getRestaurantsGivenConstraints(constraints);
   }
 
   openFilterDialog(): void {

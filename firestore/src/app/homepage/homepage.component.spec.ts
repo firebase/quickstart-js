@@ -51,7 +51,7 @@ class MockHomepageFirestore extends HomepageFirestore {
     return of(mockRestaurants);
   }
 
-  override getRestaurntsGivenConstraints(
+  override getRestaurantsGivenConstraints(
     constraints: QueryConstraint[]): Observable<Restaurant[]> {
     const mockRestaurants: Restaurant[] = [{
       id: "Mock 1",
@@ -97,6 +97,6 @@ describe('HomepageComponent', () => {
   });
 
   it('should get resturants when service called', () => {
-    expect(component.restaurants).toBeDefined;
+    expect(component.restaurants).toBeDefined();
   })
 });
