@@ -20,7 +20,7 @@ import {
   QueryConstraint,
   orderBy,
 } from '@angular/fire/firestore';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 import { Auth, signOut } from '@angular/fire/auth';
@@ -35,7 +35,7 @@ import { DefaultHomepageFirestore, HomepageFirestore } from './hompage.service';
     {
       provide: HomepageFirestore,
       useClass: DefaultHomepageFirestore
-    },
+    }
   ]
 })
 
@@ -68,11 +68,11 @@ export class HomepageComponent {
   }
 
   openFilterDialog(): void {
-    const dialogRef = this.dialog.open(FilterDialogComponent, {
+    this.dialogRef = this.dialog.open(FilterDialogComponent, {
       data: this.sortingData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(result => {
       this.sortingData = result;
       this.fetchWithUpdatedFilters()
     });
@@ -91,5 +91,5 @@ export class HomepageComponent {
     signOut(this.auth);
   }
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<FilterDialogComponent>) { }
 }

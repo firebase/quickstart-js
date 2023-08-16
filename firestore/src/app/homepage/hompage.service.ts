@@ -16,7 +16,7 @@
 
 import { Injectable } from "@angular/core";
 import { Firestore, QueryConstraint, collection, collectionData, query } from "@angular/fire/firestore";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { Restaurant } from "types/restaurant";
 
 @Injectable()

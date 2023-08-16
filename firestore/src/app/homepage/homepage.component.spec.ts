@@ -79,7 +79,6 @@ class MockHomepageFirestore extends HomepageFirestore {
 describe('HomepageComponent', () => {
   let component: HomepageComponent;
   let fixture: ComponentFixture<HomepageComponent>;
-  let mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MatDialogModule,
@@ -100,7 +99,6 @@ describe('HomepageComponent', () => {
     });
     fixture = TestBed.createComponent(HomepageComponent);
     component = fixture.componentInstance;
-    component.dialog = mockDialog;
     fixture.detectChanges();
   });
 
@@ -116,27 +114,24 @@ describe('HomepageComponent', () => {
    * */
   it('should call service and get restuarants on init', () => {
     const emptyRestaurantsDiv = fixture.debugElement.query(By.css("#empty-restaurants-container"));
+
     expect(emptyRestaurantsDiv).toBeNull();
   });
 
-  it('should get new data when filters change', waitForAsync(() => {
-    let mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['afterClosed']);
-    mockDialogRef.afterClosed.and.returnValue(of({ ...DEFAULT_SORT_DATA, price: 2 }));
-    mockDialog.open.and.returnValue(mockDialogRef);
+  it('should change filters when dialog changes', waitForAsync(() => {
+    let mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close', 'afterClosed']);
+    mockDialogRef.afterClosed.and.returnValue(of({
+      ...DEFAULT_SORT_DATA, price: 2,
+    }));
+    spyOn(component.dialog, 'open').and.returnValue(mockDialogRef);
 
     component.openFilterDialog();
-    component.restaurants.subscribe(
-      result => expect(result).toEqual([{
-        id: "Mock 2",
-        avgRating: 3,
-        category: "Korean",
-        city: "Los Angeles",
-        name: "Mock Eats 2",
-        numRatings: 0,
-        photo: "Mock Photo URL",
-        price: 2
-      }])
-    );
+    mockDialogRef.close();
+
+    expect(component.sortingData).toEqual({
+      ...DEFAULT_SORT_DATA, price: 2
+    });
+
   }));
 
 });
