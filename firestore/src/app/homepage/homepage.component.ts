@@ -20,7 +20,7 @@ import {
   QueryConstraint,
   orderBy,
 } from '@angular/fire/firestore';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 import { Auth, signOut } from '@angular/fire/auth';
@@ -35,7 +35,9 @@ import { DefaultHomepageFirestore, HomepageFirestore } from './hompage.service';
     {
       provide: HomepageFirestore,
       useClass: DefaultHomepageFirestore
-    }
+    },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} }
   ]
 })
 
