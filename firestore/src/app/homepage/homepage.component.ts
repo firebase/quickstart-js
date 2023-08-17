@@ -31,15 +31,21 @@ import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component'
 import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 import { Auth, signOut } from '@angular/fire/auth';
 import { SignInModalComponent } from '../sign-in-modal/sign-in-modal.component';
-import { DefaultHomepageFirestore, HomepageFirestore } from './hompage.service';
+import { HomepageFirestore } from './hompage.service';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css'],
   providers: [
-    { provide: MAT_DIALOG_DATA, useValue: {} },
-    { provide: MatDialogRef, useValue: {} }
+    {
+      provide: MAT_DIALOG_DATA,
+      useValue: {}
+    },
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    }
   ]
 })
 

@@ -17,13 +17,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomepageComponent } from './homepage.component';
-import { DefaultHomepageFirestore, HomepageFirestore } from './hompage.service';
+import { HomepageFirestore } from './hompage.service';
 
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef
-} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { projectConfig } from 'src/environments/environment.default';
 import {
@@ -107,7 +103,10 @@ describe('HomepageComponent', () => {
         provideAuth(() => getAuth()),
       ],
       declarations: [HomepageComponent, RestaurantCardComponent],
-      providers: [{ provide: HomepageFirestore, useClass: MockHomepageFirestore }]
+      providers: [{
+        provide: HomepageFirestore,
+        useClass: MockHomepageFirestore
+      }]
     });
     fixture = TestBed.createComponent(HomepageComponent);
     component = fixture.componentInstance;
@@ -164,11 +163,10 @@ describe('HomepageComponent', () => {
 
     component.openFilterDialog();
     mockDialogRef.close();
-
     fixture.detectChanges();
+
     const restaurantDivs = fixture.debugElement
       .queryAll(By.css(".grid-cell"));
-
     expect(restaurantDivs.length).toEqual(1);
   });
 });
