@@ -18,12 +18,27 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubmitReviewModalComponent } from './submit-review-modal.component';
 
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { projectConfig } from 'src/environments/environment.default';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+
+
 describe('SubmitReviewModalComponent', () => {
   let component: SubmitReviewModalComponent;
   let fixture: ComponentFixture<SubmitReviewModalComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [MatDialogModule,
+        provideFirebaseApp(() => initializeApp(projectConfig)),
+        provideFirestore(() => getFirestore()),
+        provideAuth(() => getAuth())],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} }
+      ],
       declarations: [SubmitReviewModalComponent]
     });
     fixture = TestBed.createComponent(SubmitReviewModalComponent);

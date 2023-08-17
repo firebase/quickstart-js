@@ -92,7 +92,7 @@
   margin: 25px;
 }
 
-@media(max-width: 1024px){
+@media (max-width: 1024px) {
   #inner-grid {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
@@ -100,7 +100,7 @@
   }
 }
 
-@media(max-width: 600px){
+@media (max-width: 600px) {
   #inner-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

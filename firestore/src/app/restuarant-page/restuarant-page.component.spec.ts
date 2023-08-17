@@ -17,6 +17,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RestuarantPageComponent } from './restuarant-page.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { projectConfig } from 'src/environments/environment.default';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 describe('RestuarantPageComponent', () => {
   let component: RestuarantPageComponent;
@@ -24,7 +30,16 @@ describe('RestuarantPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RestuarantPageComponent]
+      imports: [RouterTestingModule,
+        MatDialogModule,
+        provideFirebaseApp(() => initializeApp(projectConfig)),
+        provideFirestore(() => getFirestore()),
+        provideAuth(() => getAuth())],
+      declarations: [RestuarantPageComponent],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} },
+      ]
     });
     fixture = TestBed.createComponent(RestuarantPageComponent);
     component = fixture.componentInstance;

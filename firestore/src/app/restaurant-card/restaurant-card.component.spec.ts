@@ -24,7 +24,8 @@ describe('RestaurantCardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RestaurantCardComponent]
+      declarations: [RestaurantCardComponent],
+      imports: []
     });
     fixture = TestBed.createComponent(RestaurantCardComponent);
     component = fixture.componentInstance;

@@ -70,7 +70,6 @@ export class DefaultHomepageFirestore extends HomepageFirestore {
 
     override getRestaurantsGivenConstraints(
         constraints: QueryConstraint[]): Observable<Restaurant[]> {
-
         const restaurantsCollectionRef = collection(this.store, 'restaurants');
         return collectionData(query(restaurantsCollectionRef, ...constraints),
             { idField: 'id' }) as Observable<Restaurant[]>;
