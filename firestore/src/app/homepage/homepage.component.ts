@@ -20,10 +20,13 @@ import {
   QueryConstraint,
   orderBy,
 } from '@angular/fire/firestore';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { Restaurant } from '../../types/restaurant';
 import { Observable } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 import { Auth, signOut } from '@angular/fire/auth';
@@ -35,10 +38,6 @@ import { DefaultHomepageFirestore, HomepageFirestore } from './hompage.service';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css'],
   providers: [
-    {
-      provide: HomepageFirestore,
-      useClass: DefaultHomepageFirestore
-    },
     { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} }
   ]
@@ -46,9 +45,9 @@ import { DefaultHomepageFirestore, HomepageFirestore } from './hompage.service';
 
 export class HomepageComponent {
   public auth: Auth = inject(Auth);
-  private homepageFirestore: HomepageFirestore = inject(HomepageFirestore);
   title = 'FriendlyEats-Homepage';
   sortingData: DialogData = DEFAULT_SORT_DATA;
+  private homepageFirestore = inject(HomepageFirestore);
   restaurants = this.homepageFirestore
     .getRestaurantCollectionData() as Observable<Restaurant[]>;
 
@@ -100,5 +99,7 @@ export class HomepageComponent {
     signOut(this.auth);
   }
 
-  constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<FilterDialogComponent>) { }
+  constructor(
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<FilterDialogComponent>) { }
 }

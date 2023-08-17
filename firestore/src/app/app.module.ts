@@ -48,12 +48,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { connectFirestoreEmulator } from '@firebase/firestore';
 import { FormsModule } from '@angular/forms';
 import { SignInModalComponent } from './sign-in-modal/sign-in-modal.component';
+import { DefaultHomepageFirestore, HomepageFirestore } from './homepage/hompage.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
     RestuarantPageComponent,
+    RestaurantCardComponent,
     ReviewListComponent,
     FilterDialogComponent,
     SubmitReviewModalComponent,
@@ -64,7 +66,6 @@ import { SignInModalComponent } from './sign-in-modal/sign-in-modal.component';
     AppRoutingModule,
     MatSlideToggleModule,
     MatCardModule,
-    RestaurantCardComponent,
     FlexLayoutModule,
     MatToolbarModule,
     MatIconModule,
@@ -96,7 +97,7 @@ import { SignInModalComponent } from './sign-in-modal/sign-in-modal.component';
     provideFunctions(() => getFunctions()),
     provideStorage(() => getStorage()),
   ],
-  providers: [],
+  providers: [{ provide: HomepageFirestore, useClass: DefaultHomepageFirestore }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

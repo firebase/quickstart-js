@@ -15,10 +15,6 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
 import { Restaurant } from '../../types/restaurant';
 import { Router } from '@angular/router';
 
@@ -26,8 +22,6 @@ import { Router } from '@angular/router';
   selector: 'app-restaurant-card',
   templateUrl: './restaurant-card.component.html',
   styleUrls: ['./restaurant-card.component.css'],
-  standalone: true,
-  imports: [MatButtonModule, MatCardModule, MatIconModule, CommonModule]
 })
 export class RestaurantCardComponent {
   onCardClicked = () => {
