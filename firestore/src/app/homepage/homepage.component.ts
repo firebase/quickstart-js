@@ -52,7 +52,7 @@ import { HomepageFirestore } from './hompage.service';
 export class HomepageComponent {
   public auth: Auth = inject(Auth);
   title = 'FriendlyEats-Homepage';
-  sortingData: DialogData = DEFAULT_SORT_DATA;
+  private sortingData: DialogData = DEFAULT_SORT_DATA;
   private homepageFirestore = inject(HomepageFirestore);
   restaurants = this.homepageFirestore
     .getRestaurantCollectionData() as Observable<Restaurant[]>;

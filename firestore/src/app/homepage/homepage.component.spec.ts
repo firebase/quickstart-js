@@ -130,28 +130,12 @@ describe('HomepageComponent', () => {
     expect(emptyRestaurantsDiv).toBeNull();
   });
 
-  it('should change filters when dialog changes', (done) => {
-    let mockDialogRef = jasmine.createSpyObj('MatDialogRef',
-      ['close', 'afterClosed']);
-    mockDialogRef.afterClosed.and.returnValue(of({
-      ...DEFAULT_SORT_DATA, price: 2,
-    }));
-    spyOn(component.dialog, 'open').and.returnValue(mockDialogRef);
-
-    component.openFilterDialog();
-    mockDialogRef.close();
-
-    expect(component.sortingData).toEqual({
-      ...DEFAULT_SORT_DATA, price: 2
-    });
-    done();
-  });
-
   /**
    * Tests to see that exactly 1 restaurant is rendered when filtering for
-   * restaurants with a price of just one $. (Tests that the 
+   * restaurants with a price of just one $. This tests that the 
    * `getRestaurantsGivenConstraints` function is called in the 
-   * MockHomepageFirestoreClass).
+   * MockHomepageFirestoreClass, and that the `sortingData` field
+   * was correctly updated.
    */
   it('should change restaurants when filters change', () => {
     let mockDialogRef = jasmine.createSpyObj('MatDialogRef',
