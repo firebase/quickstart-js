@@ -5,6 +5,13 @@
       "label": "Install on Open",
       "type": "shell",
       "command": "npm i && (cd functions && npm i)",
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
       "problemMatcher": [],
       "runOptions": {
         "runOn": "folderOpen"
@@ -14,6 +21,13 @@
       "label": "Open ReadMe",
       "type": "shell",
       "command": "code README.md",
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
       "problemMatcher": [],
       "runOptions": {
         "runOn": "folderOpen"
