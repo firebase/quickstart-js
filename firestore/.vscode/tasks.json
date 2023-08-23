@@ -4,9 +4,9 @@
     {
       "label": "Install on Open",
       "type": "shell",
-      "command": "npm i && (cd functions && npm i)",
+      "command": "if [[ \"${config:shouldRunNPMTask}\" == \"true\" ]]; then npm i && (cd functions && npm i); else echo \"Could not run NPM on project open! To enable automatic NPM installs when the project is opened, run the 'Toggle Install on File Open' task and select 'true' when prompted.\"; fi",
       "presentation": {
-        "echo": false,
+        "echo": true,
         "reveal": "always",
         "focus": false,
         "panel": "shared",
@@ -23,7 +23,7 @@
       "command": "code README.md",
       "presentation": {
         "echo": false,
-        "reveal": "always",
+        "reveal": "never",
         "focus": false,
         "panel": "shared",
         "showReuseMessage": false
@@ -32,6 +32,28 @@
       "runOptions": {
         "runOn": "folderOpen"
       }
+    },
+    {
+      "label": "Toggle Install on File Open",
+      "type": "shell",
+      "command": "if [[ \"${input:runNPM}\" == \"true\" ]]; then sed 's/\"shouldRunNPMTask\": false/\"shouldRunNPMTask\": true/' .vscode/settings.json > tmp.txt && mv tmp.txt .vscode/settings.json; else sed 's/\"shouldRunNPMTask\": true/\"shouldRunNPMTask\": false/' .vscode/settings.json > tmp.txt && mv tmp.txt .vscode/settings.json; fi",
+      "presentation": {
+        "echo": true,
+        "reveal": "never",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "runNPM",
+      "description": "Automatically NPM Install on Folder Open:",
+      "default": "true",
+      "type": "pickString",
+      "options": ["true", "false"]
     }
   ]
 }
