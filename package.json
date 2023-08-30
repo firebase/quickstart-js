@@ -27,7 +27,8 @@
     "dev": "vite",
     "build": "vite build",
     "bootstrap": "lerna bootstrap",
-    "test": "scripts/test.sh"
+    "test": "scripts/test.sh",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "firebase": "^10.1.0"
