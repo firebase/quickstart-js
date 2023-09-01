@@ -4,7 +4,7 @@
     {
       "label": "Install on Open",
       "type": "shell",
-      "command": "npm i && (cd functions && npm i)",
+      "command": "npm i && cd functions && npm i",
       "presentation": {
         "echo": true,
         "reveal": "always",
