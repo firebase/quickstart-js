@@ -1,12 +1,14 @@
 import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '../config';
 import {
   OAuthProvider,
   connectAuthEmulator,
   getAuth,
+  getRedirectResult,
   onAuthStateChanged,
-  signInWithPopup,
+  signInWithRedirect,
+  signOut,
 } from 'firebase/auth';
+import { firebaseConfig } from '../config';
 
 initializeApp(firebaseConfig);
 
@@ -35,45 +37,51 @@ const oauthToken = document.getElementById(
 function toggleSignIn() {
   if (!auth.currentUser) {
     const provider = new OAuthProvider('apple.com');
-
     provider.addScope('email');
     provider.addScope('name');
-
-    signInWithPopup(auth, provider)
-      .then(function (result) {
-        // The signed-in user info.
-        const user = result.user;
-
-        const credential = OAuthProvider.credentialFromResult(result)!;
-        // You can also get the Apple OAuth Access and ID Tokens.
-        const accessToken = credential.accessToken;
-        const idToken = credential.idToken;
-
-        oauthToken.textContent = idToken ?? null;
-      })
-      .catch(function (error) {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The AuthCredential type that was used.
-        const credential = error.credential;
-        if (errorCode === 'auth/account-exists-with-different-credential') {
-          alert(
-            'You have already signed up with a different auth provider for that email.'
-          );
-          // If you are using multiple auth providers on your app you should handle linking
-          // the user's accounts here.
-        } else {
-          console.error(error);
-        }
-      });
+    signInWithRedirect(auth, provider);
   } else {
-    auth.signOut();
+    signOut(auth);
   }
   signInButton.disabled = true;
 }
+
+// Result from Redirect auth flow.
+getRedirectResult(auth)
+  .then(function (result) {
+    if (!result) return;
+    const credential = OAuthProvider.credentialFromResult(result);
+
+    if (credential) {
+      // You can get the Apple OAuth Access and ID Tokens.
+      const accessToken = credential.accessToken;
+      const idToken = credential.idToken;
+
+      oauthToken.textContent = idToken ?? null;
+    } else {
+      oauthToken.textContent = 'null';
+    }
+    // The signed-in user info.
+    const user = result.user;
+  })
+  .catch(function (error) {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // The AuthCredential type that was used.
+    const credential = error.credential;
+    if (errorCode === 'auth/account-exists-with-different-credential') {
+      alert(
+        'You have already signed up with a different auth provider for that email.'
+      );
+      // If you are using multiple auth providers on your app you should handle linking
+      // the user's accounts here.
+    } else {
+      console.error(error);
+    }
+  });
 
 // Listening for auth state changes.
 onAuthStateChanged(auth, function (user) {

@@ -5,6 +5,7 @@ import {
   signInAnonymously,
   connectAuthEmulator,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 
 initializeApp(firebaseConfig);
@@ -47,7 +48,7 @@ function toggleSignIn() {
 }
 
 // Listening for auth state changes.
-auth.onAuthStateChanged(function (user) {
+onAuthStateChanged(auth, function (user) {
   if (user) {
     // User is signed in.
     const isAnonymous = user.isAnonymous;
