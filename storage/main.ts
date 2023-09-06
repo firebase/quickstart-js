@@ -12,10 +12,6 @@ import { firebaseConfig } from '../config';
 const fileInput = document.getElementById('file') as HTMLInputElement;
 const linkBox = document.getElementById('linkbox') as HTMLDivElement;
 
-/**
- * When running on Firebase Hosting, no options need to be passed.
- * If you want to run the app locally, see https://firebase.google.com/docs/web/setup
- */
 initializeApp(firebaseConfig);
 
 const auth = getAuth();
