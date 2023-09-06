@@ -15,12 +15,25 @@ if (window.location.hostname === 'localhost') {
   connectAuthEmulator(auth, 'http://127.0.0.1:9099');
 }
 
+const signInButton = document.getElementById(
+  'quickstart-sign-in'
+)! as HTMLButtonElement;
+const signInStatus = document.getElementById(
+  'quickstart-sign-in-status'
+)! as HTMLSpanElement;
+const accountDetails = document.getElementById(
+  'quickstart-account-details'
+)! as HTMLDivElement;
+const oauthToken = document.getElementById(
+  'quickstart-oauthtoken'
+)! as HTMLDivElement;
+
 /**
  * Function called when clicking the Login/Logout button.
  */
 function toggleSignIn() {
   if (!auth.currentUser) {
-    var provider = new OAuthProvider('apple.com');
+    const provider = new OAuthProvider('apple.com');
 
     provider.addScope('email');
     provider.addScope('name');
@@ -28,23 +41,23 @@ function toggleSignIn() {
     signInWithPopup(auth, provider)
       .then(function (result) {
         // The signed-in user info.
-        var user = result.user;
+        const user = result.user;
 
         const credential = OAuthProvider.credentialFromResult(result)!;
         // You can also get the Apple OAuth Access and ID Tokens.
-        var accessToken = credential.accessToken;
-        var idToken = credential.idToken;
+        const accessToken = credential.accessToken;
+        const idToken = credential.idToken;
 
-        document.getElementById('quickstart-oauthtoken').textContent = idToken;
+        oauthToken.textContent = idToken ?? null;
       })
       .catch(function (error) {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        const errorCode = error.code;
+        const errorMessage = error.message;
         // The email of the user's account used.
-        var email = error.email;
+        const email = error.email;
         // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
+        const credential = error.credential;
         if (errorCode === 'auth/account-exists-with-different-credential') {
           alert(
             'You have already signed up with a different auth provider for that email.'
@@ -58,7 +71,7 @@ function toggleSignIn() {
   } else {
     auth.signOut();
   }
-  document.getElementById('quickstart-sign-in').disabled = true;
+  signInButton.disabled = true;
 }
 
 // Listening for auth state changes.
@@ -66,29 +79,23 @@ auth.onAuthStateChanged(function (user) {
   if (user) {
     // User is signed in. Note that unlike other providers supported by Firebase Auth, Apple does
     // not provide a profile photo so user.photoURL will be null.
-    var displayName = user.displayName;
-    var email = user.email;
-    var emailVerified = user.emailVerified;
-    var isAnonymous = user.isAnonymous;
-    var uid = user.uid;
-    var providerData = user.providerData;
-    document.getElementById('quickstart-sign-in-status').textContent =
-      'Signed in';
-    document.getElementById('quickstart-sign-in').textContent = 'Log out';
-    document.getElementById('quickstart-account-details').textContent =
-      JSON.stringify(user, null, '  ');
+    const displayName = user.displayName;
+    const email = user.email;
+    const emailVerified = user.emailVerified;
+    const isAnonymous = user.isAnonymous;
+    const uid = user.uid;
+    const providerData = user.providerData;
+    signInStatus.textContent = 'Signed in';
+    signInButton.textContent = 'Log out';
+    accountDetails.textContent = JSON.stringify(user, null, '  ');
   } else {
     // User is signed out.
-    document.getElementById('quickstart-sign-in-status').textContent =
-      'Signed out';
-    document.getElementById('quickstart-sign-in').textContent =
-      'Log in with Apple';
-    document.getElementById('quickstart-account-details').textContent = 'null';
-    document.getElementById('quickstart-oauthtoken').textContent = 'null';
+    signInStatus.textContent = 'Signed out';
+    signInButton.textContent = 'Log in with Apple';
+    accountDetails.textContent = 'null';
+    oauthToken.textContent = 'null';
   }
-  document.getElementById('quickstart-sign-in').disabled = false;
+  signInButton.disabled = false;
 });
 
-document
-  .getElementById('quickstart-sign-in')
-  .addEventListener('click', toggleSignIn, false);
+signInButton.addEventListener('click', toggleSignIn, false);
