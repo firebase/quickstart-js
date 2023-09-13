@@ -20,14 +20,14 @@ if (window.location.hostname === 'localhost') {
 }
 
 const signInButton = document.getElementById(
-  'quickstart-sign-in'
+  'quickstart-sign-in',
 )! as HTMLButtonElement;
 const emailInput = document.getElementById('email')! as HTMLInputElement;
 const signInStatus = document.getElementById(
-  'quickstart-sign-in-status'
+  'quickstart-sign-in-status',
 )! as HTMLSpanElement;
 const accountDetails = document.getElementById(
-  'quickstart-account-details'
+  'quickstart-account-details',
 )! as HTMLDivElement;
 
 /**
@@ -63,7 +63,7 @@ function toggleSignIn() {
         alert(
           'An email was sent to ' +
             email +
-            '. Please use the link in the email to sign-in.'
+            '. Please use the link in the email to sign-in.',
         );
         // Re-enable the sign-in button.
         signInButton.disabled = false;
@@ -103,7 +103,7 @@ function handleSignIn() {
       // User opened the link on a different device. To prevent session fixation attacks, ask the
       // user to provide the associated email again. For example:
       email = window.prompt(
-        "Please provide the email you'd like to sign-in with for confirmation."
+        "Please provide the email you'd like to sign-in with for confirmation.",
       );
     }
     if (email) {
@@ -114,7 +114,7 @@ function handleSignIn() {
           window.history.replaceState(
             {},
             document.title,
-            window.location.href.split('?')[0]
+            window.location.href.split('?')[0],
           );
           // Clear email from storage.
           window.localStorage.removeItem('emailForSignIn');

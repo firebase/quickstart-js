@@ -17,13 +17,13 @@ if (window.location.hostname === 'localhost') {
 }
 
 const signInButton = document.getElementById(
-  'quickstart-sign-in'
+  'quickstart-sign-in',
 )! as HTMLButtonElement;
 const signInStatus = document.getElementById(
-  'quickstart-sign-in-status'
+  'quickstart-sign-in-status',
 )! as HTMLSpanElement;
 const accountDetails = document.getElementById(
-  'quickstart-account-details'
+  'quickstart-account-details',
 )! as HTMLDivElement;
 
 /**

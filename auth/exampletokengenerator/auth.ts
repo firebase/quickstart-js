@@ -53,7 +53,7 @@ function handleGenerateClick() {
     sHeader,
     sPayload,
     sPKCS8PEM,
-    'notasecret'
+    'notasecret',
   );
 
   const tokenBox = document.getElementById('tokenbox')! as HTMLParagraphElement;
@@ -65,7 +65,7 @@ function handleGenerateClick() {
     sJWT +
     '">Use this token in the web custom auth example</a>';
   const linkToTokenBox = document.getElementById(
-    'linktokenbox'
+    'linktokenbox',
   )! as HTMLParagraphElement;
   linkToTokenBox.innerHTML = link;
 }

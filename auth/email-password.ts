@@ -22,22 +22,22 @@ if (window.location.hostname === 'localhost') {
 const emailInput = document.getElementById('email')! as HTMLInputElement;
 const passwordInput = document.getElementById('password')! as HTMLInputElement;
 const signInButton = document.getElementById(
-  'quickstart-sign-in'
+  'quickstart-sign-in',
 )! as HTMLButtonElement;
 const signUpButton = document.getElementById(
-  'quickstart-sign-up'
+  'quickstart-sign-up',
 )! as HTMLButtonElement;
 const passwordResetButton = document.getElementById(
-  'quickstart-password-reset'
+  'quickstart-password-reset',
 )! as HTMLButtonElement;
 const verifyEmailButton = document.getElementById(
-  'quickstart-verify-email'
+  'quickstart-verify-email',
 )! as HTMLButtonElement;
 const signInStatus = document.getElementById(
-  'quickstart-sign-in-status'
+  'quickstart-sign-in-status',
 )! as HTMLSpanElement;
 const accountDetails = document.getElementById(
-  'quickstart-account-details'
+  'quickstart-account-details',
 )! as HTMLDivElement;
 
 /**

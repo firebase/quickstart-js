@@ -1,12 +1,13 @@
 import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '../config';
 import {
-  OAuthProvider,
+  FacebookAuthProvider,
   connectAuthEmulator,
   getAuth,
   onAuthStateChanged,
   signInWithPopup,
+  signOut,
 } from 'firebase/auth';
+import { firebaseConfig } from '../config';
 
 initializeApp(firebaseConfig);
 
@@ -19,14 +20,14 @@ if (window.location.hostname === 'localhost') {
 const signInButton = document.getElementById(
   'quickstart-sign-in',
 )! as HTMLButtonElement;
+const oauthToken = document.getElementById(
+  'quickstart-oauthtoken',
+)! as HTMLDivElement;
 const signInStatus = document.getElementById(
   'quickstart-sign-in-status',
 )! as HTMLSpanElement;
 const accountDetails = document.getElementById(
   'quickstart-account-details',
-)! as HTMLDivElement;
-const oauthToken = document.getElementById(
-  'quickstart-oauthtoken',
 )! as HTMLDivElement;
 
 /**
@@ -34,22 +35,16 @@ const oauthToken = document.getElementById(
  */
 function toggleSignIn() {
   if (!auth.currentUser) {
-    const provider = new OAuthProvider('apple.com');
-
-    provider.addScope('email');
-    provider.addScope('name');
-
+    const provider = new FacebookAuthProvider();
+    provider.addScope('user_birthday');
     signInWithPopup(auth, provider)
       .then(function (result) {
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const token = credential?.accessToken;
         // The signed-in user info.
         const user = result.user;
-
-        const credential = OAuthProvider.credentialFromResult(result)!;
-        // You can also get the Apple OAuth Access and ID Tokens.
-        const accessToken = credential.accessToken;
-        const idToken = credential.idToken;
-
-        oauthToken.textContent = idToken ?? null;
+        oauthToken.textContent = token ?? 'null';
       })
       .catch(function (error) {
         // Handle Errors here.
@@ -57,7 +52,7 @@ function toggleSignIn() {
         const errorMessage = error.message;
         // The email of the user's account used.
         const email = error.email;
-        // The AuthCredential type that was used.
+        // The firebase.auth.AuthCredential type that was used.
         const credential = error.credential;
         if (errorCode === 'auth/account-exists-with-different-credential') {
           alert(
@@ -70,7 +65,7 @@ function toggleSignIn() {
         }
       });
   } else {
-    auth.signOut();
+    signOut(auth);
   }
   signInButton.disabled = true;
 }
@@ -78,11 +73,11 @@ function toggleSignIn() {
 // Listening for auth state changes.
 onAuthStateChanged(auth, function (user) {
   if (user) {
-    // User is signed in. Note that unlike other providers supported by Firebase Auth, Apple does
-    // not provide a profile photo so user.photoURL will be null.
+    // User is signed in.
     const displayName = user.displayName;
     const email = user.email;
     const emailVerified = user.emailVerified;
+    const photoURL = user.photoURL;
     const isAnonymous = user.isAnonymous;
     const uid = user.uid;
     const providerData = user.providerData;
@@ -92,7 +87,7 @@ onAuthStateChanged(auth, function (user) {
   } else {
     // User is signed out.
     signInStatus.textContent = 'Signed out';
-    signInButton.textContent = 'Log in with Apple';
+    signInButton.textContent = 'Log in with Facebook';
     accountDetails.textContent = 'null';
     oauthToken.textContent = 'null';
   }
