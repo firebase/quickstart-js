@@ -5,3 +5,5 @@
 **/*.bak
 .idea
 .firebaserc
+dist/
+**/ui-debug.log
