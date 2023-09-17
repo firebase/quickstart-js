@@ -16,18 +16,20 @@ const auth = getAuth();
 // reCAPTCHA verification does not work with the Firebase emulator.
 // Hence, we do not connect to the emulator in this example.
 
-declare global {
-  // We declare variables used on the window object
-  interface Window {
-    signingIn?: boolean;
-    verifyingCode?: boolean;
-    confirmationResult?: ConfirmationResult | null;
-    recaptchaVerifier?: RecaptchaVerifier;
-    recaptchaWidgetId?: number;
-  }
-  // Comes from Google reCAPTCHA V3 script included in the HTML file
-  const grecaptcha: any;
+// We declare variables used on the window object
+// We use a custom interface to avoid these modifying the global Window type in other files
+interface CustomWindow extends Window {
+  signingIn?: boolean;
+  verifyingCode?: boolean;
+  confirmationResult?: ConfirmationResult | null;
+  recaptchaVerifier?: RecaptchaVerifier;
+  recaptchaWidgetId?: number;
 }
+
+declare const window: CustomWindow;
+
+// Comes from Google reCAPTCHA V3 script included in the HTML file
+declare const grecaptcha: any;
 
 const phoneNumberInput = document.getElementById(
   'phone-number',
