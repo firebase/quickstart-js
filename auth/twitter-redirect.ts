@@ -3,8 +3,9 @@ import {
   TwitterAuthProvider,
   connectAuthEmulator,
   getAuth,
+  getRedirectResult,
   onAuthStateChanged,
-  signInWithPopup,
+  signInWithRedirect,
   signOut,
 } from 'firebase/auth';
 import { firebaseConfig } from '../config';
@@ -31,7 +32,7 @@ const signInButton = document.getElementById(
 ) as HTMLButtonElement;
 const signInStatus = document.getElementById(
   'quickstart-sign-in-status',
-) as HTMLDivElement;
+) as HTMLSpanElement;
 
 /**
  * Function called when clicking the Login/Logout button.
@@ -39,41 +40,50 @@ const signInStatus = document.getElementById(
 function toggleSignIn() {
   if (!auth.currentUser) {
     const provider = new TwitterAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(function (result) {
-        const credential = TwitterAuthProvider.credentialFromResult(result);
-        // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-        // You can use these server side with your app's credentials to access the Twitter API.
-        const token = credential?.accessToken;
-        const secret = credential?.secret;
-        // The signed-in user info.
-        const user = result.user;
-        oauthtoken.textContent = token ?? '';
-        oauthsecret.textContent = secret ?? '';
-      })
-      .catch(function (error) {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        const credential = error.credential;
-        if (errorCode === 'auth/account-exists-with-different-credential') {
-          alert(
-            'You have already signed up with a different auth provider for that email.',
-          );
-          // If you are using multiple auth providers on your app you should handle linking
-          // the user's accounts here.
-        } else {
-          console.error(error);
-        }
-      });
+    signInWithRedirect(auth, provider);
   } else {
     signOut(auth);
   }
   signInButton.disabled = true;
 }
+
+// Result from Redirect auth flow.
+getRedirectResult(auth)
+  .then(function (result) {
+    if (!result) return;
+    const credential = TwitterAuthProvider.credentialFromResult(result);
+    if (credential) {
+      // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+      // You can use these server side with your app's credentials to access the Twitter API.
+      const token = credential.accessToken;
+      const secret = credential.secret;
+      oauthtoken.textContent = token ?? '';
+      oauthsecret.textContent = secret ?? '';
+    } else {
+      oauthtoken.textContent = 'null';
+      oauthsecret.textContent = 'null';
+    }
+    // The signed-in user info.
+    const user = result.user;
+  })
+  .catch(function (error) {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    const credential = error.credential;
+    if (errorCode === 'auth/account-exists-with-different-credential') {
+      alert(
+        'You have already signed up with a different auth provider for that email.',
+      );
+      // If you are using multiple auth providers on your app you should handle linking
+      // the user's accounts here.
+    } else {
+      console.error(error);
+    }
+  });
 
 // Listening for auth state changes.
 onAuthStateChanged(auth, function (user) {
