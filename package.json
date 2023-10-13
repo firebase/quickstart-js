@@ -19,10 +19,10 @@
   "devDependencies": {
     "eslint": "^8.39.0",
     "eslint-plugin-promise": "^6.1.1",
-    "lerna": "^6.6.1",
+    "lerna": "^6.6.1"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "test": "scripts/test.sh",
+    "test": "scripts/test.sh"
   }
 }
