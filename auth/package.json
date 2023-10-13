@@ -1,5 +1,5 @@
 {
-  "name": "quickstart-js",
+  "name": "quickstart-js-auth",
   "version": "1.0.0",
   "description": "JavaScript quickstarts for Firebase Auth.",
   "repository": {
@@ -18,9 +18,6 @@
   "homepage": "https://github.com/firebase/quickstart-js#readme",
   "devDependencies": {
     "@types/jsrsasign": "^10.5.8",
-    "eslint": "^8.39.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "lerna": "^6.6.1",
     "prettier": "^3.0.3",
     "typescript": "^5.1.6",
     "vite": "^4.4.9"
@@ -28,7 +25,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test": "../scripts/test.sh",
     "format": "prettier --write ."
   },
   "dependencies": {
