@@ -7,7 +7,7 @@ import {
   uploadBytes,
   getDownloadURL,
 } from 'firebase/storage';
-import { firebaseConfig } from '../config';
+import { firebaseConfig } from './config';
 
 const fileInput = document.getElementById('file') as HTMLInputElement;
 const linkBox = document.getElementById('linkbox') as HTMLDivElement;
@@ -62,14 +62,14 @@ auth.onAuthStateChanged(function (user) {
     fileInput.disabled = false;
   } else {
     console.log(
-      'There was no anonymous session. Creating a new anonymous user.'
+      'There was no anonymous session. Creating a new anonymous user.',
     );
     // Sign the user in anonymously since accessing Storage requires the user to be authorized.
     signInAnonymously(auth).catch(function (error) {
       if (error.code === 'auth/operation-not-allowed') {
         window.alert(
           'Anonymous Sign-in failed. Please make sure that you have enabled anonymous ' +
-            'sign-in on your Firebase project.'
+            'sign-in on your Firebase project.',
         );
       }
     });

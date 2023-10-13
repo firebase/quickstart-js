@@ -1,7 +1,7 @@
 {
-  "name": "quickstart-js",
+  "name": "quickstart-js-storage",
   "version": "1.0.0",
-  "description": "JavaScript quickstarts for Firebase.",
+  "description": "JavaScript quickstarts for Firebase Storage.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/firebase/quickstart-js.git"
@@ -17,12 +17,15 @@
   },
   "homepage": "https://github.com/firebase/quickstart-js#readme",
   "devDependencies": {
-    "eslint": "^8.39.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "lerna": "^6.6.1"
+    "typescript": "^5.1.6",
+    "vite": "^4.4.9"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "test": "scripts/test.sh"
+    "dev": "vite",
+    "build": "vite build",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "firebase": "^10.1.0"
   }
 }

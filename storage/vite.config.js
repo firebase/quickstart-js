@@ -4,7 +4,7 @@ export default defineConfig({
   base: '/',
   build: {
     rollupOptions: {
-      input: ['storage/index.html'],
+      input: ['index.html'],
     },
   },
 });
