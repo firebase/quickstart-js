@@ -12,8 +12,5 @@
       "port": 4000
     },
     "singleProjectMode": true
-  },
-  "functions": {
-    "source": "functions"
   }
 }

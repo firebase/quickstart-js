@@ -5,7 +5,7 @@ import {
   getAuth,
   signInWithPhoneNumber,
 } from 'firebase/auth';
-import { firebaseConfig } from '../config';
+import { firebaseConfig } from './config';
 
 initializeApp(firebaseConfig);
 
