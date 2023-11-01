@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { initializeApp } from 'firebase/app';
 import {
   GoogleAuthProvider,
@@ -52,6 +53,10 @@ interface CustomWindow extends Window {
   componentHandler?: {
     upgradeElements: (...element: Element[]) => void;
   };
+}
+
+interface HTMLElementWithMaterialTextfield extends HTMLElement {
+  MaterialTextfield: { boundUpdateClassesHandler: () => void };
 }
 
 declare const window: CustomWindow;
@@ -302,10 +307,10 @@ function createPostElement(
       commentInput.value,
     );
     commentInput.value = '';
-    // FIXME
-    (
-      commentInput.parentElement! as HTMLElement & { MaterialTextfield: any }
-    ).MaterialTextfield.boundUpdateClassesHandler();
+
+    const commentInputParent =
+      commentInput.parentElement as HTMLElementWithMaterialTextfield;
+    commentInputParent.MaterialTextfield.boundUpdateClassesHandler();
   };
 
   // Bind starring action.
