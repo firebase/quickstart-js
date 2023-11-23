@@ -13,30 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+import * as sanitizer from './sanitizer';
+import * as admin from 'firebase-admin';
+import { HttpsError, onCall } from 'firebase-functions/v2/https';
+import { setGlobalOptions } from 'firebase-functions/v2';
 
-const functions = require('firebase-functions');
-const sanitizer = require('./sanitizer');
-const admin = require('firebase-admin');
+setGlobalOptions({ maxInstances: 10 });
+
 admin.initializeApp();
 
 // [START allAdd]
 // [START addFunctionTrigger]
 // Adds two numbers to each other.
-exports.addNumbers = functions.https.onCall((data) => {
-// [END addFunctionTrigger]
+exports.addNumbers = onCall((request) => {
+  // [END addFunctionTrigger]
   // [START readAddData]
   // Numbers passed from the client.
-  const firstNumber = data.firstNumber;
-  const secondNumber = data.secondNumber;
+  const firstNumber = request.data.firstNumber;
+  const secondNumber = request.data.secondNumber;
   // [END readAddData]
 
   // [START addHttpsError]
   // Checking that attributes are present and are numbers.
   if (!Number.isFinite(firstNumber) || !Number.isFinite(secondNumber)) {
     // Throwing an HttpsError so that the client gets the error details.
-    throw new functions.https.HttpsError('invalid-argument', 'The function must be called with ' +
-        'two arguments "firstNumber" and "secondNumber" which must both be numbers.');
+    throw new HttpsError(
+      'invalid-argument',
+      'The function must be called with two arguments ' +
+        '"firstNumber" and "secondNumber" which must both be numbers.',
+    );
   }
   // [END addHttpsError]
 
@@ -54,51 +59,62 @@ exports.addNumbers = functions.https.onCall((data) => {
 
 // [START messageFunctionTrigger]
 // Saves a message to the Firebase Realtime Database but sanitizes the text by removing swearwords.
-exports.addMessage = functions.https.onCall((data, context) => {
+exports.addMessage = onCall((request) => {
   // [START_EXCLUDE]
   // [START readMessageData]
   // Message text passed from the client.
-  const text = data.text;
+  const text = request.data.text;
   // [END readMessageData]
   // [START messageHttpsErrors]
   // Checking attribute.
   if (!(typeof text === 'string') || text.length === 0) {
     // Throwing an HttpsError so that the client gets the error details.
-    throw new functions.https.HttpsError('invalid-argument', 'The function must be called with ' +
-        'one arguments "text" containing the message text to add.');
+    throw new HttpsError(
+      'invalid-argument',
+      'The function must be called with ' +
+        'one arguments "text" containing the message text to add.',
+    );
   }
   // Checking that the user is authenticated.
-  if (!context.auth) {
+  if (!request.auth) {
     // Throwing an HttpsError so that the client gets the error details.
-    throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' +
-        'while authenticated.');
+    throw new HttpsError(
+      'failed-precondition',
+      'The function must be called ' + 'while authenticated.',
+    );
   }
   // [END messageHttpsErrors]
 
   // [START authIntegration]
   // Authentication / user information is automatically added to the request.
-  const uid = context.auth.uid;
-  const name = context.auth.token.name || null;
-  const picture = context.auth.token.picture || null;
-  const email = context.auth.token.email || null;
+  const uid = request.auth.uid;
+  const name = request.auth.token.name || null;
+  const picture = request.auth.token.picture || null;
+  const email = request.auth.token.email || null;
   // [END authIntegration]
 
   // [START returnMessageAsync]
   // Saving the new message to the Realtime Database.
   const sanitizedMessage = sanitizer.sanitizeText(text); // Sanitize the message.
-  return admin.database().ref('/messages').push({
-    text: sanitizedMessage,
-    author: { uid, name, picture, email },
-  }).then(() => {
-    console.log('New Message written');
-    // Returning the sanitized message to the client.
-    return { text: sanitizedMessage };
-  })
-  // [END returnMessageAsync]
-    .catch((error) => {
-    // Re-throwing the error as an HttpsError so that the client gets the error details.
-      throw new functions.https.HttpsError('unknown', error.message, error);
-    });
+  return (
+    admin
+      .database()
+      .ref('/messages')
+      .push({
+        text: sanitizedMessage,
+        author: { uid, name, picture, email },
+      })
+      .then(() => {
+        console.log('New Message written');
+        // Returning the sanitized message to the client.
+        return { text: sanitizedMessage };
+      })
+      // [END returnMessageAsync]
+      .catch((error) => {
+        // Re-throwing the error as an HttpsError so that the client gets the error details.
+        throw new HttpsError('unknown', error.message, error);
+      })
+  );
   // [END_EXCLUDE]
 });
 // [END messageFunctionTrigger]
