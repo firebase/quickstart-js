@@ -25,7 +25,7 @@ Introduction
 Getting Started
 ---------------
 
- 1. Create a Firebase project on the [Firebase Console](https://console.firebase.google.com).
+ 1. Create a Firebase project on the [Firebase Console](https://console.firebase.google.com). Copy your Firebase config object (from the "Add Firebase to your web app" dialog), and paste it in the `config.ts` file in the auth directory.
  2. Add a support email to your project in the [settings page](https://console.firebase.google.com/u/0/project/_/settings/general/). Some auth methods won't work without this.
  3. Enable the authentication method you want to use by going to the **Authentication** section in the **SIGN-IN METHOD** tab - you don't need to enable custom auth.
      - For **Custom Auth**, generate a Service Account credentials in your [Firebase Console > Project Settings > Service Accounts](https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk), and click on **GENERATE NEW PRIVATE KEYS**. You will need it in the [example token generator](exampletokengenerator/auth.html).

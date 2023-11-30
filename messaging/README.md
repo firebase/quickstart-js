@@ -17,7 +17,7 @@ Getting Started
 2. Register a web app by following [**Step 2: Register your app with Firebase**](https://firebase.google.com/docs/web/setup/#create-firebase-project).
      1. You don't need to add Hosting right now, and you can skip the "Add Firebase SDK" step in the console's "Add Firebase to your web app" flow.
      2. Remember to click "Register App" or "Continue to console" at the bottom of the "Add Firebase to your web app" flow.
-     3. Copy your Firebase config object (from the "Add Firebase to your web app" dialog), and paste it in the `config.ts` file in the quickstart directory.
+     3. Copy your Firebase config object (from the "Add Firebase to your web app" dialog), and paste it in the `config.ts` file in the messaging directory.
 3. Open Project and go to **Project settings > Cloud Messaging** and there in the **Web configuration** section click **Generate key pair** button.
 4. Copy public key and in the `config.ts` file replace `<YOUR_PUBLIC_VAPID_KEY_HERE>` with your key.
 5. You must have the [Firebase CLI](https://firebase.google.com/docs/cli/) installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.

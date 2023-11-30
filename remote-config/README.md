@@ -17,7 +17,7 @@ see
 Getting started
 ---------------
 
-1. Follow step 1 and 2 [here](https://firebase.google.com/docs/web/setup#register-app) to register a web app with your Firebase project. Copy your Firebase config object (from the "Add Firebase to your web app" dialog), and paste it in the `config.ts` file in the quickstart directory.
+1. Follow step 1 and 2 [here](https://firebase.google.com/docs/web/setup#register-app) to register a web app with your Firebase project. Copy your Firebase config object (from the "Add Firebase to your web app" dialog), and paste it in the `config.ts` file in the remote-config directory.
 2. Set up Remote Config for your Firebase project:
     1. In the Firebase console, open your project
     2. Select Remote Config from the menu to view the Remote Config dashboard

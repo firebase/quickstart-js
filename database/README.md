@@ -13,7 +13,7 @@ Introduction
 Getting Started
 ---------------
 
- 1. Create your project on the [Firebase Console](https://console.firebase.google.com).
+ 1. Create your project on the [Firebase Console](https://console.firebase.google.com). Copy your Firebase config object (from the "Add Firebase to your web app" dialog), and paste it in the `config.ts` file in the database directory.
  2. Enable the **Google** sign-in provider in the **Authentication > SIGN-IN METHOD** tab.
  3. You must have the Firebase CLI installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
  4. Run `npm install` to install the app's dependencies.
