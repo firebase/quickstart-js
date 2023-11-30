@@ -55,12 +55,11 @@ function showToken(currentToken: string) {
 // - subscribe/unsubscribe the token from topics
 function sendTokenToServer(currentToken: string) {
   if (!isTokenSentToServer()) {
-    console.log('Sending token to server...');
+    console.log('Sending token to server...', currentToken);
     // TODO(developer): Send the current token to your server.
     setTokenSentToServer(true);
   } else {
-    console.log('Token already sent to server so won\'t send it again ' +
-      'unless it changes');
+    console.log('Token already sent to server so won\'t send it again unless it changes');
   }
 }
 
@@ -75,7 +74,7 @@ function setTokenSentToServer(sent: boolean) {
 function showHideDiv(divId: string, show: boolean) {
   const div = document.querySelector('#' + divId)! as HTMLDivElement;
   if (show) {
-    div.style.display = 'visible';
+    div.style.display = 'block';
   } else {
     div.style.display = 'none';
   }
@@ -100,7 +99,7 @@ function deleteTokenFromFirebase() {
   // Delete registration token.
   getToken(messaging).then((currentToken) => {
     deleteToken(messaging).then(() => {
-      console.log('Token deleted.');
+      console.log('Token deleted.', currentToken);
       setTokenSentToServer(false);
       // Once token is deleted update UI.
       resetUI();
@@ -143,5 +142,8 @@ function updateUIForPushPermissionRequired() {
   showHideDiv(tokenDivId, false);
   showHideDiv(permissionDivId, true);
 }
+
+document.getElementById('request-permission-button')!.addEventListener('click', requestPermission);
+document.getElementById('delete-token-button')!.addEventListener('click', deleteTokenFromFirebase);
 
 resetUI();
