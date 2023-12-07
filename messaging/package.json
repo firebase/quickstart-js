@@ -1,0 +1,33 @@
+{
+  "name": "quickstart-js-messaging",
+  "version": "1.0.0",
+  "description": "JavaScript quickstarts for Firebase Messaging.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firebase/quickstart-js.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/firebase/quickstart-js/issues"
+  },
+  "engines": {
+    "npm": ">=9.0.0 <10.0.0",
+    "node": ">=18.0.0 <=20.0.0"
+  },
+  "homepage": "https://github.com/firebase/quickstart-js#readme",
+  "devDependencies": {
+    "@types/jsrsasign": "^10.5.8",
+    "prettier": "^3.0.3",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.9"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "firebase": "^10.1.0"
+  }
+}
