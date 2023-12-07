@@ -40,18 +40,18 @@ exports.addNumbers = onCall((request) => {
     throw new HttpsError(
       'invalid-argument',
       'The function must be called with two arguments ' +
-        '"firstNumber" and "secondNumber" which must both be numbers.',
+      '"firstNumber" and "secondNumber" which must both be numbers.'
     );
   }
   // [END addHttpsError]
-
+  
   // [START returnAddData]
   // returning result.
   return {
     firstNumber: firstNumber,
     secondNumber: secondNumber,
     operator: '+',
-    operationResult: firstNumber + secondNumber,
+    operationResult: firstNumber + secondNumber
   };
   // [END returnAddData]
 });
@@ -72,7 +72,7 @@ exports.addMessage = onCall((request) => {
     throw new HttpsError(
       'invalid-argument',
       'The function must be called with ' +
-        'one arguments "text" containing the message text to add.',
+      'one arguments "text" containing the message text to add.'
     );
   }
   // Checking that the user is authenticated.
@@ -80,7 +80,7 @@ exports.addMessage = onCall((request) => {
     // Throwing an HttpsError so that the client gets the error details.
     throw new HttpsError(
       'failed-precondition',
-      'The function must be called ' + 'while authenticated.',
+      'The function must be called while authenticated.'
     );
   }
   // [END messageHttpsErrors]
@@ -102,7 +102,7 @@ exports.addMessage = onCall((request) => {
       .ref('/messages')
       .push({
         text: sanitizedMessage,
-        author: { uid, name, picture, email },
+        author: { uid, name, picture, email }
       })
       .then(() => {
         console.log('New Message written');

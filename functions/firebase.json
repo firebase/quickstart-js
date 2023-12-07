@@ -3,7 +3,7 @@
     "rules": "security.rules.json"
   },
   "hosting": {
-    "public": "./public",
+    "public": "./dist",
     "headers": [
       {
         "source": "**/*.@(js|html)",
@@ -31,5 +31,21 @@
         "firebase-debug.*.log"
       ]
     }
-  ]
+  ],
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "database": {
+      "port": 9000
+    },
+    "functions": {
+      "port": 5001
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000
+    },
+    "singleProjectMode": true
+  }
 }
