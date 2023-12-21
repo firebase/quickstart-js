@@ -1,13 +1,37 @@
-{
-  "parserOptions": {
-    // Required for certain syntax usages
-    "ecmaVersion": 6
+module.exports = {
+  root: true,
+  env: {
+    es6: true,
+    node: true
   },
-  "plugins": [
+  extends: [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "google",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: ["tsconfig.json", "tsconfig.dev.json"],
+    sourceType: "module"
+  },
+  ignorePatterns: [
+    "/lib/**/*" // Ignore built files.
+  ],
+  plugins: [
+    "@typescript-eslint",
+    "import",
     "promise"
   ],
-  "extends": "eslint:recommended",
-  "rules": {
+  rules: {
+    "quotes": ["error", "single"],
+    "import/no-unresolved": 0,
+    "indent": ["error", 2],
+    "max-len": "off",
+    "object-curly-spacing": "off",
+
     // Removed rule "disallow the use of console" from recommended eslint rules
     "no-console": "off",
 
@@ -120,4 +144,4 @@
     // Warn against nested then() or catch() statements
     "promise/no-nesting": 1
   }
-}
+};
