@@ -5,6 +5,7 @@ on:
 
 jobs:
   tag-diff:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: "Git Checkout"
