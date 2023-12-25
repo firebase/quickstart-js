@@ -13,108 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as sanitizer from './sanitizer';
 import * as admin from 'firebase-admin';
-import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { setGlobalOptions } from 'firebase-functions/v2';
+import {
+  beforeUserCreated,
+  beforeUserSignedIn,
+} from 'firebase-functions/v2/identity';
 
 setGlobalOptions({ maxInstances: 10 });
 
 admin.initializeApp();
 
-// [START allAdd]
-// [START addFunctionTrigger]
-// Adds two numbers to each other.
-exports.addNumbers = onCall((request) => {
-  // [END addFunctionTrigger]
-  // [START readAddData]
-  // Numbers passed from the client.
-  const firstNumber = request.data.firstNumber;
-  const secondNumber = request.data.secondNumber;
-  // [END readAddData]
-
-  // [START addHttpsError]
-  // Checking that attributes are present and are numbers.
-  if (!Number.isFinite(firstNumber) || !Number.isFinite(secondNumber)) {
-    // Throwing an HttpsError so that the client gets the error details.
-    throw new HttpsError(
-      'invalid-argument',
-      'The function must be called with two arguments ' +
-      '"firstNumber" and "secondNumber" which must both be numbers.'
-    );
-  }
-  // [END addHttpsError]
-  
-  // [START returnAddData]
-  // returning result.
+export const beforeCreateUser = beforeUserCreated(async (event) => {
+  console.log('beforeCreateUser', JSON.stringify(event));
   return {
-    firstNumber: firstNumber,
-    secondNumber: secondNumber,
-    operator: '+',
-    operationResult: firstNumber + secondNumber
+    disabled: false,
   };
-  // [END returnAddData]
 });
-// [END allAdd]
 
-// [START messageFunctionTrigger]
-// Saves a message to the Firebase Realtime Database but sanitizes the text by removing swearwords.
-exports.addMessage = onCall((request) => {
-  // [START_EXCLUDE]
-  // [START readMessageData]
-  // Message text passed from the client.
-  const text = request.data.text;
-  // [END readMessageData]
-  // [START messageHttpsErrors]
-  // Checking attribute.
-  if (!(typeof text === 'string') || text.length === 0) {
-    // Throwing an HttpsError so that the client gets the error details.
-    throw new HttpsError(
-      'invalid-argument',
-      'The function must be called with ' +
-      'one arguments "text" containing the message text to add.'
-    );
-  }
-  // Checking that the user is authenticated.
-  if (!request.auth) {
-    // Throwing an HttpsError so that the client gets the error details.
-    throw new HttpsError(
-      'failed-precondition',
-      'The function must be called while authenticated.'
-    );
-  }
-  // [END messageHttpsErrors]
-
-  // [START authIntegration]
-  // Authentication / user information is automatically added to the request.
-  const uid = request.auth.uid;
-  const name = request.auth.token.name || null;
-  const picture = request.auth.token.picture || null;
-  const email = request.auth.token.email || null;
-  // [END authIntegration]
-
-  // [START returnMessageAsync]
-  // Saving the new message to the Realtime Database.
-  const sanitizedMessage = sanitizer.sanitizeText(text); // Sanitize the message.
-  return (
-    admin
-      .database()
-      .ref('/messages')
-      .push({
-        text: sanitizedMessage,
-        author: { uid, name, picture, email }
-      })
-      .then(() => {
-        console.log('New Message written');
-        // Returning the sanitized message to the client.
-        return { text: sanitizedMessage };
-      })
-      // [END returnMessageAsync]
-      .catch((error) => {
-        // Re-throwing the error as an HttpsError so that the client gets the error details.
-        throw new HttpsError('unknown', error.message, error);
-      })
-  );
-  // [END_EXCLUDE]
+export const beforeSignIn = beforeUserSignedIn(async (event) => {
+  console.log('beforeSignIn', JSON.stringify(event));
+  return {
+    disabled: false,
+  };
 });
-// [END messageFunctionTrigger]

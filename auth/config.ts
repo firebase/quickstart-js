@@ -1,12 +1,8 @@
 export const firebaseConfig = {
-  // Your web app's Firebase configuration here
-  // See https://firebase.google.com/docs/web/setup#add-sdks-initialize
-  apiKey: 'API_KEY',
-  authDomain: 'PROJECT_ID.firebaseapp.com',
-  databaseURL: 'https://PROJECT_ID.firebaseio.com',
-  projectId: 'PROJECT_ID',
-  storageBucket: 'PROJECT_ID.appspot.com',
-  messagingSenderId: 'SENDER_ID',
-  appId: 'APP_ID',
-  measurementId: 'G-MEASUREMENT_ID',
-};
+    apiKey: "AIzaSyBpE7UwrGZDhEFDIrnPy13Zrfa5Ag0U53U",
+    authDomain: "test-2fa-issue.firebaseapp.com",
+    projectId: "test-2fa-issue",
+    storageBucket: "test-2fa-issue.appspot.com",
+    messagingSenderId: "1087630522725",
+    appId: "1:1087630522725:web:d038faff2a617a5dcfc98c"
+  };
