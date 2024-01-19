@@ -14,17 +14,36 @@ Getting Started
 ---------------
 
 1. Create your project in the Firebase Console by following [**Step 1: Create a Firebase Project**](https://firebase.google.com/docs/web/setup/#create-firebase-project)
-1. Register a web app by following [**Step 2: Register your app with Firebase**](https://firebase.google.com/docs/web/setup/#create-firebase-project).
+2. Register a web app by following [**Step 2: Register your app with Firebase**](https://firebase.google.com/docs/web/setup/#create-firebase-project).
      1. You don't need to add Hosting right now, and you can skip the "Add Firebase SDK" step in the console's "Add Firebase to your web app" flow.
-     1. Remember to click "Register App" or "Continue to console" at the bottom of the "Add Firebase to your web app" flow.
-1. Open Project and go to **Project settings > Cloud Messaging** and there in section **Web configuration** click **Generate key pair** button.
-1. Copy public key and in `index.html` file replace `<YOUR_PUBLIC_VAPID_KEY_HERE>` with your key.
-1. You must have the [Firebase CLI](https://firebase.google.com/docs/cli/) installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
-1. On the command line run `firebase use --add` and select the Firebase project you have created.
-1. On the command line run `firebase serve -p 8081` using the Firebase CLI tool to launch a local server.
-1. Open [http://localhost:8081](http://localhost:8081) in your browser.
-1. Click **REQUEST PERMISSION** button to request permission for the app to send notifications to the browser.
-1. Use the generated Instance ID token (IID Token) to send an HTTP request to FCM that delivers the message to the web application, inserting appropriate values for [`YOUR-SERVER-KEY`](https://console.firebase.google.com/project/_/settings/cloudmessaging) and `YOUR-IID-TOKEN`.
+     2. Remember to click "Register App" or "Continue to console" at the bottom of the "Add Firebase to your web app" flow.
+     3. Copy your Firebase config object (from the "Add Firebase to your web app" dialog), and paste it in the `config.ts` file in the messaging directory.
+3. Open Project and go to **Project settings > Cloud Messaging** and there in the **Web configuration** section click **Generate key pair** button.
+4. Copy public key and in the `config.ts` file replace `<YOUR_PUBLIC_VAPID_KEY_HERE>` with your key.
+5. You must have the [Firebase CLI](https://firebase.google.com/docs/cli/) installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
+6. On the command line run `firebase use --add` and select the Firebase project you have created.
+
+To run the sample app locally during development:
+1. Run `npm install` to install dependencies.
+2. Run `firebase emulators:start` to start the local Firebase emulators. Note: phone authentication required ReCaptcha verification which does not work with the Firebase emulators. These examples skip connecting to the emulators.
+3. Run `npm run dev` to serve the app locally using Vite
+   This will start a server locally that serves `index.html` on `http://localhost:5173/index.html`.
+4. Click **REQUEST PERMISSION** button to request permission for the app to send notifications to the browser.
+5. Use the generated Instance ID token (IID Token) to send an HTTP request to FCM that delivers the message to the web application, inserting appropriate values for [`YOUR-SERVER-KEY`](https://console.firebase.google.com/project/_/settings/cloudmessaging) and `YOUR-IID-TOKEN`.
+
+Running the app using the Firebase CLI:
+1. Run `npm install` to install dependencies.
+2. Run `npm run build` to build the app using Vite.
+3. Run `firebase emulators:start` to start the local Firebase emulators. Note: phone authentication required ReCaptcha verification which does not work with the Firebase emulators. These examples skip connecting to the emulators.
+4. In your terminal output, you will see the "Hosting" URL. By default, it will be `127.0.0.1:5002`, though it may be different for you.
+5. Navigate in your browser to the URL output by the `firebase emulators:start` command.
+6. Click **REQUEST PERMISSION** button to request permission for the app to send notifications to the browser.
+7. Use the generated Instance ID token (IID Token) to send an HTTP request to FCM that delivers the message to the web application, inserting appropriate values for [`YOUR-SERVER-KEY`](https://console.firebase.google.com/project/_/settings/cloudmessaging) and `YOUR-IID-TOKEN`.
+
+To deploy the sample app to production:
+1. Run `firebase deploy`.
+   This will deploy the sample app to `https://<project_id>.firebaseapp.com`.
+
 
 NOTE: If your payload has a `notification` object, `setBackgroundMessageHandler` will not trigger. Read [here](https://firebase.google.com/docs/cloud-messaging/js/receive) for more information.
 

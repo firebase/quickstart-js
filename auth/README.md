@@ -25,28 +25,28 @@ Introduction
 Getting Started
 ---------------
 
- 1. Create a Firebase project on the [Firebase Console](https://console.firebase.google.com).
- 1. Add a support email to your project in the [settings page](https://console.firebase.google.com/u/0/project/_/settings/general/). Some auth methods won't work without this.
- 1. Enable the authentication method you want to use by going to the **Authentication** section in the **SIGN-IN METHOD** tab - you don't need to enable custom auth.
+ 1. Create a Firebase project on the [Firebase Console](https://console.firebase.google.com). Copy your Firebase config object (from the "Add Firebase to your web app" dialog), and paste it in the `config.ts` file in the auth directory.
+ 2. Add a support email to your project in the [settings page](https://console.firebase.google.com/u/0/project/_/settings/general/). Some auth methods won't work without this.
+ 3. Enable the authentication method you want to use by going to the **Authentication** section in the **SIGN-IN METHOD** tab - you don't need to enable custom auth.
      - For **Custom Auth**, generate a Service Account credentials in your [Firebase Console > Project Settings > Service Accounts](https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk), and click on **GENERATE NEW PRIVATE KEYS**. You will need it in the [example token generator](exampletokengenerator/auth.html).
      - For **Facebook**, **Twitter** and **GitHub** you will need to create an application as a developer on their respective developer platform, whitelist `https://<project_id>.firebaseapp.com/__/auth/handler` for auth redirects and enable and setup the app's credentials in the **Firebase Console > Authentication > SIGN-IN METHOD**.
- 1. You must have the [Firebase CLI](https://firebase.google.com/docs/cli/) installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
- 1. On the command line, `cd` into the `quickstart-js/auth` subdirectory.
- 1. Run `firebase use --add` and select your Firebase project.
+ 4. You must have the [Firebase CLI](https://firebase.google.com/docs/cli/) installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
+ 5. On the command line, `cd` into the `quickstart-js/auth` subdirectory.
+ 6. Run `firebase use --add` and select your Firebase project.
 
 To run the sample app locally during development:
  1. Run `npm install` to install dependencies.
- 1. Run `firebase emulators:start` to start the local Firebase emulators. Note: phone authentication required ReCaptcha verification which does not work with the Firebase emulators. These examples skip connecting to the emulators.
- 1. Run `npm run dev` to serve the app locally using Vite
-    This will start a server locally that serves `auth/index.html` on `http://localhost:5173/auth/index.html`. 
+ 2. Run `firebase emulators:start` to start the local Firebase emulators. Note: phone authentication required ReCaptcha verification which does not work with the Firebase emulators. These examples skip connecting to the emulators.
+ 3. Run `npm run dev` to serve the app locally using Vite
+   This will start a server locally that serves `index.html` on `http://localhost:5173/index.html`. 
 
 
 Running the app using the Firebase CLI:
- 1. Alternatively, you can also serve the app via the Firebase CLI.
- 1. Run `npm run build` to build the app using Vite.
- 1. Run `firebase emulators:start` to start the local Firebase emulators. Note: phone authentication required ReCaptcha verification which does not work with the Firebase emulators. These examples skip connecting to the emulators.
- 1. In your terminal output, you will see the "Hosting" URL. By default, it will be `127.0.0.1:5002`, though it may be different for you.
- 1. Navigate in your browser to the URL output by the `firebase emulators:start` command.
+ 1. Run `npm install` to install dependencies.
+ 2. Run `npm run build` to build the app using Vite.
+ 3. Run `firebase emulators:start` to start the local Firebase emulators. Note: phone authentication required ReCaptcha verification which does not work with the Firebase emulators. These examples skip connecting to the emulators.
+ 4. In your terminal output, you will see the "Hosting" URL. By default, it will be `127.0.0.1:5002`, though it may be different for you.
+ 5. Navigate in your browser to the URL output by the `firebase emulators:start` command.
 
 To deploy the sample app to production:
  1. Run `firebase deploy`.

@@ -17,19 +17,43 @@ see
 Getting started
 ---------------
 
-1. Follow step 1 and 2 [here](https://firebase.google.com/docs/web/setup#register-app) to register a web app with your Firebase project
-1. Set up Remote Config for your Firebase project:
+1. Follow step 1 and 2 [here](https://firebase.google.com/docs/web/setup#register-app) to register a web app with your Firebase project. Copy your Firebase config object (from the "Add Firebase to your web app" dialog), and paste it in the `config.ts` file in the remote-config directory.
+2. Set up Remote Config for your Firebase project:
     1. In the Firebase console, open your project
-    1. Select Remote Config from the menu to view the Remote Config dashboard
-    1. Define a parameter with key `welcome_message` and default value `Hello World`
-    1. Click "Add parameter", and then click "Publish changes"
-1. You must have the Firebase CLI installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
-1. On the command line run `firebase use --add` and select the Firebase project you have created
-1. On the command line run `firebase serve` using the Firebase CLI tool to serve your web app
-1. Change the parameter value in the Firebase Console (the value of
-  `welcome_message`), and then click "Publish changes"
-1. Tap **Fetch Remote Welcome** in the app to fetch new parameter values and see
-  the resulting change in the app.
+    2. Select Remote Config from the menu to view the Remote Config dashboard
+    3. Define a parameter with key `welcome_message` and default value `Hello World`
+    4. Click "Add parameter", and then click "Publish changes"
+3. You must have the Firebase CLI installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
+4. On the command line run `firebase use --add` and select the Firebase project you have created
+
+To run the sample app locally during development:
+1. Run `npm install` to install dependencies.
+2. Run `firebase emulators:start` to start the local Firebase emulators. Note: phone authentication required ReCaptcha verification which does not work with the Firebase emulators. These examples skip connecting to the emulators.
+3. Run `npm run dev` to serve the app locally using Vite
+   This will start a server locally that serves `index.html` on `http://localhost:5173/index.html`.
+4. Click **REQUEST PERMISSION** button to request permission for the app to send notifications to the browser.
+5. Use the generated Instance ID token (IID Token) to send an HTTP request to FCM that delivers the message to the web application, inserting appropriate values for [`YOUR-SERVER-KEY`](https://console.firebase.google.com/project/_/settings/cloudmessaging) and `YOUR-IID-TOKEN`.
+6. Change the parameter value in the Firebase Console (the value of
+   `welcome_message`), and then click "Publish changes"
+7. Tap **Fetch Remote Welcome** in the app to fetch new parameter values and see
+   the resulting change in the app.
+
+Running the app using the Firebase CLI:
+1. Run `npm install` to install dependencies.
+2. Run `npm run build` to build the app using Vite.
+3. Run `firebase emulators:start` to start the local Firebase emulators. Note: phone authentication required ReCaptcha verification which does not work with the Firebase emulators. These examples skip connecting to the emulators.
+4. In your terminal output, you will see the "Hosting" URL. By default, it will be `127.0.0.1:5002`, though it may be different for you.
+5. Navigate in your browser to the URL output by the `firebase emulators:start` command.
+6. Click **REQUEST PERMISSION** button to request permission for the app to send notifications to the browser.
+7. Use the generated Instance ID token (IID Token) to send an HTTP request to FCM that delivers the message to the web application, inserting appropriate values for [`YOUR-SERVER-KEY`](https://console.firebase.google.com/project/_/settings/cloudmessaging) and `YOUR-IID-TOKEN`.
+8. Change the parameter value in the Firebase Console (the value of
+   `welcome_message`), and then click "Publish changes"
+9. Tap **Fetch Remote Welcome** in the app to fetch new parameter values and see
+   the resulting change in the app.
+
+To deploy the sample app to production:
+1. Run `firebase deploy`.
+   This will deploy the sample app to `https://<project_id>.firebaseapp.com`.
 
 Best practices
 --------------
