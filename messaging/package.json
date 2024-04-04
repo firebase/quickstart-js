@@ -20,7 +20,7 @@
     "@types/jsrsasign": "^10.5.8",
     "prettier": "^3.0.3",
     "typescript": "^5.1.6",
-    "vite": "^4.4.9"
+    "vite": "^4.5.3"
   },
   "scripts": {
     "dev": "vite",
