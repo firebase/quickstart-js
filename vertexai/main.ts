@@ -19,7 +19,7 @@ async function main() {
   // Get a gemini model
   const model = getGenerativeModel(
     vertexAI,
-    { model: "gemini-1.0-pro" }
+    { model: "gemini-1.5-pro-preview-0409" }
   );
   // Call generateContent with a string or Content(s)
   const generateContentResult = await model.generateContent("what is a cat?");
