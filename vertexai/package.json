@@ -26,6 +26,6 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "firebase": "10.10.0-vertexai-preview.cdcc49eb9"
+    "firebase": "10.12.0"
   }
 }

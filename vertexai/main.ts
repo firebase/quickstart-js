@@ -4,7 +4,7 @@ import {
   initializeAppCheck,
   ReCaptchaEnterpriseProvider,
 } from "firebase/app-check";
-import { getVertexAI, getGenerativeModel } from "firebase/vertexai";
+import { getVertexAI, getGenerativeModel } from "firebase/vertexai-preview";
 
 async function main() {
   const app = initializeApp(firebaseConfig);
