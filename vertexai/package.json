@@ -1,7 +1,7 @@
 {
-  "name": "quickstart-js-storage",
+  "name": "quickstart-js-vertexai",
   "version": "1.0.0",
-  "description": "JavaScript quickstarts for Firebase Storage.",
+  "description": "JavaScript quickstarts for Vertex AI for Firebase.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/firebase/quickstart-js.git"
@@ -26,6 +26,6 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "firebase": "10.12.0"
+    "firebase": "^10.12.0"
   }
 }

@@ -19,7 +19,7 @@ Getting Started
  2. Enable Gemini in the console.
  3. Create a ReCAPTCHA Enterprise key in the same project.
  4. Enable App Check in the Firebase console with the ReCAPTCHA Enterprise site key you created.
- 5. Copy your Firebase project config and your ReCAPTCHA Enterprise site key into the appropraite places in `config.ts` in this directory.
+ 5. Copy your Firebase project config and your ReCAPTCHA Enterprise site key into the appropriate places in `config.ts` in this directory.
  6. In this directory, run `npm install`
  7. In this directory, run `npm run dev`
 
