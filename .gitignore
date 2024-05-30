@@ -7,3 +7,4 @@
 .firebaserc
 dist/
 **/ui-debug.log
+.next

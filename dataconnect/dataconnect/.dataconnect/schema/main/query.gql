@@ -1,0 +1,79 @@
+extend type Query {
+  """
+  Look up a single Actor based on `id` or `key` and return selected fields (or `null` if not found).
+  """
+  actor(id: UUID, key: Actor_Key): Actor
+  """
+  Look up a single FavoriteActor based on `id` or `key` and return selected fields (or `null` if not found).
+  """
+  favoriteActor(key: FavoriteActor_Key): FavoriteActor
+  """
+  Look up a single FavoriteMovie based on `id` or `key` and return selected fields (or `null` if not found).
+  """
+  favoriteMovie(key: FavoriteMovie_Key): FavoriteMovie
+  """
+  Look up a single Movie based on `id` or `key` and return selected fields (or `null` if not found).
+  """
+  movie(id: UUID, key: Movie_Key): Movie
+  """
+  Look up a single MovieActor based on `id` or `key` and return selected fields (or `null` if not found).
+  """
+  movieActor(key: MovieActor_Key): MovieActor
+  """
+  Look up a single MovieMetadata based on `id` or `key` and return selected fields (or `null` if not found).
+  """
+  movieMetadata(id: UUID, key: MovieMetadata_Key): MovieMetadata
+  """
+  Look up a single Review based on `id` or `key` and return selected fields (or `null` if not found).
+  """
+  review(key: Review_Key): Review
+  """
+  Look up a single User based on `id` or `key` and return selected fields (or `null` if not found).
+  """
+  user(id: String, id_expr: String_Expr, key: User_Key): User
+  """
+  Look up a single WatchedMovie based on `id` or `key` and return selected fields (or `null` if not found).
+  """
+  watchedMovie(key: WatchedMovie_Key): WatchedMovie
+  """
+  List Actor entries in the table, optionally filtered by `where` conditions.
+  """
+  actors(where: Actor_Filter, orderBy: [Actor_Order!], limit: Int = 100): [Actor!]!
+  """
+  List FavoriteActor entries in the table, optionally filtered by `where` conditions.
+  """
+  favoriteActors(where: FavoriteActor_Filter, orderBy: [FavoriteActor_Order!], limit: Int = 100): [FavoriteActor!]!
+  """
+  List FavoriteMovie entries in the table, optionally filtered by `where` conditions.
+  """
+  favoriteMovies(where: FavoriteMovie_Filter, orderBy: [FavoriteMovie_Order!], limit: Int = 100): [FavoriteMovie!]!
+  """
+  List Movie entries in the table, optionally filtered by `where` conditions.
+  """
+  movies(where: Movie_Filter, orderBy: [Movie_Order!], limit: Int = 100): [Movie!]!
+  """
+  List MovieActor entries in the table, optionally filtered by `where` conditions.
+  """
+  movieActors(where: MovieActor_Filter, orderBy: [MovieActor_Order!], limit: Int = 100): [MovieActor!]!
+  """
+  List MovieMetadata entries in the table, optionally filtered by `where` conditions.
+  """
+  movieMetadatas(where: MovieMetadata_Filter, orderBy: [MovieMetadata_Order!], limit: Int = 100): [MovieMetadata!]!
+  """
+  List Review entries in the table, optionally filtered by `where` conditions.
+  """
+  reviews(where: Review_Filter, orderBy: [Review_Order!], limit: Int = 100): [Review!]!
+  """
+  List User entries in the table, optionally filtered by `where` conditions.
+  """
+  users(where: User_Filter, orderBy: [User_Order!], limit: Int = 100): [User!]!
+  """
+  List WatchedMovie entries in the table, optionally filtered by `where` conditions.
+  """
+  watchedMovies(where: WatchedMovie_Filter, orderBy: [WatchedMovie_Order!], limit: Int = 100): [WatchedMovie!]!
+  """
+  List Movie entries ordered by vector similarity between the `descriptionEmbedding` field and `compare_embed`.
+  (Alternatively, `compare` can be used if the input is a raw Vector.)
+  """
+  movies_descriptionEmbedding_similarity(compare: Vector, compare_embed: Vector_Embed, method: VectorSimilarityMethod = INNER_PRODUCT, within: Float, where: Movie_Filter, limit: Int = 100): [Movie!]!
+}

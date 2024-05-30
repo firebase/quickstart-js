@@ -1,0 +1,218 @@
+extend type Mutation {
+  """
+  Insert a single Actor into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  actor_insert(data: Actor_Data!): Actor_Key!
+  """
+  Insert a single FavoriteActor into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  favoriteActor_insert(data: FavoriteActor_Data!): FavoriteActor_Key!
+  """
+  Insert a single FavoriteMovie into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  favoriteMovie_insert(data: FavoriteMovie_Data!): FavoriteMovie_Key!
+  """
+  Insert a single Movie into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  movie_insert(data: Movie_Data!): Movie_Key!
+  """
+  Insert a single MovieActor into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  movieActor_insert(data: MovieActor_Data!): MovieActor_Key!
+  """
+  Insert a single MovieMetadata into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  movieMetadata_insert(data: MovieMetadata_Data!): MovieMetadata_Key!
+  """
+  Insert a single Review into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  review_insert(data: Review_Data!): Review_Key!
+  """
+  Insert a single User into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  user_insert(data: User_Data!): User_Key!
+  """
+  Insert a single WatchedMovie into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  watchedMovie_insert(data: WatchedMovie_Data!): WatchedMovie_Key!
+  """
+  Insert or update a single Actor into the table, based on the primary key. Returns the key of the newly inserted Actor.
+  """
+  actor_upsert(data: Actor_Data!): Actor_Key!
+  """
+  Insert or update a single FavoriteActor into the table, based on the primary key. Returns the key of the newly inserted FavoriteActor.
+  """
+  favoriteActor_upsert(data: FavoriteActor_Data!): FavoriteActor_Key!
+  """
+  Insert or update a single FavoriteMovie into the table, based on the primary key. Returns the key of the newly inserted FavoriteMovie.
+  """
+  favoriteMovie_upsert(data: FavoriteMovie_Data!): FavoriteMovie_Key!
+  """
+  Insert or update a single Movie into the table, based on the primary key. Returns the key of the newly inserted Movie.
+  """
+  movie_upsert(data: Movie_Data!): Movie_Key!
+  """
+  Insert or update a single MovieActor into the table, based on the primary key. Returns the key of the newly inserted MovieActor.
+  """
+  movieActor_upsert(data: MovieActor_Data!): MovieActor_Key!
+  """
+  Insert or update a single MovieMetadata into the table, based on the primary key. Returns the key of the newly inserted MovieMetadata.
+  """
+  movieMetadata_upsert(data: MovieMetadata_Data!): MovieMetadata_Key!
+  """
+  Insert or update a single Review into the table, based on the primary key. Returns the key of the newly inserted Review.
+  """
+  review_upsert(data: Review_Data!): Review_Key!
+  """
+  Insert or update a single User into the table, based on the primary key. Returns the key of the newly inserted User.
+  """
+  user_upsert(data: User_Data!): User_Key!
+  """
+  Insert or update a single WatchedMovie into the table, based on the primary key. Returns the key of the newly inserted WatchedMovie.
+  """
+  watchedMovie_upsert(data: WatchedMovie_Data!): WatchedMovie_Key!
+  """
+  Update a single Actor based on `id` or `key`, setting columns specified in `data`. Returns `null` if not found.
+  """
+  actor_update(id: UUID, key: Actor_Key, data: Actor_Data!): Actor_Key
+  """
+  Update a single FavoriteActor based on `id` or `key`, setting columns specified in `data`. Returns `null` if not found.
+  """
+  favoriteActor_update(key: FavoriteActor_Key, data: FavoriteActor_Data!): FavoriteActor_Key
+  """
+  Update a single FavoriteMovie based on `id` or `key`, setting columns specified in `data`. Returns `null` if not found.
+  """
+  favoriteMovie_update(key: FavoriteMovie_Key, data: FavoriteMovie_Data!): FavoriteMovie_Key
+  """
+  Update a single Movie based on `id` or `key`, setting columns specified in `data`. Returns `null` if not found.
+  """
+  movie_update(id: UUID, key: Movie_Key, data: Movie_Data!): Movie_Key
+  """
+  Update a single MovieActor based on `id` or `key`, setting columns specified in `data`. Returns `null` if not found.
+  """
+  movieActor_update(key: MovieActor_Key, data: MovieActor_Data!): MovieActor_Key
+  """
+  Update a single MovieMetadata based on `id` or `key`, setting columns specified in `data`. Returns `null` if not found.
+  """
+  movieMetadata_update(id: UUID, key: MovieMetadata_Key, data: MovieMetadata_Data!): MovieMetadata_Key
+  """
+  Update a single Review based on `id` or `key`, setting columns specified in `data`. Returns `null` if not found.
+  """
+  review_update(key: Review_Key, data: Review_Data!): Review_Key
+  """
+  Update a single User based on `id` or `key`, setting columns specified in `data`. Returns `null` if not found.
+  """
+  user_update(id: String, id_expr: String_Expr, key: User_Key, data: User_Data!): User_Key
+  """
+  Update a single WatchedMovie based on `id` or `key`, setting columns specified in `data`. Returns `null` if not found.
+  """
+  watchedMovie_update(key: WatchedMovie_Key, data: WatchedMovie_Data!): WatchedMovie_Key
+  """
+  Update Actor entries matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  actor_updateMany(where: Actor_Filter, all: Boolean = false, data: Actor_Data!): Int!
+  """
+  Update FavoriteActor entries matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  favoriteActor_updateMany(where: FavoriteActor_Filter, all: Boolean = false, data: FavoriteActor_Data!): Int!
+  """
+  Update FavoriteMovie entries matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  favoriteMovie_updateMany(where: FavoriteMovie_Filter, all: Boolean = false, data: FavoriteMovie_Data!): Int!
+  """
+  Update Movie entries matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  movie_updateMany(where: Movie_Filter, all: Boolean = false, data: Movie_Data!): Int!
+  """
+  Update MovieActor entries matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  movieActor_updateMany(where: MovieActor_Filter, all: Boolean = false, data: MovieActor_Data!): Int!
+  """
+  Update MovieMetadata entries matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  movieMetadata_updateMany(where: MovieMetadata_Filter, all: Boolean = false, data: MovieMetadata_Data!): Int!
+  """
+  Update Review entries matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  review_updateMany(where: Review_Filter, all: Boolean = false, data: Review_Data!): Int!
+  """
+  Update User entries matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  user_updateMany(where: User_Filter, all: Boolean = false, data: User_Data!): Int!
+  """
+  Update WatchedMovie entries matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  watchedMovie_updateMany(where: WatchedMovie_Filter, all: Boolean = false, data: WatchedMovie_Data!): Int!
+  """
+  Delete a single Actor based on `id` or `key` and return its key (or `null` if not found).
+  """
+  actor_delete(id: UUID, key: Actor_Key): Actor_Key
+  """
+  Delete a single FavoriteActor based on `id` or `key` and return its key (or `null` if not found).
+  """
+  favoriteActor_delete(key: FavoriteActor_Key): FavoriteActor_Key
+  """
+  Delete a single FavoriteMovie based on `id` or `key` and return its key (or `null` if not found).
+  """
+  favoriteMovie_delete(key: FavoriteMovie_Key): FavoriteMovie_Key
+  """
+  Delete a single Movie based on `id` or `key` and return its key (or `null` if not found).
+  """
+  movie_delete(id: UUID, key: Movie_Key): Movie_Key
+  """
+  Delete a single MovieActor based on `id` or `key` and return its key (or `null` if not found).
+  """
+  movieActor_delete(key: MovieActor_Key): MovieActor_Key
+  """
+  Delete a single MovieMetadata based on `id` or `key` and return its key (or `null` if not found).
+  """
+  movieMetadata_delete(id: UUID, key: MovieMetadata_Key): MovieMetadata_Key
+  """
+  Delete a single Review based on `id` or `key` and return its key (or `null` if not found).
+  """
+  review_delete(key: Review_Key): Review_Key
+  """
+  Delete a single User based on `id` or `key` and return its key (or `null` if not found).
+  """
+  user_delete(id: String, id_expr: String_Expr, key: User_Key): User_Key
+  """
+  Delete a single WatchedMovie based on `id` or `key` and return its key (or `null` if not found).
+  """
+  watchedMovie_delete(key: WatchedMovie_Key): WatchedMovie_Key
+  """
+  Delete Actor entries matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  actor_deleteMany(where: Actor_Filter, all: Boolean = false): Int!
+  """
+  Delete FavoriteActor entries matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  favoriteActor_deleteMany(where: FavoriteActor_Filter, all: Boolean = false): Int!
+  """
+  Delete FavoriteMovie entries matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  favoriteMovie_deleteMany(where: FavoriteMovie_Filter, all: Boolean = false): Int!
+  """
+  Delete Movie entries matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  movie_deleteMany(where: Movie_Filter, all: Boolean = false): Int!
+  """
+  Delete MovieActor entries matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  movieActor_deleteMany(where: MovieActor_Filter, all: Boolean = false): Int!
+  """
+  Delete MovieMetadata entries matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  movieMetadata_deleteMany(where: MovieMetadata_Filter, all: Boolean = false): Int!
+  """
+  Delete Review entries matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  review_deleteMany(where: Review_Filter, all: Boolean = false): Int!
+  """
+  Delete User entries matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  user_deleteMany(where: User_Filter, all: Boolean = false): Int!
+  """
+  Delete WatchedMovie entries matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  watchedMovie_deleteMany(where: WatchedMovie_Filter, all: Boolean = false): Int!
+}

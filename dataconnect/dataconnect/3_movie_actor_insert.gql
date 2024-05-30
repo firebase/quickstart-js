@@ -1,0 +1,283 @@
+mutation {
+  metadata1: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440000",
+    director: "Christopher Nolan"
+  })
+  
+  metadata2: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440001",
+    director: "Lana Wachowski, Lilly Wachowski"
+  })
+  
+  metadata3: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440002",
+    director: "Chad Stahelski"
+  })
+
+  metadata4: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440003",
+    director: "Christopher Nolan"
+  })
+
+  metadata5: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440004",
+    director: "David Fincher"
+  })
+
+  metadata6: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440005",
+    director: "Quentin Tarantino"
+  })
+
+  metadata7: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440006",
+    director: "Peter Jackson"
+  })
+
+  metadata8: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440007",
+    director: "Frank Darabont"
+  })
+
+  metadata9: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440008",
+    director: "Robert Zemeckis"
+  })
+
+  metadata10: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440009",
+    director: "Francis Ford Coppola"
+  })
+
+  metadata11: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440010",
+    director: "Jonathan Demme"
+  })
+
+  metadata12: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440011",
+    director: "Steven Spielberg"
+  })
+
+  metadata13: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440012",
+    director: "Joss Whedon"
+  })
+
+  metadata14: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440013",
+    director: "Ridley Scott"
+  })
+
+  metadata15: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440014",
+    director: "James Cameron"
+  })
+
+  metadata16: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440015",
+    director: "James Cameron"
+  })
+
+  metadata17: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440016",
+    director: "Steven Spielberg"
+  })
+
+  metadata18: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440017",
+    director: "Roger Allers, Rob Minkoff"
+  })
+
+  metadata19: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440018",
+    director: "George Lucas"
+  })
+
+  metadata20: movieMetadata_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440019",
+    director: "Ridley Scott"
+  })
+
+  movieActor1: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440000",
+    actorId: "123e4567-e89b-12d3-a456-426614174000",
+    role: "main"
+  })
+  
+  movieActor2: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440001",
+    actorId: "123e4567-e89b-12d3-a456-426614174001",
+    role: "main"
+  })
+  
+  movieActor3: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440002",
+    actorId: "123e4567-e89b-12d3-a456-426614174001",
+    role: "main"
+  })
+
+  movieActor4: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440003",
+    actorId: "123e4567-e89b-12d3-a456-426614174003",
+    role: "main"
+  })
+
+  movieActor5: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440004",
+    actorId: "123e4567-e89b-12d3-a456-426614174004",
+    role: "main"
+  })
+
+  movieActor6: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440005",
+    actorId: "123e4567-e89b-12d3-a456-426614174005",
+    role: "main"
+  })
+
+  movieActor7: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440006",
+    actorId: "123e4567-e89b-12d3-a456-426614174006",
+    role: "main"
+  })
+
+  movieActor8: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440007",
+    actorId: "123e4567-e89b-12d3-a456-426614174007",
+    role: "main"
+  })
+
+  movieActor9: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440008",
+    actorId: "123e4567-e89b-12d3-a456-426614174008",
+    role: "main"
+  })
+
+  movieActor10: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440009",
+    actorId: "123e4567-e89b-12d3-a456-426614174009",
+    role: "main"
+  })
+
+  movieActor11: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440010",
+    actorId: "123e4567-e89b-12d3-a456-426614174010",
+    role: "main"
+  })
+
+  movieActor12: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440011",
+    actorId: "123e4567-e89b-12d3-a456-426614174011",
+    role: "main"
+  })
+
+  movieActor13: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440012",
+    actorId: "123e4567-e89b-12d3-a456-426614174012",
+    role: "main"
+  })
+
+  movieActor14: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440013",
+    actorId: "123e4567-e89b-12d3-a456-426614174013",
+    role: "main"
+  })
+
+  movieActor15: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440014",
+    actorId: "123e4567-e89b-12d3-a456-426614174014",
+    role: "main"
+  })
+
+  movieActor16: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440015",
+    actorId: "123e4567-e89b-12d3-a456-426614174015",
+    role: "main"
+  })
+
+  movieActor17: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440016",
+    actorId: "123e4567-e89b-12d3-a456-426614174016",
+    role: "main"
+  })
+
+  movieActor18: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440017",
+    actorId: "123e4567-e89b-12d3-a456-426614174017",
+    role: "main"
+  })
+
+  movieActor19: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440018",
+    actorId: "123e4567-e89b-12d3-a456-426614174018",
+    role: "main"
+  })
+
+  movieActor20: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440019",
+    actorId: "123e4567-e89b-12d3-a456-426614174019",
+    role: "main"
+  })
+
+  # Adding supporting actors
+  movieActor21: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440000",
+    actorId: "123e4567-e89b-12d3-a456-426614174001",
+    role: "supporting"
+  })
+  
+  movieActor22: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440001",
+    actorId: "123e4567-e89b-12d3-a456-426614174002",
+    role: "supporting"
+  })
+  
+  movieActor23: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440002",
+    actorId: "123e4567-e89b-12d3-a456-426614174003",
+    role: "supporting"
+  })
+
+  movieActor24: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440003",
+    actorId: "123e4567-e89b-12d3-a456-426614174004",
+    role: "supporting"
+  })
+
+  movieActor25: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440004",
+    actorId: "123e4567-e89b-12d3-a456-426614174005",
+    role: "supporting"
+  })
+
+  movieActor26: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440005",
+    actorId: "123e4567-e89b-12d3-a456-426614174006",
+    role: "supporting"
+  })
+
+  movieActor27: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440006",
+    actorId: "123e4567-e89b-12d3-a456-426614174007",
+    role: "supporting"
+  })
+
+  movieActor28: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440007",
+    actorId: "123e4567-e89b-12d3-a456-426614174008",
+    role: "supporting"
+  })
+
+  movieActor29: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440008",
+    actorId: "123e4567-e89b-12d3-a456-426614174009",
+    role: "supporting"
+  })
+
+  movieActor30: movieActor_insert(data: {
+    movieId: "550e8400-e29b-41d4-a716-446655440009",
+    actorId: "123e4567-e89b-12d3-a456-426614174010",
+    role: "supporting"
+  })
+
+}

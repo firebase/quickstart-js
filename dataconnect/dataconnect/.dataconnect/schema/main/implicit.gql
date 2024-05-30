@@ -1,0 +1,27 @@
+extend type FavoriteActor {
+  userId: String!
+  actorId: UUID!
+}
+extend type FavoriteMovie {
+  userId: String!
+  movieId: UUID!
+}
+extend type Movie {
+  sequelToId: UUID
+}
+extend type MovieActor {
+  movieId: UUID!
+  actorId: UUID!
+}
+extend type MovieMetadata {
+  id: UUID! @default(expr: "uuidV4()")
+  movieId: UUID!
+}
+extend type Review {
+  movieId: UUID!
+  userId: String!
+}
+extend type WatchedMovie {
+  userId: String!
+  movieId: UUID!
+}

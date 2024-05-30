@@ -1,0 +1,32 @@
+{
+  "dataconnect": {
+    "source": "./dataconnect",
+    "location": "us-central1"
+  },
+  "emulators": {
+    "dataconnect": {
+      "port": 9399
+    },
+    "ui": {
+      "enabled": false
+    },
+    "singleProjectMode": true,
+    "auth": {
+      "port": 9099
+    },
+    "hosting": {
+      "port": 5000
+    }
+  },
+  "hosting": {
+    "source": "movie",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
+  }
+}

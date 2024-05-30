@@ -1,0 +1,316 @@
+scalar Actor_Key
+scalar FavoriteActor_Key
+scalar FavoriteMovie_Key
+scalar Movie_Key
+scalar MovieActor_Key
+scalar MovieMetadata_Key
+scalar Review_Key
+scalar User_Key
+scalar WatchedMovie_Key
+input Actor_Data {
+  id: UUID
+  id_expr: UUID_Expr
+  biography: String
+  biography_expr: String_Expr
+  imageUrl: String
+  imageUrl_expr: String_Expr
+  name: String
+  name_expr: String_Expr
+}
+input Actor_Filter {
+  _and: [Actor_Filter!]
+  _not: Actor_Filter
+  _or: [Actor_Filter!]
+  id: UUID_Filter
+  biography: String_Filter
+  imageUrl: String_Filter
+  name: String_Filter
+  favoriteActors_on_actor: FavoriteActor_ListFilter
+  movieActors_on_actor: MovieActor_ListFilter
+  movies_via_MovieActor: Movie_ListFilter
+  users_via_FavoriteActor: User_ListFilter
+}
+input Actor_ListFilter {
+  count: Int_Filter
+  exist: Actor_Filter
+}
+input Actor_Order {
+  id: OrderDirection
+  biography: OrderDirection
+  imageUrl: OrderDirection
+  name: OrderDirection
+}
+input FavoriteActor_Data {
+  userId: String
+  userId_expr: String_Expr
+  actorId: UUID
+  actorId_expr: UUID_Expr
+  actor: Actor_Key
+  user: User_Key
+}
+input FavoriteActor_Filter {
+  _and: [FavoriteActor_Filter!]
+  _not: FavoriteActor_Filter
+  _or: [FavoriteActor_Filter!]
+  userId: String_Filter
+  actorId: UUID_Filter
+  actor: Actor_Filter
+  user: User_Filter
+}
+input FavoriteActor_ListFilter {
+  count: Int_Filter
+  exist: FavoriteActor_Filter
+}
+input FavoriteActor_Order {
+  userId: OrderDirection
+  actorId: OrderDirection
+  actor: Actor_Order
+  user: User_Order
+}
+input FavoriteMovie_Data {
+  userId: String
+  userId_expr: String_Expr
+  movieId: UUID
+  movieId_expr: UUID_Expr
+  movie: Movie_Key
+  user: User_Key
+}
+input FavoriteMovie_Filter {
+  _and: [FavoriteMovie_Filter!]
+  _not: FavoriteMovie_Filter
+  _or: [FavoriteMovie_Filter!]
+  userId: String_Filter
+  movieId: UUID_Filter
+  movie: Movie_Filter
+  user: User_Filter
+}
+input FavoriteMovie_ListFilter {
+  count: Int_Filter
+  exist: FavoriteMovie_Filter
+}
+input FavoriteMovie_Order {
+  userId: OrderDirection
+  movieId: OrderDirection
+  movie: Movie_Order
+  user: User_Order
+}
+input Movie_Data {
+  id: UUID
+  id_expr: UUID_Expr
+  sequelToId: UUID
+  sequelToId_expr: UUID_Expr
+  sequelTo: Movie_Key
+  description: String
+  description_expr: String_Expr
+  descriptionEmbedding: Vector
+  descriptionEmbedding_embed: Vector_Embed
+  genre: String
+  genre_expr: String_Expr
+  imageUrl: String
+  imageUrl_expr: String_Expr
+  rating: Float
+  releaseYear: Int
+  tags: [String!]
+  title: String
+  title_expr: String_Expr
+}
+input Movie_Filter {
+  _and: [Movie_Filter!]
+  _not: Movie_Filter
+  _or: [Movie_Filter!]
+  id: UUID_Filter
+  sequelToId: UUID_Filter
+  sequelTo: Movie_Filter
+  description: String_Filter
+  descriptionEmbedding: Vector_Filter
+  genre: String_Filter
+  imageUrl: String_Filter
+  rating: Float_Filter
+  releaseYear: Int_Filter
+  tags: String_ListFilter
+  title: String_Filter
+  favoriteMovies_on_movie: FavoriteMovie_ListFilter
+  movies_on_sequelTo: Movie_ListFilter
+  movieActors_on_movie: MovieActor_ListFilter
+  movieMetadatas_on_movie: MovieMetadata_ListFilter
+  reviews_on_movie: Review_ListFilter
+  watchedMovies_on_movie: WatchedMovie_ListFilter
+  actors_via_MovieActor: Actor_ListFilter
+  users_via_FavoriteMovie: User_ListFilter
+  users_via_Review: User_ListFilter
+  users_via_WatchedMovie: User_ListFilter
+}
+input Movie_ListFilter {
+  count: Int_Filter
+  exist: Movie_Filter
+}
+input Movie_Order {
+  id: OrderDirection
+  sequelToId: OrderDirection
+  sequelTo: Movie_Order
+  description: OrderDirection
+  descriptionEmbedding: OrderDirection
+  genre: OrderDirection
+  imageUrl: OrderDirection
+  rating: OrderDirection
+  releaseYear: OrderDirection
+  title: OrderDirection
+}
+input MovieActor_Data {
+  movieId: UUID
+  movieId_expr: UUID_Expr
+  actorId: UUID
+  actorId_expr: UUID_Expr
+  actor: Actor_Key
+  movie: Movie_Key
+  role: String
+  role_expr: String_Expr
+}
+input MovieActor_Filter {
+  _and: [MovieActor_Filter!]
+  _not: MovieActor_Filter
+  _or: [MovieActor_Filter!]
+  movieId: UUID_Filter
+  actorId: UUID_Filter
+  actor: Actor_Filter
+  movie: Movie_Filter
+  role: String_Filter
+}
+input MovieActor_ListFilter {
+  count: Int_Filter
+  exist: MovieActor_Filter
+}
+input MovieActor_Order {
+  movieId: OrderDirection
+  actorId: OrderDirection
+  actor: Actor_Order
+  movie: Movie_Order
+  role: OrderDirection
+}
+input MovieMetadata_Data {
+  id: UUID
+  id_expr: UUID_Expr
+  movieId: UUID
+  movieId_expr: UUID_Expr
+  movie: Movie_Key
+  director: String
+  director_expr: String_Expr
+}
+input MovieMetadata_Filter {
+  _and: [MovieMetadata_Filter!]
+  _not: MovieMetadata_Filter
+  _or: [MovieMetadata_Filter!]
+  id: UUID_Filter
+  movieId: UUID_Filter
+  movie: Movie_Filter
+  director: String_Filter
+}
+input MovieMetadata_ListFilter {
+  count: Int_Filter
+  exist: MovieMetadata_Filter
+}
+input MovieMetadata_Order {
+  id: OrderDirection
+  movieId: OrderDirection
+  movie: Movie_Order
+  director: OrderDirection
+}
+input Review_Data {
+  movieId: UUID
+  movieId_expr: UUID_Expr
+  userId: String
+  userId_expr: String_Expr
+  movie: Movie_Key
+  user: User_Key
+  id: UUID
+  id_expr: UUID_Expr
+  rating: Int
+  reviewDate: Date
+  reviewDate_date: Date_Relative
+  reviewDate_expr: Date_Expr
+  reviewText: String
+  reviewText_expr: String_Expr
+}
+input Review_Filter {
+  _and: [Review_Filter!]
+  _not: Review_Filter
+  _or: [Review_Filter!]
+  movieId: UUID_Filter
+  userId: String_Filter
+  movie: Movie_Filter
+  user: User_Filter
+  id: UUID_Filter
+  rating: Int_Filter
+  reviewDate: Date_Filter
+  reviewText: String_Filter
+}
+input Review_ListFilter {
+  count: Int_Filter
+  exist: Review_Filter
+}
+input Review_Order {
+  movieId: OrderDirection
+  userId: OrderDirection
+  movie: Movie_Order
+  user: User_Order
+  id: OrderDirection
+  rating: OrderDirection
+  reviewDate: OrderDirection
+  reviewText: OrderDirection
+}
+input User_Data {
+  id: String
+  id_expr: String_Expr
+  username: String
+  username_expr: String_Expr
+}
+input User_Filter {
+  _and: [User_Filter!]
+  _not: User_Filter
+  _or: [User_Filter!]
+  id: String_Filter
+  username: String_Filter
+  favoriteActors_on_user: FavoriteActor_ListFilter
+  favoriteMovies_on_user: FavoriteMovie_ListFilter
+  reviews_on_user: Review_ListFilter
+  watchedMovies_on_user: WatchedMovie_ListFilter
+  actors_via_FavoriteActor: Actor_ListFilter
+  movies_via_FavoriteMovie: Movie_ListFilter
+  movies_via_Review: Movie_ListFilter
+  movies_via_WatchedMovie: Movie_ListFilter
+}
+input User_ListFilter {
+  count: Int_Filter
+  exist: User_Filter
+}
+input User_Order {
+  id: OrderDirection
+  username: OrderDirection
+}
+input WatchedMovie_Data {
+  userId: String
+  userId_expr: String_Expr
+  movieId: UUID
+  movieId_expr: UUID_Expr
+  movie: Movie_Key
+  user: User_Key
+}
+input WatchedMovie_Filter {
+  _and: [WatchedMovie_Filter!]
+  _not: WatchedMovie_Filter
+  _or: [WatchedMovie_Filter!]
+  userId: String_Filter
+  movieId: UUID_Filter
+  movie: Movie_Filter
+  user: User_Filter
+}
+input WatchedMovie_ListFilter {
+  count: Int_Filter
+  exist: WatchedMovie_Filter
+}
+input WatchedMovie_Order {
+  userId: OrderDirection
+  movieId: OrderDirection
+  movie: Movie_Order
+  user: User_Order
+}

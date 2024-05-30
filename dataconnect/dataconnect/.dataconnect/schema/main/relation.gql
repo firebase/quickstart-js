@@ -1,0 +1,94 @@
+extend type Actor {
+  """
+  ✨ List FavoriteActor entries in a one-to-many relationship with this object (i.e. where `FavoriteActor.actor` equals this object).
+  """
+  favoriteActors_on_actor(where: FavoriteActor_Filter, orderBy: [FavoriteActor_Order!], limit: Int = 100): [FavoriteActor!]!
+  """
+  ✨ List MovieActor entries in a one-to-many relationship with this object (i.e. where `MovieActor.actor` equals this object).
+  """
+  movieActors_on_actor(where: MovieActor_Filter, orderBy: [MovieActor_Order!], limit: Int = 100): [MovieActor!]!
+  """
+  ✨ List related Movie entries using MovieActor as a join table (i.e. where an entry of MovieActor exists whose actor == this and movie == that).
+  """
+  movies_via_MovieActor(where: MovieActor_Filter, orderBy: [MovieActor_Order!], limit: Int = 100): [Movie!]!
+  """
+  ✨ List related User entries using FavoriteActor as a join table (i.e. where an entry of FavoriteActor exists whose actor == this and user == that).
+  """
+  users_via_FavoriteActor(where: FavoriteActor_Filter, orderBy: [FavoriteActor_Order!], limit: Int = 100): [User!]!
+}
+extend type Movie {
+  """
+  ✨ List FavoriteMovie entries in a one-to-many relationship with this object (i.e. where `FavoriteMovie.movie` equals this object).
+  """
+  favoriteMovies_on_movie(where: FavoriteMovie_Filter, orderBy: [FavoriteMovie_Order!], limit: Int = 100): [FavoriteMovie!]!
+  """
+  ✨ List Movie entries in a one-to-many relationship with this object (i.e. where `Movie.sequelTo` equals this object).
+  """
+  movies_on_sequelTo(where: Movie_Filter, orderBy: [Movie_Order!], limit: Int = 100): [Movie!]!
+  """
+  ✨ List MovieActor entries in a one-to-many relationship with this object (i.e. where `MovieActor.movie` equals this object).
+  """
+  movieActors_on_movie(where: MovieActor_Filter, orderBy: [MovieActor_Order!], limit: Int = 100): [MovieActor!]!
+  """
+  ✨ List MovieMetadata entries in a one-to-many relationship with this object (i.e. where `MovieMetadata.movie` equals this object).
+  """
+  movieMetadatas_on_movie(where: MovieMetadata_Filter, orderBy: [MovieMetadata_Order!], limit: Int = 100): [MovieMetadata!]!
+  """
+  ✨ List Review entries in a one-to-many relationship with this object (i.e. where `Review.movie` equals this object).
+  """
+  reviews_on_movie(where: Review_Filter, orderBy: [Review_Order!], limit: Int = 100): [Review!]!
+  """
+  ✨ List WatchedMovie entries in a one-to-many relationship with this object (i.e. where `WatchedMovie.movie` equals this object).
+  """
+  watchedMovies_on_movie(where: WatchedMovie_Filter, orderBy: [WatchedMovie_Order!], limit: Int = 100): [WatchedMovie!]!
+  """
+  ✨ List related Actor entries using MovieActor as a join table (i.e. where an entry of MovieActor exists whose movie == this and actor == that).
+  """
+  actors_via_MovieActor(where: MovieActor_Filter, orderBy: [MovieActor_Order!], limit: Int = 100): [Actor!]!
+  """
+  ✨ List related User entries using FavoriteMovie as a join table (i.e. where an entry of FavoriteMovie exists whose movie == this and user == that).
+  """
+  users_via_FavoriteMovie(where: FavoriteMovie_Filter, orderBy: [FavoriteMovie_Order!], limit: Int = 100): [User!]!
+  """
+  ✨ List related User entries using Review as a join table (i.e. where an entry of Review exists whose movie == this and user == that).
+  """
+  users_via_Review(where: Review_Filter, orderBy: [Review_Order!], limit: Int = 100): [User!]!
+  """
+  ✨ List related User entries using WatchedMovie as a join table (i.e. where an entry of WatchedMovie exists whose movie == this and user == that).
+  """
+  users_via_WatchedMovie(where: WatchedMovie_Filter, orderBy: [WatchedMovie_Order!], limit: Int = 100): [User!]!
+}
+extend type User {
+  """
+  ✨ List FavoriteActor entries in a one-to-many relationship with this object (i.e. where `FavoriteActor.user` equals this object).
+  """
+  favoriteActors_on_user(where: FavoriteActor_Filter, orderBy: [FavoriteActor_Order!], limit: Int = 100): [FavoriteActor!]!
+  """
+  ✨ List FavoriteMovie entries in a one-to-many relationship with this object (i.e. where `FavoriteMovie.user` equals this object).
+  """
+  favoriteMovies_on_user(where: FavoriteMovie_Filter, orderBy: [FavoriteMovie_Order!], limit: Int = 100): [FavoriteMovie!]!
+  """
+  ✨ List Review entries in a one-to-many relationship with this object (i.e. where `Review.user` equals this object).
+  """
+  reviews_on_user(where: Review_Filter, orderBy: [Review_Order!], limit: Int = 100): [Review!]!
+  """
+  ✨ List WatchedMovie entries in a one-to-many relationship with this object (i.e. where `WatchedMovie.user` equals this object).
+  """
+  watchedMovies_on_user(where: WatchedMovie_Filter, orderBy: [WatchedMovie_Order!], limit: Int = 100): [WatchedMovie!]!
+  """
+  ✨ List related Actor entries using FavoriteActor as a join table (i.e. where an entry of FavoriteActor exists whose user == this and actor == that).
+  """
+  actors_via_FavoriteActor(where: FavoriteActor_Filter, orderBy: [FavoriteActor_Order!], limit: Int = 100): [Actor!]!
+  """
+  ✨ List related Movie entries using FavoriteMovie as a join table (i.e. where an entry of FavoriteMovie exists whose user == this and movie == that).
+  """
+  movies_via_FavoriteMovie(where: FavoriteMovie_Filter, orderBy: [FavoriteMovie_Order!], limit: Int = 100): [Movie!]!
+  """
+  ✨ List related Movie entries using Review as a join table (i.e. where an entry of Review exists whose user == this and movie == that).
+  """
+  movies_via_Review(where: Review_Filter, orderBy: [Review_Order!], limit: Int = 100): [Movie!]!
+  """
+  ✨ List related Movie entries using WatchedMovie as a join table (i.e. where an entry of WatchedMovie exists whose user == this and movie == that).
+  """
+  movies_via_WatchedMovie(where: WatchedMovie_Filter, orderBy: [WatchedMovie_Order!], limit: Int = 100): [Movie!]!
+}

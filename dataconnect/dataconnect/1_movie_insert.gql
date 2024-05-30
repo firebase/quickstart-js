@@ -1,0 +1,241 @@
+mutation {
+  movie1: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440000",
+    title: "Inception",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Finception.jpg?alt=media&token=0a2950ee-0df7-4909-a5fd-e9f44dd803d6",
+    releaseYear: 2010,
+    genre: "sci-fi",
+    rating: 8.8,
+    description: "Dom Cobb (Leonardo DiCaprio) is a thief with the rare ability to enter people's dreams and steal their secrets from their subconscious. His skill has made him a valuable player in the world of corporate espionage but has also cost him everything he loves. Cobb gets a chance at redemption when he is offered a seemingly impossible task: plant an idea in someone's mind. If he succeeds, it will be the perfect crime, but a dangerous enemy anticipates Cobb's every move.",
+    tags: ["thriller", "action"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "Dom Cobb (Leonardo DiCaprio) is a thief with the rare ability to enter people's dreams and steal their secrets from their subconscious. His skill has made him a valuable player in the world of corporate espionage but has also cost him everything he loves. Cobb gets a chance at redemption when he is offered a seemingly impossible task: plant an idea in someone's mind. If he succeeds, it will be the perfect crime, but a dangerous enemy anticipates Cobb's every move."}
+  })
+  
+  movie2: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440001",
+    title: "The Matrix",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_matrix.jpg?alt=media&token=9d9a952e-6441-420a-8479-6a58d62655f8",
+    releaseYear: 1999,
+    genre: "action",
+    rating: 8.7,
+    description: "Thomas Anderson, a computer programmer, discovers that the world is actually a simulation controlled by malevolent machines in a dystopian future. Known as Neo, he joins a group of underground rebels led by Morpheus to fight the machines and free humanity. Along the way, Neo learns to manipulate the simulated reality, uncovering his true destiny.",
+    tags: ["sci-fi", "adventure"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "Thomas Anderson, a computer programmer, discovers that the world is actually a simulation controlled by malevolent machines in a dystopian future. Known as Neo, he joins a group of underground rebels led by Morpheus to fight the machines and free humanity. Along the way, Neo learns to manipulate the simulated reality, uncovering his true destiny."}
+  })
+  
+  movie3: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440002",
+    title: "John Wick 4",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fjohn_wick_4.jpg?alt=media&token=98c60306-fbd9-4718-ac7a-2c6cde8706d8",
+    releaseYear: 2023,
+    genre: "action",
+    rating: 8.1,
+    description: "John Wick (Keanu Reeves) uncovers a path to defeating The High Table, but before he can earn his freedom, he must face off against a new enemy with powerful alliances across the globe. The film follows Wick as he battles through various international locations, facing relentless adversaries and forming new alliances.",
+    tags: ["action", "thriller"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "John Wick (Keanu Reeves) uncovers a path to defeating The High Table, but before he can earn his freedom, he must face off against a new enemy with powerful alliances across the globe. The film follows Wick as he battles through various international locations, facing relentless adversaries and forming new alliances."}
+  })
+
+  movie4: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440003",
+    title: "The Dark Knight",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_dark_knight.jpg?alt=media&token=7ee322e9-3b27-4952-b4a9-e445a15412de",
+    releaseYear: 2008,
+    genre: "action",
+    rating: 9.0,
+    description: "When the menace known as the Joker (Heath Ledger) emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight (Christian Bale) must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+    tags: ["action", "drama"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "When the menace known as the Joker (Heath Ledger) emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight (Christian Bale) must accept one of the greatest psychological and physical tests of his ability to fight injustice."}
+  })
+
+  movie5: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440004",
+    title: "Fight Club",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Ffight_club.jpg?alt=media&token=1dcfbea5-feb3-4345-92bc-7551c671cb49",
+    releaseYear: 1999,
+    genre: "drama",
+    rating: 8.8,
+    description: "An insomniac office worker (Edward Norton) and a devil-may-care soapmaker (Brad Pitt) form an underground fight club that evolves into something much more. The story explores themes of consumerism, masculinity, and the search for identity.",
+    tags: ["drama", "thriller"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "An insomniac office worker (Edward Norton) and a devil-may-care soapmaker (Brad Pitt) form an underground fight club that evolves into something much more. The story explores themes of consumerism, masculinity, and the search for identity."}
+  })
+
+  movie6: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440005",
+    title: "Pulp Fiction",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fpulp_fiction.jpg?alt=media&token=d9ccbe88-c19b-4aab-bb89-016a7cbd4051",
+    releaseYear: 1994,
+    genre: "crime",
+    rating: 8.9,
+    description: "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption. The film is known for its eclectic dialogue, ironic mix of humor and violence, and a host of cinematic allusions and pop culture references.",
+    tags: ["crime", "drama"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption. The film is known for its eclectic dialogue, ironic mix of humor and violence, and a host of cinematic allusions and pop culture references."}
+  })
+
+  movie7: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440006",
+    title: "The Lord of the Rings: The Fellowship of the Ring",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Flotr_fellowship.jpg?alt=media&token=f98d137b-f37f-43e6-86f2-7f49e946e133",
+    releaseYear: 2001,
+    genre: "fantasy",
+    rating: 8.8,
+    description: "A meek Hobbit from the Shire, Frodo Baggins, and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron. The epic adventure begins the quest that will test their courage and bond.",
+    tags: ["fantasy", "adventure"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "A meek Hobbit from the Shire, Frodo Baggins, and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron. The epic adventure begins the quest that will test their courage and bond."}
+  })
+
+  movie8: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440007",
+    title: "The Shawshank Redemption",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_shawshanks_redemption.jpg?alt=media&token=8fae5b0c-8797-4607-9c2b-3ecc09b48a8e",
+    releaseYear: 1994,
+    genre: "drama",
+    rating: 9.3,
+    description: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. The film follows Andy Dufresne (Tim Robbins), a banker sentenced to life in Shawshank State Penitentiary, and his friendship with Red (Morgan Freeman).",
+    tags: ["drama", "crime"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. The film follows Andy Dufresne (Tim Robbins), a banker sentenced to life in Shawshank State Penitentiary, and his friendship with Red (Morgan Freeman)."}
+    })
+
+  movie9: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440008",
+    title: "Forrest Gump",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fforrest_gump.jpeg?alt=media&token=decc25fa-d88e-49cc-a2ca-fc9a77e3a651",
+    releaseYear: 1994,
+    genre: "drama",
+    rating: 8.8,
+    description: "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical moments unfold from the perspective of an Alabama man with a low IQ. Forrest Gump (Tom Hanks) becomes an unwitting participant in many key moments of 20th-century U.S. history, all while maintaining his love for his childhood sweetheart Jenny (Robin Wright).",
+    tags: ["drama", "romance"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical moments unfold from the perspective of an Alabama man with a low IQ. Forrest Gump (Tom Hanks) becomes an unwitting participant in many key moments of 20th-century U.S. history, all while maintaining his love for his childhood sweetheart Jenny (Robin Wright)."}
+  })
+
+  movie10: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440009",
+    title: "The Godfather",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_godfather.jpg?alt=media&token=52cc0cbd-0fc7-4afa-a44e-f44ab4880079",
+    releaseYear: 1972,
+    genre: "crime",
+    rating: 9.2,
+    description: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son. The story follows the powerful Corleone family as they navigate power, loyalty, and betrayal.",
+    tags: ["crime", "drama"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son. The story follows the powerful Corleone family as they navigate power, loyalty, and betrayal."}
+  })
+
+  movie11: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440010",
+    title: "The Silence of the Lambs",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_silence_of_the_lambs.jpg?alt=media&token=064778c8-8b0e-4412-8235-511082613118",
+    releaseYear: 1991,
+    genre: "thriller",
+    rating: 8.6,
+    description: "A young F.B.I. cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer. Clarice Starling (Jodie Foster) seeks the assistance of Hannibal Lecter (Anthony Hopkins) to understand the mind of a killer.",
+    tags: ["thriller", "crime"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "A young F.B.I. cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer. Clarice Starling (Jodie Foster) seeks the assistance of Hannibal Lecter (Anthony Hopkins) to understand the mind of a killer."}
+  })
+
+  movie12: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440011",
+    title: "Saving Private Ryan",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fsaving_private_ryan.jpg?alt=media&token=54b5ade0-e41d-4f53-a39d-56fd5be270f9",
+    releaseYear: 1998,
+    genre: "war",
+    rating: 8.6,
+    description: "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action. The harrowing journey of Captain John H. Miller (Tom Hanks) and his men highlights the brutal reality of war.",
+    tags: ["war", "drama"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action. The harrowing journey of Captain John H. Miller (Tom Hanks) and his men highlights the brutal reality of war."}
+  })
+ 
+  movie13: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440012",
+    title: "The Avengers",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_avengers.jpg?alt=media&token=54cd8f43-cf29-4e86-9f78-a4c43c9ac79c",
+    releaseYear: 2012,
+    genre: "action",
+    rating: 8.0,
+    description: "Earth's mightiest heroes, including Iron Man, Captain America, Thor, Hulk, Black Widow, and Hawkeye, must come together to stop Loki and his alien army from enslaving humanity. Directed by Joss Whedon, the film is known for its witty dialogue, intense action sequences, and the chemistry among its ensemble cast.",
+    tags: ["action", "sci-fi"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "Earth's mightiest heroes, including Iron Man, Captain America, Thor, Hulk, Black Widow, and Hawkeye, must come together to stop Loki and his alien army from enslaving humanity. Directed by Joss Whedon, the film is known for its witty dialogue, intense action sequences, and the chemistry among its ensemble cast."}
+  })
+
+  movie14: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440013",
+    title: "Gladiator",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fgladiator.jpg?alt=media&token=aa112d9f-de39-4b5e-80c4-621c7af842bd",
+    releaseYear: 2000,
+    genre: "action",
+    rating: 8.5,
+    description: "A former Roman General, Maximus Decimus Meridius, seeks vengeance against the corrupt emperor Commodus who murdered his family and sent him into slavery. Directed by Ridley Scott, the film is known for its epic scale, intense battle scenes, and Russell Crowe's powerful performance.",
+    tags: ["action", "drama"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "A former Roman General, Maximus Decimus Meridius, seeks vengeance against the corrupt emperor Commodus who murdered his family and sent him into slavery. Directed by Ridley Scott, the film is known for its epic scale, intense battle scenes, and Russell Crowe's powerful performance."}
+  })
+
+  movie15: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440014",
+    title: "Titanic",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Ftitanic.png?alt=media&token=5f594626-19d8-4043-9d09-81104e128ed2",
+    releaseYear: 1997,
+    genre: "romance",
+    rating: 7.8,
+    description: "A romantic drama recounting the ill-fated voyage of the R.M.S. Titanic through the eyes of Jack Dawson, a poor artist, and Rose DeWitt Bukater, a wealthy aristocrat. Their forbidden romance unfolds aboard the luxurious ship, which tragically sinks after striking an iceberg. Directed by James Cameron, the film is known for its epic scale, emotional depth, and stunning visuals.",
+    tags: ["romance", "drama"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "A romantic drama recounting the ill-fated voyage of the R.M.S. Titanic through the eyes of Jack Dawson, a poor artist, and Rose DeWitt Bukater, a wealthy aristocrat. Their forbidden romance unfolds aboard the luxurious ship, which tragically sinks after striking an iceberg. Directed by James Cameron, the film is known for its epic scale, emotional depth, and stunning visuals."}
+  })
+
+  movie16: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440015",
+    title: "Avatar",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Favatar.jpg?alt=media&token=2d858616-4033-408a-aea0-9add07a67c88",
+    releaseYear: 2009,
+    genre: "sci-fi",
+    rating: 7.8,
+    description: "A paraplegic Marine named Jake Sully is sent on a unique mission to Pandora, an alien world, to bridge relations with the native Na'vi people. Torn between following his orders and protecting the world he feels is his home, Jake's journey becomes a battle for survival. Directed by James Cameron, 'Avatar' is renowned for its groundbreaking special effects and immersive 3D experience.",
+    tags: ["sci-fi", "adventure"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "A paraplegic Marine named Jake Sully is sent on a unique mission to Pandora, an alien world, to bridge relations with the native Na'vi people. Torn between following his orders and protecting the world he feels is his home, Jake's journey becomes a battle for survival. Directed by James Cameron, 'Avatar' is renowned for its groundbreaking special effects and immersive 3D experience."}
+  })
+
+  movie17: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440016",
+    title: "Jurassic Park",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fjurassic_park.jpg?alt=media&token=040b46b8-c974-4825-85e5-2652bc375ed7",
+    releaseYear: 1993,
+    genre: "adventure",
+    rating: 8.1,
+    description: "During a preview tour, a theme park suffers a major power breakdown that allows its cloned dinosaur exhibits to run amok. Directed by Steven Spielberg, 'Jurassic Park' is known for its groundbreaking special effects, thrilling storyline, and the suspenseful chaos unleashed by its prehistoric creatures.",
+    tags: ["adventure", "sci-fi"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "During a preview tour, a theme park suffers a major power breakdown that allows its cloned dinosaur exhibits to run amok. Directed by Steven Spielberg, 'Jurassic Park' is known for its groundbreaking special effects, thrilling storyline, and the suspenseful chaos unleashed by its prehistoric creatures."}
+  })
+
+  movie18: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440017",
+    title: "The Lion King",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_lion_king.jpg?alt=media&token=4778e0ac-96e7-44fd-9422-423d5aad353f",
+    releaseYear: 1994,
+    genre: "animation",
+    rating: 8.5,
+    description: "A young lion prince, Simba, must overcome betrayal and tragedy to reclaim his rightful place as king. 'The Lion King' is a beloved animated musical known for its memorable songs, stunning animation, and a timeless tale of courage, loyalty, and redemption.",
+    tags: ["animation", "drama"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "A young lion prince, Simba, must overcome betrayal and tragedy to reclaim his rightful place as king. 'The Lion King' is a beloved animated musical known for its memorable songs, stunning animation, and a timeless tale of courage, loyalty, and redemption."}
+  })
+
+  movie19: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440018",
+    title: "Star Wars: Episode IV - A New Hope",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fstar_wars_4.jpg?alt=media&token=cad4cb98-89ce-4c8a-a735-d7cdaf884b26",
+    releaseYear: 1977,
+    genre: "sci-fi",
+    rating: 8.6,
+    description: "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee, and two droids to save the galaxy from the Empire's world-destroying battle station, the Death Star. Directed by George Lucas, 'A New Hope' revolutionized the sci-fi genre with its groundbreaking special effects and unforgettable characters.",
+    tags: ["sci-fi", "adventure"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee, and two droids to save the galaxy from the Empire's world-destroying battle station, the Death Star. Directed by George Lucas, 'A New Hope' revolutionized the sci-fi genre with its groundbreaking special effects and unforgettable characters."}
+  })
+
+  movie20: movie_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440019",
+    title: "Blade Runner",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fblade_runner.jpg?alt=media&token=4c7e7c9d-c9c7-4cef-9eb7-4302b2610905",
+    releaseYear: 1982,
+    genre: "sci-fi",
+    rating: 8.1,
+    description: "In a dystopian future, synthetic humans known as replicants are created by powerful corporations. A blade runner named Rick Deckard is tasked with hunting down and 'retiring' four replicants who have escaped to Earth. Directed by Ridley Scott, 'Blade Runner' is a seminal sci-fi thriller that explores themes of humanity and identity.",
+    tags: ["sci-fi", "thriller"],
+    descriptionEmbedding_embed: {model: "textembedding-gecko@001", text: "In a dystopian future, synthetic humans known as replicants are created by powerful corporations. A blade runner named Rick Deckard is tasked with hunting down and 'retiring' four replicants who have escaped to Earth. Directed by Ridley Scott, 'Blade Runner' is a seminal sci-fi thriller that explores themes of humanity and identity."}
+  })
+}
