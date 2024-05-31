@@ -21,7 +21,7 @@ Getting Started
 4. Clone this repository to your local machine.
 5. Update `firebase-tools` with `npm install -g firebase-tools`.
 6. Enable the DataConnect CLI with `firebase experiments:enable dataconnect`.
-7. Initialize your Firebase project in the `dataconnect` folder with `firebase init` and select DataConnect.
+7. Initialize your Firebase project in the `dataconnect` folder with `firebase init` and select DataConnect. Do not overwrite the dataconnect files when prompted.
 8. Replace variables in `.env.local` with your project-specific values.
 9. Allow domains for Firebase Auth (e.g., http://localhost or http://127.0.0.1).
 10. Deploy DataConnect with `firebase deploy --only dataconnect` (this unlocks hidden vectors search).
