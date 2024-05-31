@@ -8,3 +8,5 @@
 dist/
 **/ui-debug.log
 .next
+dataconnect/.dataconnect
+dataconnect/movie/lib/dataconnect-sdk

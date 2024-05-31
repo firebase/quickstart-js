@@ -25,8 +25,10 @@ Getting Started
 8. Replace variables in `.env.local` with your project-specific values.
 9. Allow domains for Firebase Auth (e.g., http://localhost or http://127.0.0.1).
 10. Deploy DataConnect with `firebase deploy --only dataconnect` (this unlocks hidden vectors search).
-11. Navigate to the `movie` directory and install dependencies with `npm i` and start the development server with `npm run dev`.
-12. Run the four `_insert.gql` files in the `./dataconnect` directory in order.
+11. Start the DateConnect emulators.
+12. Run `firebase dataconnect:sdk:generate` to generate the SDK
+13. Navigate to the `movie` directory and install dependencies with `npm i` and start the development server with `npm run dev`.
+14. Run the four `_insert.gql` files in the `./dataconnect` directory in order.
 
 <!-- Support
 -------
