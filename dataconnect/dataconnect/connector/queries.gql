@@ -12,13 +12,6 @@ query ListMovies @auth(level: PUBLIC) {
   }
 }
 
-query searchMovieDescriptionUsingL2Similarity1($compare: Vector!, $within: Float, $excludesContent: String, $limit: Int) @auth(level: PUBLIC) {
-    movies_descriptionEmbedding_similarity(compare: $compare, method: L2, within: $within, where: {description: {ne: $excludesContent}}, limit: $limit) {
-      id
-      title
-	description
-    }
-  }
 
 # List subset of fields for users
 query ListUsers @auth(level: PUBLIC) {
@@ -572,3 +565,12 @@ query searchMovieDescriptionUsingL2Similarity($query: String!)
     imageUrl
   }
 }
+
+# Search movie descriptions using L2 similarity with Vertex AI, with custom embeddings
+query searchMovieDescriptionUsingL2Similarity1($compare: Vector!, $within: Float, $excludesContent: String, $limit: Int) @auth(level: PUBLIC) {
+    movies_descriptionEmbedding_similarity(compare: $compare, method: L2, within: $within, where: {description: {ne: $excludesContent}}, limit: $limit) {
+      id
+      title
+	description
+    }
+  }
