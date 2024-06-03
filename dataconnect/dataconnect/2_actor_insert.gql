@@ -1,140 +1,140 @@
 mutation {
   actor1: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174000",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Leonardo_Dicaprio_Cannes_2019.jpg/440px-Leonardo_Dicaprio_Cannes_2019.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fdicaprio.jpeg?alt=media&token=452e030a-efa5-4ef4-bb81-502b23241316",
     name: "Leonardo DiCaprio",
     biography: "Leonardo DiCaprio is an American actor and producer. He has received numerous awards, including an Academy Award and three Golden Globe Awards. DiCaprio is known for his roles in Titanic, Inception, and The Revenant."
   })
   
   actor2: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174001",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Reuni%C3%A3o_com_o_ator_norte-americano_Keanu_Reeves_%2846806576944%29_%28cropped%29.jpg/440px-Reuni%C3%A3o_com_o_ator_norte-americano_Keanu_Reeves_%2846806576944%29_%28cropped%29.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fkeanu.jpg?alt=media&token=6056520c-ef3e-4823-aad0-108aab163115",
     name: "Keanu Reeves",
     biography: "Keanu Reeves is a Canadian actor known for his roles in The Matrix and John Wick series. He has gained acclaim for his versatility and has also directed and produced several films."
   })
   
   actor3: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174002",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Matthew_McConaughey_2019_%2848648344772%29.jpg/440px-Matthew_McConaughey_2019_%2848648344772%29.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fmcconaoghey.jpg?alt=media&token=d340ca18-ef51-44ac-a160-08e45b242cd7",
     name: "Matthew McConaughey",
     biography: "Matthew McConaughey is an American actor and producer. He gained fame with his breakout role in Dazed and Confused and has won an Academy Award for his performance in Dallas Buyers Club."
   })
 
   actor4: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174003",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Christian_Bale-7837.jpg/440px-Christian_Bale-7837.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fbale.jpg?alt=media&token=666f1690-a550-458f-a1cf-9505b7d1af7d",
     name: "Christian Bale",
     biography: "Christian Bale is an English actor known for his versatility and physical transformations for roles. He has starred in The Dark Knight Trilogy and won an Academy Award for The Fighter."
   })
 
   actor5: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174004",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Brad_Pitt_2019_by_Glenn_Francis.jpg/440px-Brad_Pitt_2019_by_Glenn_Francis.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fpitt.jpeg?alt=media&token=3a5283d4-f85c-4ba7-be72-51bc87ca4133",
     name: "Brad Pitt",
     biography: "Brad Pitt is an American actor and producer. He has won two Academy Awards and is known for his roles in Fight Club, Ocean's Eleven, and Once Upon a Time in Hollywood."
   })
 
   actor6: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174005",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/SamuelLJackson.jpg/440px-SamuelLJackson.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fjackson.jpg?alt=media&token=07be0601-19fe-4b5d-b111-84fa71f32139",
     name: "Samuel L. Jackson",
     biography: "Samuel L. Jackson is an American actor and producer. He is one of the most widely recognized actors of his generation, known for his roles in Pulp Fiction, the Marvel Cinematic Universe, and Jurassic Park."
   })
 
   actor7: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174006",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/64/Viggo_Mortensen_B_%282020%29.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fmortensen.jpeg?alt=media&token=e3d1ec99-b8e7-42e9-9d1c-03f56f61ecf7",
     name: "Viggo Mortensen",
     biography: "Viggo Mortensen is an American actor, author, and musician. He is best known for his role as Aragorn in The Lord of the Rings trilogy and has been nominated for three Academy Awards."
   })
 
   actor8: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174007",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Morgan_Freeman_at_The_Pentagon_on_2_August_2023_-_230802-D-PM193-3363_%28cropped%29.jpg/440px-Morgan_Freeman_at_The_Pentagon_on_2_August_2023_-_230802-D-PM193-3363_%28cropped%29.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Ffreeman.jpg?alt=media&token=94bc6227-119e-4ab0-b350-55fac7aeb062",
     name: "Morgan Freeman",
     biography: "Morgan Freeman is an American actor, director, and narrator. He is known for his distinctive voice and has won an Academy Award for his role in Million Dollar Baby."
   })
 
   actor9: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174008",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Tom_Hanks_TIFF_2019.jpg/440px-Tom_Hanks_TIFF_2019.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fhanks.jpeg?alt=media&token=d92979ce-da62-4b28-afbe-b8740bbb9d32",
     name: "Tom Hanks",
     biography: "Tom Hanks is an American actor and filmmaker. He is known for his roles in Forrest Gump, Saving Private Ryan, and Toy Story, and has won two Academy Awards for Best Actor."
   })
 
   actor10: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174009",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Al_Pacino_2016_%2830401544240%29.jpg/440px-Al_Pacino_2016_%2830401544240%29.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fpacino.jpg?alt=media&token=9c0c54b1-6913-48b5-8e5e-d6551dd2f182",
     name: "Al Pacino",
     biography: "Al Pacino is an American actor and filmmaker. He has won an Academy Award, two Tony Awards, and two Primetime Emmy Awards. He is known for his roles in The Godfather series, Scarface, and Scent of a Woman."
   })
 
   actor11: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174010",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Jodie_Foster_C%C3%A9sars_2011_2_%28cropped%29.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Ffoster.jpg?alt=media&token=b429734c-0f2d-4840-b75b-6857eac7bb4f",
     name: "Jodie Foster",
     biography: "Jodie Foster is an American actress and director. She has won two Academy Awards for Best Actress for her roles in The Accused and The Silence of the Lambs."
   })
 
   actor12: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174011",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Tom_Cruise_by_Gage_Skidmore_2.jpg/440px-Tom_Cruise_by_Gage_Skidmore_2.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fcruise.jpg?alt=media&token=d34b0326-a8d1-4f01-86e5-f3f094594e5a",
     name: "Tom Cruise",
     biography: "Tom Cruise is an American actor and producer. He is one of the highest-paid actors in the world and is known for his roles in Top Gun, the Mission: Impossible series, and Jerry Maguire."
   })
 
   actor13: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174012",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg/440px-Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fdowney.jpg?alt=media&token=dd291c96-6ef0-42fc-841c-902c80748b37",
     name: "Robert Downey Jr.",
     biography: "Robert Downey Jr. is an American actor and producer. He is known for his roles in Iron Man, Sherlock Holmes, and Chaplin, and has been a major figure in the Marvel Cinematic Universe."
   })
 
   actor14: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174013",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Russell_Crowe_%2833994020424%29.jpg/440px-Russell_Crowe_%2833994020424%29.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fcrowe.jpg?alt=media&token=46d413d5-ace8-404e-b018-8d7e6fe0d362",
     name: "Russell Crowe",
     biography: "Russell Crowe is an Australian actor, film producer, and musician. He gained international fame for his role in Gladiator, for which he won the Academy Award for Best Actor."
   })
 
   actor15: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174014",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Kate_Winslet_at_the_2017_Toronto_International_Film_Festival_%28cropped%29.jpg/440px-Kate_Winslet_at_the_2017_Toronto_International_Film_Festival_%28cropped%29.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fwinslet.jpg?alt=media&token=b675585e-356e-4361-a041-5ac1a6ee5922",
     name: "Kate Winslet",
     biography: "Kate Winslet is an English actress known for her roles in Titanic, The Reader, and Eternal Sunshine of the Spotless Mind. She has won numerous awards, including an Academy Award and an Emmy."
   })
 
   actor16: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174015",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Sigourney_Weaver_by_Gage_Skidmore_4.jpg/862px-Sigourney_Weaver_by_Gage_Skidmore_4.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fweaver.jpeg?alt=media&token=263b5c3d-e0ee-43c3-854d-9b236c6df391",
     name: "Sigourney Weaver",
     biography: "Sigourney Weaver is an American actress best known for her roles in the Alien franchise, Ghostbusters, and Avatar. She has been nominated for three Academy Awards and has won two Golden Globe Awards."
   })
 
   actor17: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174016",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Jeff_Goldblum_by_Gage_Skidmore_3.jpg/440px-Jeff_Goldblum_by_Gage_Skidmore_3.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fgoldblume.jpeg?alt=media&token=18277dd1-166c-4934-a02e-19ef141c86e2",
     name: "Jeff Goldblum",
     biography: "Jeff Goldblum is an American actor and musician known for his roles in Jurassic Park, Independence Day, and The Fly. His unique delivery and eccentric characters have made him a cult icon."
   })
 
   actor18: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174017",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/James_Earl_Jones_%288516667383%29.jpg/440px-James_Earl_Jones_%288516667383%29.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fjones.jpg?alt=media&token=f7ac9bc4-6e26-4b25-9a73-7a90f699424e",
     name: "James Earl Jones",
     biography: "James Earl Jones is an American actor known for his deep resonant voice, which has been featured in roles such as Darth Vader in Star Wars and Mufasa in The Lion King. He has won multiple awards, including a Tony, Emmy, and Grammy."
   })
 
   actor19: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174018",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Harrison_Ford_by_Gage_Skidmore_3.jpg/440px-Harrison_Ford_by_Gage_Skidmore_3.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fford.jpg?alt=media&token=928434c0-d492-4c8e-bdf0-0db585008d87",
     name: "Harrison Ford",
     biography: "Harrison Ford is an American actor known for his iconic roles as Han Solo in Star Wars and Indiana Jones in the Indiana Jones series. He has been nominated for an Academy Award and has received numerous other accolades."
   })
 
   actor20: actor_insert(data: {
     id: "123e4567-e89b-12d3-a456-426614174019",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Arnold_Schwarzenegger_by_Gage_Skidmore_4.jpg/440px-Arnold_Schwarzenegger_by_Gage_Skidmore_4.jpg",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fschwarzenegger.jpeg?alt=media&token=c46fb249-41ef-4084-b4ad-9517bee6ab46",
     name: "Arnold Schwarzenegger",
     biography: "Arnold Schwarzenegger is an Austrian-American actor, businessman, and former politician. He is best known for his roles in The Terminator series and Total Recall, and for serving as the 38th Governor of California."
   })

@@ -2,7 +2,7 @@ mutation {
   movie1: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440000",
     title: "Inception",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Finception.jpg?alt=media&token=0a2950ee-0df7-4909-a5fd-e9f44dd803d6",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Finception.jpg?alt=media&token=07b09781-b302-4623-a5c3-1956d0143168",
     releaseYear: 2010,
     genre: "sci-fi",
     rating: 8.8,
@@ -14,7 +14,7 @@ mutation {
   movie2: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440001",
     title: "The Matrix",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_matrix.jpg?alt=media&token=9d9a952e-6441-420a-8479-6a58d62655f8",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fthe_matrix.jpg?alt=media&token=4975645d-fef8-409e-84a5-bcc1046e2059",
     releaseYear: 1999,
     genre: "action",
     rating: 8.7,
@@ -26,7 +26,7 @@ mutation {
   movie3: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440002",
     title: "John Wick 4",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fjohn_wick_4.jpg?alt=media&token=98c60306-fbd9-4718-ac7a-2c6cde8706d8",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fjohn_wick_4.jpg?alt=media&token=463ed467-9daa-4281-965d-44e7cc4172d5",
     releaseYear: 2023,
     genre: "action",
     rating: 8.1,
@@ -38,7 +38,7 @@ mutation {
   movie4: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440003",
     title: "The Dark Knight",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_dark_knight.jpg?alt=media&token=7ee322e9-3b27-4952-b4a9-e445a15412de",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fthe_dark_knight.jpg?alt=media&token=a9803c59-40d5-4758-a6f4-9a7c274a1218",
     releaseYear: 2008,
     genre: "action",
     rating: 9.0,
@@ -50,7 +50,7 @@ mutation {
   movie5: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440004",
     title: "Fight Club",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Ffight_club.jpg?alt=media&token=1dcfbea5-feb3-4345-92bc-7551c671cb49",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Ffight_club.jpg?alt=media&token=a4bc1933-2607-42cd-a860-e44c4587fd9c",
     releaseYear: 1999,
     genre: "drama",
     rating: 8.8,
@@ -62,7 +62,7 @@ mutation {
   movie6: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440005",
     title: "Pulp Fiction",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fpulp_fiction.jpg?alt=media&token=d9ccbe88-c19b-4aab-bb89-016a7cbd4051",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fpulp_fiction.jpg?alt=media&token=0df86e18-5cb1-45b3-a6d9-3f41563c3465",
     releaseYear: 1994,
     genre: "crime",
     rating: 8.9,
@@ -74,7 +74,7 @@ mutation {
   movie7: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440006",
     title: "The Lord of the Rings: The Fellowship of the Ring",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Flotr_fellowship.jpg?alt=media&token=f98d137b-f37f-43e6-86f2-7f49e946e133",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Flotr_fellowship.jpg?alt=media&token=92641d2d-6c52-4172-bd66-95fb86b4b96b",
     releaseYear: 2001,
     genre: "fantasy",
     rating: 8.8,
@@ -86,7 +86,7 @@ mutation {
   movie8: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440007",
     title: "The Shawshank Redemption",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_shawshanks_redemption.jpg?alt=media&token=8fae5b0c-8797-4607-9c2b-3ecc09b48a8e",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fthe_shawshanks_redemption.jpg?alt=media&token=f67b5ab2-a435-48b2-8251-5bf866b183e9",
     releaseYear: 1994,
     genre: "drama",
     rating: 9.3,
@@ -98,7 +98,7 @@ mutation {
   movie9: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440008",
     title: "Forrest Gump",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fforrest_gump.jpeg?alt=media&token=decc25fa-d88e-49cc-a2ca-fc9a77e3a651",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fforrest_gump.jpeg?alt=media&token=f21e88ce-6fab-4218-aa55-94738acc9b8f",
     releaseYear: 1994,
     genre: "drama",
     rating: 8.8,
@@ -110,7 +110,7 @@ mutation {
   movie10: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440009",
     title: "The Godfather",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_godfather.jpg?alt=media&token=52cc0cbd-0fc7-4afa-a44e-f44ab4880079",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fthe_godfather.jpg?alt=media&token=5297fd94-ae87-4995-9de5-3755232bad52",
     releaseYear: 1972,
     genre: "crime",
     rating: 9.2,
@@ -122,7 +122,7 @@ mutation {
   movie11: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440010",
     title: "The Silence of the Lambs",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_silence_of_the_lambs.jpg?alt=media&token=064778c8-8b0e-4412-8235-511082613118",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fthe_silence_of_the_lambs.jpg?alt=media&token=7ca6abeb-b15c-4f5e-9280-5a590e89fe54",
     releaseYear: 1991,
     genre: "thriller",
     rating: 8.6,
@@ -134,7 +134,7 @@ mutation {
   movie12: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440011",
     title: "Saving Private Ryan",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fsaving_private_ryan.jpg?alt=media&token=54b5ade0-e41d-4f53-a39d-56fd5be270f9",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fsaving_private_ryan.jpg?alt=media&token=58ed877e-7ae0-4e30-9aee-d45c2deb7a00",
     releaseYear: 1998,
     genre: "war",
     rating: 8.6,
@@ -146,7 +146,7 @@ mutation {
   movie13: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440012",
     title: "The Avengers",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_avengers.jpg?alt=media&token=54cd8f43-cf29-4e86-9f78-a4c43c9ac79c",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fthe_avengers.jpg?alt=media&token=3d68ccad-2fa1-48da-a83e-7941e246c9f9",
     releaseYear: 2012,
     genre: "action",
     rating: 8.0,
@@ -158,7 +158,7 @@ mutation {
   movie14: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440013",
     title: "Gladiator",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fgladiator.jpg?alt=media&token=aa112d9f-de39-4b5e-80c4-621c7af842bd",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fgladiator.jpg?alt=media&token=61d75825-b79f-4add-afdb-7da5eed53407",
     releaseYear: 2000,
     genre: "action",
     rating: 8.5,
@@ -170,7 +170,7 @@ mutation {
   movie15: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440014",
     title: "Titanic",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Ftitanic.png?alt=media&token=5f594626-19d8-4043-9d09-81104e128ed2",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Ftitanic.png?alt=media&token=dd03dc83-486e-4b03-9b03-2f9ed83fd9d0",
     releaseYear: 1997,
     genre: "romance",
     rating: 7.8,
@@ -182,7 +182,7 @@ mutation {
   movie16: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440015",
     title: "Avatar",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Favatar.jpg?alt=media&token=2d858616-4033-408a-aea0-9add07a67c88",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Favatar.jpg?alt=media&token=1c75b09d-7c7a-44bf-b7ad-e7da4d0b7193",
     releaseYear: 2009,
     genre: "sci-fi",
     rating: 7.8,
@@ -194,7 +194,7 @@ mutation {
   movie17: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440016",
     title: "Jurassic Park",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fjurassic_park.jpg?alt=media&token=040b46b8-c974-4825-85e5-2652bc375ed7",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fjurassic_park.jpg?alt=media&token=1731ce71-3384-4435-8a5b-821d4fd286d3",
     releaseYear: 1993,
     genre: "adventure",
     rating: 8.1,
@@ -206,7 +206,7 @@ mutation {
   movie18: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440017",
     title: "The Lion King",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fthe_lion_king.jpg?alt=media&token=4778e0ac-96e7-44fd-9422-423d5aad353f",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fthe_lion_king.jpg?alt=media&token=3e4e4265-6ae7-47d6-a5ba-584de126ef00",
     releaseYear: 1994,
     genre: "animation",
     rating: 8.5,
@@ -218,7 +218,7 @@ mutation {
   movie19: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440018",
     title: "Star Wars: Episode IV - A New Hope",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fstar_wars_4.jpg?alt=media&token=cad4cb98-89ce-4c8a-a735-d7cdaf884b26",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fstar_wars_4.jpg?alt=media&token=b4ea7e0c-707f-43dd-8633-9d962e77b5a4",
     releaseYear: 1977,
     genre: "sci-fi",
     rating: 8.6,
@@ -230,7 +230,7 @@ mutation {
   movie20: movie_insert(data: {
     id: "550e8400-e29b-41d4-a716-446655440019",
     title: "Blade Runner",
-    imageUrl: "https://firebasestorage.googleapis.com/v0/b/matcha-yuzu.appspot.com/o/fdc-quickstart%2Fblade_runner.jpg?alt=media&token=4c7e7c9d-c9c7-4cef-9eb7-4302b2610905",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/movies%2Fblade_runner.jpg?alt=media&token=d8e94bdd-1477-49f3-b244-dd7a9c059fc1",
     releaseYear: 1982,
     genre: "sci-fi",
     rating: 8.1,

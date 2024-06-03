@@ -8,8 +8,17 @@ query ListMovies @auth(level: PUBLIC) {
     genre
     rating
     tags
+    description
   }
 }
+
+query searchMovieDescriptionUsingL2Similarity1($compare: Vector!, $within: Float, $excludesContent: String, $limit: Int) @auth(level: PUBLIC) {
+    movies_descriptionEmbedding_similarity(compare: $compare, method: L2, within: $within, where: {description: {ne: $excludesContent}}, limit: $limit) {
+      id
+      title
+	description
+    }
+  }
 
 # List subset of fields for users
 query ListUsers @auth(level: PUBLIC) {
