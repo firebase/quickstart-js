@@ -1,17 +1,17 @@
 mutation {
   user1: user_insert(data: {
     id: "SnLgOC3lN4hcIl69e53cW0Q8R1T2",
-    username: "cynthia_w"
+    username: "c_w"
   })
   
   user2: user_insert(data: {
     id: "fep4fXpGWsaRpiphq9CIrBIXQ0S2",
-    username: "momo_h"
+    username: "a_w"
   })
   
   user3: user_insert(data: {
     id: "TBedjwCX1Jf955Uuoxk6k74sY0l1",
-    username: "siyi_w"
+    username: "r_f"
   })
 
   review1: review_insert(data: {
