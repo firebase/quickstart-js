@@ -67,3 +67,4 @@ node_modules/
 .next
 .dataconnect
 movie/lib/dataconnect-sdk
+movie/package-lock.json
