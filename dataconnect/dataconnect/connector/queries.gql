@@ -18,14 +18,14 @@ query ListUsers @auth(level: PUBLIC) {
   users {
     id
     username
-    favoriteActors_on_user {
+    favoriteActors: favoriteActors_on_user {
       actor {
         id
         name
         imageUrl
       }
     }
-    favoriteMovies_on_user {
+    favoriteMovies: favoriteMovies_on_user {
       movie {
         id
         title
@@ -571,6 +571,6 @@ query searchMovieDescriptionUsingL2Similarity1($compare: Vector!, $within: Float
     movies_descriptionEmbedding_similarity(compare: $compare, method: L2, within: $within, where: {description: {ne: $excludesContent}}, limit: $limit) {
       id
       title
-	description
+      description
     }
   }

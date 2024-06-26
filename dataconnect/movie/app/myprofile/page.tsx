@@ -10,7 +10,7 @@ import {
   deleteWatchedMovie,
   deleteFavoritedMovie,
   deleteFavoriteActor,
-} from '../../lib/dataconnect-sdk';
+} from '@/lib/dataconnect-sdk';
 import { MdStar } from 'react-icons/md';
 
 const Page = () => {

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
-import { getActorById, GetActorByIdResponse, GetActorByIdVariables, addFavoritedActor, deleteFavoriteActor, getIfFavoritedActor } from '../../../lib/dataconnect-sdk';
+import { getActorById, GetActorByIdResponse, GetActorByIdVariables, addFavoritedActor, deleteFavoriteActor, getIfFavoritedActor } from '@/lib/dataconnect-sdk';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
 const Page = () => {

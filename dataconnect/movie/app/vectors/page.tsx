@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { searchMovieDescriptionUsingL2similarity, SearchMovieDescriptionUsingL2similarityResponse } from '../../lib/dataconnect-sdk';
+import { searchMovieDescriptionUsingL2similarity, SearchMovieDescriptionUsingL2similarityResponse } from '@/lib/dataconnect-sdk';
 import { FaSpinner } from 'react-icons/fa';
 
 const Page = () => {

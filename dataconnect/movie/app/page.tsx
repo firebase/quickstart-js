@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import Carousel from "../components/carousel";
+import Carousel from "@/components/carousel";
 import {
   moviesTop10,
   moviesRecentlyReleased,
   MoviesRecentlyReleasedResponse,
   MoviesTop10Response,
-} from "../lib/dataconnect-sdk";
+} from "@/lib/dataconnect-sdk";
 
 const Page = () => {
   const [topMovies, setTopMovies] = useState<MoviesTop10Response["movies"]>([]);

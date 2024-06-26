@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 import { MdStar } from 'react-icons/md';
-import { fuzzySearch } from '../../lib/dataconnect-sdk';
+import { fuzzySearch } from '@/lib/dataconnect-sdk';
 
 const genres = ['', 'action', 'crime', 'drama', 'sci-fi', 'thriller', 'adventure'];
 

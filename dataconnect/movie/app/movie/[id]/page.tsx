@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { MdFavorite, MdFavoriteBorder, MdCheck, MdCheckBoxOutlineBlank, MdStar } from 'react-icons/md';
+import { MdFavorite, MdFavoriteBorder, MdCheck, MdAdd, MdStar } from 'react-icons/md';
 import {
   getMovieById,
   GetMovieByIdResponse,
@@ -14,7 +14,9 @@ import {
   getIfFavoritedMovie,
   addReview,
   deleteReview,
-} from '../../../lib/dataconnect-sdk';
+  searchMovieDescriptionUsingL2similarity,
+  SearchMovieDescriptionUsingL2similarityResponse,
+} from '@/lib/dataconnect-sdk';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
 const Page = () => {
@@ -28,6 +30,7 @@ const Page = () => {
   const [reviewText, setReviewText] = useState('');
   const [userReview, setUserReview] = useState<GetMovieByIdResponse['movie']['reviews'][0] | null>(null);
   const [rating, setRating] = useState(0);
+  const [similarMovies, setSimilarMovies] = useState<SearchMovieDescriptionUsingL2similarityResponse['movies_descriptionEmbedding_similarity']>([]);
 
   useEffect(() => {
     const auth = getAuth();
@@ -50,6 +53,7 @@ const Page = () => {
           setMovie(response.data.movie);
           const userReview = response.data.movie.reviews.find(review => review.user.id === authUser?.uid);
           setUserReview(userReview || null);
+          await fetchSimilarMovies(response.data.movie.description);
         } catch (error) {
           console.error('Error fetching movie:', error);
         } finally {
@@ -59,7 +63,16 @@ const Page = () => {
 
       fetchMovie();
     }
-  }, [id, authUser, movie]);
+  }, [id, authUser]);
+
+  const fetchSimilarMovies = async (description: string) => {
+    try {
+      const response = await searchMovieDescriptionUsingL2similarity({ query: description });
+      setSimilarMovies(response?.data?.movies_descriptionEmbedding_similarity);
+    } catch (error) {
+      console.error('Error fetching similar movies:', error);
+    }
+  };
 
   const checkIfFavorited = async (userId: string) => {
     try {
@@ -167,13 +180,6 @@ const Page = () => {
             >
               {isFavorited ? <MdFavorite size={24} /> : <MdFavoriteBorder size={24} />}
             </button>
-            <button
-              className="flex items-center justify-center p-1 text-green-700 hover:text-green-800 transition-colors duration-200"
-              aria-label="Watched"
-              onClick={handleWatchedToggle}
-            >
-              {isWatched ? <MdCheck size={24} /> : <MdCheckBoxOutlineBlank size={24} />}
-            </button>
           </div>
         </div>
       </div>
@@ -272,6 +278,43 @@ const Page = () => {
             )}
           </div>
         ))}
+      </div>
+
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-2">Similar Movies</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {similarMovies.map((similarMovie) => (
+            <div key={similarMovie.id} className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer relative">
+              <Link href={`/movie/${similarMovie.id}`}>
+                <img className="w-full h-64 object-cover" src={similarMovie.imageUrl} alt={similarMovie.title} />
+              </Link>
+              <div className="p-4">
+                <h3 className="font-bold text-lg mb-1 text-white">{similarMovie.title}</h3>
+                <p className="text-sm text-gray-300 overflow-y-scroll max-h-12">{similarMovie.description}</p>
+                <div className="flex items-center text-yellow-500 mt-2">
+                  <MdStar className="text-yellow-500" size={20} />
+                  <span className="ml-1 text-gray-400">{similarMovie.rating}</span>
+                </div>
+                <div className="flex flex-wrap gap-1 mt-2">
+                  {similarMovie.tags?.map((tag, index) => (
+                    <span key={index} className="bg-gray-700 text-white px-2 py-1 rounded-full text-xs capitalize">{tag}</span>
+                  ))}
+                </div>
+                {authUser && (
+                  <div className="mt-2 flex space-x-2 items-center">
+                    <button
+                      className="flex items-center justify-center p-1 text-red-500 hover:text-red-600 transition-colors duration-200"
+                      aria-label="Favorite"
+                      onClick={handleFavoriteToggle}
+                    >
+                      {isFavorited ? <MdFavorite size={20} /> : <MdFavoriteBorder size={20} />}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
