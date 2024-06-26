@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAuth, signInWithRedirect, GoogleAuthProvider, signOut, User } from 'firebase/auth';
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
 import { firebaseapp, onAuthStateChanged } from '@/lib/firebase';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -28,7 +28,7 @@ const Navbar = () => {
 
   const handleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithRedirect(auth, provider);
+    await signInWithPopup(auth, provider);
   };
 
   const handleSignOut = async () => {
