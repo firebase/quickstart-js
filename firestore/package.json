@@ -6,7 +6,7 @@
     "start": "npm run pre-build && firebase --project demo-friendly-eats emulators:exec --import ./app-data-seed --ui 'ng serve'",
     "emulators": "npm run pre-build && firebase --project demo-friendly-eats emulators:exec --import ./app-data-seed --ui 'ng serve -c local'",
     "production": "npm run pre-build && firebase deploy --only firestore && npm run check-config",
-    "check-config":"grep -q \"projectId\" \"src/environments/environment.prod.ts\" && ng serve -c production || echo \"No project id in configuration file!\"",
+    "check-config": "grep -q \"projectId\" \"src/environments/environment.prod.ts\" && ng serve -c production || echo \"No project id in configuration file!\"",
     "pre-build": "(cd functions && npm run build)",
     "populate-emulators": "cp src/environments/environment.default.ts scripts/environment.js && node scripts/PopulateFirestore.js",
     "populate-production": "cp src/environments/environment.prod.ts scripts/environment.js && node scripts/PopulateFirestore.js",
