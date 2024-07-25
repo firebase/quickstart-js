@@ -21,7 +21,7 @@ type Movie
 type MovieMetadata
   @table {
   # @ref creates a field in the current table (MovieMetadata) that holds the primary key of the referenced type
-  # In this case, @ref(fields: "id") is implied
+  # In this case, @ref(fields: "movieId", references: "id") is implied
   movie: Movie! @ref
   # movieId: UUID <- this is created by the above @ref
   director: String

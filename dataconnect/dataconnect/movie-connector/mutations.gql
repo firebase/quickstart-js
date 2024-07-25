@@ -101,7 +101,7 @@ mutation deleteReview(
 }
 
 # Upsert (update or insert) a user based on their username
-mutation upsertUser($username: String!) @auth(level: PUBLIC) {
+mutation upsertUser($username: String!) @auth(level: USER) {
   user_upsert(
     data: {
       id_expr: "auth.uid"

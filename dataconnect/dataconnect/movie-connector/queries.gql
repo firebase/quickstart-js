@@ -195,7 +195,7 @@ query SearchMovieAnd(
 
 # Get favorite movies by user ID
 query GetUserFavoriteMovies @auth(level: USER) {
-  user(key: {id_expr: "auth.uid"}) {
+  user(id_expr: "auth.uid") {
     favorite_movies_on_user {
       movie {
         id
@@ -350,7 +350,7 @@ query searchMovieDescriptionUsingL2Similarity($query: String!)
     compare_embed: { model: "textembedding-gecko@003", text: $query }
     method: L2
     within: 2
-    where: { description: { ne: "" } }
+    where: { isNull: false }
     limit: 5
   ) {
     id
