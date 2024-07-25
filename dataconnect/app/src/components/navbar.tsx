@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
               </div>
             </div>
           </div>
-          <Link to="/vectors" className="text-gray-200 hover:text-white">
+          <Link to="/vectorsearch" className="text-gray-200 hover:text-white">
             Vector Search
           </Link>
         </div>
