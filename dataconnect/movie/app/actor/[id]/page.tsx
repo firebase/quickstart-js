@@ -45,8 +45,8 @@ const Page = () => {
 
   const checkIfFavorited = async (userId: string) => {
     try {
-      const response = await getIfFavoritedActor({ id: userId, actorId: id });
-      setIsFavorited(!!response.data.favoriteActor);
+      const response = await getIfFavoritedActor({ actorId: id });
+      setIsFavorited(!!response.data.favorite_actor);
     } catch (error) {
       console.error('Error checking if favorited:', error);
     }
@@ -56,7 +56,7 @@ const Page = () => {
     if (!authUser) return;
     try {
       if (isFavorited) {
-        await deleteFavoriteActor({ userId: authUser.uid, actorId: id });
+        await deleteFavoriteActor({ actorId: id });
       } else {
         await addFavoritedActor({ actorId: id });
       }
@@ -84,7 +84,6 @@ const Page = () => {
               {isFavorited ? <MdFavorite size={24} /> : <MdFavoriteBorder size={24} />}
             </button>
           </div>
-          <p className="text-lg mb-4 p-4 bg-gray-800 rounded-lg">{actor.biography}</p>
         </div>
       </div>
 

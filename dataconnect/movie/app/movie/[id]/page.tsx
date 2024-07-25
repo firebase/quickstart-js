@@ -8,9 +8,6 @@ import {
   GetMovieByIdResponse,
   addFavoritedMovie,
   deleteFavoritedMovie,
-  addWatchedMovie,
-  deleteWatchedMovie,
-  getIfWatched,
   getIfFavoritedMovie,
   addReview,
   deleteReview,
@@ -26,7 +23,6 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
-  const [isWatched, setIsWatched] = useState(false);
   const [reviewText, setReviewText] = useState('');
   const [userReview, setUserReview] = useState<GetMovieByIdResponse['movie']['reviews'][0] | null>(null);
   const [rating, setRating] = useState(0);
@@ -38,7 +34,6 @@ const Page = () => {
       if (user) {
         setAuthUser(user);
         checkIfFavorited(user.uid);
-        checkIfWatched(user.uid);
       }
     });
 
@@ -76,19 +71,10 @@ const Page = () => {
 
   const checkIfFavorited = async (userId: string) => {
     try {
-      const response = await getIfFavoritedMovie({ id: userId, movieId: id });
-      setIsFavorited(!!response.data.favoriteMovie);
+      const response = await getIfFavoritedMovie({ movieId: id });
+      setIsFavorited(!!response.data.favorite_movie);
     } catch (error) {
       console.error('Error checking if favorited:', error);
-    }
-  };
-
-  const checkIfWatched = async (userId: string) => {
-    try {
-      const response = await getIfWatched({ id: userId, movieId: id });
-      setIsWatched(!!response.data.watchedMovie);
-    } catch (error) {
-      console.error('Error checking if watched:', error);
     }
   };
 
@@ -98,29 +84,13 @@ const Page = () => {
     if (!authUser) return;
     try {
       if (isFavorited) {
-        await deleteFavoritedMovie({ userId: authUser.uid, movieId: id });
+        await deleteFavoritedMovie({ movieId: id });
       } else {
         await addFavoritedMovie({ movieId: id });
       }
       setIsFavorited(!isFavorited);
     } catch (error) {
       console.error('Error updating favorite status:', error);
-    }
-  };
-
-  const handleWatchedToggle = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (!authUser) return;
-    try {
-      if (isWatched) {
-        await deleteWatchedMovie({ userId: authUser.uid, movieId: id });
-      } else {
-        await addWatchedMovie({ movieId: id });
-      }
-      setIsWatched(!isWatched);
-    } catch (error) {
-      console.error('Error updating watched status:', error);
     }
   };
 
@@ -143,7 +113,7 @@ const Page = () => {
     e.preventDefault();
     if (!authUser || !userReview) return;
     try {
-      await deleteReview({ movieId: id, userId: authUser.uid });
+      await deleteReview({ movieId: id });
       setUserReview(null);
       const updatedMovie = await getMovieById({ id });
       setMovie(updatedMovie.data.movie);
@@ -215,18 +185,6 @@ const Page = () => {
           ))}
         </div>
       </div>
-
-      {movie.sequelTo && (
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-2">Sequel</h2>
-          <Link href={`/movie/${movie.sequelTo.id}`} passHref>
-            <div className="flex items-center cursor-pointer hover:bg-gray-800 p-2 rounded-lg transition">
-              <img className="w-20 h-28 object-cover rounded-lg mr-4" src={movie.sequelTo.imageUrl} alt={movie.sequelTo.title} />
-              <span className="text-lg">{movie.sequelTo.title}</span>
-            </div>
-          </Link>
-        </div>
-      )}
 
       <div className="mt-8">
         <h2 className="text-2xl font-bold mb-2">User Reviews</h2>

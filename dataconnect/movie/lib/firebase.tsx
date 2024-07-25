@@ -13,21 +13,21 @@ const firebaseConfig = {
 
 const firebaseapp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseapp);
-// const dataconnect = getDataConnect(firebaseapp, {
-//   connector: 'movie-connector',
-//   service: 'local',
-//   location: 'us-central1'
-// });
+const dataconnect = getDataConnect(firebaseapp, {
+  connector: 'movie-connector',
+  service: 'local',
+  location: 'us-central1'
+});
 const provider = new GoogleAuthProvider();
 
 if (process.env.NODE_ENV === 'development') {
-  // connectDataConnectEmulator(
-  //   dataconnect, 
-  //   'localhost', 
-  //   9399, 
-  //   false
-  // );
-  // connectAuthEmulator(auth, "http://localhost:9099");
+  connectDataConnectEmulator(
+    dataconnect, 
+    '127.0.0.1', 
+    9399, 
+    false
+  );
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
 }
 
 export { firebaseapp, auth, onAuthStateChanged };

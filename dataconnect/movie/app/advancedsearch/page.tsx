@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 import { MdStar } from 'react-icons/md';
-import { fuzzySearch } from '@/lib/dataconnect-sdk';
+import { searchAll } from '@/lib/dataconnect-sdk';
 
 const genres = ['', 'action', 'crime', 'drama', 'sci-fi', 'thriller', 'adventure'];
 
@@ -22,7 +22,7 @@ const Page = () => {
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fuzzySearch({
+      const response = await searchAll({
         input: searchQuery,
         minYear: releaseYearRange.min,
         maxYear: releaseYearRange.max,

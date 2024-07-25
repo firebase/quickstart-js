@@ -4,10 +4,9 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import {
-  getUserById,
-  GetUserByIdResponse,
+  getCurrentUser,
+  GetCurrentUserResponse,
   deleteReview,
-  deleteWatchedMovie,
   deleteFavoritedMovie,
   deleteFavoriteActor,
 } from '@/lib/dataconnect-sdk';
@@ -16,7 +15,7 @@ import { MdStar } from 'react-icons/md';
 const Page = () => {
   const router = useRouter();
   const [authUser, setAuthUser] = useState<User | null>(null);
-  const [user, setUser] = useState<GetUserByIdResponse['user'] | null>(null);
+  const [user, setUser] = useState<GetCurrentUserResponse['user'] | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ const Page = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthUser(user);
-        fetchUserProfile(user.uid);
+        fetchUserProfile();
       } else {
         router.push('/');
       }
@@ -33,9 +32,9 @@ const Page = () => {
     return () => unsubscribe();
   }, [router]);
 
-  const fetchUserProfile = async (userId: string) => {
+  const fetchUserProfile = async () => {
     try {
-      const response = await getUserById({ id: userId });
+      const response = await getCurrentUser();
       setUser(response.data.user);
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -47,28 +46,18 @@ const Page = () => {
   const handleDeleteReview = async (reviewId: string) => {
     if (!authUser) return;
     try {
-      await deleteReview({ movieId: reviewId, userId: authUser.uid });
-      fetchUserProfile(authUser.uid);
+      await deleteReview({ movieId: reviewId });
+      fetchUserProfile();
     } catch (error) {
       console.error('Error deleting review:', error);
-    }
-  };
-
-  const handleUnwatchMovie = async (movieId: string) => {
-    if (!authUser) return;
-    try {
-      await deleteWatchedMovie({ userId: authUser.uid, movieId });
-      fetchUserProfile(authUser.uid);
-    } catch (error) {
-      console.error('Error unwatching movie:', error);
     }
   };
 
   const handleUnfavoriteMovie = async (movieId: string) => {
     if (!authUser) return;
     try {
-      await deleteFavoritedMovie({ userId: authUser.uid, movieId });
-      fetchUserProfile(authUser.uid);
+      await deleteFavoritedMovie({ movieId });
+      fetchUserProfile();
     } catch (error) {
       console.error('Error unfavoriting movie:', error);
     }
@@ -77,8 +66,8 @@ const Page = () => {
   const handleUnfavoriteActor = async (actorId: string) => {
     if (!authUser) return;
     try {
-      await deleteFavoriteActor({ userId: authUser.uid, actorId });
-      fetchUserProfile(authUser.uid);
+      await deleteFavoriteActor({ actorId });
+      fetchUserProfile();
     } catch (error) {
       console.error('Error unfavoriting actor:', error);
     }
@@ -110,39 +99,6 @@ const Page = () => {
                 className="absolute bottom-2 right-2 text-red-500 hover:text-red-600"
               >
                 Delete Review
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-8">
-        <h2 className="text-2xl font-bold mb-2">Watched Movies</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {user.watched.map((watched) => (
-            <div key={watched.movie.id} className="bg-gray-800 rounded-lg overflow-scroll shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer relative max-h-80">
-              <Link href={`/movie/${watched.movie.id}`}>
-                <img className="w-full h-64 object-cover" src={watched.movie.imageUrl} alt={watched.movie.title} />
-              </Link>
-              <div className="p-4">
-                <h3 className="font-bold text-lg mb-1 text-white">{watched.movie.title}</h3>
-                <p className="text-sm text-gray-400 capitalize">{watched.movie.genre}</p>
-                <p className="text-sm text-gray-300 overflow-y-scroll max-h-24">{watched.movie.description}</p>
-                <div className="flex items-center text-yellow-500 mt-2">
-                  <MdStar className="text-yellow-500" size={24} />
-                  <span className="ml-1 text-gray-400">{watched.movie.rating}</span>
-                </div>
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {watched.movie.tags?.map((tag, index) => (
-                    <span key={index} className="bg-gray-700 text-white px-2 py-1 rounded-full text-xs capitalize">{tag}</span>
-                  ))}
-                </div>
-              </div>
-              <button
-                onClick={() => handleUnwatchMovie(watched.movie.id)}
-                className="absolute bottom-2 right-2 text-red-500 hover:text-red-600"
-              >
-                Remove Watched
               </button>
             </div>
           ))}

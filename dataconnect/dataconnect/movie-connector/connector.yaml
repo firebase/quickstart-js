@@ -11,4 +11,4 @@ generate:
     # directory as your app code
     outputDir: "../../movie/lib/dataconnect-sdk"
     # This property tells Data Connect what directory to install the generated SDK to
-    # packageJsonDir: "../../movie/lib/dataconnect-sdk"
+    packageJsonDir: "../../movie/lib/dataconnect-sdk"

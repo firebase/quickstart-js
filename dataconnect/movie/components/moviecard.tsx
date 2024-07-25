@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { MdFavorite, MdFavoriteBorder, MdCheck, MdAdd, MdStar } from 'react-icons/md';
+import { MdFavorite, MdFavoriteBorder, MdStar } from 'react-icons/md';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { addFavoritedMovie, deleteFavoritedMovie, addWatchedMovie, deleteWatchedMovie, getIfWatched, getIfFavoritedMovie } from '@/lib/dataconnect-sdk';
+import { addFavoritedMovie, deleteFavoritedMovie, getIfFavoritedMovie } from '@/lib/dataconnect-sdk';
 
 interface MovieCardProps {
   id: string;
@@ -16,36 +16,25 @@ interface MovieCardProps {
 const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genre, tags }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
-  const [isWatched, setIsWatched] = useState(false);
   const auth = getAuth();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        checkIfFavorited(user.uid);
-        checkIfWatched(user.uid);
+        checkIfFavorited();
       }
     });
 
     return () => unsubscribe();
   }, [auth, id]);
 
-  const checkIfFavorited = async (userId: string) => {
+  const checkIfFavorited = async () => {
     try {
-      const response = await getIfFavoritedMovie({ id: userId, movieId: id });
-      setIsFavorited(!!response.data.favoriteMovie);
+      const response = await getIfFavoritedMovie({ movieId: id });
+      setIsFavorited(!!response.data.favorite_movie);
     } catch (error) {
       console.error('Error checking if favorited:', error);
-    }
-  };
-
-  const checkIfWatched = async (userId: string) => {
-    try {
-      const response = await getIfWatched({ id: userId, movieId: id });
-      setIsWatched(!!response.data.watchedMovie);
-    } catch (error) {
-      console.error('Error checking if watched:', error);
     }
   };
 
@@ -55,29 +44,13 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genr
     if (!user) return;
     try {
       if (isFavorited) {
-        await deleteFavoritedMovie({ userId: user.uid, movieId: id });
+        await deleteFavoritedMovie({ movieId: id });
       } else {
         await addFavoritedMovie({ movieId: id });
       }
       setIsFavorited(!isFavorited);
     } catch (error) {
       console.error('Error updating favorite status:', error);
-    }
-  };
-
-  const handleWatchedToggle = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (!user) return;
-    try {
-      if (isWatched) {
-        await deleteWatchedMovie({ userId: user.uid, movieId: id });
-      } else {
-        await addWatchedMovie({ movieId: id });
-      }
-      setIsWatched(!isWatched);
-    } catch (error) {
-      console.error('Error updating watched status:', error);
     }
   };
 
@@ -114,23 +87,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genr
                   onClick={handleFavoriteToggle}
                 >
                   {isFavorited ? <MdFavorite size={20} /> : <MdFavoriteBorder size={20} />}
-                </button>
-                <button
-                  className="flex items-center justify-center p-1 text-green-700 hover:text-green-800 transition-colors duration-200"
-                  aria-label="Watched"
-                  onClick={handleWatchedToggle}
-                >
-                  {isWatched ? (
-                    <>
-                      <MdCheck size={20} />
-                      <span className="ml-1 text-sm">Watched</span>
-                    </>
-                  ) : (
-                    <>
-                      <MdAdd size={20} />
-                      <span className="ml-1 text-sm">Add to watchlist</span>
-                    </>
-                  )}
                 </button>
               </div>
             )}

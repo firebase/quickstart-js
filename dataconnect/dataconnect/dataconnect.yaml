@@ -1,10 +1,11 @@
 specVersion: "v1alpha"
-serviceId: "dataconnect"
+serviceId: "your-dataconnect-service-id"
+location: "us-central1"
 schema:
   source: "./schema"
   datasource:
     postgresql:
-      database: "postgres"
+      database: "your-dataconnect-database"
       cloudSql:
-        instanceId: "your-instanceId"
-connectorDirs: ["./connector"]
+        instanceId: "your-dataconnect-id"
+connectorDirs: ["./movie-connector"]
