@@ -1,13 +1,12 @@
-'use client';
-import { useState } from 'react';
-import Link from 'next/link';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { MdStar } from 'react-icons/md';
 import { searchAll } from '@/lib/dataconnect-sdk';
 
 const genres = ['', 'action', 'crime', 'drama', 'sci-fi', 'thriller', 'adventure'];
 
-const Page = () => {
+const AdvancedSearchPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [releaseYearRange, setReleaseYearRange] = useState({ min: 1900, max: 2030 });
   const [genre, setGenre] = useState('');
@@ -130,7 +129,7 @@ const Page = () => {
           <h3 className="text-xl font-bold mb-2">Movies Matching Title</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {results.moviesMatchingTitle?.map((movie) => (
-              <Link key={movie.id} href={`/movie/${movie.id}`}>
+              <Link key={movie.id} to={`/movie/${movie.id}`}>
                 <div className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
                   <img className="w-full h-64 object-cover" src={movie.imageUrl} alt={movie.title} />
                   <div className="p-4">
@@ -154,7 +153,7 @@ const Page = () => {
           <h3 className="text-xl font-bold mb-2">Movies Matching Description</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {results.moviesMatchingDescription?.map((movie) => (
-              <Link key={movie.id} href={`/movie/${movie.id}`}>
+              <Link key={movie.id} to={`/movie/${movie.id}`}>
                 <div className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
                   <img className="w-full h-64 object-cover" src={movie.imageUrl} alt={movie.title} />
                   <div className="p-4">
@@ -178,7 +177,7 @@ const Page = () => {
           <h3 className="text-xl font-bold mb-2">Actors</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {results.actors?.map((actor) => (
-              <Link key={actor.id} href={`/actor/${actor.id}`}>
+              <Link key={actor.id} to={`/actor/${actor.id}`}>
                 <div className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
                   <img className="w-full h-64 object-cover" src={actor.imageUrl} alt={actor.name} />
                   <div className="p-4">
@@ -204,7 +203,7 @@ const Page = () => {
                   <MdStar className="text-yellow-500" size={20} />
                   <span className="ml-1 text-gray-400">{review.rating}</span>
                 </div>
-                <Link href={`/movie/${review.movie.id}`} className="mt-2 text-blue-500 hover:text-blue-400 transition-colors">
+                <Link to={`/movie/${review.movie.id}`} className="mt-2 text-blue-500 hover:text-blue-400 transition-colors">
                   {review?.movie?.title}
                 </Link>
               </div>
@@ -216,4 +215,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default AdvancedSearchPage;

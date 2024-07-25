@@ -1,19 +1,26 @@
-'use client';
-import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
-import { getActorById, GetActorByIdResponse, addFavoritedActor, deleteFavoriteActor, getIfFavoritedActor } from '@/lib/dataconnect-sdk';
+import {
+  getActorById,
+  GetActorByIdResponse,
+  addFavoritedActor,
+  deleteFavoriteActor,
+  getIfFavoritedActor
+} from '@/lib/dataconnect-sdk';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
+import NotFound from './NotFound';
 
-const Page = () => {
-  const { id } = useParams() as { id: string };
+const ActorPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const actorId = id || '';
   const [actor, setActor] = useState<GetActorByIdResponse['actor'] | null>(null);
   const [loading, setLoading] = useState(true);
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
-  let auth  = useContext(AuthContext);
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -24,16 +31,21 @@ const Page = () => {
     });
 
     return () => unsubscribe();
-  }, [id]);
+  }, [auth, actorId]);
 
   useEffect(() => {
-    if (id) {
+    if (actorId) {
       const fetchActor = async () => {
         try {
-          const response = await getActorById({ id });
-          setActor(response.data.actor);
+          const response = await getActorById({ id: actorId });
+          if (response.data.actor) {
+            setActor(response.data.actor);
+          } else {
+            navigate('/not-found');
+          }
         } catch (error) {
           console.error('Error fetching actor:', error);
+          navigate('/not-found');
         } finally {
           setLoading(false);
         }
@@ -41,11 +53,11 @@ const Page = () => {
 
       fetchActor();
     }
-  }, [id]);
+  }, [actorId, navigate]);
 
   const checkIfFavorited = async () => {
     try {
-      const response = await getIfFavoritedActor({ actorId: id });
+      const response = await getIfFavoritedActor({ actorId });
       setIsFavorited(!!response.data.favorite_actor);
     } catch (error) {
       console.error('Error checking if favorited:', error);
@@ -56,9 +68,9 @@ const Page = () => {
     if (!authUser) return;
     try {
       if (isFavorited) {
-        await deleteFavoriteActor({ actorId: id });
+        await deleteFavoriteActor({ actorId });
       } else {
-        await addFavoritedActor({ actorId: id });
+        await addFavoritedActor({ actorId });
       }
       setIsFavorited(!isFavorited);
     } catch (error) {
@@ -67,9 +79,8 @@ const Page = () => {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (!actor) return <p>Actor not found.</p>;
 
-  return (
+  return actor ? (
     <div className="container mx-auto p-4 bg-gray-900 min-h-screen text-white">
       <div className="flex flex-col md:flex-row mb-8">
         <img className="w-full md:w-1/3 object-cover rounded-lg shadow-md" src={actor.imageUrl} alt={actor.name} />
@@ -91,14 +102,14 @@ const Page = () => {
         <h2 className="text-2xl font-bold mb-2">Main Roles</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {actor.mainActors.map((movie) => (
-            <Link key={movie.id} href={`/movie/${movie.id}`}>
+            <Link key={movie.id} to={`/movie/${movie.id}`}>
               <div className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
                 <img className="w-full h-48 object-cover" src={movie.imageUrl} alt={movie.title} />
                 <div className="p-4">
                   <h3 className="font-bold text-lg mb-1 text-white">{movie.title}</h3>
                   <p className="text-sm text-gray-400">{movie.genre}</p>
                   <div className="flex flex-wrap gap-1 mt-2">
-                    {movie.tags.map((tag, index) => (
+                    {movie.tags?.map((tag, index) => (
                       <span key={index} className="bg-gray-700 text-white px-2 py-1 rounded-full text-xs">{tag}</span>
                     ))}
                   </div>
@@ -113,14 +124,14 @@ const Page = () => {
         <h2 className="text-2xl font-bold mb-2">Supporting Roles</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {actor.supportingActors.map((movie) => (
-            <Link key={movie.id} href={`/movie/${movie.id}`}>
+            <Link key={movie.id} to={`/movie/${movie.id}`}>
               <div className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
                 <img className="w-full h-48 object-cover" src={movie.imageUrl} alt={movie.title} />
                 <div className="p-4">
                   <h3 className="font-bold text-lg mb-1 text-white">{movie.title}</h3>
                   <p className="text-sm text-gray-400">{movie.genre}</p>
                   <div className="flex flex-wrap gap-1 mt-2">
-                    {movie.tags.map((tag, index) => (
+                    {movie.tags?.map((tag, index) => (
                       <span key={index} className="bg-gray-700 text-white px-2 py-1 rounded-full text-xs">{tag}</span>
                     ))}
                   </div>
@@ -131,7 +142,9 @@ const Page = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <NotFound />
   );
 };
 
-export default Page;
+export default ActorPage;

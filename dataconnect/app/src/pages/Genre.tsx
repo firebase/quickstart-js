@@ -1,11 +1,10 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import MovieCard from '@/components/moviecard';
 import { ListMoviesByGenreResponse, listMoviesByGenre } from '@/lib/dataconnect-sdk';
 
-const Page = () => {
-  const { genre } = useParams() as { genre: string };
+const GenrePage: React.FC = () => {
+  const { genre } = useParams<{ genre: string }>();
   const [mostPopular, setMostPopular] = useState<ListMoviesByGenreResponse['mostPopular']>([]);
   const [mostRecent, setMostRecent] = useState<ListMoviesByGenreResponse['mostRecent']>([]);
   const [loading, setLoading] = useState(true);
@@ -67,4 +66,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default GenrePage;

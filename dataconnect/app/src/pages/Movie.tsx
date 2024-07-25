@@ -1,7 +1,6 @@
 'use client';
 import { useContext, useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useParams, Link } from 'react-router-dom';
 import { MdFavorite, MdFavoriteBorder, MdStar } from 'react-icons/md';
 import {
   getMovieById,
@@ -16,9 +15,9 @@ import {
 } from '@/lib/dataconnect-sdk';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
+import NotFound from './NotFound';
 
-const Page = () => {
-  const router = useRouter();
+const MoviePage = () => {
   const { id } = useParams() as { id: string };
   const [movie, setMovie] = useState<GetMovieByIdResponse['movie'] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -28,7 +27,7 @@ const Page = () => {
   const [userReview, setUserReview] = useState<GetMovieByIdResponse['movie']['reviews'][0] | null>(null);
   const [rating, setRating] = useState(0);
   const [similarMovies, setSimilarMovies] = useState<SearchMovieDescriptionUsingL2similarityResponse['movies_descriptionEmbedding_similarity']>([]);
-  let auth  = useContext(AuthContext);
+  const auth = useContext(AuthContext);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -99,7 +98,7 @@ const Page = () => {
     e.preventDefault();
     if (!authUser) return;
     try {
-        const response  = await addReview({ movieId: id, rating, reviewText });
+        await addReview({ movieId: id, rating, reviewText });
       setReviewText('');
       setRating(0);
       const updatedMovie = await getMovieById({ id });
@@ -122,12 +121,10 @@ const Page = () => {
       console.error('Error deleting review:', error);
     }
   };
-
   if (loading) return <p>Loading...</p>;
-  if (!movie) return <p>Movie not found.</p>;
-
+  if (!movie) return <NotFound />;
   return (
-    <div className="container mx-auto p-4 bg-gray-900 min-h-screen text-white">
+  <div className="container mx-auto p-4 bg-gray-900 min-h-screen text-white">
       <div className="flex flex-col md:flex-row mb-8">
         <img className="w-full md:w-1/3 object-cover rounded-lg shadow-md" src={movie.imageUrl} alt={movie.title} />
         <div className="md:ml-8 mt-4 md:mt-0 flex-1">
@@ -141,7 +138,7 @@ const Page = () => {
             <p><span className="font-bold">Genre:</span> {movie.genre}</p>
             <p><span className="font-bold">Release Year:</span> {movie.releaseYear}</p>
             <p><span className="font-bold">Director:</span> {movie.metadata[0]?.director}</p>
-            <p><span className="font-bold">Tags:</span> {movie.tags.join(', ')}</p>
+            <p><span className="font-bold">Tags:</span> {movie.tags?.join(', ')}</p>
           </div>
           <div className="mt-4 flex space-x-4">
             <button
@@ -159,7 +156,7 @@ const Page = () => {
         <h2 className="text-2xl font-bold mb-2">Main Actors</h2>
         <div className="flex overflow-x-auto space-x-4">
           {movie.mainActors.map((actor) => (
-            <Link key={actor.id} href={`/actor/${actor.id}`} passHref>
+            <Link key={actor.id} to={`/actor/${actor.id}`}>
               <div className="flex-shrink-0 bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer w-32">
                 <img className="w-full h-32 object-cover" src={actor.imageUrl} alt={actor.name} />
                 <div className="p-2 text-center">
@@ -175,7 +172,7 @@ const Page = () => {
         <h2 className="text-2xl font-bold mb-2">Supporting Actors</h2>
         <div className="flex overflow-x-auto space-x-4">
           {movie.supportingActors.map((actor) => (
-            <Link key={actor.id} href={`/actor/${actor.id}`} passHref>
+            <Link key={actor.id} to={`/actor/${actor.id}`}>
               <div className="flex-shrink-0 bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer w-32">
                 <img className="w-full h-32 object-cover" src={actor.imageUrl} alt={actor.name} />
                 <div className="p-2 text-center">
@@ -216,7 +213,7 @@ const Page = () => {
               Submit Review
             </button>
           </form>
-        ) : (<></>)}
+        ) : null}
 
         {movie.reviews.map((review) => (
           <div key={review.id} className="mb-4 p-4 bg-gray-800 rounded-lg shadow-md">
@@ -244,7 +241,7 @@ const Page = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {similarMovies.map((similarMovie) => (
             <div key={similarMovie.id} className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer relative">
-              <Link href={`/movie/${similarMovie.id}`}>
+              <Link to={`/movie/${similarMovie.id}`}>
                 <img className="w-full h-64 object-cover" src={similarMovie.imageUrl} alt={similarMovie.title} />
               </Link>
               <div className="p-4">
@@ -275,8 +272,7 @@ const Page = () => {
           ))}
         </div>
       </div>
-    </div>
-  );
+    </div>);
 };
 
-export default Page;
+export default MoviePage;

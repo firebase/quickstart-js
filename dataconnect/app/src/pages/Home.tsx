@@ -1,22 +1,16 @@
-"use client";
-import { useEffect, useState } from "react";
-import Carousel from "@/components/carousel";
-import {
-  listMovies,
-  ListMoviesResponse,
-} from "@/lib/dataconnect-sdk";
+import React, { useEffect, useState } from 'react';
+import Carousel from '@/components/carousel';
+import { listMovies, ListMoviesResponse } from '@/lib/dataconnect-sdk';
 
-const Page = () => {
+const HomePage: React.FC = () => {
   const [topMovies, setTopMovies] = useState<ListMoviesResponse["movies"]>([]);
-  const [latestMovies, setLatestMovies] = useState<
-  ListMoviesResponse["movies"]
-  >([]);
+  const [latestMovies, setLatestMovies] = useState<ListMoviesResponse["movies"]>([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const topMoviesResponse = await listMovies({orderByRating :"DESC", limit: 10});
-        const latestMoviesResponse = await listMovies({orderByReleaseYear :"DESC", limit: 10});
+        const topMoviesResponse = await listMovies({ orderByRating: "DESC", limit: 10 });
+        const latestMoviesResponse = await listMovies({ orderByReleaseYear: "DESC", limit: 10 });
 
         setTopMovies(topMoviesResponse.data.movies);
         setLatestMovies(latestMoviesResponse.data.movies);
@@ -36,4 +30,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default HomePage;

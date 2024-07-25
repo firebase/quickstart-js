@@ -1,5 +1,5 @@
 import React from 'react';
-import MovieCard from './moviecard';
+import MovieCard from '@/components/moviecard';
 
 interface CarouselProps {
   title: string;
@@ -7,9 +7,9 @@ interface CarouselProps {
     id: string;
     title?: string;
     imageUrl?: string;
-    rating?: number;
-    genre?: string;
-    tags?: string[];
+    rating?: number | null;
+    genre?: string | null;
+    tags?: string[] | null;
   }[];
 }
 
@@ -22,7 +22,7 @@ const Carousel: React.FC<CarouselProps> = ({ title, movies }) => {
           <div className="flex-shrink-0" key={movie.id}>
             <MovieCard
               id={movie.id}
-              title={movie.title}
+              title={movie.title || 'TBA'}
               imageUrl={movie.imageUrl}
               rating={movie.rating}
               genre={movie.genre}

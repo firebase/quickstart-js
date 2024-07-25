@@ -1,9 +1,8 @@
-'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { searchMovieDescriptionUsingL2similarity, SearchMovieDescriptionUsingL2similarityResponse } from '@/lib/dataconnect-sdk';
 import { FaSpinner } from 'react-icons/fa';
 
-const Page = () => {
+const VectorSearchPage: React.FC = () => {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<SearchMovieDescriptionUsingL2similarityResponse['movies_descriptionEmbedding_similarity']>([]);
@@ -78,4 +77,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default VectorSearchPage;

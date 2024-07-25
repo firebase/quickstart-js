@@ -1,7 +1,5 @@
-'use client';
-import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import {
   getCurrentUser,
@@ -13,25 +11,25 @@ import {
 import { MdStar } from 'react-icons/md';
 import { AuthContext } from '@/lib/firebase';
 
-const Page = () => {
-  const router = useRouter();
+const MyProfilePage: React.FC = () => {
+  const navigate = useNavigate();
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [user, setUser] = useState<GetCurrentUserResponse['user'] | null>(null);
   const [loading, setLoading] = useState(true);
-  let auth  = useContext(AuthContext);
-  
+  const auth = useContext(AuthContext);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthUser(user);
         fetchUserProfile();
       } else {
-        router.push('/');
+        navigate('/');
       }
     });
 
     return () => unsubscribe();
-  }, [router]);
+  }, [navigate, auth]);
 
   const fetchUserProfile = async () => {
     try {
@@ -111,7 +109,7 @@ const Page = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {user.favoriteMovies.map((fav) => (
             <div key={fav.movie.id} className="bg-gray-800 rounded-lg overflow-scroll shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer relative max-h-80">
-              <Link href={`/movie/${fav.movie.id}`}>
+              <Link to={`/movie/${fav.movie.id}`}>
                 <img className="w-full h-64 object-cover" src={fav.movie.imageUrl} alt={fav.movie.title} />
               </Link>
               <div className="p-4">
@@ -144,7 +142,7 @@ const Page = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {user.favoriteActors.map((favActor) => (
             <div key={favActor.actor.id} className="bg-gray-800 rounded-lg overflow-scroll shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer relative max-h-80">
-              <Link href={`/actor/${favActor.actor.id}`}>
+              <Link to={`/actor/${favActor.actor.id}`}>
                 <img className="w-48 h-48 object-cover rounded-full mx-auto mt-4" src={favActor.actor.imageUrl} alt={favActor.actor.name} />
               </Link>
               <div className="p-4 text-center">
@@ -164,4 +162,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default MyProfilePage;
