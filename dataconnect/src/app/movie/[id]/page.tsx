@@ -1,8 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { MdFavorite, MdFavoriteBorder, MdCheck, MdAdd, MdStar } from 'react-icons/md';
+import { MdFavorite, MdFavoriteBorder, MdStar } from 'react-icons/md';
 import {
   getMovieById,
   GetMovieByIdResponse,
@@ -14,7 +14,8 @@ import {
   searchMovieDescriptionUsingL2similarity,
   SearchMovieDescriptionUsingL2similarityResponse,
 } from '@/lib/dataconnect-sdk';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { AuthContext } from '@/lib/firebase';
 
 const Page = () => {
   const router = useRouter();
@@ -27,13 +28,13 @@ const Page = () => {
   const [userReview, setUserReview] = useState<GetMovieByIdResponse['movie']['reviews'][0] | null>(null);
   const [rating, setRating] = useState(0);
   const [similarMovies, setSimilarMovies] = useState<SearchMovieDescriptionUsingL2similarityResponse['movies_descriptionEmbedding_similarity']>([]);
+  let auth  = useContext(AuthContext);
 
   useEffect(() => {
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthUser(user);
-        checkIfFavorited(user.uid);
+        checkIfFavorited();
       }
     });
 
@@ -69,7 +70,7 @@ const Page = () => {
     }
   };
 
-  const checkIfFavorited = async (userId: string) => {
+  const checkIfFavorited = async () => {
     try {
       const response = await getIfFavoritedMovie({ movieId: id });
       setIsFavorited(!!response.data.favorite_movie);

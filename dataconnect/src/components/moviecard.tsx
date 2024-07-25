@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { MdFavorite, MdFavoriteBorder, MdStar } from 'react-icons/md';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { addFavoritedMovie, deleteFavoritedMovie, getIfFavoritedMovie } from '@/lib/dataconnect-sdk';
+import { AuthContext } from '@/lib/firebase';
 
 interface MovieCardProps {
   id: string;
@@ -16,7 +17,7 @@ interface MovieCardProps {
 const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genre, tags }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
-  const auth = getAuth();
+  let auth  = useContext(AuthContext);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -70,7 +71,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genr
             <div className="mt-2 text-gray-400">
               {genre && (
                 <Link href={`/genre/${genre.toLowerCase()}`} passHref legacyBehavior>
-                  <a className="block mb-1 hover:underline">{capitalize(genre)}</a>
+                  <p className="block mb-1 hover:underline">{capitalize(genre)}</p>
                 </Link>
               )}
               <div className="flex flex-wrap gap-1">

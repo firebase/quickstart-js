@@ -18,7 +18,7 @@
     }
   },
   "hosting": {
-    "source": "movie",
+    "source": "src",
     "ignore": [
       "firebase.json",
       "**/.*",

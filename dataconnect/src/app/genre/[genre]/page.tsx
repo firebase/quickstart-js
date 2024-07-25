@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import MovieCard from '@/components/moviecard';
-import { ListMoviesByGenreResponse, ListMoviesByGenreVariables, listMoviesByGenre } from '@/lib/dataconnect-sdk';
+import { ListMoviesByGenreResponse, listMoviesByGenre } from '@/lib/dataconnect-sdk';
 
 const Page = () => {
   const { genre } = useParams() as { genre: string };

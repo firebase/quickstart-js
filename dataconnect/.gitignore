@@ -63,8 +63,7 @@ node_modules/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
 .next
 .dataconnect
-movie/lib/dataconnect-sdk
-movie/package-lock.json
+src/lib/dataconnect-sdk
+src/package-lock.json

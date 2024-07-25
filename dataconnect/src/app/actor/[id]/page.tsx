@@ -1,25 +1,25 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
-import { getActorById, GetActorByIdResponse, GetActorByIdVariables, addFavoritedActor, deleteFavoriteActor, getIfFavoritedActor } from '@/lib/dataconnect-sdk';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { getActorById, GetActorByIdResponse, addFavoritedActor, deleteFavoriteActor, getIfFavoritedActor } from '@/lib/dataconnect-sdk';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { AuthContext } from '@/lib/firebase';
 
 const Page = () => {
-  const router = useRouter();
   const { id } = useParams() as { id: string };
   const [actor, setActor] = useState<GetActorByIdResponse['actor'] | null>(null);
   const [loading, setLoading] = useState(true);
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
+  let auth  = useContext(AuthContext);
 
   useEffect(() => {
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthUser(user);
-        checkIfFavorited(user.uid);
+        checkIfFavorited();
       }
     });
 
@@ -43,7 +43,7 @@ const Page = () => {
     }
   }, [id]);
 
-  const checkIfFavorited = async (userId: string) => {
+  const checkIfFavorited = async () => {
     try {
       const response = await getIfFavoritedActor({ actorId: id });
       setIsFavorited(!!response.data.favorite_actor);

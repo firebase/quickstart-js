@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
-import { firebaseapp, onAuthStateChanged } from '@/lib/firebase';
+import { useEffect, useState, useContext } from 'react';
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
+import { AuthContext } from '@/lib/firebase';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { upsertUser } from '@/lib/dataconnect-sdk';
 import { FaSearch } from 'react-icons/fa';
 import Image from 'next/image';
@@ -10,8 +9,7 @@ import firebaseLogo from '@/assets/firebase_logo.svg';
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
-  const auth = getAuth(firebaseapp);
-  const router = useRouter();
+  let auth  = useContext(AuthContext);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {

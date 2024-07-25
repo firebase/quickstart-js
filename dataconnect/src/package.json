@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.19",
-    "firebase": "10.12.0-dataconnect-preview.388b61c7e",
+    "firebase": "^10.12.0-dataconnect-preview.388b61c7e",
+    "firebase-functions": "^5.0.1",
     "next": "latest",
     "postcss": "^8.4.38",
     "react": "^18.3.1",

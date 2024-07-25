@@ -1,8 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import {
   getCurrentUser,
   GetCurrentUserResponse,
@@ -11,15 +11,16 @@ import {
   deleteFavoriteActor,
 } from '@/lib/dataconnect-sdk';
 import { MdStar } from 'react-icons/md';
+import { AuthContext } from '@/lib/firebase';
 
 const Page = () => {
   const router = useRouter();
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [user, setUser] = useState<GetCurrentUserResponse['user'] | null>(null);
   const [loading, setLoading] = useState(true);
-
+  let auth  = useContext(AuthContext);
+  
   useEffect(() => {
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthUser(user);
