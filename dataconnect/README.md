@@ -36,10 +36,10 @@ npm install -g firebase-tools
 This repository contains the quickstart to get started with the functionalities of Data Connect.
 
 1. Clone this repository to your local machine.
-2. Enable the DataConnect CLI with the command `firebase experiments:enable dataconnect`.
-3. cd to the `dataconnect` folder, and initialize your Firebase project with `firebase init` and select both DataConnect options. Overwrite only dataconnect.yaml when prompted, do not overwrite any other dataconnect files.
-4. Replace variables in `.env` with your project-specific values.
-5. Allow domains for Firebase Auth in your [project console](https://console.firebase.google.com/project/_/authentication/settings) (e.g. http://127.0.0.1).
+2. cd to the `dataconnect` folder, and initialize your Firebase project with `firebase init dataconnect`. Overwrite only dataconnect.yaml when prompted, do not overwrite any other dataconnect files.
+(Optional): If you intend on using other Firebase features, run `firebase init` instead, and select both DataConnect options as well as any feature you intend to use.
+3. Replace variables in `.env` with your project-specific values.
+4. Allow domains for Firebase Auth in your [project console](https://console.firebase.google.com/project/_/authentication/settings) (e.g. http://127.0.0.1).
 
 ### 4. Running queries and mutations in VS Code
 The VSCode Firebase Extension allows you to generate Firebase Data Connect SDK code, run queries/mutations, and deploy Firebase Data Connect with a click. Alternatively, see below for CLI commands.
@@ -59,7 +59,7 @@ Now you should be able to deploy your schema, run mutations/queries, generate SD
 ### 6. Running the app
 
 1. `cd` into the src folder, and run `npm run dev` to start the localhost web app.
-(Optional): To use the Firebase Auth emulator, run `firebase emulators:start` and uncomment the `connectAuthEmulator` function in `src/lib/firebase.ts`.
+(Optional): To use the Firebase Auth emulator, run `firebase emulators:start` and uncomment the `connectAuthEmulator` function in `app/src/lib/firebase.ts`.
 
 <!-- Support
 -------
