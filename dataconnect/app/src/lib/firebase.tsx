@@ -15,6 +15,16 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
 
 const auth = getAuth(firebaseApp);
 
+if (process.env.NODE_ENV === 'development') {
+  // connectDataConnectEmulator(
+  //   dataconnect, 
+  //   'localhost', 
+  //   9399, 
+  //   false
+  // );
+  // connectAuthEmulator(auth, "http://localhost:9099");
+}
+
 const AuthContext = createContext(auth);
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
