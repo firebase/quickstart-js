@@ -37,8 +37,8 @@ This repository contains the quickstart to get started with the functionalities 
 
 1. Clone this repository to your local machine.
 2. Enable the DataConnect CLI with the command `firebase experiments:enable dataconnect`.
-3. cd to the `dataconnect` folder, and initialize your Firebase project with `firebase init` and select DataConnect. Do not overwrite the dataconnect files when prompted.
-4. Replace variables in `.env.local` with your project-specific values.
+3. cd to the `dataconnect` folder, and initialize your Firebase project with `firebase init` and select both DataConnect options. Overwrite only dataconnect.yaml when prompted, do not overwrite any other dataconnect files.
+4. Replace variables in `.env` with your project-specific values.
 5. Allow domains for Firebase Auth in your [project console](https://console.firebase.google.com/project/_/authentication/settings) (e.g. http://127.0.0.1).
 
 ### 4. Running queries and mutations in VS Code
@@ -49,12 +49,17 @@ The VSCode Firebase Extension allows you to generate Firebase Data Connect SDK c
 3. Open this quickstart in VS code, and in the left pane of the Firebase extension, and log in with your Firebase account.
 (Optional): If your Firebase project was not initialized in the last section, you can click `Run firebase init` and select `Data Connect` to initialize.
 4. Click on deploy to deploy your schema to your cloud SQL instance. Or run `firebase deploy --only dataconnect` (this will also activate vectors search if it's enabled in the schema).
-4. Start the DateConnect emulators.
+4. Running the VSCode extension should automatically start the DataConnect emulators. If you see an emulators error, try running `firebase emulators:start` manually.
 
 Now you should be able to deploy your schema, run mutations/queries, generate SDK code, and view your application locally.
 
 ### 5. Populating the database
 1. Run the four `_insert.gql` files in the `./dataconnect` directory in order using the VS code extension.
+
+### 6. Running the app
+
+1. `cd` into the src folder, and run `npm run dev` to start the localhost web app.
+(Optional): To use the Firebase Auth emulator, run `firebase emulators:start` and uncomment the `connectAuthEmulator` function in `src/lib/firebase.ts`.
 
 <!-- Support
 -------
