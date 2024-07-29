@@ -1,0 +1,121 @@
+mutation {
+  user_insertMany(data: [
+    {
+      id: "SnLgOC3lN4hcIl69s53cW0Q8R1T2",
+      username: "cynthia_w"
+    },
+    {
+      id: "fep4fXpGWsaRpuphq9CIrBIXQ0S2",
+      username: "hercule_p"
+    },
+    {
+      id: "TBedjwCX0Jf955Uuoxk6k74sY0l1",
+      username: "jane_d"
+    }
+  ])
+
+  review_insertMany(data: [
+    {
+      id: "345e4567-e89b-12d3-a456-426614174000",
+      userId: "SnLgOC3lN4hcIl69s53cW0Q8R1T2",
+      movieId: "550e8400-e29b-41d4-a716-446655440000",
+      rating: 5,
+      reviewText: "An incredible movie with a mind-blowing plot!",
+      reviewDate_date: { today: true }
+    },
+    {
+      id: "345e4567-e89b-12d3-a456-426614174001",
+      userId: "fep4fXpGWsaRpuphq9CIrBIXQ0S2",
+      movieId: "550e8400-e29b-41d4-a716-446655440001",
+      rating: 5,
+      reviewText: "A revolutionary film that changed cinema forever.",
+      reviewDate_date: { today: true }
+    },
+    {
+      id: "345e4567-e89b-12d3-a456-426614174002",
+      userId: "TBedjwCX0Jf955Uuoxk6k74sY0l1",
+      movieId: "550e8400-e29b-41d4-a716-446655440002",
+      rating: 5,
+      reviewText: "A visually stunning and emotionally impactful movie.",
+      reviewDate_date: { today: true }
+    },
+    {
+      id: "345e4567-e89b-12d3-a456-426614174003",
+      userId: "SnLgOC3lN4hcIl69s53cW0Q8R1T2",
+      movieId: "550e8400-e29b-41d4-a716-446655440003",
+      rating: 4,
+      reviewText: "A fantastic superhero film with great performances.",
+      reviewDate_date: { today: true }
+    },
+    {
+      id: "345e4567-e89b-12d3-a456-426614174004",
+      userId: "fep4fXpGWsaRpuphq9CIrBIXQ0S2",
+      movieId: "550e8400-e29b-41d4-a716-446655440004",
+      rating: 5,
+      reviewText: "An amazing film that keeps you on the edge of your seat.",
+      reviewDate_date: { today: true }
+    },
+    {
+      id: "345e4567-e89b-12d3-a456-426614174005",
+      userId: "TBedjwCX0Jf955Uuoxk6k74sY0l1",
+      movieId: "550e8400-e29b-41d4-a716-446655440005",
+      rating: 5,
+      reviewText: "An absolute classic with unforgettable dialogue.",
+      reviewDate_date: { today: true }
+    }
+  ])
+
+  favorite_movie_insertMany(data: [
+    {
+      userId: "SnLgOC3lN4hcIl69s53cW0Q8R1T2",
+      movieId: "550e8400-e29b-41d4-a716-446655440000"
+    },
+    {
+      userId: "fep4fXpGWsaRpuphq9CIrBIXQ0S2",
+      movieId: "550e8400-e29b-41d4-a716-446655440001"
+    },
+    {
+      userId: "TBedjwCX0Jf955Uuoxk6k74sY0l1",
+      movieId: "550e8400-e29b-41d4-a716-446655440002"
+    },
+    {
+      userId: "SnLgOC3lN4hcIl69s53cW0Q8R1T2",
+      movieId: "550e8400-e29b-41d4-a716-446655440003"
+    },
+    {
+      userId: "fep4fXpGWsaRpuphq9CIrBIXQ0S2",
+      movieId: "550e8400-e29b-41d4-a716-446655440004"
+    },
+    {
+      userId: "TBedjwCX0Jf955Uuoxk6k74sY0l1",
+      movieId: "550e8400-e29b-41d4-a716-446655440005"
+    }
+  ])
+
+  favorite_actor_insertMany(data: [
+    {
+      userId: "SnLgOC3lN4hcIl69s53cW0Q8R1T2",
+      actorId: "123e4567-e89b-12d3-a456-426614174000"
+    },
+    {
+      userId: "fep4fXpGWsaRpuphq9CIrBIXQ0S2",
+      actorId: "123e4567-e89b-12d3-a456-426614174001"
+    },
+    {
+      userId: "TBedjwCX0Jf955Uuoxk6k74sY0l1",
+      actorId: "123e4567-e89b-12d3-a456-426614174002"
+    },
+    {
+      userId: "SnLgOC3lN4hcIl69s53cW0Q8R1T2",
+      actorId: "123e4567-e89b-12d3-a456-426614174003"
+    },
+    {
+      userId: "fep4fXpGWsaRpuphq9CIrBIXQ0S2",
+      actorId: "123e4567-e89b-12d3-a456-426614174004"
+    },
+    {
+      userId: "TBedjwCX0Jf955Uuoxk6k74sY0l1",
+      actorId: "123e4567-e89b-12d3-a456-426614174005"
+    }
+  ])
+}
