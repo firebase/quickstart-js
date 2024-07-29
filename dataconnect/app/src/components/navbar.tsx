@@ -6,7 +6,7 @@ import { upsertUser } from '@/lib/dataconnect-sdk';
 import { FaSearch } from 'react-icons/fa';
 import firebaseLogo from '@/assets/firebase_logo.svg';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
   const auth = useContext(AuthContext);
 

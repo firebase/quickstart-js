@@ -6,7 +6,7 @@ import { searchAll } from '@/lib/dataconnect-sdk';
 
 const genres = ['', 'action', 'crime', 'drama', 'sci-fi', 'thriller', 'adventure'];
 
-const AdvancedSearchPage: React.FC = () => {
+const AdvancedSearchPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [releaseYearRange, setReleaseYearRange] = useState({ min: 1900, max: 2030 });
   const [genre, setGenre] = useState('');

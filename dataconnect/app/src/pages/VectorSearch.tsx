@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { searchMovieDescriptionUsingL2similarity, SearchMovieDescriptionUsingL2similarityResponse } from '@/lib/dataconnect-sdk';
 import { FaSpinner } from 'react-icons/fa';
 
-const VectorSearchPage: React.FC = () => {
+const VectorSearchPage = () => {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<SearchMovieDescriptionUsingL2similarityResponse['movies_descriptionEmbedding_similarity']>([]);

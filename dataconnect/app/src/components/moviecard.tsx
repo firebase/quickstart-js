@@ -14,7 +14,16 @@ interface MovieCardProps {
   tags?: string[] | null;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genre, tags }) => {
+const MovieCard = (
+  {
+    id,
+    title,
+    imageUrl,
+    rating,
+    genre,
+    tags
+  }: MovieCardProps
+) => {
   const [user, setUser] = useState<User | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
   const auth = useContext(AuthContext);

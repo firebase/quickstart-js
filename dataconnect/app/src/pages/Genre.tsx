@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import MovieCard from '@/components/moviecard';
 import { ListMoviesByGenreResponse, listMoviesByGenre } from '@/lib/dataconnect-sdk';
 
-const GenrePage: React.FC = () => {
+const GenrePage = () => {
   const { genre } = useParams<{ genre: string }>();
   const [mostPopular, setMostPopular] = useState<ListMoviesByGenreResponse['mostPopular']>([]);
   const [mostRecent, setMostRecent] = useState<ListMoviesByGenreResponse['mostRecent']>([]);

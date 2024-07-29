@@ -13,7 +13,12 @@ interface CarouselProps {
   }[];
 }
 
-const Carousel: React.FC<CarouselProps> = ({ title, movies }) => {
+const Carousel = (
+  {
+    title,
+    movies
+  }: CarouselProps
+) => {
   return (
     <section className="carousel py-8">
       <h2 className="text-gray-200 text-2xl font-bold mb-4">{title}</h2>

@@ -12,7 +12,7 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import NotFound from './NotFound';
 
-const ActorPage: React.FC = () => {
+const ActorPage = () => {
   const { id } = useParams<{ id: string }>();
   const actorId = id || '';
   const [actor, setActor] = useState<GetActorByIdResponse['actor'] | null>(null);

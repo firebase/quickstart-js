@@ -11,7 +11,7 @@ import {
 import { MdStar } from 'react-icons/md';
 import { AuthContext } from '@/lib/firebase';
 
-const MyProfilePage: React.FC = () => {
+const MyProfilePage = () => {
   const navigate = useNavigate();
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [user, setUser] = useState<GetCurrentUserResponse['user'] | null>(null);

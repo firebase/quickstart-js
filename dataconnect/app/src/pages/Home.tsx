@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Carousel from '@/components/carousel';
 import { listMovies, ListMoviesResponse } from '@/lib/dataconnect-sdk';
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   const [topMovies, setTopMovies] = useState<ListMoviesResponse["movies"]>([]);
   const [latestMovies, setLatestMovies] = useState<ListMoviesResponse["movies"]>([]);
 
