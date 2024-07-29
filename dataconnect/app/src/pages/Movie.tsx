@@ -48,6 +48,14 @@ export default function MoviePage() {
   }, [id, auth]);
 
   useEffect(() => {
+    async function fetchSimilarMovies(description: string) {
+      try {
+        const response = await searchMovieDescriptionUsingL2similarity({ query: description });
+        setSimilarMovies(response?.data?.movies_descriptionEmbedding_similarity);
+      } catch (error) {
+        console.error('Error fetching similar movies:', error);
+      }
+    }
     if (id) {
       const fetchMovie = async () => {
         try {
@@ -66,15 +74,6 @@ export default function MoviePage() {
       fetchMovie();
     }
   }, [id, authUser]);
-
-  async function fetchSimilarMovies(description: string) {
-    try {
-      const response = await searchMovieDescriptionUsingL2similarity({ query: description });
-      setSimilarMovies(response?.data?.movies_descriptionEmbedding_similarity);
-    } catch (error) {
-      console.error('Error fetching similar movies:', error);
-    }
-  }
 
   async function handleFavoriteToggle(e: React.MouseEvent) {
     e.stopPropagation();

@@ -278,7 +278,7 @@ query GetIfFavoritedActor($actorId: UUID!) @auth(level: USER) {
 }
 
 # Search for movies, actors, and reviews
-query searchAll(
+query SearchAll(
   $input: String
   $minYear: Int!
   $maxYear: Int!
@@ -343,41 +343,22 @@ query searchAll(
   }
 }
 
-# Search movie descriptions using L2 similarity with Vertex AI
-query searchMovieDescriptionUsingL2Similarity($query: String!)
-@auth(level: PUBLIC) {
-  movies_descriptionEmbedding_similarity(
-    compare_embed: { model: "textembedding-gecko@003", text: $query }
-    method: L2
-    within: 2
-    where: { isNull: false }
-    limit: 5
-  ) {
-    id
-    title
-    description
-    tags
-    rating
-    imageUrl
-  }
-}
+# # Search movie descriptions using L2 similarity with Vertex AI
+# query SearchMovieDescriptionUsingL2Similarity($query: String!)
+# @auth(level: PUBLIC) {
+#   movies_descriptionEmbedding_similarity(
+#     compare_embed: { model: "textembedding-gecko@003", text: $query }
+#     method: L2
+#     within: 2
+#     where: { isNull: false }
+#     limit: 5
+#   ) {
+#     id
+#     title
+#     description
+#     tags
+#     rating
+#     imageUrl
+#   }
+# }
 
-# Search movie descriptions using L2 similarity with Vertex AI, with custom embeddings
-query searchMovieDescriptionUsingL2Similarity1(
-  $compare: Vector!
-  $within: Float
-  $excludesContent: String
-  $limit: Int
-) @auth(level: PUBLIC) {
-  movies_descriptionEmbedding_similarity(
-    compare: $compare
-    method: L2
-    within: $within
-    where: { description: { ne: $excludesContent } }
-    limit: $limit
-  ) {
-    id
-    title
-    description
-  }
-}

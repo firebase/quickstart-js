@@ -1,5 +1,5 @@
 # Create a movie based on user input
-mutation createMovie(
+mutation CreateMovie(
   $title: String!
   $releaseYear: Int!
   $genre: String!
@@ -22,7 +22,7 @@ mutation createMovie(
 }
 
 # Update movie information based on the provided ID
-mutation updateMovie(
+mutation UpdateMovie(
   $id: UUID!
   $title: String
   $releaseYear: Int
@@ -47,37 +47,37 @@ mutation updateMovie(
 }
 
 # Delete a movie by its ID
-mutation deleteMovie($id: UUID!) @auth(level: USER_EMAIL_VERIFIED) {
+mutation DeleteMovie($id: UUID!) @auth(level: USER_EMAIL_VERIFIED) {
   movie_delete(id: $id)
 }
 
 # Delete movies with a rating lower than the specified minimum rating
-mutation deleteUnpopularMovies($minRating: Float!) @auth(level: USER_EMAIL_VERIFIED) {
+mutation DeleteUnpopularMovies($minRating: Float!) @auth(level: USER_EMAIL_VERIFIED) {
   movie_deleteMany(where: { rating: { le: $minRating } })
 }
 
 # Add a movie to the user's favorites list
-mutation addFavoritedMovie($movieId: UUID!) @auth(level: USER) {
+mutation AddFavoritedMovie($movieId: UUID!) @auth(level: USER) {
   favorite_movie_upsert(data: { userId_expr: "auth.uid", movieId: $movieId })
 }
 
 # Remove a movie from the user's favorites list
-mutation deleteFavoritedMovie($movieId: UUID!) @auth(level: USER) {
+mutation DeleteFavoritedMovie($movieId: UUID!) @auth(level: USER) {
   favorite_movie_delete(key: { userId_expr: "auth.uid", movieId: $movieId })
 }
 
 # Add an actor to the user's favorites list
-mutation addFavoritedActor($actorId: UUID!) @auth(level: USER) {
+mutation AddFavoritedActor($actorId: UUID!) @auth(level: USER) {
   favorite_actor_upsert(data: { userId_expr: "auth.uid", actorId: $actorId })
 }
 
 # Remove an actor from the user's favorites list
-mutation deleteFavoriteActor($actorId: UUID!) @auth(level: USER) {
+mutation DeleteFavoritedActor($actorId: UUID!) @auth(level: USER) {
   favorite_actor_delete(key: { userId_expr: "auth.uid", actorId: $actorId })
 }
 
 # Add a review for a movie
-mutation addReview(
+mutation AddReview(
   $movieId: UUID!
   $rating: Int!
   $reviewText: String!
@@ -94,14 +94,14 @@ mutation addReview(
 }
 
 # Delete a user's review for a movie
-mutation deleteReview(
+mutation DeleteReview(
   $movieId: UUID!
 ) @auth(level: USER) {
   review_delete(key: { userId_expr: "auth.uid", movieId: $movieId })
 }
 
 # Upsert (update or insert) a user based on their username
-mutation upsertUser($username: String!) @auth(level: USER) {
+mutation UpsertUser($username: String!) @auth(level: USER) {
   user_upsert(
     data: {
       id_expr: "auth.uid"
