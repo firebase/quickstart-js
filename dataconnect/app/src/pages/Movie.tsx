@@ -30,6 +30,14 @@ export default function MoviePage() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      async function checkIfFavorited() {
+        try {
+          const response = await getIfFavoritedMovie({ movieId: id });
+          setIsFavorited(!!response.data.favorite_movie);
+        } catch (error) {
+          console.error('Error checking if favorited:', error);
+        }
+      }
       if (user) {
         setAuthUser(user);
         checkIfFavorited();
@@ -37,7 +45,7 @@ export default function MoviePage() {
     });
 
     return () => unsubscribe();
-  }, [id]);
+  }, [id, auth]);
 
   useEffect(() => {
     if (id) {
@@ -65,15 +73,6 @@ export default function MoviePage() {
       setSimilarMovies(response?.data?.movies_descriptionEmbedding_similarity);
     } catch (error) {
       console.error('Error fetching similar movies:', error);
-    }
-  }
-
-  async function checkIfFavorited() {
-    try {
-      const response = await getIfFavoritedMovie({ movieId: id });
-      setIsFavorited(!!response.data.favorite_movie);
-    } catch (error) {
-      console.error('Error checking if favorited:', error);
     }
   }
 

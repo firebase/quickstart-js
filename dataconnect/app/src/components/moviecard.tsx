@@ -29,6 +29,14 @@ export default function MovieCard({
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      async function checkIfFavorited() {
+        try {
+          const response = await getIfFavoritedMovie({ movieId: id });
+          setIsFavorited(!!response.data.favorite_movie);
+        } catch (error) {
+          console.error('Error checking if favorited:', error);
+        }
+      }
       if (user) {
         setUser(user);
         checkIfFavorited();
@@ -38,14 +46,6 @@ export default function MovieCard({
     return () => unsubscribe();
   }, [auth, id]);
 
-  async function checkIfFavorited() {
-    try {
-      const response = await getIfFavoritedMovie({ movieId: id });
-      setIsFavorited(!!response.data.favorite_movie);
-    } catch (error) {
-      console.error('Error checking if favorited:', error);
-    }
-  }
 
   async function handleFavoriteToggle(e: React.MouseEvent) {
     e.stopPropagation();

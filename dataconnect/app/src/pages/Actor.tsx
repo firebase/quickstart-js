@@ -24,6 +24,14 @@ export default function ActorPage() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      async function checkIfFavorited() {
+        try {
+          const response = await getIfFavoritedActor({ actorId });
+          setIsFavorited(!!response.data.favorite_actor);
+        } catch (error) {
+          console.error('Error checking if favorited:', error);
+        }
+      }
       if (user) {
         setAuthUser(user);
         checkIfFavorited();
@@ -54,15 +62,6 @@ export default function ActorPage() {
       fetchActor();
     }
   }, [actorId, navigate]);
-
-  async function checkIfFavorited() {
-    try {
-      const response = await getIfFavoritedActor({ actorId });
-      setIsFavorited(!!response.data.favorite_actor);
-    } catch (error) {
-      console.error('Error checking if favorited:', error);
-    }
-  }
 
   async function handleFavoriteToggle() {
     if (!authUser) return;
