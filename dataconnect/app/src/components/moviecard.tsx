@@ -14,16 +14,14 @@ interface MovieCardProps {
   tags?: string[] | null;
 }
 
-const MovieCard = (
-  {
-    id,
-    title,
-    imageUrl,
-    rating,
-    genre,
-    tags
-  }: MovieCardProps
-) => {
+export default function MovieCard({
+  id,
+  title,
+  imageUrl,
+  rating,
+  genre,
+  tags
+}: MovieCardProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
   const auth = useContext(AuthContext);
@@ -40,16 +38,16 @@ const MovieCard = (
     return () => unsubscribe();
   }, [auth, id]);
 
-  const checkIfFavorited = async () => {
+  async function checkIfFavorited() {
     try {
       const response = await getIfFavoritedMovie({ movieId: id });
       setIsFavorited(!!response.data.favorite_movie);
     } catch (error) {
       console.error('Error checking if favorited:', error);
     }
-  };
+  }
 
-  const handleFavoriteToggle = async (e: React.MouseEvent) => {
+  async function handleFavoriteToggle(e: React.MouseEvent) {
     e.stopPropagation();
     e.preventDefault();
     if (!user) return;
@@ -63,13 +61,15 @@ const MovieCard = (
     } catch (error) {
       console.error('Error updating favorite status:', error);
     }
-  };
+  }
 
-  const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+  function capitalize(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
-  const handleCardClick = () => {
+  function handleCardClick() {
     navigate(`/movie/${id}`);
-  };
+  }
 
   return (
     <div
@@ -111,6 +111,4 @@ const MovieCard = (
       </div>
     </div>
   );
-};
-
-export default MovieCard;
+}

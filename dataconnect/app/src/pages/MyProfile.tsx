@@ -11,7 +11,7 @@ import {
 import { MdStar } from 'react-icons/md';
 import { AuthContext } from '@/lib/firebase';
 
-const MyProfilePage = () => {
+export default function MyProfilePage() {
   const navigate = useNavigate();
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [user, setUser] = useState<GetCurrentUserResponse['user'] | null>(null);
@@ -31,7 +31,7 @@ const MyProfilePage = () => {
     return () => unsubscribe();
   }, [navigate, auth]);
 
-  const fetchUserProfile = async () => {
+  async function fetchUserProfile() {
     try {
       const response = await getCurrentUser();
       setUser(response.data.user);
@@ -40,9 +40,9 @@ const MyProfilePage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
-  const handleDeleteReview = async (reviewId: string) => {
+  async function handleDeleteReview(reviewId: string) {
     if (!authUser) return;
     try {
       await deleteReview({ movieId: reviewId });
@@ -50,9 +50,9 @@ const MyProfilePage = () => {
     } catch (error) {
       console.error('Error deleting review:', error);
     }
-  };
+  }
 
-  const handleUnfavoriteMovie = async (movieId: string) => {
+  async function handleUnfavoriteMovie(movieId: string) {
     if (!authUser) return;
     try {
       await deleteFavoritedMovie({ movieId });
@@ -60,9 +60,9 @@ const MyProfilePage = () => {
     } catch (error) {
       console.error('Error unfavoriting movie:', error);
     }
-  };
+  }
 
-  const handleUnfavoriteActor = async (actorId: string) => {
+  async function handleUnfavoriteActor(actorId: string) {
     if (!authUser) return;
     try {
       await deleteFavoriteActor({ actorId });
@@ -70,7 +70,7 @@ const MyProfilePage = () => {
     } catch (error) {
       console.error('Error unfavoriting actor:', error);
     }
-  };
+  }
 
   if (loading) return <p>Loading...</p>;
   if (!user) return <p>User not found.</p>;
@@ -160,6 +160,4 @@ const MyProfilePage = () => {
       </div>
     </div>
   );
-};
-
-export default MyProfilePage;
+}

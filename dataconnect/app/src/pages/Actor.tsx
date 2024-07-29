@@ -12,7 +12,7 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import NotFound from './NotFound';
 
-const ActorPage = () => {
+export default function ActorPage() {
   const { id } = useParams<{ id: string }>();
   const actorId = id || '';
   const [actor, setActor] = useState<GetActorByIdResponse['actor'] | null>(null);
@@ -55,16 +55,16 @@ const ActorPage = () => {
     }
   }, [actorId, navigate]);
 
-  const checkIfFavorited = async () => {
+  async function checkIfFavorited() {
     try {
       const response = await getIfFavoritedActor({ actorId });
       setIsFavorited(!!response.data.favorite_actor);
     } catch (error) {
       console.error('Error checking if favorited:', error);
     }
-  };
+  }
 
-  const handleFavoriteToggle = async () => {
+  async function handleFavoriteToggle() {
     if (!authUser) return;
     try {
       if (isFavorited) {
@@ -76,7 +76,7 @@ const ActorPage = () => {
     } catch (error) {
       console.error('Error updating favorite status:', error);
     }
-  };
+  }
 
   if (loading) return <p>Loading...</p>;
 
@@ -145,6 +145,4 @@ const ActorPage = () => {
   ) : (
     <NotFound />
   );
-};
-
-export default ActorPage;
+}

@@ -6,7 +6,7 @@ import { upsertUser } from '@/lib/dataconnect-sdk';
 import { FaSearch } from 'react-icons/fa';
 import firebaseLogo from '@/assets/firebase_logo.svg';
 
-const Navbar = () => {
+export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
   const auth = useContext(AuthContext);
 
@@ -23,14 +23,14 @@ const Navbar = () => {
     return () => unsubscribe();
   }, [auth]);
 
-  const handleSignIn = async () => {
+  async function handleSignIn() {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
-  };
+  }
 
-  const handleSignOut = async () => {
+  async function handleSignOut() {
     await signOut(auth);
-  };
+  }
 
   return (
     <nav className="bg-black p-4">
@@ -89,6 +89,4 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

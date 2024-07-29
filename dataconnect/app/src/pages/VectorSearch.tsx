@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { searchMovieDescriptionUsingL2similarity, SearchMovieDescriptionUsingL2similarityResponse } from '@/lib/dataconnect-sdk';
 import { FaSpinner } from 'react-icons/fa';
 
-const VectorSearchPage = () => {
+export default function VectorSearchPage() {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<SearchMovieDescriptionUsingL2similarityResponse['movies_descriptionEmbedding_similarity']>([]);
 
-  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     try {
@@ -18,7 +18,7 @@ const VectorSearchPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <div className="container mx-auto p-4 bg-gray-900 min-h-screen text-white">
@@ -75,6 +75,4 @@ const VectorSearchPage = () => {
       )}
     </div>
   );
-};
-
-export default VectorSearchPage;
+}

@@ -3,14 +3,14 @@ import { useParams } from 'react-router-dom';
 import MovieCard from '@/components/moviecard';
 import { ListMoviesByGenreResponse, listMoviesByGenre } from '@/lib/dataconnect-sdk';
 
-const GenrePage = () => {
+export default function GenrePage() {
   const { genre } = useParams<{ genre: string }>();
   const [mostPopular, setMostPopular] = useState<ListMoviesByGenreResponse['mostPopular']>([]);
   const [mostRecent, setMostRecent] = useState<ListMoviesByGenreResponse['mostRecent']>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    async function fetchMovies() {
       try {
         const response = await listMoviesByGenre({ genre });
         setMostPopular(response.data.mostPopular);
@@ -20,7 +20,7 @@ const GenrePage = () => {
       } finally {
         setLoading(false);
       }
-    };
+    }
 
     fetchMovies();
   }, [genre]);
@@ -64,6 +64,4 @@ const GenrePage = () => {
       </section>
     </div>
   );
-};
-
-export default GenrePage;
+}

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Carousel from '@/components/carousel';
 import { listMovies, ListMoviesResponse } from '@/lib/dataconnect-sdk';
 
-const HomePage = () => {
+export default function HomePage() {
   const [topMovies, setTopMovies] = useState<ListMoviesResponse["movies"]>([]);
   const [latestMovies, setLatestMovies] = useState<ListMoviesResponse["movies"]>([]);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    async function fetchMovies() {
       try {
         const topMoviesResponse = await listMovies({ orderByRating: "DESC", limit: 10 });
         const latestMoviesResponse = await listMovies({ orderByReleaseYear: "DESC", limit: 10 });
@@ -17,7 +17,7 @@ const HomePage = () => {
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
-    };
+    }
 
     fetchMovies();
   }, []);
@@ -28,6 +28,4 @@ const HomePage = () => {
       <Carousel title="Latest Movies" movies={latestMovies} />
     </div>
   );
-};
-
-export default HomePage;
+}

@@ -13,12 +13,7 @@ interface CarouselProps {
   }[];
 }
 
-const Carousel = (
-  {
-    title,
-    movies
-  }: CarouselProps
-) => {
+export default function Carousel({ title, movies }: CarouselProps) {
   return (
     <section className="carousel py-8">
       <h2 className="text-gray-200 text-2xl font-bold mb-4">{title}</h2>
@@ -38,6 +33,4 @@ const Carousel = (
       </div>
     </section>
   );
-};
-
-export default Carousel;
+}
