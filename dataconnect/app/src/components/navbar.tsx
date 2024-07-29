@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import { Link } from 'react-router-dom';
-import { upsertUser } from '@/lib/dataconnect-sdk';
+import { upsertUser } from '@movie/dataconnect';
 import { FaSearch } from 'react-icons/fa';
 import firebaseLogo from '@/assets/firebase_logo.svg';
 

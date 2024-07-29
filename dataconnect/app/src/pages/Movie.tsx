@@ -11,7 +11,7 @@ import {
   deleteReview,
   searchMovieDescriptionUsingL2similarity,
   SearchMovieDescriptionUsingL2similarityResponse,
-} from '@/lib/dataconnect-sdk';
+} from '@movie/dataconnect';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import NotFound from './NotFound';

@@ -2,5 +2,6 @@ connectorId: movie-connector
 authMode: PUBLIC
 generate:
   javascriptSdk:
-    package: "@movie/sdk"
+    package: "@movie/dataconnect"
     outputDir: ../../app/src/lib/dataconnect-sdk
+    packageJsonDir: "../../app"

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { MdStar } from 'react-icons/md';
-import { searchAll } from '@/lib/dataconnect-sdk';
+import { searchAll } from '@movie/dataconnect';
 
 const genres = ['', 'action', 'crime', 'drama', 'sci-fi', 'thriller', 'adventure'];
 

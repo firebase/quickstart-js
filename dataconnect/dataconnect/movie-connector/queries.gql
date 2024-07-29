@@ -350,7 +350,6 @@ query SearchMovieDescriptionUsingL2Similarity($query: String!)
     compare_embed: { model: "textembedding-gecko@003", text: $query }
     method: L2
     within: 2
-    where: { isNull: false }
     limit: 5
   ) {
     id

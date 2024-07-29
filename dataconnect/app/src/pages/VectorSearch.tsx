@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { searchMovieDescriptionUsingL2similarity, SearchMovieDescriptionUsingL2similarityResponse } from '@/lib/dataconnect-sdk';
+import { searchMovieDescriptionUsingL2similarity, SearchMovieDescriptionUsingL2similarityResponse } from '@movie/dataconnect';
 import { FaSpinner } from 'react-icons/fa';
 
 export default function VectorSearchPage() {

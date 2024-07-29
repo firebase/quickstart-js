@@ -7,7 +7,7 @@ import {
   deleteReview,
   deleteFavoritedMovie,
   deleteFavoritedActor,
-} from '@/lib/dataconnect-sdk';
+} from '@movie/dataconnect';
 import { MdStar } from 'react-icons/md';
 import { AuthContext } from '@/lib/firebase';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Carousel from '@/components/carousel';
-import { listMovies, ListMoviesResponse } from '@/lib/dataconnect-sdk';
+import { listMovies, ListMoviesResponse } from '@movie/dataconnect';
 
 export default function HomePage() {
   const [topMovies, setTopMovies] = useState<ListMoviesResponse["movies"]>([]);

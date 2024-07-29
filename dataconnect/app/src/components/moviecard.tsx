@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MdFavorite, MdFavoriteBorder, MdStar } from 'react-icons/md';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { addFavoritedMovie, deleteFavoritedMovie, getIfFavoritedMovie } from '@/lib/dataconnect-sdk';
+import { addFavoritedMovie, deleteFavoritedMovie, getIfFavoritedMovie } from '@movie/dataconnect';
 import { AuthContext } from '@/lib/firebase';
 
 interface MovieCardProps {

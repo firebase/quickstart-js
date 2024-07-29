@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MovieCard from '@/components/moviecard';
-import { ListMoviesByGenreResponse, listMoviesByGenre } from '@/lib/dataconnect-sdk';
+import { ListMoviesByGenreResponse, listMoviesByGenre } from '@movie/dataconnect';
 
 export default function GenrePage() {
   const { genre } = useParams<{ genre: string }>();

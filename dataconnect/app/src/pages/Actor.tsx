@@ -7,7 +7,7 @@ import {
   addFavoritedActor,
   deleteFavoritedActor,
   getIfFavoritedActor
-} from '@/lib/dataconnect-sdk';
+} from '@movie/dataconnect';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import NotFound from './NotFound';
