@@ -343,22 +343,22 @@ query SearchAll(
   }
 }
 
-# # Search movie descriptions using L2 similarity with Vertex AI
-# query SearchMovieDescriptionUsingL2Similarity($query: String!)
-# @auth(level: PUBLIC) {
-#   movies_descriptionEmbedding_similarity(
-#     compare_embed: { model: "textembedding-gecko@003", text: $query }
-#     method: L2
-#     within: 2
-#     where: { isNull: false }
-#     limit: 5
-#   ) {
-#     id
-#     title
-#     description
-#     tags
-#     rating
-#     imageUrl
-#   }
-# }
+# Search movie descriptions using L2 similarity with Vertex AI
+query SearchMovieDescriptionUsingL2Similarity($query: String!)
+@auth(level: PUBLIC) {
+  movies_descriptionEmbedding_similarity(
+    compare_embed: { model: "textembedding-gecko@003", text: $query }
+    method: L2
+    within: 2
+    where: { isNull: false }
+    limit: 5
+  ) {
+    id
+    title
+    description
+    tags
+    rating
+    imageUrl
+  }
+}
 

@@ -5,7 +5,7 @@ import {
   getActorById,
   GetActorByIdResponse,
   addFavoritedActor,
-  deleteFavoriteActor,
+  deleteFavoritedActor,
   getIfFavoritedActor
 } from '@/lib/dataconnect-sdk';
 import { onAuthStateChanged, User } from 'firebase/auth';
@@ -67,7 +67,7 @@ export default function ActorPage() {
     if (!authUser) return;
     try {
       if (isFavorited) {
-        await deleteFavoriteActor({ actorId });
+        await deleteFavoritedActor({ actorId });
       } else {
         await addFavoritedActor({ actorId });
       }

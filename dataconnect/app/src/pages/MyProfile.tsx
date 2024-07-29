@@ -6,7 +6,7 @@ import {
   GetCurrentUserResponse,
   deleteReview,
   deleteFavoritedMovie,
-  deleteFavoriteActor,
+  deleteFavoritedActor,
 } from '@/lib/dataconnect-sdk';
 import { MdStar } from 'react-icons/md';
 import { AuthContext } from '@/lib/firebase';
@@ -65,7 +65,7 @@ export default function MyProfilePage() {
   async function handleUnfavoriteActor(actorId: string) {
     if (!authUser) return;
     try {
-      await deleteFavoriteActor({ actorId });
+      await deleteFavoritedActor({ actorId });
       fetchUserProfile();
     } catch (error) {
       console.error('Error unfavoriting actor:', error);
