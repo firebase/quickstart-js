@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MdFavorite, MdFavoriteBorder, MdStar } from 'react-icons/md';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { addFavoritedMovie, deleteFavoritedMovie, getIfFavoritedMovie } from '@/lib/dataconnect-sdk';
+import { addFavoritedMovie, deleteFavoritedMovie, getIfFavoritedMovie } from '@movie/dataconnect';
 import { AuthContext } from '@/lib/firebase';
 
 interface MovieCardProps {
@@ -14,7 +14,14 @@ interface MovieCardProps {
   tags?: string[] | null;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genre, tags }) => {
+export default function MovieCard({
+  id,
+  title,
+  imageUrl,
+  rating,
+  genre,
+  tags
+}: MovieCardProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
   const auth = useContext(AuthContext);
@@ -22,6 +29,14 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genr
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      async function checkIfFavorited() {
+        try {
+          const response = await getIfFavoritedMovie({ movieId: id });
+          setIsFavorited(!!response.data.favorite_movie);
+        } catch (error) {
+          console.error('Error checking if favorited:', error);
+        }
+      }
       if (user) {
         setUser(user);
         checkIfFavorited();
@@ -31,16 +46,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genr
     return () => unsubscribe();
   }, [auth, id]);
 
-  const checkIfFavorited = async () => {
-    try {
-      const response = await getIfFavoritedMovie({ movieId: id });
-      setIsFavorited(!!response.data.favorite_movie);
-    } catch (error) {
-      console.error('Error checking if favorited:', error);
-    }
-  };
 
-  const handleFavoriteToggle = async (e: React.MouseEvent) => {
+  async function handleFavoriteToggle(e: React.MouseEvent) {
     e.stopPropagation();
     e.preventDefault();
     if (!user) return;
@@ -54,13 +61,15 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genr
     } catch (error) {
       console.error('Error updating favorite status:', error);
     }
-  };
+  }
 
-  const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+  function capitalize(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
-  const handleCardClick = () => {
+  function handleCardClick() {
     navigate(`/movie/${id}`);
-  };
+  }
 
   return (
     <div
@@ -102,6 +111,4 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genr
       </div>
     </div>
   );
-};
-
-export default MovieCard;
+}

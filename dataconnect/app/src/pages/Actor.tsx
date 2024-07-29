@@ -5,14 +5,14 @@ import {
   getActorById,
   GetActorByIdResponse,
   addFavoritedActor,
-  deleteFavoriteActor,
+  deleteFavoritedActor,
   getIfFavoritedActor
-} from '@/lib/dataconnect-sdk';
+} from '@movie/dataconnect';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import NotFound from './NotFound';
 
-const ActorPage: React.FC = () => {
+export default function ActorPage() {
   const { id } = useParams<{ id: string }>();
   const actorId = id || '';
   const [actor, setActor] = useState<GetActorByIdResponse['actor'] | null>(null);
@@ -24,6 +24,14 @@ const ActorPage: React.FC = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      async function checkIfFavorited() {
+        try {
+          const response = await getIfFavoritedActor({ actorId });
+          setIsFavorited(!!response.data.favorite_actor);
+        } catch (error) {
+          console.error('Error checking if favorited:', error);
+        }
+      }
       if (user) {
         setAuthUser(user);
         checkIfFavorited();
@@ -55,20 +63,11 @@ const ActorPage: React.FC = () => {
     }
   }, [actorId, navigate]);
 
-  const checkIfFavorited = async () => {
-    try {
-      const response = await getIfFavoritedActor({ actorId });
-      setIsFavorited(!!response.data.favorite_actor);
-    } catch (error) {
-      console.error('Error checking if favorited:', error);
-    }
-  };
-
-  const handleFavoriteToggle = async () => {
+  async function handleFavoriteToggle() {
     if (!authUser) return;
     try {
       if (isFavorited) {
-        await deleteFavoriteActor({ actorId });
+        await deleteFavoritedActor({ actorId });
       } else {
         await addFavoritedActor({ actorId });
       }
@@ -76,7 +75,7 @@ const ActorPage: React.FC = () => {
     } catch (error) {
       console.error('Error updating favorite status:', error);
     }
-  };
+  }
 
   if (loading) return <p>Loading...</p>;
 
@@ -145,6 +144,4 @@ const ActorPage: React.FC = () => {
   ) : (
     <NotFound />
   );
-};
-
-export default ActorPage;
+}

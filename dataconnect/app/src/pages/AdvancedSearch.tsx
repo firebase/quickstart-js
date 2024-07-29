@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { MdStar } from 'react-icons/md';
-import { searchAll } from '@/lib/dataconnect-sdk';
+import { searchAll } from '@movie/dataconnect';
 
 const genres = ['', 'action', 'crime', 'drama', 'sci-fi', 'thriller', 'adventure'];
 
-const AdvancedSearchPage: React.FC = () => {
+export default function AdvancedSearchPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [releaseYearRange, setReleaseYearRange] = useState({ min: 1900, max: 2030 });
   const [genre, setGenre] = useState('');
@@ -18,7 +18,7 @@ const AdvancedSearchPage: React.FC = () => {
     reviews: [],
   });
 
-  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       const response = await searchAll({
@@ -38,7 +38,7 @@ const AdvancedSearchPage: React.FC = () => {
     } catch (error) {
       console.error('Error fetching search results:', error);
     }
-  };
+  }
 
   return (
     <div className="container mx-auto p-4 bg-gray-900 min-h-screen text-white">
@@ -213,6 +213,4 @@ const AdvancedSearchPage: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default AdvancedSearchPage;
+}

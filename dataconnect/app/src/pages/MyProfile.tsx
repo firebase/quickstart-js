@@ -6,12 +6,12 @@ import {
   GetCurrentUserResponse,
   deleteReview,
   deleteFavoritedMovie,
-  deleteFavoriteActor,
-} from '@/lib/dataconnect-sdk';
+  deleteFavoritedActor,
+} from '@movie/dataconnect';
 import { MdStar } from 'react-icons/md';
 import { AuthContext } from '@/lib/firebase';
 
-const MyProfilePage: React.FC = () => {
+export default function MyProfilePage() {
   const navigate = useNavigate();
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [user, setUser] = useState<GetCurrentUserResponse['user'] | null>(null);
@@ -31,7 +31,7 @@ const MyProfilePage: React.FC = () => {
     return () => unsubscribe();
   }, [navigate, auth]);
 
-  const fetchUserProfile = async () => {
+  async function fetchUserProfile() {
     try {
       const response = await getCurrentUser();
       setUser(response.data.user);
@@ -40,9 +40,9 @@ const MyProfilePage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
-  const handleDeleteReview = async (reviewId: string) => {
+  async function handleDeleteReview(reviewId: string) {
     if (!authUser) return;
     try {
       await deleteReview({ movieId: reviewId });
@@ -50,9 +50,9 @@ const MyProfilePage: React.FC = () => {
     } catch (error) {
       console.error('Error deleting review:', error);
     }
-  };
+  }
 
-  const handleUnfavoriteMovie = async (movieId: string) => {
+  async function handleUnfavoriteMovie(movieId: string) {
     if (!authUser) return;
     try {
       await deleteFavoritedMovie({ movieId });
@@ -60,17 +60,17 @@ const MyProfilePage: React.FC = () => {
     } catch (error) {
       console.error('Error unfavoriting movie:', error);
     }
-  };
+  }
 
-  const handleUnfavoriteActor = async (actorId: string) => {
+  async function handleUnfavoriteActor(actorId: string) {
     if (!authUser) return;
     try {
-      await deleteFavoriteActor({ actorId });
+      await deleteFavoritedActor({ actorId });
       fetchUserProfile();
     } catch (error) {
       console.error('Error unfavoriting actor:', error);
     }
-  };
+  }
 
   if (loading) return <p>Loading...</p>;
   if (!user) return <p>User not found.</p>;
@@ -160,6 +160,4 @@ const MyProfilePage: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default MyProfilePage;
+}

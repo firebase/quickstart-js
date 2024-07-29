@@ -2,11 +2,11 @@ import React, { useEffect, useState, useContext } from 'react';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import { Link } from 'react-router-dom';
-import { upsertUser } from '@/lib/dataconnect-sdk';
+import { upsertUser } from '@movie/dataconnect';
 import { FaSearch } from 'react-icons/fa';
 import firebaseLogo from '@/assets/firebase_logo.svg';
 
-const Navbar: React.FC = () => {
+export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
   const auth = useContext(AuthContext);
 
@@ -23,14 +23,14 @@ const Navbar: React.FC = () => {
     return () => unsubscribe();
   }, [auth]);
 
-  const handleSignIn = async () => {
+  async function handleSignIn() {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
-  };
+  }
 
-  const handleSignOut = async () => {
+  async function handleSignOut() {
     await signOut(auth);
-  };
+  }
 
   return (
     <nav className="bg-black p-4">
@@ -89,6 +89,4 @@ const Navbar: React.FC = () => {
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

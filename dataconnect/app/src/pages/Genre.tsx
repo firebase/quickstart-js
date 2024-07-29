@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MovieCard from '@/components/moviecard';
-import { ListMoviesByGenreResponse, listMoviesByGenre } from '@/lib/dataconnect-sdk';
+import { ListMoviesByGenreResponse, listMoviesByGenre } from '@movie/dataconnect';
 
-const GenrePage: React.FC = () => {
+export default function GenrePage() {
   const { genre } = useParams<{ genre: string }>();
   const [mostPopular, setMostPopular] = useState<ListMoviesByGenreResponse['mostPopular']>([]);
   const [mostRecent, setMostRecent] = useState<ListMoviesByGenreResponse['mostRecent']>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    async function fetchMovies() {
       try {
         const response = await listMoviesByGenre({ genre });
         setMostPopular(response.data.mostPopular);
@@ -20,7 +20,7 @@ const GenrePage: React.FC = () => {
       } finally {
         setLoading(false);
       }
-    };
+    }
 
     fetchMovies();
   }, [genre]);
@@ -64,6 +64,4 @@ const GenrePage: React.FC = () => {
       </section>
     </div>
   );
-};
-
-export default GenrePage;
+}

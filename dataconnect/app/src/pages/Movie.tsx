@@ -1,4 +1,3 @@
-'use client';
 import { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MdFavorite, MdFavoriteBorder, MdStar } from 'react-icons/md';
@@ -12,12 +11,12 @@ import {
   deleteReview,
   searchMovieDescriptionUsingL2similarity,
   SearchMovieDescriptionUsingL2similarityResponse,
-} from '@/lib/dataconnect-sdk';
+} from '@movie/dataconnect';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import NotFound from './NotFound';
 
-const MoviePage = () => {
+export default function MoviePage() {
   const { id } = useParams() as { id: string };
   const [movie, setMovie] = useState<GetMovieByIdResponse['movie'] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -31,6 +30,14 @@ const MoviePage = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      async function checkIfFavorited() {
+        try {
+          const response = await getIfFavoritedMovie({ movieId: id });
+          setIsFavorited(!!response.data.favorite_movie);
+        } catch (error) {
+          console.error('Error checking if favorited:', error);
+        }
+      }
       if (user) {
         setAuthUser(user);
         checkIfFavorited();
@@ -38,9 +45,17 @@ const MoviePage = () => {
     });
 
     return () => unsubscribe();
-  }, [id]);
+  }, [id, auth]);
 
   useEffect(() => {
+    async function fetchSimilarMovies(description: string) {
+      try {
+        const response = await searchMovieDescriptionUsingL2similarity({ query: description });
+        setSimilarMovies(response?.data?.movies_descriptionEmbedding_similarity);
+      } catch (error) {
+        console.error('Error fetching similar movies:', error);
+      }
+    }
     if (id) {
       const fetchMovie = async () => {
         try {
@@ -60,25 +75,7 @@ const MoviePage = () => {
     }
   }, [id, authUser]);
 
-  const fetchSimilarMovies = async (description: string) => {
-    try {
-      const response = await searchMovieDescriptionUsingL2similarity({ query: description });
-      setSimilarMovies(response?.data?.movies_descriptionEmbedding_similarity);
-    } catch (error) {
-      console.error('Error fetching similar movies:', error);
-    }
-  };
-
-  const checkIfFavorited = async () => {
-    try {
-      const response = await getIfFavoritedMovie({ movieId: id });
-      setIsFavorited(!!response.data.favorite_movie);
-    } catch (error) {
-      console.error('Error checking if favorited:', error);
-    }
-  };
-
-  const handleFavoriteToggle = async (e: React.MouseEvent) => {
+  async function handleFavoriteToggle(e: React.MouseEvent) {
     e.stopPropagation();
     e.preventDefault();
     if (!authUser) return;
@@ -92,13 +89,13 @@ const MoviePage = () => {
     } catch (error) {
       console.error('Error updating favorite status:', error);
     }
-  };
+  }
 
-  const handleReviewSubmit = async (e: React.FormEvent) => {
+  async function handleReviewSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!authUser) return;
     try {
-        await addReview({ movieId: id, rating, reviewText });
+      await addReview({ movieId: id, rating, reviewText });
       setReviewText('');
       setRating(0);
       const updatedMovie = await getMovieById({ id });
@@ -106,9 +103,9 @@ const MoviePage = () => {
     } catch (error) {
       console.error('Error adding review:', error);
     }
-  };
+  }
 
-  const handleReviewDelete = async (e: React.MouseEvent) => {
+  async function handleReviewDelete(e: React.MouseEvent) {
     e.stopPropagation();
     e.preventDefault();
     if (!authUser || !userReview) return;
@@ -120,11 +117,13 @@ const MoviePage = () => {
     } catch (error) {
       console.error('Error deleting review:', error);
     }
-  };
+  }
+
   if (loading) return <p>Loading...</p>;
   if (!movie) return <NotFound />;
+
   return (
-  <div className="container mx-auto p-4 bg-gray-900 min-h-screen text-white">
+    <div className="container mx-auto p-4 bg-gray-900 min-h-screen text-white">
       <div className="flex flex-col md:flex-row mb-8">
         <img className="w-full md:w-1/3 object-cover rounded-lg shadow-md" src={movie.imageUrl} alt={movie.title} />
         <div className="md:ml-8 mt-4 md:mt-0 flex-1">
@@ -272,7 +271,6 @@ const MoviePage = () => {
           ))}
         </div>
       </div>
-    </div>);
-};
-
-export default MoviePage;
+    </div>
+  );
+}

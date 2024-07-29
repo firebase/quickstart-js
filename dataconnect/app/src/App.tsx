@@ -10,7 +10,7 @@ import AdvancedSearchPage from "./pages/AdvancedSearch";
 import NotFound from "./pages/NotFound";
 import RootLayout from "./layout/RootLayout";
 
-const App: React.FC = () => {
+export default function App() {
   return (
     <Router>
       <RootLayout>
@@ -27,6 +27,4 @@ const App: React.FC = () => {
       </RootLayout>
     </Router>
   );
-};
-
-export default App;
+}
