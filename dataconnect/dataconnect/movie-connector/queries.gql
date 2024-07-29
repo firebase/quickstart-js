@@ -107,6 +107,7 @@ query GetActorById($id: UUID!) @auth(level: PUBLIC) {
 }
 
 # List movies by partial title match
+# For example purposes only, not called in quickstart
 query ListMoviesByPartialTitle($input: String!) @auth(level: PUBLIC) {
   movies(where: { title: { contains: $input } }) {
     id
@@ -118,6 +119,7 @@ query ListMoviesByPartialTitle($input: String!) @auth(level: PUBLIC) {
 }
 
 # List movies by tag
+# For example purposes only, not called in quickstart
 query ListMoviesByTag($tag: String!) @auth(level: PUBLIC) {
   movies(where: { tags: { includes: $tag } }) {
     id
@@ -129,6 +131,7 @@ query ListMoviesByTag($tag: String!) @auth(level: PUBLIC) {
 }
 
 # List movies by release year range
+# For example purposes only, not called in quickstart
 query MoviesByReleaseYear($min: Int, $max: Int) @auth(level: PUBLIC) {
   movies(
     where: { releaseYear: { le: $max, ge: $min } }
@@ -142,6 +145,7 @@ query MoviesByReleaseYear($min: Int, $max: Int) @auth(level: PUBLIC) {
 }
 
 # List movies by rating and genre with OR filters
+# For example purposes only, not called in quickstart
 query SearchMovieOr(
   $minRating: Float
   $maxRating: Float
@@ -168,6 +172,7 @@ query SearchMovieOr(
 }
 
 # List movies by rating and genre with AND filters
+# For example purposes only, not called in quickstart
 query SearchMovieAnd(
   $minRating: Float
   $maxRating: Float
@@ -194,6 +199,7 @@ query SearchMovieAnd(
 }
 
 # Get favorite movies by user ID
+# For example purposes only, not called in quickstart
 query GetUserFavoriteMovies @auth(level: USER) {
   user(id_expr: "auth.uid") {
     favorite_movies_on_user {
@@ -211,6 +217,7 @@ query GetUserFavoriteMovies @auth(level: USER) {
 }
 
 # Get favorite actors by user ID
+# For example purposes only, not called in quickstart
 query GetFavoriteActors @auth(level: USER) {
   user(key: {id_expr: "auth.uid"}) {
     favorite_actors_on_user {

@@ -22,6 +22,7 @@ mutation CreateMovie(
 }
 
 # Update movie information based on the provided ID
+# For example purposes only, not called in quickstart
 mutation UpdateMovie(
   $id: UUID!
   $title: String
@@ -47,11 +48,13 @@ mutation UpdateMovie(
 }
 
 # Delete a movie by its ID
+# For example purposes only, not called in quickstart
 mutation DeleteMovie($id: UUID!) @auth(level: USER_EMAIL_VERIFIED) {
   movie_delete(id: $id)
 }
 
 # Delete movies with a rating lower than the specified minimum rating
+# For example purposes only, not called in quickstart
 mutation DeleteUnpopularMovies($minRating: Float!) @auth(level: USER_EMAIL_VERIFIED) {
   movie_deleteMany(where: { rating: { le: $minRating } })
 }
