@@ -3,4 +3,4 @@ authMode: PUBLIC
 generate:
   javascriptSdk:
     package: "@movie/sdk"
-    outputDir: ../../app/lib/dataconnect-sdk
+    outputDir: ../../app/src/lib/dataconnect-sdk
