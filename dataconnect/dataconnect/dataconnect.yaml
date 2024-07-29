@@ -1,0 +1,11 @@
+specVersion: "v1alpha"
+serviceId: "fdc-quickstart-web"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdc-quickstart-web"
+      cloudSql:
+        instanceId: "fdc-quickstart-web"
+connectorDirs: ["./movie-connector"]

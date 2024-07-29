@@ -1,0 +1,104 @@
+mutation {
+  actor_insertMany(data: [
+    {
+      id: "123e4567-e89b-12d3-a456-426614174000",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fdicaprio.jpeg?alt=media&token=452e030a-efa5-4ef4-bb81-502b23241316",
+      name: "Leonardo DiCaprio"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174001",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fkeanu.jpg?alt=media&token=6056520c-ef3e-4823-aad0-108aab163115",
+      name: "Keanu Reeves"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174002",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fmcconaoghey.jpg?alt=media&token=d340ca18-ef51-44ac-a160-08e45b242cd7",
+      name: "Matthew McConaughey"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174003",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fbale.jpg?alt=media&token=666f1690-a550-458f-a1cf-9505b7d1af7d",
+      name: "Christian Bale"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174004",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fpitt.jpeg?alt=media&token=3a5283d4-f85c-4ba7-be72-51bc87ca4133",
+      name: "Brad Pitt"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174005",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fjackson.jpg?alt=media&token=07be0601-19fe-4b5d-b111-84fa71f32139",
+      name: "Samuel L. Jackson"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174006",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fmortensen.jpeg?alt=media&token=e3d1ec99-b8e7-42e9-9d1c-03f56f61ecf7",
+      name: "Viggo Mortensen"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174007",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Ffreeman.jpg?alt=media&token=94bc6227-119e-4ab0-b350-55fac7aeb062",
+      name: "Morgan Freeman"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174008",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fhanks.jpeg?alt=media&token=d92979ce-da62-4b28-afbe-b8740bbb9d32",
+      name: "Tom Hanks"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174009",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fpacino.jpg?alt=media&token=9c0c54b1-6913-48b5-8e5e-d6551dd2f182",
+      name: "Al Pacino"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174010",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Ffoster.jpg?alt=media&token=b429734c-0f2d-4840-b75b-6857eac7bb4f",
+      name: "Jodie Foster"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174011",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fcruise.jpg?alt=media&token=d34b0326-a8d1-4f01-86e5-f3f094594e5a",
+      name: "Tom Cruise"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174012",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fdowney.jpg?alt=media&token=dd291c96-6ef0-42fc-841c-902c80748b37",
+      name: "Robert Downey Jr."
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174013",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fcrowe.jpg?alt=media&token=46d413d5-ace8-404e-b018-8d7e6fe0d362",
+      name: "Russell Crowe"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174014",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fwinslet.jpg?alt=media&token=b675585e-356e-4361-a041-5ac1a6ee5922",
+      name: "Kate Winslet"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174015",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fweaver.jpeg?alt=media&token=263b5c3d-e0ee-43c3-854d-9b236c6df391",
+      name: "Sigourney Weaver"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174016",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fgoldblume.jpeg?alt=media&token=18277dd1-166c-4934-a02e-19ef141c86e2",
+      name: "Jeff Goldblum"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174017",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fjones.jpg?alt=media&token=f7ac9bc4-6e26-4b25-9a73-7a90f699424e",
+      name: "James Earl Jones"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174018",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fford.jpg?alt=media&token=928434c0-d492-4c8e-bdf0-0db585008d87",
+      name: "Harrison Ford"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174019",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-quickstart-web.appspot.com/o/actors%2Fschwarzenegger.jpeg?alt=media&token=c46fb249-41ef-4084-b4ad-9517bee6ab46",
+      name: "Arnold Schwarzenegger"
+    }
+  ])
+}

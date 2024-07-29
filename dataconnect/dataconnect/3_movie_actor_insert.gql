@@ -1,0 +1,238 @@
+mutation {
+  movieMetadata_insertMany(data: [
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440000",
+      director: "Christopher Nolan"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440001",
+      director: "Lana Wachowski, Lilly Wachowski"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440002",
+      director: "Chad Stahelski"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440003",
+      director: "Christopher Nolan"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440004",
+      director: "David Fincher"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440005",
+      director: "Quentin Tarantino"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440006",
+      director: "Peter Jackson"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440007",
+      director: "Frank Darabont"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440008",
+      director: "Robert Zemeckis"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440009",
+      director: "Francis Ford Coppola"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440010",
+      director: "Jonathan Demme"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440011",
+      director: "Steven Spielberg"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440012",
+      director: "Joss Whedon"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440013",
+      director: "Ridley Scott"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440014",
+      director: "James Cameron"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440015",
+      director: "James Cameron"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440016",
+      director: "Steven Spielberg"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440017",
+      director: "Roger Allers, Rob Minkoff"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440018",
+      director: "George Lucas"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440019",
+      director: "Ridley Scott"
+    }
+  ])
+
+  movieActor_insertMany(data: [
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440000",
+      actorId: "123e4567-e89b-12d3-a456-426614174000",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440001",
+      actorId: "123e4567-e89b-12d3-a456-426614174001",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440002",
+      actorId: "123e4567-e89b-12d3-a456-426614174001",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440003",
+      actorId: "123e4567-e89b-12d3-a456-426614174003",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440004",
+      actorId: "123e4567-e89b-12d3-a456-426614174004",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440005",
+      actorId: "123e4567-e89b-12d3-a456-426614174005",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440006",
+      actorId: "123e4567-e89b-12d3-a456-426614174006",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440007",
+      actorId: "123e4567-e89b-12d3-a456-426614174007",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440008",
+      actorId: "123e4567-e89b-12d3-a456-426614174008",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440009",
+      actorId: "123e4567-e89b-12d3-a456-426614174009",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440010",
+      actorId: "123e4567-e89b-12d3-a456-426614174010",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440011",
+      actorId: "123e4567-e89b-12d3-a456-426614174011",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440012",
+      actorId: "123e4567-e89b-12d3-a456-426614174012",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440013",
+      actorId: "123e4567-e89b-12d3-a456-426614174013",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440014",
+      actorId: "123e4567-e89b-12d3-a456-426614174014",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440015",
+      actorId: "123e4567-e89b-12d3-a456-426614174015",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440016",
+      actorId: "123e4567-e89b-12d3-a456-426614174016",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440017",
+      actorId: "123e4567-e89b-12d3-a456-426614174017",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440018",
+      actorId: "123e4567-e89b-12d3-a456-426614174018",
+      role: "main"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440019",
+      actorId: "123e4567-e89b-12d3-a456-426614174019",
+      role: "main"
+    },
+    # Supporting actors
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440000",
+      actorId: "123e4567-e89b-12d3-a456-426614174001",
+      role: "supporting"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440001",
+      actorId: "123e4567-e89b-12d3-a456-426614174002",
+      role: "supporting"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440002",
+      actorId: "123e4567-e89b-12d3-a456-426614174003",
+      role: "supporting"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440003",
+      actorId: "123e4567-e89b-12d3-a456-426614174004",
+      role: "supporting"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440004",
+      actorId: "123e4567-e89b-12d3-a456-426614174005",
+      role: "supporting"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440005",
+      actorId: "123e4567-e89b-12d3-a456-426614174006",
+      role: "supporting"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440006",
+      actorId: "123e4567-e89b-12d3-a456-426614174007",
+      role: "supporting"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440007",
+      actorId: "123e4567-e89b-12d3-a456-426614174008",
+      role: "supporting"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440008",
+      actorId: "123e4567-e89b-12d3-a456-426614174009",
+      role: "supporting"
+    },
+    {
+      movieId: "550e8400-e29b-41d4-a716-446655440009",
+      actorId: "123e4567-e89b-12d3-a456-426614174010",
+      role: "supporting"
+    }
+  ])
+}
