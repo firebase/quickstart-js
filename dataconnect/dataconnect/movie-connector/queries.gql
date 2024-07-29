@@ -106,130 +106,6 @@ query GetActorById($id: UUID!) @auth(level: PUBLIC) {
   }
 }
 
-# List movies by partial title match
-# For example purposes only, not called in quickstart
-query ListMoviesByPartialTitle($input: String!) @auth(level: PUBLIC) {
-  movies(where: { title: { contains: $input } }) {
-    id
-    title
-    genre
-    rating
-    imageUrl
-  }
-}
-
-# List movies by tag
-# For example purposes only, not called in quickstart
-query ListMoviesByTag($tag: String!) @auth(level: PUBLIC) {
-  movies(where: { tags: { includes: $tag } }) {
-    id
-    title
-    imageUrl
-    genre
-    rating
-  }
-}
-
-# List movies by release year range
-# For example purposes only, not called in quickstart
-query MoviesByReleaseYear($min: Int, $max: Int) @auth(level: PUBLIC) {
-  movies(
-    where: { releaseYear: { le: $max, ge: $min } }
-    orderBy: { releaseYear: ASC }
-  ) {
-    id
-    rating
-    title
-    imageUrl
-  }
-}
-
-# List movies by rating and genre with OR filters
-# For example purposes only, not called in quickstart
-query SearchMovieOr(
-  $minRating: Float
-  $maxRating: Float
-  $genre: String
-  $tag: String
-  $input: String
-) @auth(level: PUBLIC) {
-  movies(
-    where: {
-      _or: [
-        { rating: { ge: $minRating } }
-        { rating: { le: $maxRating } }
-        { genre: { eq: $genre } }
-        { tags: { includes: $tag } }
-        { title: { contains: $input } }
-      ]
-    }
-  ) {
-    id
-    rating
-    title
-    imageUrl
-  }
-}
-
-# List movies by rating and genre with AND filters
-# For example purposes only, not called in quickstart
-query SearchMovieAnd(
-  $minRating: Float
-  $maxRating: Float
-  $genre: String
-  $tag: String
-  $input: String
-) @auth(level: PUBLIC) {
-  movies(
-    where: {
-      _and: [
-        { rating: { ge: $minRating } }
-        { rating: { le: $maxRating } }
-        { genre: { eq: $genre } }
-        { tags: { includes: $tag } }
-        { title: { contains: $input } }
-      ]
-    }
-  ) {
-    id
-    rating
-    title
-    imageUrl
-  }
-}
-
-# Get favorite movies by user ID
-# For example purposes only, not called in quickstart
-query GetUserFavoriteMovies @auth(level: USER) {
-  user(id_expr: "auth.uid") {
-    favorite_movies_on_user {
-      movie {
-        id
-        title
-        genre
-        imageUrl
-        releaseYear
-        rating
-        description
-      }
-    }
-  }
-}
-
-# Get favorite actors by user ID
-# For example purposes only, not called in quickstart
-query GetFavoriteActors @auth(level: USER) {
-  user(key: {id_expr: "auth.uid"}) {
-    favorite_actors_on_user {
-      actor {
-        id
-        name
-        imageUrl
-      }
-    }
-  }
-}
-
 # Get user by ID
 query GetCurrentUser @auth(level: USER) {
   user(key: {id_expr: "auth.uid"}) {
@@ -367,4 +243,122 @@ query SearchMovieDescriptionUsingL2Similarity($query: String!)
     imageUrl
   }
 }
+# The queries below are unused by the application, but are useful examples for more complex cases
 
+# List movies by partial title match
+query ListMoviesByPartialTitle($input: String!) @auth(level: PUBLIC) {
+  movies(where: { title: { contains: $input } }) {
+    id
+    title
+    genre
+    rating
+    imageUrl
+  }
+}
+
+# List movies by tag
+query ListMoviesByTag($tag: String!) @auth(level: PUBLIC) {
+  movies(where: { tags: { includes: $tag } }) {
+    id
+    title
+    imageUrl
+    genre
+    rating
+  }
+}
+
+# List movies by release year range
+query MoviesByReleaseYear($min: Int, $max: Int) @auth(level: PUBLIC) {
+  movies(
+    where: { releaseYear: { le: $max, ge: $min } }
+    orderBy: { releaseYear: ASC }
+  ) {
+    id
+    rating
+    title
+    imageUrl
+  }
+}
+
+# List movies by rating and genre with OR filters
+query SearchMovieOr(
+  $minRating: Float
+  $maxRating: Float
+  $genre: String
+  $tag: String
+  $input: String
+) @auth(level: PUBLIC) {
+  movies(
+    where: {
+      _or: [
+        { rating: { ge: $minRating } }
+        { rating: { le: $maxRating } }
+        { genre: { eq: $genre } }
+        { tags: { includes: $tag } }
+        { title: { contains: $input } }
+      ]
+    }
+  ) {
+    id
+    rating
+    title
+    imageUrl
+  }
+}
+
+# List movies by rating and genre with AND filters
+query SearchMovieAnd(
+  $minRating: Float
+  $maxRating: Float
+  $genre: String
+  $tag: String
+  $input: String
+) @auth(level: PUBLIC) {
+  movies(
+    where: {
+      _and: [
+        { rating: { ge: $minRating } }
+        { rating: { le: $maxRating } }
+        { genre: { eq: $genre } }
+        { tags: { includes: $tag } }
+        { title: { contains: $input } }
+      ]
+    }
+  ) {
+    id
+    rating
+    title
+    imageUrl
+  }
+}
+
+# Get favorite actors by user ID
+query GetFavoriteActors @auth(level: USER) {
+  user(key: {id_expr: "auth.uid"}) {
+    favorite_actors_on_user {
+      actor {
+        id
+        name
+        imageUrl
+      }
+    }
+  }
+}
+
+# Get favorite movies by user ID
+query GetUserFavoriteMovies @auth(level: USER) {
+  user(id_expr: "auth.uid") {
+    favorite_movies_on_user {
+      movie {
+        id
+        title
+        genre
+        imageUrl
+        releaseYear
+        rating
+        description
+      }
+    }
+  }
+}
+# end of example queries
