@@ -5,8 +5,6 @@ importScripts('/__/firebase/9.2.0/firebase-app-compat.js');
 importScripts('/__/firebase/9.2.0/firebase-messaging-compat.js');
 importScripts('/__/firebase/init.js');
 
-const messaging = firebase.messaging();
-
 /**
  * Here is is the code snippet to initialize Firebase Messaging in the Service
  * Worker when your app is not hosted on Firebase Hosting.
@@ -30,12 +28,11 @@ const messaging = firebase.messaging();
    appId: 'app-id',
    measurementId: 'G-measurement-id',
  });
+ **/
 
  // Retrieve an instance of Firebase Messaging so that it can handle background
  // messages.
  const messaging = firebase.messaging();
- **/
-
 
 // If you would like to customize notifications that are received in the
 // background (Web app is closed or not in browser focus) then you should
