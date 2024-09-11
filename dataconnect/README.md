@@ -49,7 +49,7 @@ The VSCode Firebase Extension allows you to generate Firebase Data Connect SDK c
 3. Open this quickstart in VS code, and in the left pane of the Firebase extension, and log in with your Firebase account.
 (Optional): If your Firebase project was not initialized in the last section, you can click `Run firebase init` and select `Data Connect` to initialize.
 4. Click on deploy to deploy your schema to your cloud SQL instance. Or run `firebase deploy --only dataconnect` (this will also activate vectors search if it's enabled in the schema).
-4. Running the VSCode extension should automatically start the DataConnect emulators. If you see an emulators error, try running `firebase emulators:start` manually.
+5. Running the VSCode extension should automatically start the DataConnect emulators. If you see an emulators error, try running `firebase emulators:start` manually.
 
 Now you should be able to deploy your schema, run mutations/queries, generate SDK code, and view your application locally.
 
