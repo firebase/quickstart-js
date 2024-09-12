@@ -8,7 +8,6 @@ mutation CreateMovie(
   $imageUrl: String!
   $tags: [String!] = []
 ) @auth(expr: "auth.token.isAdmin == true") {
-  builders($tenantId: String!) {
   movie_insert(
     data: {
       title: $title
