@@ -45,29 +45,24 @@ This repository contains the quickstart to get started with the functionalities 
 The VSCode Firebase Extension allows you to generate Firebase Data Connect SDK code, run queries/mutations, and deploy Firebase Data Connect with a click. Alternatively, see below for CLI commands.
 
 1. Install [VS Code](https://code.visualstudio.com/).
-2.  Download the [Firebase extension](https://firebasestorage.googleapis.com/v0/b/firemat-preview-drop/o/vsix%2Ffirebase-vscode-latest.vsix?alt=media) and [install](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-an-extension) it.
+2. Download the [Firebase extension](https://firebasestorage.googleapis.com/v0/b/firemat-preview-drop/o/vsix%2Ffirebase-vscode-latest.vsix?alt=media) and [install](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-an-extension) it.
 3. Open this quickstart in VS code, and in the left pane of the Firebase extension, and log in with your Firebase account.
 (Optional): If your Firebase project was not initialized in the last section, you can click `Run firebase init` and select `Data Connect` to initialize.
 4. Click on deploy to deploy your schema to your cloud SQL instance. Or run `firebase deploy --only dataconnect` (this will also activate vectors search if it's enabled in the schema).
-5. Running the VSCode extension should automatically start the DataConnect emulators. If you see an emulators error, try running `firebase emulators:start` manually.
+5. Running the VSCode extension should automatically start the DataConnect emulators. If you see an emulators error, try running `firebase emulators:start dataconnect` manually.
 
 Now you should be able to deploy your schema, run mutations/queries, generate SDK code, and view your application locally.
 
 ### 5. Populating the database
-1. Run the four `_insert.gql` files in the `./dataconnect` directory in order using the VS code extension.
+1. Run `1_movie_insert.gql`, `2_actor_insert.gql`, `3_movie_actor_insert.gql`, and `4_user_favorites_review_insert.gql` files in the `./dataconnect` directory in order using the VS code extension, 
 
 ### 6. Running the app
 
 1. `cd` into the src folder, and run `npm run dev` to start the localhost web app.
 (Optional): To use the Firebase Auth emulator, run `firebase emulators:start` and uncomment the `connectAuthEmulator` function in `app/src/lib/firebase.ts`.
 
-<!-- Support
--------
-
-- [Firebase Support](https://firebase.google.com/support/) -->
-
 License
 -------
 
-© Google, 2024. Licensed under an [Apache-2](../LICENSE) license.
+© Google, 2024. Licensed under an [Apache-2](../../LICENSE) license.
 
