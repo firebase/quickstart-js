@@ -8,7 +8,6 @@ mutation CreateMovie(
   $imageUrl: String!
   $tags: [String!] = []
 ) @auth(expr: "auth.token.isAdmin == true") {
-  builders($tenantId: String!) {
   movie_insert(
     data: {
       title: $title
@@ -48,7 +47,7 @@ mutation AddReview(
   $rating: Int!
   $reviewText: String!
 ) @auth(level: USER) {
-  review_update(
+  review_insert(
     data: {
       userId_expr: "auth.uid"
       movieId: $movieId
@@ -61,14 +60,12 @@ mutation AddReview(
 
 # Update a user's review for a movie
 mutation UpdateReview(
-  $id: UUID!
   $movieId: UUID!
   $rating: Int!
   $reviewText: String!
-  $userId: String!
-) @auth(expr: "auth.uid != null && auth.uid == userId") {
+) @auth(level: USER) {
   review_update(
-    id: $id,
+    key: {movieId: $movieId, userId_expr: "auth.uid"},
     data: {
       userId_expr: "auth.uid"
       movieId: $movieId
