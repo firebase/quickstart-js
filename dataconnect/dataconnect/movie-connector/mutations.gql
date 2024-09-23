@@ -47,7 +47,7 @@ mutation AddReview(
   $rating: Int!
   $reviewText: String!
 ) @auth(level: USER) {
-  review_insert(
+  review_upsert(
     data: {
       userId_expr: "auth.uid"
       movieId: $movieId
@@ -59,6 +59,7 @@ mutation AddReview(
 }
 
 # Update a user's review for a movie
+# (This is just an example on how to do updates with compound keys; it's not used in the app.)
 mutation UpdateReview(
   $movieId: UUID!
   $rating: Int!
