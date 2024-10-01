@@ -1,0 +1,9 @@
+{
+  "name": "Data Connect",
+  "description": "Build a new web app using Data Connect",
+  "categories": [
+    "Web app"
+  ],
+  "icon": "https://www.gstatic.com/monospace/231115/logo_react.svg",
+  "publisher": "Google LLC"
+}
