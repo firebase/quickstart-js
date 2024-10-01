@@ -12,8 +12,8 @@
     cp ${./.vscode/settings.json} "$out"/.vscode/settings.json
     rm "$out"/app/src/lib/firebase.tsx
     rm "$out"/app/vite.config.ts
+    chmod -R u+w "$out"
     mv ${./app/src/lib/firebase.idx.tsx} "$out"/app/src/lib/firebase.tsx
     mv ${./app/vite.config.idx.ts} "$out"/app/vite.config.ts
-    chmod -R u+w "$out"
   '';
 }
