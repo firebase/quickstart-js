@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "firebase": "^10.12.4-dataconnect-preview.d986d4bf2"
+  }
+}

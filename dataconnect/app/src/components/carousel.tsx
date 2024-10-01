@@ -17,7 +17,7 @@ export default function Carousel({ title, movies }: CarouselProps) {
   return (
     <section className="carousel py-8">
       <h2 className="text-gray-200 text-2xl font-bold mb-4">{title}</h2>
-      <div className="carousel__container flex overflow-x-auto space-x-4">
+      <div className="carousel__container flex overflow-x-auto space-x-4 overflow-y-clip">
         {movies.map((movie) => (
           <div className="flex-shrink-0" key={movie.id}>
             <MovieCard

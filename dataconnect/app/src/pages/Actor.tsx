@@ -1,40 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
-import {
-  getActorById,
-  GetActorByIdResponse,
-  addFavoritedActor,
-  deleteFavoritedActor,
-  getIfFavoritedActor
-} from '@movie/dataconnect';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import NotFound from './NotFound';
+import { handleGetActorById } from '@/lib/MovieService';
 
 export default function ActorPage() {
+  const navigate = useNavigate();
+  const auth = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const actorId = id || '';
-  const [actor, setActor] = useState<GetActorByIdResponse['actor'] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [authUser, setAuthUser] = useState<User | null>(null);
-  const [isFavorited, setIsFavorited] = useState(false);
-  const auth = useContext(AuthContext);
-  const navigate = useNavigate();
+  const [, setAuthUser] = useState<User | null>(null);
+
+  const [actor, setActor] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      async function checkIfFavorited() {
-        try {
-          const response = await getIfFavoritedActor({ actorId });
-          setIsFavorited(!!response.data.favorite_actor);
-        } catch (error) {
-          console.error('Error checking if favorited:', error);
-        }
-      }
       if (user) {
         setAuthUser(user);
-        checkIfFavorited();
       }
     });
 
@@ -44,38 +28,18 @@ export default function ActorPage() {
   useEffect(() => {
     if (actorId) {
       const fetchActor = async () => {
-        try {
-          const response = await getActorById({ id: actorId });
-          if (response.data.actor) {
-            setActor(response.data.actor);
-          } else {
-            navigate('/not-found');
-          }
-        } catch (error) {
-          console.error('Error fetching actor:', error);
+        const actorData = await handleGetActorById(actorId);
+        if (actorData) {
+          setActor(actorData);
+        } else {
           navigate('/not-found');
-        } finally {
-          setLoading(false);
         }
+        setLoading(false);
       };
 
       fetchActor();
     }
   }, [actorId, navigate]);
-
-  async function handleFavoriteToggle() {
-    if (!authUser) return;
-    try {
-      if (isFavorited) {
-        await deleteFavoritedActor({ actorId });
-      } else {
-        await addFavoritedActor({ actorId });
-      }
-      setIsFavorited(!isFavorited);
-    } catch (error) {
-      console.error('Error updating favorite status:', error);
-    }
-  }
 
   if (loading) return <p>Loading...</p>;
 
@@ -85,15 +49,6 @@ export default function ActorPage() {
         <img className="w-full md:w-1/3 object-cover rounded-lg shadow-md" src={actor.imageUrl} alt={actor.name} />
         <div className="md:ml-8 mt-4 md:mt-0 flex-1">
           <h1 className="text-5xl font-bold mb-2">{actor.name}</h1>
-          <div className="mt-4 flex space-x-4">
-            <button
-              className="flex items-center justify-center p-1 text-red-500 hover:text-red-600 transition-colors duration-200"
-              aria-label="Favorite"
-              onClick={handleFavoriteToggle}
-            >
-              {isFavorited ? <MdFavorite size={24} /> : <MdFavoriteBorder size={24} />}
-            </button>
-          </div>
         </div>
       </div>
 

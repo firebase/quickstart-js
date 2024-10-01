@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import { Link } from 'react-router-dom';
-import { upsertUser } from '@movie/dataconnect';
+import { handleAuthStateChange } from '@/lib/MovieService';
 import { FaSearch } from 'react-icons/fa';
 import firebaseLogo from '@/assets/firebase_logo.svg';
 
@@ -10,16 +10,9 @@ export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
   const auth = useContext(AuthContext);
 
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setUser(user);
-        const username = user.email?.substring(0, user.email?.indexOf("@")) || 'anon';
-        await upsertUser({ username });
-      } else {
-        setUser(null);
-      }
-    });
+    const unsubscribe = handleAuthStateChange(auth, setUser);
     return () => unsubscribe();
   }, [auth]);
 
@@ -36,29 +29,10 @@ export default function Navbar() {
     <nav className="bg-black p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-4">
-          <Link to="/" className="flex items-center text-white text-lg font-bold">
+          <Link to="/" className="flex items-center">
             <img src={firebaseLogo} alt="Firebase Logo" width={30} height={30} className="mr-2" />
-            FriendlyMovies
+            <span className=" text-white text-lg font-bold hidden md:block">FriendlyMovies</span>
           </Link>
-          <div className="relative group">
-            <button className="text-gray-200 hover:text-white">Genres</button>
-            <div className="absolute hidden group-hover:block bg-black text-white mt-1 rounded shadow-lg" style={{ minWidth: '150px' }}>
-              <div className="py-2">
-                <Link to="/genre/action" className="block px-4 py-2 hover:bg-gray-800">
-                  Action
-                </Link>
-                <Link to="/genre/crime" className="block px-4 py-2 hover:bg-gray-800">
-                  Crime
-                </Link>
-                <Link to="/genre/drama" className="block px-4 py-2 hover:bg-gray-800">
-                  Drama
-                </Link>
-                <Link to="/genre/sci-fi" className="block px-4 py-2 hover:bg-gray-800">
-                  Sci-Fi
-                </Link>
-              </div>
-            </div>
-          </div>
           <Link to="/vectorsearch" className="text-gray-200 hover:text-white">
             Vector Search
           </Link>

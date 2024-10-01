@@ -4,7 +4,7 @@
       "port": 9099
     },
     "hosting": {
-      "port": 5000
+      "port": 5059
     },
     "dataconnect": {
       "port": 9399
@@ -18,14 +18,11 @@
     "source": "./dataconnect"
   },
   "hosting": {
-    "source": "app",
+    "public": "app/dist",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "frameworksBackend": {
-      "region": "us-central1"
-    }
+    ]
   }
 }
