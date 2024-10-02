@@ -16,6 +16,9 @@
     mkdir "$out"/app
     mkdir "$out"/dataconnect
     mkdir "$out"/.vscode
+    mkdir "$out"/app    
+    mkdir "$out"/app/src/
+    mkdir "$out"/app/src/lib
     mv ${./app/src/lib/firebase.tsx} ${./app/src/lib/firebase.reg.tsx}
     cp ${.idx/dev.nix} "$out"/.idx/dev.nix
     cp -a ${./app}/* "$out"/app/
