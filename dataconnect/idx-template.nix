@@ -19,8 +19,8 @@
     cp ${.idx/dev.nix} "$out"/.idx/dev.nix
     cp -a ${./app}/* "$out"/app/
     cp -a ${./dataconnect}/* "$out"/dataconnect/
-    cp ${./app/src/lib/firebase.idx.tsx} "$out"/app/src/lib/firebase.tsx"
-    
+    cp ${./app/src/lib/firebase.idx.tsx} "$out"/app/src/lib/firebase.tsx
+    cp ${./app/vite.config.idx.ts} "$out"/app/vite.config.ts
     cp ${./.vscode/settings.json} "$out"/.vscode/settings.json
     cp ${./firebase.json} "$out"/firebase.json
     cp ${./README.md} "$out"/README.md
