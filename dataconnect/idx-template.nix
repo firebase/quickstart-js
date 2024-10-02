@@ -16,15 +16,19 @@
     mkdir "$out"/app
     mkdir "$out"/dataconnect
     mkdir "$out"/.vscode
-    mkdir "$out"/app    
-    mkdir "$out"/app/src/
-    mkdir "$out"/app/src/lib
-    mv ${./app/src/lib/firebase.tsx} ${./app/src/lib/firebase.reg.tsx}
+
+    # Rename the files
+    mv ${./app/src/lib/firebase.tsx} ${./app/src/lib/firebase.reg.tsx} 
+    mv ${./app/vite.config.ts} ${./app/vite.config.reg.ts}  
+
     cp ${.idx/dev.nix} "$out"/.idx/dev.nix
     cp -a ${./app}/* "$out"/app/
     cp -a ${./dataconnect}/* "$out"/dataconnect/
-    cp ${./app/src/lib/firebase.idx.tsx} "$out"/app/src/lib/firebase.tsx
-    cp ${./app/vite.config.idx.ts} "$out"/app/vite.config.ts
+
+    # Use the new file names
+    cp ${./app/src/lib/firebase.reg.tsx} "$out"/app/src/lib/firebase.tsx  
+    cp ${./app/vite.config.reg.ts} "$out"/app/vite.config.ts 
+
     cp ${./.vscode/settings.json} "$out"/.vscode/settings.json
     cp ${./firebase.json} "$out"/firebase.json
     cp ${./README.md} "$out"/README.md
