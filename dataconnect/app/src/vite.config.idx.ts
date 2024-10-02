@@ -15,7 +15,7 @@ export default defineConfig({
       '/v1beta/projects': {
         target: 'http://127.0.0.1:9399',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/v1beta\/projects/, '/v1alpha/projects'),
+        rewrite: (path) => path.replace(/^\/v1beta\/projects/, '/v1beta/projects'),
       },
     },
   },
