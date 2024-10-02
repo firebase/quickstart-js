@@ -12,7 +12,7 @@
   packages = [];
   bootstrap = ''
     mkdir "$out"
-    cp -a --parents ${.}/* "$out"
+    cp -a --parents ${./} "$out"
     chmod -R u+w "$out" 
   '';
 }
