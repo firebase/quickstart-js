@@ -11,7 +11,7 @@ import {
   handleDeleteFavoritedMovie,
   handleAddReview,
   handleDeleteReview,
-  fetchSimilarMovies,
+  searchMoviesByDescription
 } from "@/lib/MovieService";
 import MovieCard from "@/components/moviecard";
 
@@ -50,7 +50,7 @@ export default function MoviePage() {
           const userReview = movieData.reviews.find(
             (review) => review.user.id === authUser?.uid
           );
-          fetchSimilarMovies(movieData.description).then((similarMovies) => {
+          searchMoviesByDescription(movieData.description).then((similarMovies) => {
             const similarResults = similarMovies?.filter(
               (movie) => movie.id !== movieData.id
             );
