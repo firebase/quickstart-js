@@ -2,8 +2,9 @@
   "name": "Data Connect",
   "description": "Build a new web app using Data Connect",
   "categories": [
-    "Web app"
+    "Web app",
+    "Databases"
   ],
-  "icon": "https://www.gstatic.com/monospace/231115/logo_react.svg",
+  "icon": "https://www.gstatic.com/monospace/240513/logo_firebase.svg",
   "publisher": "Google LLC"
 }
