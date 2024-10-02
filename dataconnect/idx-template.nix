@@ -7,7 +7,6 @@
     mkdir "$out"/dataconnect
     mkdir "$out"/.vscode
 
-    cp ${./app/hello} "$out/app/hello"
     cp ${./app/src/lib/firebase.idx.tsx} "$out/app/src/lib/firebase.tsx"
     cp ${./app/vite.config.idx.ts} "$out/app/vite.config.ts"
 
