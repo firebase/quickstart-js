@@ -46,7 +46,6 @@ build/Release
 
 # Dependency directories
 node_modules/
-app/src/lib/dataconnect-sdk/
 app/package-lock.json
 
 # Optional npm cache directory
@@ -67,3 +66,5 @@ app/package-lock.json
 # dotenv environment variables file
 .next
 .dataconnect
+
+.idx/.data
