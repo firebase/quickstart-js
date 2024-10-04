@@ -1,4 +1,4 @@
-# Firebase DataConnect Quickstart
+# Firebase Data Connect Quickstart
 
 ## Introduction
 
