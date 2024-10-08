@@ -1,4 +1,4 @@
-# Firebase DataConnect Quickstart
+# Firebase Data Connect Quickstart
 
 ## Introduction
 
@@ -13,7 +13,7 @@ Follow these steps to get up and running with Firebase DataConnect. For more det
 1. Open [Firebase Data Connect](https://console.firebase.google.com/u/0/project/_/dataconnect) in your Firebase Console project and select **Get Started**.
 2. Create a new Data Connect service and a Cloud SQL instance. Ensure the Blaze plan is active. Find pricing details at [Firebase Pricing](https://firebase.google.com/pricing).
 3. Choose your server region. If you plan to use vector search, select `us-central1`.
-4. Wait for the Cloud SQL instance to be provisioned. Once it's ready, you can manage it in the [Cloud Console](https://pantheon.corp.google.com/sql).
+4. Wait for the Cloud SQL instance to be provisioned. Once it's ready, you can manage it in the [Cloud Console](https://console.cloud.google.com/sql).
 
 ### 2. Set Up Firebase CLI
 
