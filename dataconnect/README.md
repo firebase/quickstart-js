@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This is a sample app for the preview version of Firebase DataConnect. This service is currently in Private Preview at no cost for a limited time. Sign up for the program at [Firebase Data Connect](https://firebase.google.com/products/data-connect). This quickstart will not work if you don't have access to the preview.
+This is a sample app for Firebase Data Connect, which is currently in [Public Preview](https://firebase.blog/posts/2024/10/data-connect-public-preview) at no cost until after General Availability.
 
-## Getting Started with Firebase DataConnect
+## Getting Started with Firebase Data Connect
 
-Follow these steps to get up and running with Firebase DataConnect. For more detailed instructions, check out the [official documentation](https://firebase.google.com/docs/data-connect/quickstart).
+Follow these steps to get up and running with Firebase Data Connect. For more detailed instructions, check out the [official documentation](https://firebase.google.com/docs/data-connect/quickstart).
 
 ### 1. Create a New Data Connect Service and Cloud SQL Instance
 
@@ -25,7 +25,7 @@ npm install -g firebase-tools
 
 ### 3. Cloning the Repository
 
-This repository contains the quickstart to help you explore the functionalities of DataConnect.
+This repository contains the quickstart to help you explore the functionalities of Data Connect.
 
 1. Clone this repository to your local machine.
 2. Navigate to the `dataconnect` folder and initialize your Firebase project:
@@ -39,15 +39,15 @@ This repository contains the quickstart to help you explore the functionalities 
 ### 4. Installing VS Code Extension
 
 1. Install [VS Code](https://code.visualstudio.com/).
-2. Download and install the [Firebase DataConnect extension](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.firebase-dataconnect-vscode).
+2. Download and install the [Firebase Data Connect extension](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.firebase-dataconnect-vscode).
 3. Open this quickstart in VS Code and log in to your Firebase account using the Firebase extension.
-4. In the Firebase DataConnect VSCode extension, click **Start Emulators** and confirm that the emulators are running in the terminal.
+4. In the Firebase Data Connect VSCode extension, click **Start Emulators** and confirm that the emulators are running in the terminal.
 
 ### 5. Populating the Database
 
-1. In VS Code, open `dataconnect/movie_insert.gql`. Ensure the emulators in the Firebase DataConnect extension are running.
+1. In VS Code, open `dataconnect/movie_insert.gql`. Ensure the emulators in the Firebase Data Connect extension are running.
 2. You should see a **Run (local)** button at the top of the file. Click this to insert mock movie data into your database.
-3. Check the DataConnect Execution terminal to confirm that the data was added successfully.
+3. Check the Data Connect Execution terminal to confirm that the data was added successfully.
 
 ### 6. Running the App
 
