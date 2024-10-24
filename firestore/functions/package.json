@@ -14,12 +14,12 @@
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
-    "firebase-admin": "^11.8.0",
-    "firebase-functions": "^4.3.1"
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^6.1.0"
   },
   "devDependencies": {
     "typescript": "^4.9.0",
-    "firebase-functions-test": "^3.1.0"
+    "firebase-functions-test": "^3.3.0"
   },
   "private": true
 }
