@@ -7,14 +7,18 @@ const ConditionalRender = ({ condition, preferred, alternate }: { condition: boo
 )
 
 const PlaceholderMessage = () => (
-  <div className="min-h-screen flex items-center justify-center text-center text-4xl text-white">
-    <h1>To get Started with Firebase Data Connect:</h1>
-    <ol>
-      <li><a href="https://console.firebase.google.com/project/_/authentication/settings">Add {window.location.host} to your list of domains</a></li>
-      <li>Open the Firebase Data Connect Extension</li>
-      <li>Select your project</li>
-      <li>Click "Start Emulators"</li>
-    </ol>
+  <div className="min-h-screen flex items-center justify-center text-center text-white">
+    <div className='px-4'>
+      <h1 className='text-4xl'>To get Started with Firebase Data Connect:</h1>
+      <ol className='list-decimal'>
+        <li>Add {window.location.host}<a target="_blank" className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="https://console.firebase.google.com/project/_/authentication/settings"> to your list of domains</a></li>
+        <li>Add {window.location.host}/__auth/handler<a target="_blank" className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="https://pantheon.corp.google.com/apis/credentials/oauthclient/"> to your list of redirect uris by selecting "Web client (auto created by Google Service)", and then adding "{window.location.host}/__auth/handler" to Authorized redirect URIs
+        </a></li>
+        <li>Open the Firebase Data Connect Extension</li>
+        <li>Select your project</li>
+        <li>Click "Start Emulators"</li>
+      </ol>
+    </div>
   </div>
 )
 
