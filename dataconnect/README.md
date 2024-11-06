@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a sample app for the preview version of Firebase DataConnect. This service is currently in Private Preview at no cost for a limited time. Sign up for the program at [Firebase Data Connect](https://firebase.google.com/products/data-connect). This quickstart will not work if you don't have access to the preview.
+This is a sample app for the preview version of Firebase DataConnect. This service is currently in Public Preview at no cost for a limited time.
 
 ## Getting Started with Firebase DataConnect
 
