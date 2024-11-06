@@ -8,7 +8,13 @@ const ConditionalRender = ({ condition, preferred, alternate }: { condition: boo
 
 const PlaceholderMessage = () => (
   <div className="min-h-screen flex items-center justify-center text-center text-4xl text-white">
-    Run the Firebase Data Connect Extension to get started.
+    <h1>To get Started with Firebase Data Connect:</h1>
+    <ol>
+      <li><a href="https://console.firebase.google.com/project/_/authentication/settings">Add {window.location.host} to your list of domains</a></li>
+      <li>Open the Firebase Data Connect Extension</li>
+      <li>Select your project</li>
+      <li>Click "Start Emulators"</li>
+    </ol>
   </div>
 )
 

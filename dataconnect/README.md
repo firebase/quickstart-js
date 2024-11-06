@@ -88,9 +88,8 @@ This repository contains the quickstart to help you explore the functionalities 
     npm run build
     ```
 
-5. Set up Firebase Authentication with Google Sign-In. Optionally, allow domains for [Firebase Auth](https://firebase.google.com/docs/auth/web/hosting) in your project console (e.g., `http://127.0.0.1`).
-6. Allow domains for Firebase Auth in your [project console](https://console.firebase.google.com/project/_/authentication/settings) (e.g., `http://127.0.0.1`).
-7. In `dataconnect/dataconnect.yaml`, ensure that your `instanceId`, `database`, and `serviceId` match your project configuration:
+5. Allow domains for Firebase Auth in your [project console](https://console.firebase.google.com/project/_/authentication/settings) (e.g., `http://127.0.0.1`).
+6. In `dataconnect/dataconnect.yaml`, ensure that your `instanceId`, `database`, and `serviceId` match your project configuration:
 
     ```yaml
     specVersion: "v1alpha"
@@ -106,7 +105,7 @@ This repository contains the quickstart to help you explore the functionalities 
     connectorDirs: ["./movie-connector"]
     ```
 
-8. Deploy your project:
+7. Deploy your project:
 
     ```bash
     npm install -g firebase-tools
@@ -115,13 +114,13 @@ This repository contains the quickstart to help you explore the functionalities 
     firebase deploy --only dataconnect,hosting
     ```
 
-9. To compare schema changes, run:
+8. To compare schema changes, run:
 
     ```bash
     firebase dataconnect:sql:diff
     ```
 
-10. If the changes are acceptable, apply them with:
+9. If the changes are acceptable, apply them with:
 
     ```bash
     firebase dataconnect:sql:migrate
