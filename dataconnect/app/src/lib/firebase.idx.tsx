@@ -16,6 +16,8 @@ const firebaseConfig = {
   appId: "APP_ID"
 };
 
+firebaseConfig['authDomain'] = typeof window !== "undefined" ? window.location.host : process.env.WEB_HOST;
+
 const firebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
