@@ -1,0 +1,16 @@
+ ```json
+{
+  "versions": [{
+    "version_number": "6",
+    "update_time": "2022-05-12T02:38:54Z",
+    "update_user": {
+      "name": "Jane Smith",
+      "email": "jane@developer.org",
+      "imageUrl": "https://lh3.googleusercontent.com/a-/..."
+    },
+    "description": "One small change on the console",
+    "origin": "CONSOLE",
+    "update_type": "INCREMENTAL_UPDATE"
+  }]
+}
+```
