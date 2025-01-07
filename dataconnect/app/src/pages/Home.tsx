@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Carousel from '@/components/carousel';
-import { handleGetTopMovies, handleGetLatestMovies } from '@/lib/MovieService';
 import { listMoviesRef, OrderDirection } from '@/lib/dataconnect-sdk';
 import { useDataConnectQuery } from '@tanstack-query-firebase/react/data-connect';
 
@@ -15,15 +14,14 @@ const PlaceholderMessage = () => (
 )
 
 export default function HomePage() {
-  const { data: topMovies } = useDataConnectQuery(listMoviesRef({ limit: 10, orderByRating: OrderDirection.DESC }));
-  const { data: latestMovies } = useDataConnectQuery(listMoviesRef({ limit: 10, orderByReleaseYear: OrderDirection.DESC }));
-  const shouldRunEmulators = topMovies?.movies.length === 0 && latestMovies?.movies.length === 0;
+  const { data: topMovies,  isLoading: loadingTopMovies } = useDataConnectQuery(listMoviesRef({ limit: 10, orderByRating: OrderDirection.DESC }));
+  const { data: latestMovies, isLoading: loadingLatestMovies } = useDataConnectQuery(listMoviesRef({ limit: 10, orderByReleaseYear: OrderDirection.DESC }));
+  const shouldRunEmulators = loadingLatestMovies || loadingTopMovies || topMovies?.movies.length === 0 && latestMovies?.movies.length === 0;
   
-
   const carousels = (
     <>
-      <Carousel title="Top 10 Movies" movies={topMovies.movies} />
-      <Carousel title="Latest Movies" movies={latestMovies.movies} />
+      <Carousel title="Top 10 Movies" movies={topMovies?.movies} />
+      <Carousel title="Latest Movies" movies={latestMovies?.movies} />
     </>
   )
 

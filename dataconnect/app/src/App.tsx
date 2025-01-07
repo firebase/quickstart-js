@@ -8,9 +8,13 @@ import VectorSearchPage from "./pages/VectorSearch";
 import AdvancedSearchPage from "./pages/AdvancedSearch";
 import NotFound from "./pages/NotFound";
 import RootLayout from "./layout/RootLayout";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
+    <QueryClientProvider client={queryClient}>
     <Router>
       <RootLayout>
         <Routes>
@@ -24,5 +28,6 @@ export default function App() {
         </Routes>
       </RootLayout>
     </Router>
+    </QueryClientProvider>
   );
 }
