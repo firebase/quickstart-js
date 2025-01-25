@@ -82,7 +82,7 @@ Follow these steps to have a working version of the quickstart running with the 
  7. Set the CLI to use the project you created in Step 1:
 
  ```bash
- firebase --use add
+ firebase use --add
  ```
 
  8. Serve your Angular app and see it connect to the Firebase Console by opening [http://localhost:4200](http://localhost:4200) in your browser!
