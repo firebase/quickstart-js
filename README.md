@@ -35,6 +35,8 @@ Samples are organized into the following subdirectories and include README.md fi
    - Upload a file to Firebase Storage and display its URL
  - [Messaging](messaging/README.md)
    - Send notifications
+ - [Vertex AI](vertexai/README.md)
+   - Generate text from text-only input
 
 ## How to make contributions?
 Please read and follow the steps in the [CONTRIBUTING.md](CONTRIBUTING.md)
