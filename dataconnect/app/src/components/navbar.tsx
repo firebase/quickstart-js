@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
+import { signInWithRedirect, GoogleAuthProvider, signOut, User } from 'firebase/auth';
 import { AuthContext } from '@/lib/firebase';
 import { Link } from 'react-router-dom';
 import { handleAuthStateChange } from '@/lib/MovieService';
@@ -18,7 +18,7 @@ export default function Navbar() {
 
   async function handleSignIn() {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    await signInWithRedirect(auth, provider);
   }
 
   async function handleSignOut() {
