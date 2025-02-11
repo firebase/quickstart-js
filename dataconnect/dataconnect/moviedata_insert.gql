@@ -1,3 +1,17 @@
+ # Copyright 2024 Google LLC
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #      http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+
 mutation {
   movie_insertMany(
     data: [
@@ -24,7 +38,7 @@ mutation {
       {
         id: "550e8400-e29b-41d4-a716-446655440002"
         title: "Celestial Harmony"
-        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fcelestial_harmony.jpeg?alt=media&token=3edf1cf9-c2f5-4c75-9819-36ff6a734c9a"
+        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fcelestial_harmony.jpeg?alt=media&token=f5fe1845-3fac-4f46-8511-f35f928b6d1d"
         releaseYear: 2024
         genre: "romance"
         rating: 7.5
@@ -44,7 +58,7 @@ mutation {
       {
         id: "550e8400-e29b-41d4-a716-446655440004"
         title: "The Forgotten Island"
-        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fforgotten_island.jpeg?alt=media&token=bc2b16e1-caed-4649-952c-73b6113f205c"
+        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fforgotten_island.jpeg?alt=media&token=a6b2d761-2018-48c3-91a1-632d199440d4"
         releaseYear: 2025
         genre: "adventure"
         rating: 7.6
@@ -114,7 +128,7 @@ mutation {
       {
         id: "550e8400-e29b-41d4-a716-446655440011"
         title: "Beyond the Horizon"
-        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fbeyond_horizon.jpeg?alt=media&token=31493973-0692-4e6e-8b88-afb1aaea17ee"
+        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fbeyond_horizon.jpeg?alt=media&token=9c054b8d-1a63-48f6-b161-fb28e3d15e55"
         releaseYear: 2026
         genre: "sci-fi"
         rating: 8.5
@@ -144,7 +158,7 @@ mutation {
       {
         id: "550e8400-e29b-41d4-a716-446655440014"
         title: "Moonlit Crusade"
-        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fmoonlit_crusade.jpeg?alt=media&token=b13241f5-d7d0-4370-b651-07847ad99dc2"
+        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fmoonlit_crusade.jpeg?alt=media&token=1e2d46e2-6b76-4e20-b656-4b005b37d14b"
         releaseYear: 2025
         genre: "fantasy"
         rating: 8.3
@@ -184,7 +198,7 @@ mutation {
       {
         id: "550e8400-e29b-41d4-a716-446655440018"
         title: "Parallel Justice"
-        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fparalel_justice.jpeg?alt=media&token=4544b5e2-7a1d-46ca-a97f-eb6a490d4288"
+        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fparallel_justice.jpeg?alt=media&token=f975524a-6edf-4d3b-99e1-c99e62a50518"
         releaseYear: 2024
         genre: "crime"
         rating: 8.1
@@ -194,7 +208,7 @@ mutation {
       {
         id: "550e8400-e29b-41d4-a716-446655440019"
         title: "Veil of Illusion"
-        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fveil_illusion.jpeg?alt=media&token=7bf09a3c-c531-478a-9d02-5d99fca9393b"
+        imageUrl: "https://firebasestorage.googleapis.com/v0/b/fdc-web-quickstart.appspot.com/o/movie%2Fveil_illusion.jpeg?alt=media&token=baa02cce-efe8-4c9f-bd9f-65233c6e1ca8"
         releaseYear: 2022
         genre: "mystery"
         rating: 7.8
