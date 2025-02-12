@@ -128,4 +128,4 @@ This repository contains the quickstart to help you explore the functionalities 
 
 ## License
 
-© Google, 2024. Licensed under an [Apache-2](../../LICENSE) license.
+© Google, 2024. Licensed under an [Apache-2](../LICENSE) license.
