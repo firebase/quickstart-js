@@ -21,7 +21,7 @@ import {
   initializeAppCheck,
   ReCaptchaEnterpriseProvider,
 } from "firebase/app-check";
-import { getVertexAI, getGenerativeModel } from "firebase/vertexai-preview";
+import { getVertexAI, getGenerativeModel } from "firebase/vertexai";
 
 async function main() {
   const app = initializeApp(firebaseConfig);
@@ -38,7 +38,7 @@ async function main() {
   // Get a Gemini model
   const model = getGenerativeModel(
     vertexAI,
-    { model: "gemini-1.5-flash-preview-0514" }
+    { model: "gemini-2.0-flash" }
   );
   // Call generateContent with a string or Content(s)
   const generateContentResult = await model.generateContent("what is a cat?");
