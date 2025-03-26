@@ -22,7 +22,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.9",
-    "firebase-tools": "^13.20.2",
+    "firebase-tools": "^13.33.0",
     "lerna": "^6.6.1"
   },
   "scripts": {
