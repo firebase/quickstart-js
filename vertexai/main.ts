@@ -21,7 +21,7 @@ import {
   initializeAppCheck,
   ReCaptchaEnterpriseProvider,
 } from "firebase/app-check";
-import { getVertexAI, getGenerativeModel } from "firebase/vertexai";
+import { getAI, getGenerativeModel } from "firebase/ai";
 
 async function main() {
   const app = initializeApp(firebaseConfig);
@@ -33,11 +33,11 @@ async function main() {
     provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
   });
 
-  // Get VertexAI instance
-  const vertexAI = getVertexAI(app);
+  // Get AI instance
+  const ai = getAI(app);
   // Get a Gemini model
   const model = getGenerativeModel(
-    vertexAI,
+    ai,
     { model: "gemini-2.0-flash" }
   );
   // Call generateContent with a string or Content(s)
