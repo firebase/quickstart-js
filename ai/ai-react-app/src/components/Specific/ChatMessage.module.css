@@ -109,7 +109,7 @@
 .sourceSuperscript {
   font-size: 0.7em;
   vertical-align: super;
-  color: var(--brand-google-blue);
+  color: var(--google-blue);
   margin-left: 2px;
   font-weight: bold;
   user-select: none;
