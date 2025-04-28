@@ -1,0 +1,89 @@
+/* in :root or body in src/index.css */
+:root {
+  --fb-gray-0: #000000;
+  --fb-gray-10: #121212;
+  --fb-gray-20: #303030;
+  --fb-gray-30: #474747;
+  --fb-gray-40: #5e5e5e;
+  --fb-gray-50: #757575;
+  --fb-gray-60: #8f8f8f;
+  --fb-gray-70: #ababab;
+  --fb-gray-80: #c7c7c7;
+  --fb-gray-90: #e3e3e3;
+  --fb-gray-95: #f2f2f2;
+  --fb-gray-99: #fdfcfb;
+  --fb-gray-100: #ffffff;
+
+  --fb-yellow: #ffc400;
+  --fb-orange: #ff9100;
+  --fb-red: #dd2c00;
+
+  --google-blue: #4285f4;
+  --google-blue-darker: #1b66c9;
+  --google-blue-focus: #8ab4f8;
+
+  --fb-error-bg: rgba(221, 44, 0, 0.1);
+  --fb-error-text: #f79489;
+  --fb-error-border: rgba(221, 44, 0, 0.4);
+
+  --fb-warning-bg: rgba(255, 145, 0, 0.1);
+  --fb-warning-text: #ffcc80;
+  --fb-warning-border: rgba(255, 145, 0, 0.4);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background-color: var(--fb-gray-10);
+  color: var(--fb-gray-90);
+  font-family:
+    "Roboto",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Oxygen,
+    "Ubuntu",
+    Cantarell,
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Existing focus-visible styles etc --- */
+*:focus-visible {
+  outline: 2px solid var(--google-blue-focus);
+  outline-offset: 1px;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}

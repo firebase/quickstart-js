@@ -1,0 +1,105 @@
+.imagenViewContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--fb-gray-10);
+}
+
+.errorMessage {
+  color: var(--fb-error-text);
+  margin: 10px 24px;
+  padding: 10px 16px;
+  background-color: var(--fb-error-bg);
+  border: 1px solid var(--fb-error-border);
+  border-radius: 4px;
+  white-space: pre-wrap;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.displayArea {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputAreaContainer {
+  flex-shrink: 0;
+
+  & > div {
+    margin: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    box-shadow: none;
+    border-top: 1px solid var(--fb-gray-30);
+    background-color: var(--fb-gray-10);
+  }
+}
+
+.imageDisplayContainer {
+  padding: 0;
+  border-radius: 4px;
+  background-color: transparent;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--fb-gray-90);
+  width: 100%;
+  flex-grow: 1;
+}
+
+.loading,
+.placeholder {
+  font-style: italic;
+  color: var(--fb-gray-60);
+  margin: 20px 0;
+}
+
+.filteredReason {
+  color: var(--fb-warning-text);
+  background-color: var(--fb-warning-bg);
+  border: 1px solid var(--fb-warning-border);
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+  text-align: center;
+  width: auto;
+  max-width: 90%;
+  flex-shrink: 0;
+}
+
+.imageList {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  justify-content: center;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.imageWrapper {
+  border: 1px solid var(--fb-gray-30);
+  padding: 4px;
+  background-color: var(--fb-gray-10);
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.generatedImage {
+  max-width: 100%;
+  max-height: 300px;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+}

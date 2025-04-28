@@ -1,0 +1,29 @@
+.topBarContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 0 24px;
+  background-color: var(--fb-gray-10);
+  border-bottom: 1px solid var(--fb-gray-30);
+  color: var(--fb-gray-90);
+  flex-shrink: 0;
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoImage {
+  height: 24px;
+  width: 24px;
+  display: block;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--fb-gray-80);
+}
