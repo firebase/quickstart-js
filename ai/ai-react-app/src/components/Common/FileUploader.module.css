@@ -1,0 +1,71 @@
+.uploaderContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.uploadButton {
+  background-color: transparent;
+  color: var(--fb-gray-70);
+  border: 1px dashed var(--fb-gray-40);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
+  min-width: 100px;
+  font-size: 0.8125rem;
+  height: 30px;
+  line-height: 16px;
+}
+
+.uploadButton:hover:not(:disabled) {
+  background-color: var(--fb-gray-30);
+  border-color: var(--fb-gray-50);
+  color: var(--fb-gray-90);
+}
+
+.uploadButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--fb-gray-50);
+  border-color: var(--fb-gray-40);
+}
+
+.clearButton {
+  background-color: transparent;
+  color: var(--fb-gray-60);
+  border: none;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 300;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.clearButton:hover:not(:disabled) {
+  background-color: var(--fb-gray-40);
+  color: var(--fb-gray-90);
+}
+
+.clearButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--fb-gray-50);
+}

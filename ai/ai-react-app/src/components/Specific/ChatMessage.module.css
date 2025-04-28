@@ -1,0 +1,49 @@
+.messageContainer {
+  display: flex;
+  margin-bottom: 8px;
+  max-width: 80%;
+}
+
+/* Align user messages to the right */
+.messageContainer.user {
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+/* Align model messages to the left */
+.messageContainer.model {
+  justify-content: flex-start;
+  margin-right: auto;
+}
+
+.messageBubble {
+  padding: 8px 14px;
+  border-radius: 16px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  font-size: 0.875rem;
+  border: 1px solid transparent;
+}
+
+.messageContainer.user .messageBubble {
+  background-color: var(--fb-gray-40);
+  color: var(--fb-gray-95);
+  border-color: var(--fb-gray-50);
+  border-bottom-right-radius: 4px;
+}
+
+.messageContainer.model .messageBubble {
+  background-color: var(--fb-gray-10);
+  color: var(--fb-gray-90);
+  border-color: var(--fb-gray-30);
+  border-bottom-left-radius: 4px;
+}
+
+.messageText {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
