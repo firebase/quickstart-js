@@ -11,7 +11,7 @@ import {
   ModelParams,
   ImagenModelParams,
   FunctionCall,
-} from "firebase/vertexai";
+} from "firebase/ai";
 
 import { firebaseConfig } from "../config/firebase-config";
 
@@ -105,7 +105,7 @@ export const handleFunctionExecution = async (
     await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate delay
     const location: string =
       "location" in functionCall.args &&
-      typeof functionCall.args.location === "string"
+        typeof functionCall.args.location === "string"
         ? functionCall.args.location
         : "Default City, ST";
     const unit: string =
