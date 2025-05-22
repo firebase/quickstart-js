@@ -1,16 +1,16 @@
-# Firebase AI Sample App
+# Firebase AI Logic Sample App
 
-![Photo of the Firebase AI Sample App](images/screenshot.png)
+![Photo of the Firebase AI Logic Sample App](images/screenshot.png)
 
 This sample application demonstrates features of the Firebase AI SDK for Web (`firebase/ai`), integrated into a web application built with React and TypeScript.
 
-For more information about the Firebase AI SDK, see the [Firebase AI Logic Docs](https://firebase.google.com/docs/vertex-ai).
+For more information about the Firebase AI SDK, see the [Firebase AI Logic Docs](https://firebase.google.com/docs/ai-logic).
 
 ## Setup Instructions
 
-1. Follow the instructions to create a Firebase project that uses Firebase AI Logic.
+1. Use the guided workflow in the [Firebase AI Logic page](https://console.firebase.google.com/project/_/ailogic?_gl=1*dps5w8*_ga*NDk4MDUyODg4LjE3NDc4NTIwMDA.*_ga_CW55HF8NVT*czE3NDc5MzE2NzQkbzIkZzEkdDE3NDc5MzE3MjEkajEzJGwwJGgwJGRjVEhnTE1XMmtOQURjUXFPa18zZlRTU2JIblVCY0tTenN3) of the Firebase Console to setup your project (including enabling the required APIs for your chosen Gemini API provider), then register your app with your Firebase project.
 
-1. Update `src/config/firebase-config.ts` with your Firebase project configuration.
+1. Update `src/config/firebase-config.ts` with your Firebase configuration.
 
 1. Install dependencies:
 
