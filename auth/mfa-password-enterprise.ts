@@ -23,6 +23,7 @@
 // Hence, we do not connect to the emulator in this example.
 
 import { initializeApp } from 'firebase/app';
+
 import {
   MultiFactorInfo,
   MultiFactorResolver,
@@ -33,6 +34,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   getMultiFactorResolver,
+  initializeRecaptchaConfig,
   multiFactor,
   onAuthStateChanged,
   sendEmailVerification,
@@ -40,11 +42,26 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { firebaseConfig } from './config';
+import { firebaseConfig, reCaptchaSiteKey } from './config';
+
+// Dynamically load the reCAPTCHA enterprise script
+const script = document.createElement('script');
+script.src = `https://www.google.com/recaptcha/enterprise.js?render=${reCaptchaSiteKey}`;
+script.async = true;
+script.defer = true;
+document.head.appendChild(script);
 
 initializeApp(firebaseConfig);
 
 const auth = getAuth();
+
+initializeRecaptchaConfig(auth)
+  .then(() => {
+    console.log("Recaptcha Enterprise Config Initialization successful.")
+  })
+  .catch((error) => {
+    console.error("Recaptcha Enterprise Config Initialization failed with " + error)
+  });
 
 let mfaResolver: MultiFactorResolver | null = null;
 let phoneVerificationId: string | null = null;
