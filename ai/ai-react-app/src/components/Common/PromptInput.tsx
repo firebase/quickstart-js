@@ -25,6 +25,7 @@ interface PromptInputProps {
   currentParams?: ModelParams;
   currentImagenParams?: ImagenModelParams;
   selectedFile: File | null;
+  onCancel?: () => void; // New prop for cancellation
 }
 
 const PromptInput: React.FC<PromptInputProps> = ({
@@ -39,6 +40,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
   aiInstance,
   currentParams,
   selectedFile,
+  onCancel,
 }) => {
   const [tokenCount, setTokenCount] = useState<CountTokensResponse | null>(
     null,
@@ -47,7 +49,6 @@ const PromptInput: React.FC<PromptInputProps> = ({
   const [tokenCountError, setTokenCountError] = useState<string | null>(null);
 
   const handleCountTokensClick = useCallback(async () => {
-    // Prevent counting if main action is loading or already counting
     if (isLoading || isCountingTokens) return;
 
     setIsCountingTokens(true);
@@ -57,12 +58,10 @@ const PromptInput: React.FC<PromptInputProps> = ({
     const currentPromptText = prompt.trim();
     const parts: Part[] = [];
 
-    // Add text part if present
     if (currentPromptText) {
       parts.push({ text: currentPromptText });
     }
 
-    // Add file part if present
     if (selectedFile) {
       try {
         const filePart = await fileToGenerativePart(selectedFile);
@@ -75,7 +74,6 @@ const PromptInput: React.FC<PromptInputProps> = ({
       }
     }
 
-    // Don't count if there's nothing to count
     if (parts.length === 0) {
       setTokenCountError("Nothing to count tokens for (no text or file).");
       setIsCountingTokens(false);
@@ -104,7 +102,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
     } catch (err: unknown) {
       console.error("Error counting tokens:", err);
       setTokenCountError(`Token count failed`);
-      setTokenCount(null); // Clear previous count on error
+      setTokenCount(null);
     } finally {
       setIsCountingTokens(false);
     }
@@ -117,6 +115,14 @@ const PromptInput: React.FC<PromptInputProps> = ({
     isCountingTokens,
   ]);
 
+  const handlePrimaryAction = () => {
+    if (isLoading && onCancel) {
+      onCancel();
+    } else {
+      onSubmit();
+    }
+  };
+
   return (
     <div className={styles.promptContainer}>
       {/* Suggestions */}
@@ -127,7 +133,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
               key={index}
               className={styles.suggestionButton}
               onClick={() => onSuggestionClick(suggestion)}
-              disabled={isLoading} // Disable buttons while loading
+              disabled={isLoading || isCountingTokens}
             >
               {suggestion}
             </button>
@@ -142,17 +148,21 @@ const PromptInput: React.FC<PromptInputProps> = ({
           value={prompt}
           onChange={(e) => onPromptChange(e.target.value)}
           placeholder={placeholder}
-          disabled={isLoading || isCountingTokens} // Disable if main loading OR counting
+          disabled={isLoading || isCountingTokens}
           rows={3}
           aria-label="Prompt input"
         />
         <button
           className={styles.runButton}
-          onClick={onSubmit}
-          disabled={isLoading || isCountingTokens || !prompt.trim()} // Disable if loading, counting, or empty
-          aria-label="Submit prompt"
+          onClick={handlePrimaryAction}
+          disabled={
+            isLoading
+              ? false // Cancel button is always enabled when loading
+              : isCountingTokens || (!prompt.trim() && !selectedFile)
+          }
+          aria-label={isLoading ? "Cancel prompt" : "Submit prompt"}
         >
-          {isLoading ? "Running..." : "Run ➤"}
+          {isLoading ? "Cancel ✕" : "Run ➤"}
         </button>
       </div>
 

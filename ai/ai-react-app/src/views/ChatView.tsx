@@ -12,7 +12,12 @@ import {
   FunctionCall,
   AIError,
   AI,
+<<<<<<< HEAD
   GroundingMetadata,
+||||||| parent of 22637ef (abort)
+=======
+  SingleRequestOptions,
+>>>>>>> 22637ef (abort)
 } from "firebase/ai";
 import PromptInput from "../components/Common/PromptInput";
 import ChatMessage from "../components/Specific/ChatMessage";
@@ -32,9 +37,8 @@ const modelParamsChanged = (
   newParams: ModelParams,
   oldParams: ModelParams | null,
 ): boolean => {
-  if (!oldParams) return true; // No old params means change
+  if (!oldParams) return true;
 
-  // Compare critical fields that define a session's core behavior
   if (newParams.model !== oldParams.model) return true;
   if (
     JSON.stringify(newParams.systemInstruction) !==
@@ -59,7 +63,7 @@ const modelParamsChanged = (
   )
     return true;
 
-  return false; // If none of the above changed, params are not significantly different
+  return false;
 };
 
 const ChatView: React.FC<ChatViewProps> = ({
@@ -82,6 +86,7 @@ const ChatView: React.FC<ChatViewProps> = ({
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const chatSessionRef = useRef<ChatSession | null>(null);
   const sessionParamsRef = useRef<ModelParams | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const initializeChatSession = useCallback(
     (params: ModelParams) => {
@@ -100,7 +105,6 @@ const ChatView: React.FC<ChatViewProps> = ({
           systemInstruction: params.systemInstruction,
         });
         chatSessionRef.current = newSession;
-        // Store a deep copy of the params used for this session
         sessionParamsRef.current = JSON.parse(JSON.stringify(params));
         setChatHistory([]);
         setError(null);
@@ -123,7 +127,6 @@ const ChatView: React.FC<ChatViewProps> = ({
     }
   }, [aiInstance, initializeChatSession, currentParams]);
 
-  // Effect to scroll chat history
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -146,6 +149,7 @@ const ChatView: React.FC<ChatViewProps> = ({
       partsToSend: Part[],
       session: ChatSession,
       expectStructuredOutput: boolean,
+      singleRequestOptions?: SingleRequestOptions,
     ) => {
       console.log(
         "[ChatView] Processing chat turn. Expect JSON:",
@@ -153,12 +157,15 @@ const ChatView: React.FC<ChatViewProps> = ({
         "Parts:",
         partsToSend,
       );
-      setChatHistory((prev) => [...prev, { role: "model", parts: [] }]); // Add model placeholder
+      setChatHistory((prev) => [...prev, { role: "model", parts: [] }]);
       let accumulatedParts: Part[] = [];
       let finalModelCandidate: GenerateContentCandidate | undefined;
 
       try {
-        const streamResult = await session.sendMessageStream(partsToSend);
+        const streamResult = await session.sendMessageStream(
+          partsToSend,
+          singleRequestOptions,
+        );
         for await (const chunk of streamResult.stream) {
           if (chunk.candidates?.[0]?.content?.parts) {
             accumulatedParts = [
@@ -195,12 +202,10 @@ const ChatView: React.FC<ChatViewProps> = ({
         if (!finalModelCandidate) {
           console.warn("[ChatView] No candidate in final response.");
           setError("Model did not return a valid response.");
-          setChatHistory((prev) => prev.slice(0, -1)); // Remove model placeholder
-          setIsLoading(false);
+          setChatHistory((prev) => prev.slice(0, -1));
           return;
         }
 
-        // Update history definitively
         setChatHistory((prev) => {
           const newHistory = [...prev];
           if (
@@ -253,13 +258,13 @@ const ChatView: React.FC<ChatViewProps> = ({
             functionResponses,
           );
 
-          // Add model placeholder for the NEXT response
           setChatHistory((prev) => [...prev, { role: "model", parts: [] }]);
           accumulatedParts = [];
 
-          // Send function responses and process the stream
-          const funcResponseResult =
-            await session.sendMessageStream(functionResponses);
+          const funcResponseResult = await session.sendMessageStream(
+            functionResponses,
+            singleRequestOptions,
+          );
           for await (const chunk of funcResponseResult.stream) {
             if (chunk.candidates?.[0]?.content?.parts) {
               accumulatedParts = [
@@ -299,7 +304,6 @@ const ChatView: React.FC<ChatViewProps> = ({
             return newHistory;
           });
 
-          // Check for structured output in the final response after function calls
           if (expectStructuredOutput && finalFuncResponseText) {
             try {
               const parsedJson = JSON.parse(finalFuncResponseText);
@@ -341,27 +345,29 @@ const ChatView: React.FC<ChatViewProps> = ({
           }
         }
       } catch (err: unknown) {
-        console.error("[ChatView] Error during chat turn processing:", err);
-        // Check if it's an AIError and potentially handle specific codes
-        if (err instanceof AIError) {
-          setError(`AI Error (${err.code}): ${err.message}`);
+        if (err instanceof DOMException && err.name === "AbortError") {
+          console.log("[ChatView] Chat turn was cancelled by user.");
+          // No error state, just stop. UI remains as is.
+          // Model placeholder might still be there or partially filled.
         } else {
-          setError(`Error`);
-        }
-        // Attempt to remove model placeholder if it was the last thing added on error
-        setChatHistory((prev) => {
-          if (
-            prev.length > 0 &&
-            prev[prev.length - 1].role === "model" &&
-            prev[prev.length - 1].parts.length === 0
-          ) {
-            return prev.slice(0, -1);
+          console.error("[ChatView] Error during chat turn processing:", err);
+          if (err instanceof AIError) {
+            setError(`AI Error (${err.code}): ${err.message}`);
+          } else {
+            setError(`Error processing chat turn.`);
           }
-          return prev;
-        });
-        onUsageMetadataChange(null);
-      } finally {
-        setIsLoading(false);
+          setChatHistory((prev) => {
+            if (
+              prev.length > 0 &&
+              prev[prev.length - 1].role === "model" &&
+              prev[prev.length - 1].parts.length === 0
+            ) {
+              return prev.slice(0, -1);
+            }
+            return prev;
+          });
+          onUsageMetadataChange(null);
+        }
       }
     },
     [onUsageMetadataChange],
@@ -378,6 +384,9 @@ const ChatView: React.FC<ChatViewProps> = ({
     setLastResponseParsedJson(null);
     onUsageMetadataChange(null);
 
+    // Create a new AbortController for this submission
+    abortControllerRef.current = new AbortController();
+
     const userMessageParts: Part[] = [];
     if (currentInput.trim())
       userMessageParts.push({ text: currentInput.trim() });
@@ -385,18 +394,20 @@ const ChatView: React.FC<ChatViewProps> = ({
       try {
         userMessageParts.push(await fileToGenerativePart(selectedFile));
       } catch (imgErr: unknown) {
-        if (imgErr instanceof Error) {
-          setError(`Failed to process file: ${imgErr.message}`);
-        } else {
-          setError(`Failed to process file`);
-        }
+        setError(
+          imgErr instanceof Error
+            ? `Failed to process file: ${imgErr.message}`
+            : `Failed to process file`,
+        );
         setIsLoading(false);
         setSelectedFile(null);
+        abortControllerRef.current = null;
         return;
       }
     }
     if (userMessageParts.length === 0) {
       setIsLoading(false);
+      abortControllerRef.current = null;
       return;
     }
 
@@ -405,17 +416,16 @@ const ChatView: React.FC<ChatViewProps> = ({
       sessionParamsRef.current,
     );
     let sessionToUse: ChatSession;
-
     const currentHistoryForSession = [...chatHistory];
 
-    if (needsNewSession) {
+    if (needsNewSession || !chatSessionRef.current) {
       try {
         console.log(
-          "[ChatView] Significant parameters changed or no session exists. Initializing new session *with existing history*.",
+          "[ChatView] Params changed or no session. Initializing new session.",
         );
         const model = getGenerativeModel(aiInstance, currentParams);
         sessionToUse = model.startChat({
-          history: currentHistoryForSession,
+          history: currentHistoryForSession, // Use current history for new session continuity
           safetySettings: currentParams.safetySettings,
           generationConfig: currentParams.generationConfig,
           tools: currentParams.tools,
@@ -424,7 +434,6 @@ const ChatView: React.FC<ChatViewProps> = ({
         });
         chatSessionRef.current = sessionToUse;
         sessionParamsRef.current = JSON.parse(JSON.stringify(currentParams));
-        console.log("[ChatView] New session started with preserved history.");
       } catch (sessionError: unknown) {
         console.error(
           "[ChatView] Error creating new chat session:",
@@ -432,28 +441,12 @@ const ChatView: React.FC<ChatViewProps> = ({
         );
         setError(`Failed to start new chat session`);
         setIsLoading(false);
+        abortControllerRef.current = null;
         return;
       }
     } else {
       console.log("[ChatView] Reusing existing chat session.");
-      if (!chatSessionRef.current) {
-        console.error(
-          "[ChatView] Session ref is null unexpectedly. Attempting recovery.",
-        );
-        try {
-          const model = getGenerativeModel(aiInstance, currentParams);
-          sessionToUse = model.startChat({ history: currentHistoryForSession });
-          chatSessionRef.current = sessionToUse;
-          sessionParamsRef.current = JSON.parse(JSON.stringify(currentParams));
-        } catch (err: unknown) {
-          console.error("[ChatView] Error recovering chat session:", err);
-          setError(`Failed to recover chat session`);
-          setIsLoading(false);
-          return;
-        }
-      } else {
-        sessionToUse = chatSessionRef.current;
-      }
+      sessionToUse = chatSessionRef.current;
     }
 
     const userMessage: Content = { role: "user", parts: userMessageParts };
@@ -463,11 +456,33 @@ const ChatView: React.FC<ChatViewProps> = ({
 
     const expectStructuredOutput =
       currentParams.generationConfig?.responseMimeType === "application/json";
-    await processChatTurn(
-      userMessageParts,
-      sessionToUse,
-      expectStructuredOutput,
-    );
+
+    try {
+      await processChatTurn(
+        userMessageParts,
+        sessionToUse,
+        expectStructuredOutput,
+        { signal: abortControllerRef.current.signal },
+      );
+    } catch (processError) {
+      // This catch is mainly for unexpected errors rethrown by processChatTurn
+      // AbortError should be handled within processChatTurn and not rethrown.
+      console.error(
+        "[ChatView] Unexpected error from processChatTurn:",
+        processError,
+      );
+      if (
+        !(
+          processError instanceof DOMException &&
+          processError.name === "AbortError"
+        )
+      ) {
+        setError(`An unexpected error occurred during chat processing.`);
+      }
+    } finally {
+      setIsLoading(false);
+      abortControllerRef.current = null; // Clean up controller after submission attempt
+    }
   }, [
     isLoading,
     currentInput,
@@ -479,15 +494,25 @@ const ChatView: React.FC<ChatViewProps> = ({
     onUsageMetadataChange,
   ]);
 
+  const handleCancel = useCallback(() => {
+    if (abortControllerRef.current) {
+      console.log("[ChatView] User requested cancellation via button.");
+      abortControllerRef.current.abort(
+        "User cancelled the request via button.",
+      );
+      // isLoading will be set to false in handleChatSubmit's finally block
+    }
+  }, []);
+
   return (
     <div className={styles.chatViewContainer}>
-      {/* Chat History Area */}
       <div className={styles.chatHistory} ref={chatContainerRef}>
         {chatHistory.length === 0 && !isLoading && (
           <div className={styles.emptyChat}>
             {`Start chatting with ${currentParams.model}!`}
           </div>
         )}
+<<<<<<< HEAD
         {chatHistory.map((message, index) => {
           const isLastModelMessage =
             message.role === "model" && index === chatHistory.length - 1;
@@ -503,6 +528,25 @@ const ChatView: React.FC<ChatViewProps> = ({
           );
         })}
         {isLoading && (
+||||||| parent of 22637ef (abort)
+        {chatHistory.map((message, index) => (
+          <ChatMessage
+            key={`${message.role}-${index}-${message.parts[0]?.text?.slice(0, 10) ?? "part"}`}
+            message={message}
+          />
+        ))}
+        {isLoading && (
+=======
+        {chatHistory.map((message, index) => (
+          <ChatMessage
+            key={`${message.role}-${index}-${message.parts[0]?.text?.slice(0, 10) ?? "part"}`}
+            message={message}
+          />
+        ))}
+        {isLoading && chatHistory[chatHistory.length - 1]?.role !== "model" && (
+          // Show loading bubble only if the last message isn't already a model placeholder
+          // or if history is empty during initial load.
+>>>>>>> 22637ef (abort)
           <div className={styles.loadingBubble}>
             <span>.</span>
             <span>.</span>
@@ -520,7 +564,6 @@ const ChatView: React.FC<ChatViewProps> = ({
         )}
       </div>
 
-      {/* Input Area Wrapper */}
       <div className={styles.inputAreaContainer}>
         <div className={styles.fileUploaderContainer}>
           <FileUploader
@@ -542,6 +585,7 @@ const ChatView: React.FC<ChatViewProps> = ({
           aiInstance={aiInstance}
           currentParams={currentParams}
           selectedFile={selectedFile}
+          onCancel={handleCancel}
         />
       </div>
     </div>

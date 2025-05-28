@@ -146,6 +146,12 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
     return null;
   }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+||||||| parent of 733cb1a (x)
+=======
+  // Determine content to render
+>>>>>>> 733cb1a (x)
   let messageContentNodes: React.ReactNode[];
   if (
     isModel &&
@@ -161,6 +167,25 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
     messageContentNodes = [text];
   }
 
+||||||| parent of 22637ef (abort)
+  // Determine content to render
+  let messageContentNodes: React.ReactNode[];
+  if (
+    isModel &&
+    groundingMetadata?.groundingSupports &&
+    groundingMetadata?.groundingChunks
+  ) {
+    messageContentNodes = renderTextWithInlineHighlighting(
+      text,
+      groundingMetadata.groundingSupports,
+      groundingMetadata.groundingChunks,
+    );
+  } else {
+    messageContentNodes = [text];
+  }
+
+=======
+>>>>>>> 22637ef (abort)
   return (
     <div
       className={`${styles.messageContainer} ${isUser ? styles.user : styles.model}`}

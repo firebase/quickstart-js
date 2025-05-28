@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import {
   getImagenModel,
   ImagenModelParams,
@@ -6,11 +6,11 @@ import {
   ImagenGenerationResponse,
   AI,
   AIError,
+  SingleRequestOptions,
 } from "firebase/ai";
 import PromptInput from "../components/Common/PromptInput";
 import styles from "./ImagenView.module.css";
 
-// Simple component to display generated images or placeholders/loading states.
 const ImageDisplay: React.FC<{
   images: ImagenInlineImage[];
   filteredReason?: string;
@@ -47,9 +47,6 @@ interface ImagenViewProps {
   aiInstance: AI;
 }
 
-/**
- * View component for interacting with the Imagen model to generate images.
- */
 const ImagenView: React.FC<ImagenViewProps> = ({
   currentParams,
   aiInstance,
@@ -61,6 +58,7 @@ const ImagenView: React.FC<ImagenViewProps> = ({
     undefined,
   );
   const [error, setError] = useState<string | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const handleImageGenerationSubmit = useCallback(async () => {
     if (!currentPrompt.trim() || isLoading) {
@@ -73,38 +71,58 @@ const ImagenView: React.FC<ImagenViewProps> = ({
       currentParams,
     );
     setIsLoading(true);
-    setResultImages([]); // Clear previous results
+    setResultImages([]);
     setFilteredReason(undefined);
     setError(null);
+
+    abortControllerRef.current = new AbortController();
+    const singleRequestOptions: SingleRequestOptions = {
+      signal: abortControllerRef.current.signal,
+    };
 
     try {
       const imagenModel = getImagenModel(aiInstance, currentParams);
       console.log(`[ImagenView] Using Imagen model: ${imagenModel.model}`);
 
       const result: ImagenGenerationResponse<ImagenInlineImage> =
-        await imagenModel.generateImages(promptText);
+        await imagenModel.generateImages(promptText, singleRequestOptions);
 
       console.log("[ImagenView] Image generation successful.", result);
       setResultImages(result.images);
       setFilteredReason(result.filteredReason);
     } catch (err: unknown) {
-      console.error("[ImagenView] Error during image generation:", err);
-      if (err instanceof AIError) {
-        const message =
-          err.message || "Failed to generate images due to an unknown error.";
-        const details = err.customErrorData?.errorDetails
-          ? ` Details: ${JSON.stringify(err.customErrorData.errorDetails)}`
-          : "";
-        setError(`Error: ${message}${details}`);
+      console.log(err, (err as any).name);
+      if (err instanceof DOMException) {
+        console.log("[ImagenView] Image generation was cancelled by user.");
+        // No error state set, UI remains as is (e.g. "Generating images...")
       } else {
-        setError("Failed to generate images due to an unknown error.");
+        console.error("[ImagenView] Error during image generation:", err);
+        if (err instanceof AIError) {
+          const message =
+            err.message || "Failed to generate images due to an unknown error.";
+          const details = err.customErrorData?.errorDetails
+            ? ` Details: ${JSON.stringify(err.customErrorData.errorDetails)}`
+            : "";
+          setError(`Error: ${message}${details}`);
+        } else {
+          setError("Failed to generate images due to an unknown error.");
+        }
+        setResultImages([]); // Clear images on actual error
       }
-      setResultImages([]);
     } finally {
       setIsLoading(false);
-      setCurrentPrompt("");
+      if (!(currentPrompt && abortControllerRef.current?.signal.aborted)) {
+        setCurrentPrompt(""); // Clear prompt only if not aborted or if it was successful.
+      }
     }
   }, [currentPrompt, isLoading, currentParams, aiInstance]);
+
+  const handleCancel = useCallback(() => {
+    if (abortControllerRef.current) {
+      console.log("[ImagenView] User requested cancellation via button.");
+      abortControllerRef.current.abort("User cancelled the image generation.");
+    }
+  }, []);
 
   const suggestions = [
     "A photorealistic portrait of a tabby cat wearing sunglasses.",
@@ -137,7 +155,9 @@ const ImagenView: React.FC<ImagenViewProps> = ({
           onSuggestionClick={handleSuggestion}
           aiInstance={aiInstance}
           activeMode="imagenGen"
-          selectedFile={null}
+          selectedFile={null} // Imagen does not use file uploads in this sample
+          onCancel={handleCancel}
+          currentImagenParams={currentParams} // Pass imagen params for completeness, though not used by PromptInput internally
         />
       </div>
     </div>
