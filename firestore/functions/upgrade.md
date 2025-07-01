@@ -1,71 +1,75 @@
-## Detailed Plan for Upgrading `firebase-functions`
+## Goal: Systematically, incrementally, safely, and verifiably upgrade the `firebase-admin` dependency in `@firestore/functions` to its latest stable version.  
 
-**Goal:** Systematically, incrementally, safely, and verifiably upgrade the `firebase-functions` dependency in `@firestore/functions` to its latest stable version.
+## Guidance
+Come up with an exhaustive detailed plan to accomplish this goal. The plan should be a thorough checklist of tasks to accomplish the goal. This file will be used as a workspace to track progress towards that goal.
 
-**Plan:**
+## Upgrade Plan for `firebase-admin`
 
-1.  **Initial Assessment:**
-    *   Confirm the current installed version of `firebase-functions` from `package.json`.
-    *   Identify the latest stable version of `firebase-functions` available on npm.
-    *   **Crucial:** Search for official migration guides and release notes for `firebase-functions` covering all versions between our current version and the target latest stable version. This step is paramount for understanding potential breaking changes and necessary code modifications.
-    *   Identify existing tests that cover `firebase-functions` related logic.
-    *   Identify the project's commands for running tests, linting, and type-checking.
+This plan outlines the steps to safely upgrade the `firebase-admin` dependency incrementally, major version by major version.
 
-2.  **Preparation:**
-    *   Ensure your current git working directory is clean (no uncommitted changes).
-    *   Create a new git branch dedicated to this upgrade (e.g., `feature/upgrade-firebase-functions`).
+### Phase 1: Preparation and Assessment
 
-3.  **Incremental Upgrade (if major version jump):**
-    *   If there are multiple major versions between your current `firebase-functions` version and the target latest stable version, it is safer to upgrade one major version at a time.
-    *   For each intermediate major version (e.g., if currently on v4 and target is v6, first upgrade to v5, then to v6):
-        *   Install the intermediate major version: `npm install firebase-functions@<intermediate-major-version>`.
-        *   Review and apply necessary code changes based on the migration guide for this specific major version jump.
-        *   Run the project's tests.
-        *   Run the project's linting and type-checking commands.
-        *   Address any errors or warnings.
-        *   If all checks pass, commit the changes: `feat: Upgrade firebase-functions to v<intermediate-major-version>`.
-        *   If issues persist, revert the changes and investigate further before retrying.
+- [ ] **1.1. Understand Current State:**
+    - [ ] 1.1.1. Identify current `firebase-admin` version: Check `package.json` for the exact version.
+    - [ ] 1.1.2. Review `package.json` and `package-lock.json`: Note other dependencies that might be related or affected.
+    - [ ] 1.1.3. Examine existing code: Understand how `firebase-admin` is currently used in `src/index.ts` and other relevant files.
 
-4.  **Direct Upgrade to Latest Stable:**
-    *   Once all intermediate major versions (if any) have been successfully upgraded and verified, or if directly upgrading to the next minor/patch version:
-        *   Install the latest stable version: `npm install firebase-functions@latest`.
-        *   Review and apply any remaining code changes based on the migration guides.
+- [ ] **1.2. Backup Project:**
+    - [ ] 1.2.1. Ensure the current project state is committed to version control (e.g., `git commit -am "Pre-upgrade backup"`).
+    - [ ] 1.2.2. (Optional but recommended) Create a separate branch for the upgrade (e.g., `git checkout -b feature/upgrade-firebase-admin`).
 
-5.  **Verification:**
-    *   Run all existing tests to ensure no regressions.
-    *   Run the project's linting and type-checking commands to ensure code quality and type safety.
-    *   **Manual Smoke Testing:** Deploy the functions to a staging or development Firebase project and manually trigger/test critical functions that utilize `firebase-functions` to ensure they behave as expected.
+### Phase 2: Incremental Upgrade Loop
 
-6.  **Cleanup & Commit:**
-    *   Run `npm prune` to remove any unused packages.
-    *   Commit the final changes with a clear and concise message (e.g., `feat: Upgrade firebase-functions to latest stable`).
+This phase will be repeated for each major version upgrade until the latest stable version is reached.
 
-**Todo List:**
+- [ ] **2.1. Identify Next Major Version:**
+    - [ ] 2.1.1. Determine the *next immediate major version* of `firebase-admin` from the current installed version (e.g., if current is 9.x.x, next is 10.x.x).
+    - [ ] 2.1.2. If the current version is already the latest stable, proceed to Phase 3.
 
-- [ ] **Step 1: Initial Assessment**
-    - [x] Read `package.json` to confirm current `firebase-functions` version.
-    - [x] Run `npm view firebase-functions version` to find the latest stable version.
-    - [x] Performed web search for "firebase-functions upgrade guide from 4 to 5".
-    - **Key Findings:** Upgrading from v4 to v5 (and v6) involves migrating to 2nd Generation Cloud Functions. v6 defaults to v2 functions; 1st Gen functions require `firebase-functions/v1` import.
-    - [x] Identified test command: No explicit `test` script found in `package.json`. Will need to investigate.
-    - [x] Identified linting/type-checking commands: Type-checking is done via `npm run build` (which runs `tsc`). No explicit `lint` script found.
-- [ ] **Step 2: Preparation**
-    - [ ] Run `git status` to ensure a clean working directory.
-    - [ ] Run `git checkout -b feature/upgrade-firebase-functions`.
-- [ ] **Step 3: Incremental Upgrade (Iterative - repeat as needed for major versions)**
-    - [ ] `npm install firebase-functions@<intermediate-major-version>`
-    - [ ] Review migration guide for `<intermediate-major-version>`.
-    - [ ] Modify code as required.
-    - [ ] Run tests.
-    - [ ] Run linting/type-checking.
-    - [ ] `git add . && git commit -m "feat: Upgrade firebase-functions to v<intermediate-major-version>"` (if successful)
-- [ ] **Step 4: Direct Upgrade to Latest Stable**
-    - [ ] `npm install firebase-functions@latest`
-    - [ ] Modify code as required (if any remaining breaking changes).
-- [ ] **Step 5: Verification**
-    - [ ] Run tests.
-    - [ ] Run linting/type-checking.
-    - [ ] Deploy to staging and perform manual smoke tests.
-- [ ] **Step 6: Cleanup & Commit**
-    - [ ] `npm prune`
-    - [ ] `git add . && git commit -m "feat: Upgrade firebase-functions to latest stable"`
+- [ ] **2.2. Research Breaking Changes & Migration Guides for Current Jump:**
+    - [ ] 2.2.1. Consult the official `firebase-admin` changelog/release notes (e.g., GitHub releases, Firebase documentation) for all versions *between the current and the identified next major version*.
+    - [ ] 2.2.2. Pay close attention to any breaking changes, deprecations, or required migration steps. Document these in the 'Migration Notes' section below.
+
+- [ ] **2.3. Install Target `firebase-admin` Version:**
+    - [ ] 2.3.1. Run `npm install firebase-admin@<next-major-version>` (e.g., `npm install firebase-admin@10`).
+    - [ ] 2.3.2. Review `package.json` and `package-lock.json` to confirm the update.
+
+- [ ] **2.4. Update Related Dependencies (if necessary):**
+    - [ ] 2.4.1. Based on research in 2.2, update any other dependencies that are required or recommended for compatibility with the new `firebase-admin` version (e.g., `firebase-functions`, TypeScript).
+    - [ ] 2.4.2. Run `npm install` to ensure all dependencies are correctly resolved.
+
+- [ ] **2.5. Code Modifications:**
+    - [ ] 2.5.1. Apply all necessary code changes identified in Phase 2.2 (e.g., API changes, new initialization patterns, updated types).
+    - [ ] 2.5.2. Address any TypeScript compilation errors (`tsc`) that arise from the upgrade.
+
+- [ ] **2.6. Run Build/Transpilation:**
+    - [ ] 2.6.1. Execute the project's build command (e.g., `npm run build` or `tsc`) to ensure there are no compilation errors.
+
+- [ ] **2.7. Manual Testing / Local Emulation:**
+    - [ ] 2.7.1. If applicable, run the Firebase Functions locally using the Firebase Emulator Suite (`firebase emulators:start`).
+    - [ ] 2.7.2. Manually test key functionalities that rely on `firebase-admin` (e.g., Firestore operations, authentication, messaging).
+
+- [ ] **2.8. Commit Incremental Changes:**
+    - [ ] 2.8.1. Commit the changes with a clear and descriptive commit message (e.g., `feat: Upgrade firebase-admin to vX.Y.Z`). This creates a stable checkpoint before the next major version jump.
+
+- [ ] **2.9. Repeat:** Go back to step 2.1 until the latest stable version is reached.
+
+### Phase 3: Finalization
+
+- [ ] **3.1. Review and Refine:**
+    - [ ] 3.1.1. Review all changes made to the code across all incremental steps.
+    - [ ] 3.1.2. Ensure all temporary changes or debug statements are removed.
+
+## Migration Notes
+
+This section will be populated with specific breaking changes and migration steps identified for each major version jump.
+
+- **From X.x.x to Y.x.x:**
+    - [ ] Note 1
+    - [ ] Note 2
+
+- **From Y.x.x to Z.x.x:**
+    - [ ] Note 1
+    - [ ] Note 2
+
+This checklist will be updated as progress is made.
