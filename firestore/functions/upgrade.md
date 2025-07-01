@@ -43,11 +43,12 @@
 **Todo List:**
 
 - [ ] **Step 1: Initial Assessment**
-    - [ ] Read `package.json` to confirm current `firebase-functions` version.
-    - [ ] Run `npm view firebase-functions version` to find the latest stable version.
-    - [ ] Perform a web search for "firebase-functions upgrade guide from X to Y" (replace X and Y with relevant versions).
-    - [ ] Identify test command (e.g., `npm test`).
-    - [ ] Identify linting/type-checking commands (e.g., `npm run lint`, `npm run tsc`).
+    - [x] Read `package.json` to confirm current `firebase-functions` version.
+    - [x] Run `npm view firebase-functions version` to find the latest stable version.
+    - [x] Performed web search for "firebase-functions upgrade guide from 4 to 5".
+    - **Key Findings:** Upgrading from v4 to v5 (and v6) involves migrating to 2nd Generation Cloud Functions. v6 defaults to v2 functions; 1st Gen functions require `firebase-functions/v1` import.
+    - [x] Identified test command: No explicit `test` script found in `package.json`. Will need to investigate.
+    - [x] Identified linting/type-checking commands: Type-checking is done via `npm run build` (which runs `tsc`). No explicit `lint` script found.
 - [ ] **Step 2: Preparation**
     - [ ] Run `git status` to ensure a clean working directory.
     - [ ] Run `git checkout -b feature/upgrade-firebase-functions`.
