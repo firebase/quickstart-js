@@ -58,14 +58,14 @@
     - [x] Modify code as required (no changes needed).
     - [x] Run tests (No automated tests found).
     - [x] Run linting/type-checking (Passed).
-    - [ ] `git add . && git commit -m "feat: Upgrade firebase-functions to v<intermediate-major-version>"` (if successful)
+    - [x] `git add . && git commit -m "feat: Upgrade firebase-functions to v<intermediate-major-version>"` (if successful)
 - [x] **Step 4: Direct Upgrade to Latest Stable**
     - [x] `npm install firebase-functions@latest`
     - [x] Modify code as required (no changes needed).
-- [ ] **Step 5: Verification**
+- [x] **Step 5: Verification**
     - [x] Run tests (No automated tests found).
     - [x] Run linting/type-checking (Passed).
     
-- [ ] **Step 6: Cleanup & Commit**
-    - [ ] `npm prune`
-    - [ ] `git add . && git commit -m "feat: Upgrade firebase-functions to latest stable"`
+- [x] **Step 6: Cleanup & Commit**
+    - [x] `npm prune`
+    - [x] `git add . && git commit -m "feat: Upgrade firebase-functions to latest stable"`
