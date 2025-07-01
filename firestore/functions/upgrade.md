@@ -42,29 +42,29 @@
 
 **Todo List:**
 
-*   **Step 1: Initial Assessment**
-    *   Read `package.json` to confirm current `firebase-functions` version.
-    *   Run `npm view firebase-functions version` to find the latest stable version.
-    *   Perform a web search for "firebase-functions upgrade guide from X to Y" (replace X and Y with relevant versions).
-    *   Identify test command (e.g., `npm test`).
-    *   Identify linting/type-checking commands (e.g., `npm run lint`, `npm run tsc`).
-*   **Step 2: Preparation**
-    *   Run `git status` to ensure a clean working directory.
-    *   Run `git checkout -b feature/upgrade-firebase-functions`.
-*   **Step 3: Incremental Upgrade (Iterative - repeat as needed for major versions)**
-    *   `npm install firebase-functions@<intermediate-major-version>`
-    *   Review migration guide for `<intermediate-major-version>`.
-    *   Modify code as required.
-    *   Run tests.
-    *   Run linting/type-checking.
-    *   `git add . && git commit -m "feat: Upgrade firebase-functions to v<intermediate-major-version>"` (if successful)
-*   **Step 4: Direct Upgrade to Latest Stable**
-    *   `npm install firebase-functions@latest`
-    *   Modify code as required (if any remaining breaking changes).
-*   **Step 5: Verification**
-    *   Run tests.
-    *   Run linting/type-checking.
-    *   Deploy to staging and perform manual smoke tests.
-*   **Step 6: Cleanup & Commit**
-    *   `npm prune`
-    *   `git add . && git commit -m "feat: Upgrade firebase-functions to latest stable"`
+- [ ] **Step 1: Initial Assessment**
+    - [ ] Read `package.json` to confirm current `firebase-functions` version.
+    - [ ] Run `npm view firebase-functions version` to find the latest stable version.
+    - [ ] Perform a web search for "firebase-functions upgrade guide from X to Y" (replace X and Y with relevant versions).
+    - [ ] Identify test command (e.g., `npm test`).
+    - [ ] Identify linting/type-checking commands (e.g., `npm run lint`, `npm run tsc`).
+- [ ] **Step 2: Preparation**
+    - [ ] Run `git status` to ensure a clean working directory.
+    - [ ] Run `git checkout -b feature/upgrade-firebase-functions`.
+- [ ] **Step 3: Incremental Upgrade (Iterative - repeat as needed for major versions)**
+    - [ ] `npm install firebase-functions@<intermediate-major-version>`
+    - [ ] Review migration guide for `<intermediate-major-version>`.
+    - [ ] Modify code as required.
+    - [ ] Run tests.
+    - [ ] Run linting/type-checking.
+    - [ ] `git add . && git commit -m "feat: Upgrade firebase-functions to v<intermediate-major-version>"` (if successful)
+- [ ] **Step 4: Direct Upgrade to Latest Stable**
+    - [ ] `npm install firebase-functions@latest`
+    - [ ] Modify code as required (if any remaining breaking changes).
+- [ ] **Step 5: Verification**
+    - [ ] Run tests.
+    - [ ] Run linting/type-checking.
+    - [ ] Deploy to staging and perform manual smoke tests.
+- [ ] **Step 6: Cleanup & Commit**
+    - [ ] `npm prune`
+    - [ ] `git add . && git commit -m "feat: Upgrade firebase-functions to latest stable"`
