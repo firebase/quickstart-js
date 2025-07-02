@@ -109,26 +109,26 @@ This exhaustive checklist details the incremental upgrade process for Angular co
 #### Step 2.2: Angular 17.x to 18.x
 
 1.  **Update `package.json`:**
-    - [ ] For each of the listed Angular packages (excluding the three exceptions), change their version to `^18.0.0`.
-    - [ ] Save `package.json`.
-    - [ ] **Verification:** Open `package.json` again to visually confirm the changes.
+    - [x] For each of the listed Angular packages (excluding the three exceptions), change their version to `^18.0.0`.
+    - [x] Save `package.json`.
+    - [x] **Verification:** Open `package.json` again to visually confirm the changes.
 
 2.  **Install Dependencies:**
     Run `npm install`.
 
-    - [ ] **Observation:** Monitor the console output for any warnings or errors.
-    - [ ] **Verification:** Check `node_modules` and `package-lock.json`.
+    - [x] **Observation:** `npm install` failed initially due to `typescript` version conflict. Resolved by updating `typescript` to `~5.4.0` in `package.json` and re-running `npm install` after cleaning `node_modules` and `package-lock.json`. `npm install` completed successfully.
+    - [x] **Verification:** Checked `node_modules` and `package-lock.json`.
 
 3.  **Run Tests:**
     Run `npm run test -- --no-watch`.
 
-    - [ ] **Observation:** Note test results.
+    - [x] **Observation:** Tests failed with "Module not found" errors for `@angular/fire` modules (expected as `@angular/fire` was temporarily removed) and Angular Material related errors.
     - [ ] **Verification:** Ensure all tests pass.
 
 4.  **Build Project:**
     Run `npm run build`.
 
-    - [ ] **Observation:** Monitor build output.
+    - [x] **Observation:** Build failed with multiple errors, including "Module not found" for `@angular/fire` (expected) and `NG8001`/`NG8002` for Angular Material components.
     - [ ] **Verification:** Ensure build completes successfully.
 
 5.  **Post-Upgrade Verification (Manual/Exploratory):**
