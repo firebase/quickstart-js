@@ -1,0 +1,1 @@
+## Goal: Systematically, incrementally, safely, and verifiably upgrade the dependencies in `@firestore` to their latest stable version.
