@@ -15,6 +15,11 @@
  */
 
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   where,
   QueryConstraint,
@@ -32,11 +37,23 @@ import { DEFAULT_SORT_DATA, DialogData } from '../filter-dialog/dialogdata';
 import { Auth, signOut } from '@angular/fire/auth';
 import { SignInModalComponent } from '../sign-in-modal/sign-in-modal.component';
 import { HomepageFirestore } from './hompage.service';
+import { RestaurantCardComponent } from '../restaurant-card/restaurant-card.component';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    FilterDialogComponent,
+    SignInModalComponent,
+    RestaurantCardComponent
+  ],
   providers: [
     {
       provide: MAT_DIALOG_DATA,

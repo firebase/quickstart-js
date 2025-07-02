@@ -15,19 +15,35 @@
  */
 
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Firestore, doc, docData, } from '@angular/fire/firestore';
 import { Restaurant } from '../../types/restaurant';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   SubmitReviewModalComponent
 } from '../submit-review-modal/submit-review-modal.component';
+import { CommonModule } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { ReviewListComponent } from '../review-list/review-list.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-restuarant-page',
   templateUrl: './restuarant-page.component.html',
-  styleUrls: ['./restuarant-page.component.css']
+  styleUrls: ['./restuarant-page.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    ReviewListComponent,
+    SubmitReviewModalComponent
+  ]
 })
 export class RestuarantPageComponent implements OnInit {
   restaurantData: Observable<Restaurant> = new Observable();

@@ -16,12 +16,16 @@
 
 import { Component, Input } from '@angular/core';
 import { Restaurant } from '../../types/restaurant';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-restaurant-card',
   templateUrl: './restaurant-card.component.html',
   styleUrls: ['./restaurant-card.component.css'],
+  standalone: true,
+  imports: [CommonModule, RouterModule, MatCardModule]
 })
 export class RestaurantCardComponent {
   onCardClicked = () => {
