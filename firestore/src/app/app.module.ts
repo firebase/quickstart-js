@@ -16,6 +16,7 @@
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,16 +52,6 @@ import { SignInModalComponent } from './sign-in-modal/sign-in-modal.component';
 import { DefaultHomepageFirestore, HomepageFirestore } from './homepage/hompage.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomepageComponent,
-    RestuarantPageComponent,
-    RestaurantCardComponent,
-    ReviewListComponent,
-    FilterDialogComponent,
-    SubmitReviewModalComponent,
-    SignInModalComponent,
-  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -98,6 +89,5 @@ import { DefaultHomepageFirestore, HomepageFirestore } from './homepage/hompage.
     provideStorage(() => getStorage()),
   ],
   providers: [{ provide: HomepageFirestore, useClass: DefaultHomepageFirestore }],
-  bootstrap: [AppComponent],
 })
 export class AppModule { }

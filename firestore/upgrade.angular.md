@@ -193,20 +193,20 @@ This exhaustive checklist details the incremental upgrade process for Angular co
 2.  **Install Dependencies:**
     Run `npm install`.
 
-    - [x] **Observation:** `npx ng update @angular/material` command successfully updated `@angular/material` and other `@angular` packages to version 20. It also updated `typescript` to `5.8.3`.
-    - [ ] **Verification:** Check `node_modules` and `package-lock.json`.
+    - [x] **Observation:** `npx ng update @angular/material` command successfully updated `@angular/material` and other `@angular` packages to version 20. It also updated `typescript` to `5.8.3`. `npm install` completed successfully.
+    - [x] **Verification:** Checked `node_modules` and `package-lock.json`.
 
 3.  **Run Tests:**
     Run `npm run test -- --no-watch`.
 
-    - [ ] **Observation:** Note test results.
-    - [ ] **Verification:** Ensure all tests pass.
+    - [x] **Observation:** Tests passed after converting all components to standalone and fixing testbed imports.
+    - [x] **Verification:** All tests passed.
 
 4.  **Build Project:**
     Run `npm run build`.
 
-    - [ ] **Observation:** Monitor build output.
-    - [ ] **Verification:** Ensure build completes successfully.
+    - [x] **Observation:** Build successful after updating `main.ts` to bootstrap `AppComponent` directly and removing standalone components from `app.module.ts` imports.
+    - [x] **Verification:** Build completed successfully.
 
 5.  **Post-Upgrade Verification (Manual/Exploratory):**
     - [ ] Start the application locally.
