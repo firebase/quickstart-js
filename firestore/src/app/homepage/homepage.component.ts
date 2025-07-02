@@ -50,8 +50,6 @@ import { RestaurantCardComponent } from '../restaurant-card/restaurant-card.comp
     MatIconModule,
     MatButtonModule,
     FlexLayoutModule,
-    FilterDialogComponent,
-    SignInModalComponent,
     RestaurantCardComponent
   ],
   providers: [

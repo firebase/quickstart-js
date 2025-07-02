@@ -42,7 +42,6 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatButtonModule,
     ReviewListComponent,
-    SubmitReviewModalComponent
   ]
 })
 export class RestuarantPageComponent implements OnInit {

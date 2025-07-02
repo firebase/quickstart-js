@@ -24,6 +24,14 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { projectConfig } from './environments/environment.default';
 import { connectFirestoreEmulator } from '@firebase/firestore';
 import { DefaultHomepageFirestore, HomepageFirestore } from './app/homepage/hompage.service';
+import { provideRouter, Routes } from '@angular/router';
+import { HomepageComponent } from './app/homepage/homepage.component';
+import { RestuarantPageComponent } from './app/restuarant-page/restuarant-page.component';
+
+const routes: Routes = [
+  { path: 'restaurant/:id', component: RestuarantPageComponent },
+  { path: '**', component: HomepageComponent },
+];
 
 bootstrapApplication(AppComponent, { providers : [    provideFirebaseApp(() => initializeApp(projectConfig)),
     provideAuth(() => {
@@ -43,6 +51,7 @@ bootstrapApplication(AppComponent, { providers : [    provideFirebaseApp(() => i
     }),
     provideFunctions(() => getFunctions()),
     provideStorage(() => getStorage()),
-    { provide: HomepageFirestore, useClass: DefaultHomepageFirestore }
+    { provide: HomepageFirestore, useClass: DefaultHomepageFirestore },
+   provideRouter(routes)
 ] })
   .catch(err => console.error(err));
