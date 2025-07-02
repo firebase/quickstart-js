@@ -94,7 +94,7 @@ This exhaustive checklist details the incremental upgrade process for Angular co
         - [ ] **Action:** User needs to ensure `nvm` is installed and configured, or manually update Node.js to v20.19 or v22.12 before proceeding.
 
 5.  **Post-Upgrade Verification (Manual/Exploratory):**
-    - [ ] Start the application locally (`npm start` or `ng serve`).
+    - [x] Start the application locally (`npm start` or `ng serve`).
     - [ ] Perform a quick smoke test of key functionalities in the application to ensure everything is working as expected.
     - [ ] Check the browser console for any new errors or warnings.
 
