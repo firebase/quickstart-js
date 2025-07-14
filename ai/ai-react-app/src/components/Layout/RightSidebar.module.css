@@ -1,28 +1,28 @@
 .rightSidebarContainer {
   padding: 24px;
-  color: var(--fb-gray-90);
+  color: var(--color-text-primary);
   height: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
   font-size: 0.875rem;
-  background-color: var(--fb-gray-10);
+  background-color: var(--color-surface-primary);
   overflow-y: auto;
 }
 
 .sectionTitle {
-  color: var(--fb-gray-80);
+  color: var(--color-text-primary);
   font-weight: 500;
   margin: 0 0 16px 0;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--fb-gray-30);
+  border-bottom: 1px solid var(--color-border-primary);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .subSectionTitle {
-  color: var(--fb-gray-70);
+  color: var(--color-text-secondary);
   font-weight: 500;
   margin: 16px 0 12px 0;
   font-size: 0.8125rem;
@@ -37,7 +37,7 @@
 .controlGroup label {
   display: block;
   margin-bottom: 8px;
-  color: var(--fb-gray-70);
+  color: var(--color-text-secondary);
   font-size: 0.8125rem;
   font-weight: 500;
 }
@@ -48,9 +48,9 @@
 .controlGroup textarea {
   width: 100%;
   padding: 8px 12px;
-  background-color: var(--fb-gray-10);
-  border: 1px solid var(--fb-gray-40);
-  color: var(--fb-gray-90);
+  background-color: var(--color-surface-primary);
+  border: 1px solid var(--color-border-secondary);
+  color: var(--color-text-primary);
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 0.875rem;
@@ -61,18 +61,18 @@
 .controlGroup select:hover,
 .controlGroup input:not([type="range"]):hover,
 .controlGroup textarea:hover {
-  border-color: var(--fb-gray-50);
+  border-color: var(--brand-gray-50);
 }
 .controlGroup select:focus,
 .controlGroup input:not([type="range"]):focus,
 .controlGroup textarea:focus {
-  border-color: var(--google-blue);
-  background-color: var(--fb-gray-10);
+  border-color: var(--color-border-focus);
+  background-color: var(--color-surface-primary);
   outline: none;
 }
 .controlGroup input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px var(--fb-gray-10) inset !important;
-  -webkit-text-fill-color: var(--fb-gray-90) !important;
+  -webkit-box-shadow: 0 0 0 30px var(--color-surface-primary) inset !important;
+  -webkit-text-fill-color: var(--color-text-primary) !important;
 }
 
 .controlGroup input[type="range"] {
@@ -80,7 +80,7 @@
   height: 4px;
   cursor: pointer;
   appearance: none;
-  background: var(--fb-gray-40);
+  background: var(--color-border-secondary);
   outline: none;
   border-radius: 2px;
   padding: 0;
@@ -90,23 +90,23 @@
   appearance: none;
   width: 14px;
   height: 14px;
-  background: var(--fb-gray-80);
+  background: var(--color-text-primary);
   border-radius: 50%;
   cursor: pointer;
 }
 .controlGroup input[type="range"]::-moz-range-thumb {
   width: 14px;
   height: 14px;
-  background: var(--fb-gray-80);
+  background: var(--color-text-primary);
   border-radius: 50%;
   cursor: pointer;
   border: none;
 }
 .controlGroup input[type="range"]:active::-webkit-slider-thumb {
-  background: var(--fb-gray-90);
+  background: var(--brand-gray-90);
 }
 .controlGroup input[type="range"]:active::-moz-range-thumb {
-  background: var(--fb-gray-90);
+  background: var(--brand-gray-90);
 }
 
 .controlGroup textarea {
@@ -117,17 +117,17 @@
 .temperatureDisplay {
   text-align: right;
   font-size: 0.8125rem;
-  color: var(--fb-gray-60);
+  color: var(--color-text-placeholder);
   margin-top: 6px;
 }
 
 .tokenDisplay {
-  background-color: var(--fb-gray-10);
-  border: 1px solid var(--fb-gray-40);
+  background-color: var(--color-surface-primary);
+  border: 1px solid var(--color-border-secondary);
   padding: 8px 12px;
   border-radius: 4px;
   font-size: 0.8125rem;
-  color: var(--fb-gray-70);
+  color: var(--color-text-secondary);
   text-align: right;
   font-family: "Roboto Mono", monospace;
 }
@@ -140,7 +140,7 @@
   min-height: 30px;
 }
 .toggleGroup label:first-child {
-  color: var(--fb-gray-70);
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
   padding-right: 10px;
 }
@@ -166,7 +166,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--fb-gray-40);
+  background-color: var(--color-border-secondary);
   transition: 0.2s;
   border-radius: 7px;
 }
@@ -178,33 +178,33 @@
   width: 20px;
   left: -2px;
   bottom: -3px;
-  background-color: var(--fb-gray-80);
+  background-color: var(--color-text-primary);
   transition: 0.2s;
   border-radius: 50%;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 input:checked + .slider {
-  background-color: var(--google-blue);
+  background-color: var(--brand-google-blue);
 }
 
 input:checked + .slider:before {
   transform: translateX(20px);
-  background-color: var(--fb-gray-95);
+  background-color: var(--brand-gray-100);
 }
 
 .toggleGroup input:disabled + .slider {
-  background-color: var(--fb-gray-30) !important;
+  background-color: var(--color-border-primary) !important;
   cursor: not-allowed;
 }
 .toggleGroup input:disabled + .slider:before {
-  background-color: var(--fb-gray-50) !important;
+  background-color: var(--color-text-disabled) !important;
   cursor: not-allowed;
   box-shadow: none;
 }
 .toggleGroup.disabledText label:first-child,
 .toggleGroup label input:disabled ~ span {
-  color: var(--fb-gray-50);
+  color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 .toggleGroup input:disabled ~ span {
@@ -221,13 +221,13 @@ input:checked + .slider:before {
   cursor: pointer;
   outline: none;
   font-weight: 500;
-  color: var(--fb-gray-70);
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
   list-style: none;
   position: relative;
 }
 .advancedSettings summary:hover {
-  color: var(--fb-gray-90);
+  color: var(--color-text-primary);
 }
 .advancedSettings summary::-webkit-details-marker {
   display: none;
@@ -238,7 +238,7 @@ input:checked + .slider:before {
   margin-right: 8px;
   font-size: 0.7em;
   transition: transform 0.2s ease-out;
-  color: var(--fb-gray-60);
+  color: var(--color-text-placeholder);
 }
 .advancedSettings details[open] summary::before {
   transform: rotate(90deg);
@@ -246,10 +246,10 @@ input:checked + .slider:before {
 
 .advancedSettings .advancedContent {
   padding: 16px 0 0 0;
-  border-top: 1px solid var(--fb-gray-30);
+  border-top: 1px solid var(--color-border-primary);
   margin-top: 8px;
 }
 .advancedSettings .controlGroup label {
   font-weight: 400;
-  color: var(--fb-gray-70);
+  color: var(--color-text-secondary);
 }

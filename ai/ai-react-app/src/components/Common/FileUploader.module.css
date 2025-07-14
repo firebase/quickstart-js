@@ -7,8 +7,8 @@
 
 .uploadButton {
   background-color: transparent;
-  color: var(--fb-gray-70);
-  border: 1px dashed var(--fb-gray-40);
+  color: var(--color-text-secondary);
+  border: 1px dashed var(--color-border-secondary);
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
@@ -28,21 +28,21 @@
 }
 
 .uploadButton:hover:not(:disabled) {
-  background-color: var(--fb-gray-30);
-  border-color: var(--fb-gray-50);
-  color: var(--fb-gray-90);
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--brand-gray-50);
+  color: var(--color-text-primary);
 }
 
 .uploadButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  color: var(--fb-gray-50);
-  border-color: var(--fb-gray-40);
+  color: var(--color-text-disabled);
+  border-color: var(--color-border-secondary);
 }
 
 .clearButton {
   background-color: transparent;
-  color: var(--fb-gray-60);
+  color: var(--color-text-placeholder);
   border: none;
   padding: 0;
   width: 24px;
@@ -60,12 +60,12 @@
 }
 
 .clearButton:hover:not(:disabled) {
-  background-color: var(--fb-gray-40);
-  color: var(--fb-gray-90);
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-primary);
 }
 
 .clearButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  color: var(--fb-gray-50);
+  color: var(--color-text-disabled);
 }

@@ -1,33 +1,56 @@
 :root {
-  --fb-gray-0: #000000;
-  --fb-gray-10: #121212;
-  --fb-gray-20: #303030;
-  --fb-gray-30: #474747;
-  --fb-gray-40: #5e5e5e;
-  --fb-gray-50: #757575;
-  --fb-gray-60: #8f8f8f;
-  --fb-gray-70: #ababab;
-  --fb-gray-80: #c7c7c7;
-  --fb-gray-90: #e3e3e3;
-  --fb-gray-95: #f2f2f2;
-  --fb-gray-99: #fdfcfb;
-  --fb-gray-100: #ffffff;
+  --brand-gray-0: #000000;
+  --brand-gray-10: #1f1f1f;
+  --brand-gray-20: #303030;
+  --brand-gray-30: #474747;
+  --brand-gray-40: #5e5e5e;
+  --brand-gray-50: #757575;
+  --brand-gray-60: #8f8f8f;
+  --brand-gray-70: #ababab;
+  --brand-gray-80: #c7c7c7;
+  --brand-gray-90: #e3e3e3;
+  --brand-gray-95: #f2f2f2;
+  --brand-gray-99: #fdfcfb;
+  --brand-gray-100: #ffffff;
 
-  --fb-yellow: #ffc400;
-  --fb-orange: #ff9100;
-  --fb-red: #dd2c00;
+  --brand-firebase-yellow: #ffc400;
+  --brand-firebase-orange: #ff9100;
+  --brand-firebase-red: #dd2c00;
+  --brand-android-green: #c6ff00;
+  --brand-gemini-pink: #fdadee;
+  --brand-google-blue: #4285f4;
+  --brand-google-blue-darker: #1b66c9;
+  --brand-google-blue-focus: #8ab4f8;
+  --brand-google-cloud-green: #34a853;
 
-  --google-blue: #4285f4;
-  --google-blue-darker: #1b66c9;
-  --google-blue-focus: #8ab4f8;
+  /* Surfaces */
+  --color-surface-primary: var(--brand-gray-10); /* Main page background */
+  --color-surface-secondary: var(--brand-gray-20); /* Cards, message bubbles */
+  --color-surface-tertiary: var(--brand-gray-30); /* Hover states, subtle backgrounds */
+  --color-surface-interactive: var(--brand-google-blue); /* Primary buttons */
+  --color-surface-interactive-hover: var(--brand-google-blue-darker);
 
-  --fb-error-bg: rgba(221, 44, 0, 0.1);
-  --fb-error-text: #f79489;
-  --fb-error-border: rgba(221, 44, 0, 0.4);
+  /* Text */
+  --color-text-primary: var(--brand-gray-90); /* Main text */
+  --color-text-secondary: var(--brand-gray-70); /* Sub-headings, labels */
+  --color-text-placeholder: var(--brand-gray-60);
+  --color-text-disabled: var(--brand-gray-50);
+  --color-text-on-interactive: var(--brand-gray-100); /* Text on blue buttons */
+  --color-text-accent: var(--brand-firebase-yellow); /* Active nav item */
 
-  --fb-warning-bg: rgba(255, 145, 0, 0.1);
-  --fb-warning-text: #ffcc80;
-  --fb-warning-border: rgba(255, 145, 0, 0.4);
+  /* Borders */
+  --color-border-primary: var(--brand-gray-30);
+  --color-border-secondary: var(--brand-gray-40);
+  --color-border-focus: var(--brand-google-blue);
+
+  /* States */
+  --color-error-bg: rgba(221, 44, 0, 0.2);
+  --color-error-text: #f28b82;
+  --color-error-border: rgba(221, 44, 0, 0.5);
+
+  --color-warning-bg: rgba(255, 145, 0, 0.2);
+  --color-warning-text: #ffd180;
+  --color-warning-border: rgba(255, 145, 0, 0.5);
 }
 
 *,
@@ -38,14 +61,15 @@
 
 html,
 body {
+  color-scheme: light dark;
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
 body {
-  background-color: var(--fb-gray-10);
-  color: var(--fb-gray-90);
+  background-color: var(--color-surface-primary);
+  color: var(--color-text-primary);
   font-family:
     "Roboto",
     -apple-system,
@@ -72,7 +96,7 @@ body {
 }
 
 *:focus-visible {
-  outline: 2px solid var(--google-blue-focus);
+  outline: 2px solid var(--brand-google-blue-focus);
   outline-offset: 1px;
 }
 
@@ -84,4 +108,33 @@ textarea {
   font-size: inherit;
   font-weight: inherit;
   color: inherit;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Surfaces */
+    --color-surface-primary: var(--brand-gray-100);
+    --color-surface-secondary: var(--brand-gray-95);
+    --color-surface-tertiary: var(--brand-gray-90);
+    --color-surface-interactive-hover: #185abc;
+
+    /* Text */
+    --color-text-primary: var(--brand-gray-40);
+    --color-text-secondary: var(--brand-gray-50);
+    --color-text-placeholder: var(--brand-gray-60);
+    --color-text-disabled: var(--brand-gray-70);
+
+    /* Borders */
+    --color-border-primary: var(--brand-gray-80);
+    --color-border-secondary: var(--brand-gray-90);
+
+    /* States */
+    --color-error-bg: #fce8e6;
+    --color-error-text: #c5221f;
+    --color-error-border: #f9ab9f;
+
+    --color-warning-bg: #fff0e2;
+    --color-warning-text: #b06000;
+    --color-warning-border: #fdd6b4;
+  }
 }
