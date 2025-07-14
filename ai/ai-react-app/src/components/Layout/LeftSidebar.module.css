@@ -11,7 +11,7 @@
 .navButton {
   background-color: transparent;
   border: none;
-  color: var(--fb-gray-70);
+  color: var(--color-text-secondary);
   padding: 8px 12px;
   text-align: left;
   width: 100%;
@@ -25,29 +25,29 @@
 }
 
 .navButton:hover {
-  background-color: var(--fb-gray-30);
-  color: var(--fb-gray-95);
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-primary);
 }
 
 .navButton.active {
-  background-color: var(--fb-gray-30);
-  color: var(--fb-yellow);
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-accent);
   font-weight: 500;
 }
 
 .navButton.active:hover {
-  background-color: var(--fb-gray-40);
+  background-color: var(--brand-gray-40);
 }
 
 .backendSelector {
   margin-top: 24px;
   padding: 0 12px;
-  border-top: 1px solid var(--fb-gray-30);
+  border-top: 1px solid var(--color-border-primary);
   padding-top: 16px;
 }
 
 .selectorTitle {
-  color: var(--fb-gray-70);
+  color: var(--color-text-secondary);
   font-size: 0.75rem;
   font-weight: 500;
   margin: 0 0 8px 0;
@@ -63,11 +63,11 @@
   display: flex;
   align-items: center;
   font-size: 0.875rem;
-  color: var(--fb-gray-80);
+  color: var(--color-text-primary);
   cursor: pointer;
 }
 
 .radioGroup input[type="radio"] {
   margin-right: 8px;
-  accent-color: var(--google-blue);
+  accent-color: var(--brand-google-blue);
 }

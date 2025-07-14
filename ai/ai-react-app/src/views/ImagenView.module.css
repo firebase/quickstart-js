@@ -2,15 +2,15 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: var(--fb-gray-10);
+  background-color: var(--color-surface-primary);
 }
 
 .errorMessage {
-  color: var(--fb-error-text);
+  color: var(--color-error-text);
   margin: 10px 24px;
   padding: 10px 16px;
-  background-color: var(--fb-error-bg);
-  border: 1px solid var(--fb-error-border);
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
   border-radius: 4px;
   white-space: pre-wrap;
   font-size: 0.875rem;
@@ -35,8 +35,8 @@
     border-right: none;
     border-bottom: none;
     box-shadow: none;
-    border-top: 1px solid var(--fb-gray-30);
-    background-color: var(--fb-gray-10);
+    border-top: 1px solid var(--color-border-primary);
+    background-color: var(--color-surface-primary);
   }
 }
 
@@ -49,7 +49,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--fb-gray-90);
+  color: var(--color-text-primary);
   width: 100%;
   flex-grow: 1;
 }
@@ -57,14 +57,14 @@
 .loading,
 .placeholder {
   font-style: italic;
-  color: var(--fb-gray-60);
+  color: var(--color-text-placeholder);
   margin: 20px 0;
 }
 
 .filteredReason {
-  color: var(--fb-warning-text);
-  background-color: var(--fb-warning-bg);
-  border: 1px solid var(--fb-warning-border);
+  color: var(--color-warning-text);
+  background-color: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
   padding: 8px 16px;
   border-radius: 4px;
   margin-bottom: 16px;
@@ -86,9 +86,9 @@
 }
 
 .imageWrapper {
-  border: 1px solid var(--fb-gray-30);
+  border: 1px solid var(--color-border-primary);
   padding: 4px;
-  background-color: var(--fb-gray-10);
+  background-color: var(--color-surface-primary);
   border-radius: 4px;
   box-sizing: border-box;
   display: flex;
