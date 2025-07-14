@@ -19,6 +19,7 @@ export const AVAILABLE_GENERATIVE_MODELS = [
   "gemini-2.0-flash",
   "gemini-2.0-flash-lite",
   "gemini-2.0-flash-exp",
+  "gemini-2.5-flash"
 ];
 export const AVAILABLE_IMAGEN_MODELS = ["imagen-3.0-generate-002"];
 
