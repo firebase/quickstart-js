@@ -14,9 +14,9 @@
 }
 
 .suggestionButton {
-  background-color: var(--fb-gray-30);
-  color: var(--fb-gray-80);
-  border: 1px solid var(--fb-gray-40);
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-secondary);
   padding: 4px 10px;
   border-radius: 16px;
   cursor: pointer;
@@ -27,9 +27,9 @@
     color 0.15s ease;
 }
 .suggestionButton:hover:not(:disabled) {
-  background-color: var(--fb-gray-40);
-  border-color: var(--fb-gray-50);
-  color: var(--fb-gray-95);
+  background-color: var(--brand-gray-40);
+  border-color: var(--brand-gray-50);
+  color: var(--color-text-primary);
 }
 .suggestionButton:disabled {
   opacity: 0.5;
@@ -39,22 +39,22 @@
 .inputArea {
   display: flex;
   align-items: flex-end;
-  background-color: var(--fb-gray-10);
+  background-color: var(--color-surface-primary);
   border-radius: 4px;
-  border: 1px solid var(--fb-gray-40);
+  border: 1px solid var(--color-border-secondary);
   padding: 4px 4px 4px 12px;
   transition: border-color 0.15s ease;
   box-sizing: border-box;
 }
 .inputArea:focus-within {
-  border-color: var(--google-blue);
+  border-color: var(--color-border-focus);
 }
 
 .promptTextarea {
   flex-grow: 1;
   background-color: transparent;
   border: none;
-  color: var(--fb-gray-90);
+  color: var(--color-text-primary);
   resize: none;
   outline: none;
   font-size: 0.875rem;
@@ -66,12 +66,12 @@
   margin-right: 8px;
 }
 .promptTextarea::placeholder {
-  color: var(--fb-gray-60);
+  color: var(--color-text-placeholder);
 }
 
 .runButton {
-  background-color: var(--google-blue);
-  color: var(--fb-gray-100);
+  background-color: var(--color-surface-interactive);
+  color: var(--color-text-on-interactive);
   border: none;
   padding: 0 16px;
   border-radius: 4px;
@@ -86,11 +86,11 @@
   flex-shrink: 0;
 }
 .runButton:hover:not(:disabled) {
-  background-color: var(--google-blue-darker);
+  background-color: var(--color-surface-interactive-hover);
 }
 .runButton:disabled {
-  background-color: var(--fb-gray-30);
-  color: var(--fb-gray-50);
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
@@ -103,9 +103,9 @@
 }
 
 .countButton {
-  background-color: var(--fb-gray-30);
-  color: var(--fb-gray-80);
-  border: 1px solid var(--fb-gray-40);
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-secondary);
   padding: 4px 10px;
   border-radius: 4px;
   cursor: pointer;
@@ -118,20 +118,20 @@
   flex-shrink: 0;
 }
 .countButton:hover:not(:disabled) {
-  background-color: var(--fb-gray-40);
-  border-color: var(--fb-gray-50);
-  color: var(--fb-gray-95);
+  background-color: var(--brand-gray-40);
+  border-color: var(--brand-gray-50);
+  color: var(--color-text-primary);
 }
 .countButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background-color: var(--fb-gray-20);
-  border-color: var(--fb-gray-30);
+  background-color: var(--color-surface-secondary);
+  border-color: var(--color-border-primary);
 }
 
 .tokenCountDisplay {
   font-size: 0.8125rem;
-  color: var(--fb-gray-70);
+  color: var(--color-text-secondary);
   flex-grow: 1;
   text-align: right;
   min-height: 1.2em;
@@ -141,10 +141,10 @@
 }
 
 .tokenError {
-  color: var(--fb-error-text);
+  color: var(--color-error-text);
   font-style: italic;
 }
 .tokenPlaceholder {
-  color: var(--fb-gray-60);
+  color: var(--color-text-placeholder);
   font-style: italic;
 }

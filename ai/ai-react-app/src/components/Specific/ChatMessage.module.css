@@ -27,16 +27,16 @@
 }
 
 .messageContainer.user .messageBubble {
-  background-color: var(--fb-gray-40);
-  color: var(--fb-gray-95);
-  border-color: var(--fb-gray-50);
+  background-color: var(--brand-google-blue);
+  color: var(--color-text-on-interactive);
+  border-color: var(--brand-google-blue-darker);
   border-bottom-right-radius: 4px;
 }
 
 .messageContainer.model .messageBubble {
-  background-color: var(--fb-gray-10);
-  color: var(--fb-gray-90);
-  border-color: var(--fb-gray-30);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-primary);
   border-bottom-left-radius: 4px;
 }
 
@@ -46,4 +46,71 @@
   font-size: inherit;
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+.sourcesSection {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border-secondary);
+  font-size: 0.8rem;
+}
+
+.searchEntryPoint {
+  margin-bottom: 8px;
+}
+.searchEntryPoint p {
+  margin: 0 0 4px 0;
+}
+.searchEntryPoint a {
+  color: var(--brand-google-blue);
+  text-decoration: none;
+}
+.searchEntryPoint a:hover {
+  text-decoration: underline;
+}
+
+.sourcesTitle {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin: 0 0 4px 0;
+  font-size: 0.8rem;
+}
+
+.sourcesList {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.sourceItem {
+  margin-bottom: 4px;
+}
+
+.sourceItem a {
+  color: var(--brand-google-blue);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.sourceItem a:hover {
+  text-decoration: underline;
+}
+
+.highlightedSegment {
+  background-color: rgba(
+    var(--google-blue-rgb),
+    0.15
+  );
+  padding: 1px 0;
+  border-radius: 2px;
+  cursor: default;
+}
+
+.sourceSuperscript {
+  font-size: 0.7em;
+  vertical-align: super;
+  color: var(--brand-google-blue);
+  margin-left: 2px;
+  font-weight: bold;
+  user-select: none;
 }

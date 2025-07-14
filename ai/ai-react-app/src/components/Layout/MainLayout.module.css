@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: var(--fb-gray-10);
-  color: var(--fb-gray-90);
+  background-color: var(--color-surface-primary);
+  color: var(--color-text-primary);
   overflow: hidden;
 }
 
@@ -16,15 +16,15 @@
 .leftSidebar {
   width: 240px;
   flex-shrink: 0;
-  background-color: var(--fb-gray-10);
+  background-color: var(--color-surface-primary);
   padding-top: 16px;
   overflow-y: auto;
-  border-right: 1px solid var(--fb-gray-30);
+  border-right: 1px solid var(--color-border-primary);
 }
 
 .centerContent {
   flex-grow: 1;
-  background-color: var(--fb-gray-10);
+  background-color: var(--color-surface-primary);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -33,7 +33,7 @@
 .rightSidebar {
   width: 300px;
   flex-shrink: 0;
-  background-color: var(--fb-gray-10);
+  background-color: var(--color-surface-primary);
   overflow-y: auto;
-  border-left: 1px solid var(--fb-gray-30);
+  border-left: 1px solid var(--color-border-primary);
 }
