@@ -1,0 +1,255 @@
+.rightSidebarContainer {
+  padding: 24px;
+  color: var(--fb-gray-90);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 0.875rem;
+  background-color: var(--fb-gray-10);
+  overflow-y: auto;
+}
+
+.sectionTitle {
+  color: var(--fb-gray-80);
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--fb-gray-30);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subSectionTitle {
+  color: var(--fb-gray-70);
+  font-weight: 500;
+  margin: 16px 0 12px 0;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.controlGroup {
+  margin-bottom: 16px;
+}
+
+.controlGroup label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--fb-gray-70);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.controlGroup select,
+.controlGroup input[type="number"],
+.controlGroup input[type="text"],
+.controlGroup textarea {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: var(--fb-gray-10);
+  border: 1px solid var(--fb-gray-40);
+  color: var(--fb-gray-90);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 0.875rem;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+.controlGroup select:hover,
+.controlGroup input:not([type="range"]):hover,
+.controlGroup textarea:hover {
+  border-color: var(--fb-gray-50);
+}
+.controlGroup select:focus,
+.controlGroup input:not([type="range"]):focus,
+.controlGroup textarea:focus {
+  border-color: var(--google-blue);
+  background-color: var(--fb-gray-10);
+  outline: none;
+}
+.controlGroup input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px var(--fb-gray-10) inset !important;
+  -webkit-text-fill-color: var(--fb-gray-90) !important;
+}
+
+.controlGroup input[type="range"] {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  appearance: none;
+  background: var(--fb-gray-40);
+  outline: none;
+  border-radius: 2px;
+  padding: 0;
+  margin-top: 8px;
+}
+.controlGroup input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--fb-gray-80);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.controlGroup input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--fb-gray-80);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+.controlGroup input[type="range"]:active::-webkit-slider-thumb {
+  background: var(--fb-gray-90);
+}
+.controlGroup input[type="range"]:active::-moz-range-thumb {
+  background: var(--fb-gray-90);
+}
+
+.controlGroup textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.temperatureDisplay {
+  text-align: right;
+  font-size: 0.8125rem;
+  color: var(--fb-gray-60);
+  margin-top: 6px;
+}
+
+.tokenDisplay {
+  background-color: var(--fb-gray-10);
+  border: 1px solid var(--fb-gray-40);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  color: var(--fb-gray-70);
+  text-align: right;
+  font-family: "Roboto Mono", monospace;
+}
+
+.toggleGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  min-height: 30px;
+}
+.toggleGroup label:first-child {
+  color: var(--fb-gray-70);
+  font-size: 0.875rem;
+  padding-right: 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--fb-gray-40);
+  transition: 0.2s;
+  border-radius: 7px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: -2px;
+  bottom: -3px;
+  background-color: var(--fb-gray-80);
+  transition: 0.2s;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+input:checked + .slider {
+  background-color: var(--google-blue);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+  background-color: var(--fb-gray-95);
+}
+
+.toggleGroup input:disabled + .slider {
+  background-color: var(--fb-gray-30) !important;
+  cursor: not-allowed;
+}
+.toggleGroup input:disabled + .slider:before {
+  background-color: var(--fb-gray-50) !important;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.toggleGroup.disabledText label:first-child,
+.toggleGroup label input:disabled ~ span {
+  color: var(--fb-gray-50);
+  cursor: not-allowed;
+}
+.toggleGroup input:disabled ~ span {
+  cursor: not-allowed;
+}
+
+.advancedSettings details {
+  border: none;
+  margin-top: 20px;
+  background-color: transparent;
+}
+.advancedSettings summary {
+  padding: 8px 0;
+  cursor: pointer;
+  outline: none;
+  font-weight: 500;
+  color: var(--fb-gray-70);
+  font-size: 0.875rem;
+  list-style: none;
+  position: relative;
+}
+.advancedSettings summary:hover {
+  color: var(--fb-gray-90);
+}
+.advancedSettings summary::-webkit-details-marker {
+  display: none;
+}
+.advancedSettings summary::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 0.7em;
+  transition: transform 0.2s ease-out;
+  color: var(--fb-gray-60);
+}
+.advancedSettings details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.advancedSettings .advancedContent {
+  padding: 16px 0 0 0;
+  border-top: 1px solid var(--fb-gray-30);
+  margin-top: 8px;
+}
+.advancedSettings .controlGroup label {
+  font-weight: 400;
+  color: var(--fb-gray-70);
+}

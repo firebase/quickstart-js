@@ -1,0 +1,73 @@
+.sidebar ul {
+  list-style: none;
+  padding: 0 12px;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 4px;
+}
+
+.navButton {
+  background-color: transparent;
+  border: none;
+  color: var(--fb-gray-70);
+  padding: 8px 12px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+  font-weight: 500;
+}
+
+.navButton:hover {
+  background-color: var(--fb-gray-30);
+  color: var(--fb-gray-95);
+}
+
+.navButton.active {
+  background-color: var(--fb-gray-30);
+  color: var(--fb-yellow);
+  font-weight: 500;
+}
+
+.navButton.active:hover {
+  background-color: var(--fb-gray-40);
+}
+
+.backendSelector {
+  margin-top: 24px;
+  padding: 0 12px;
+  border-top: 1px solid var(--fb-gray-30);
+  padding-top: 16px;
+}
+
+.selectorTitle {
+  color: var(--fb-gray-70);
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.radioGroup {
+  margin-bottom: 6px;
+}
+
+.radioGroup label {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--fb-gray-80);
+  cursor: pointer;
+}
+
+.radioGroup input[type="radio"] {
+  margin-right: 8px;
+  accent-color: var(--google-blue);
+}

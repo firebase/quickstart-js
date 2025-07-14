@@ -7,3 +7,6 @@
 .firebaserc
 dist/
 **/ui-debug.log
+.next
+/template-test
+.oops

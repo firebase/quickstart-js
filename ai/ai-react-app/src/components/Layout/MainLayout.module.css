@@ -1,0 +1,39 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--fb-gray-10);
+  color: var(--fb-gray-90);
+  overflow: hidden;
+}
+
+.mainContentArea {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.leftSidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background-color: var(--fb-gray-10);
+  padding-top: 16px;
+  overflow-y: auto;
+  border-right: 1px solid var(--fb-gray-30);
+}
+
+.centerContent {
+  flex-grow: 1;
+  background-color: var(--fb-gray-10);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.rightSidebar {
+  width: 300px;
+  flex-shrink: 0;
+  background-color: var(--fb-gray-10);
+  overflow-y: auto;
+  border-left: 1px solid var(--fb-gray-30);
+}

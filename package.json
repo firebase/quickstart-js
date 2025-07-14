@@ -17,8 +17,12 @@
   },
   "homepage": "https://github.com/firebase/quickstart-js#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
     "eslint": "^8.39.0",
     "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "firebase-tools": "^13.20.2",
     "lerna": "^6.6.1"
   },
   "scripts": {

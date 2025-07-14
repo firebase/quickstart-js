@@ -1,0 +1,201 @@
+mutation updateMovieEmbeddings {
+  movie1: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440000"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A group of scientists accidentally open a portal to a parallel universe, causing a rift in time. As the team races to close the portal, they encounter alternate versions of themselves, leading to shocking revelations."
+      }
+    }
+  )
+
+  movie2: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440001"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "In the lawless Wild West, a mysterious gunslinger with a hidden past takes on a corrupt sheriff and his band of outlaws to bring justice to a small town."
+      }
+    }
+  )
+
+  movie3: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440002"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "Two astronauts, stationed on a remote space station, fall in love amidst the isolation of deep space. But when a mysterious signal disrupts their communication, they must find a way to reconnect and survive."
+      }
+    }
+  )
+
+  movie4: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440003"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A private detective gets caught up in a web of lies, deception, and betrayal while investigating the disappearance of a famous actress in 1940s Hollywood."
+      }
+    }
+  )
+
+  movie5: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440004"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "An explorer leads an expedition to a remote island rumored to be home to mythical creatures. As the team ventures deeper into the island, they uncover secrets that change the course of history."
+      }
+    }
+  )
+
+  movie6: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440005"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A tech-savvy teenager discovers a cursed app that brings nightmares to life. As the horrors of the digital world cross into reality, she must find a way to break the curse before it's too late."
+      }
+    }
+  )
+
+  movie7: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440006"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "In a kingdom on the brink of war, a prophecy speaks of an eclipse that will grant power to the rightful ruler. As factions vie for control, a young warrior must decide where his true loyalty lies."
+      }
+    }
+  )
+
+  movie8: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440007"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A brilliant scientist creates a robot with a human heart. As the robot struggles to understand emotions, it becomes entangled in a plot that could change the fate of humanity."
+      }
+    }
+  )
+
+  movie9: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440008"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A legendary warrior rises to challenge the tyrannical rule of a powerful empire. As rebellion brews, the warrior must unite different factions to lead an uprising."
+      }
+    }
+  )
+
+  movie10: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440009"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A talented pianist, who loses his hearing in a tragic accident, must rediscover his passion for music with the help of a young music teacher who believes in him."
+      }
+    }
+  )
+
+  movie11: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440010"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A historian stumbles upon an ancient artifact that reveals hidden truths about an empire long forgotten. As she deciphers the clues, a shadowy organization tries to stop her from unearthing the past."
+      }
+    }
+  )
+
+  movie12: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440011"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "In the future, Earth's best pilots are sent on a mission to explore a mysterious planet beyond the solar system. What they find changes humanity's understanding of the universe forever."
+      }
+    }
+  )
+
+  movie13: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440012"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A young detective with a dark past investigates a series of mysterious murders in a city plagued by corruption. As she digs deeper, she realizes nothing is as it seems."
+      }
+    }
+  )
+
+  movie14: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440013"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "An aging composer struggling with memory loss attempts to complete his final symphony. With the help of a young prodigy, he embarks on an emotional journey through his memories and legacy."
+      }
+    }
+  )
+
+  movie15: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440014"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A knight is chosen by an ancient order to embark on a quest under the light of the full moon. Facing mythical beasts and treacherous landscapes, he seeks a relic that could save his kingdom."
+      }
+    }
+  )
+
+  movie16: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440015"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "When a group of marine biologists descends into the unexplored depths of the ocean, they encounter a terrifying and ancient force. Now, they must survive as the abyss comes alive."
+      }
+    }
+  )
+
+  movie17: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440016"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A special forces operative, presumed dead, returns to avenge his fallen comrades. With nothing to lose, he faces a powerful enemy in a relentless pursuit for justice."
+      }
+    }
+  )
+
+  movie18: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440017"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "Two souls destined to meet across multiple lifetimes struggle to find each other in a chaotic world. With each incarnation, they get closer, but time itself becomes their greatest obstacle."
+      }
+    }
+  )
+
+  movie19: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440018"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A lawyer who can see the outcomes of different timelines must choose between justice and personal gain. When a high-stakes case arises, he faces a moral dilemma that could alter his life forever."
+      }
+    }
+  )
+
+  movie20: movie_update(
+    id: "550e8400-e29b-41d4-a716-446655440019"
+    data: {
+      descriptionEmbedding_embed: {
+        model: "textembedding-gecko@003"
+        text: "A magician-turned-detective uses his skills in illusion to solve crimes. When a series of murders leaves the city in fear, he must reveal the truth hidden behind a veil of deceit."
+      }
+    }
+  )
+}
