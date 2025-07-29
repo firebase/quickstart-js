@@ -11,6 +11,7 @@ import {
   ModelParams,
   ImagenModelParams,
   FunctionCall,
+  GoogleSearchTool,
 } from "firebase/ai";
 
 import { firebaseConfig } from "../config/firebase-config";
@@ -57,6 +58,10 @@ export const defaultFunctionCallingTool = {
     } as FunctionDeclaration,
   ],
 };
+
+export const defaultGoogleSearchTool: GoogleSearchTool = {
+  googleSearch: {}
+}
 
 export const defaultGenerativeParams: Omit<ModelParams, "model"> = {
   // Model name itself is selected in the UI

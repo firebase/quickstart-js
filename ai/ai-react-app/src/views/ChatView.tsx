@@ -12,6 +12,7 @@ import {
   FunctionCall,
   AIError,
   AI,
+  GroundingMetadata,
 } from "firebase/ai";
 import PromptInput from "../components/Common/PromptInput";
 import ChatMessage from "../components/Specific/ChatMessage";
@@ -75,6 +76,8 @@ const ChatView: React.FC<ChatViewProps> = ({
   const [lastResponseParsedJson, setLastResponseParsedJson] = useState<
     object | null
   >(null);
+  const [lastGroundingMetadata, setLastGroundingMetadata] =
+    useState<GroundingMetadata | null>(null);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const chatSessionRef = useRef<ChatSession | null>(null);
@@ -102,6 +105,7 @@ const ChatView: React.FC<ChatViewProps> = ({
         setChatHistory([]);
         setError(null);
         onUsageMetadataChange(null);
+        setLastGroundingMetadata(null);
         console.log("[ChatView] New chat session initialized successfully.");
       } catch (initError: unknown) {
         console.error("[ChatView] Error initializing chat session:", initError);
@@ -180,6 +184,13 @@ const ChatView: React.FC<ChatViewProps> = ({
           ? finalResponse.text()
           : "";
         finalModelCandidate = finalResponse.candidates?.[0];
+        console.log(`[ChatView] Final candidate:`, finalModelCandidate);
+        console.log(
+          `[ChatView] Grounding Metadata: ${finalModelCandidate?.groundingMetadata}`,
+        );
+        setLastGroundingMetadata(
+          finalModelCandidate?.groundingMetadata || null,
+        );
 
         if (!finalModelCandidate) {
           console.warn("[ChatView] No candidate in final response.");
@@ -361,6 +372,7 @@ const ChatView: React.FC<ChatViewProps> = ({
       return;
     }
 
+    setLastGroundingMetadata(null);
     setIsLoading(true);
     setError(null);
     setLastResponseParsedJson(null);
@@ -476,12 +488,20 @@ const ChatView: React.FC<ChatViewProps> = ({
             {`Start chatting with ${currentParams.model}!`}
           </div>
         )}
-        {chatHistory.map((message, index) => (
-          <ChatMessage
-            key={`${message.role}-${index}-${message.parts[0]?.text?.slice(0, 10) ?? "part"}`}
-            message={message}
-          />
-        ))}
+        {chatHistory.map((message, index) => {
+          const isLastModelMessage =
+            message.role === "model" && index === chatHistory.length - 1;
+          return (
+            <ChatMessage
+              key={`${message.role}-${index}-${message.parts[0]?.text?.slice(0, 10) ?? "part"}`}
+              message={message}
+              // Pass groundingMetadata only to the last model message that's fully loaded
+              groundingMetadata={
+                isLastModelMessage && !isLoading ? lastGroundingMetadata : null
+              }
+            />
+          );
+        })}
         {isLoading && (
           <div className={styles.loadingBubble}>
             <span>.</span>
