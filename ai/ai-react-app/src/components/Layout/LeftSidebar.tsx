@@ -31,19 +31,19 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
   const [selectedPersonaId, setSelectedPersonaId] = useState<string>("default");
   const [customPersona, setCustomPersona] = useState<string>("");
 
+  // Memoize the calculation of the new instruction text based on UI state.
   const newInstructionText = React.useMemo(() => {
     const selected = PREDEFINED_PERSONAS.find(
       (p) => p.id === selectedPersonaId,
     );
-    // Should not happen with the dropdown, but good to have a fallback.
-    if (!selected) return "";
+    if (!selected) return ""; // Should not happen, but a safe fallback.
 
     return selected.id === "custom"
       ? customPersona
       : selected.systemInstruction;
   }, [selectedPersonaId, customPersona]);
 
-  // Effect to update systemInstruction when persona changes
+  // Effect to sync UI changes (from dropdown or textarea) UP to the parent state.
   useEffect(() => {
     setGenerativeParams((prevParams) => {
       const currentInstructionText =
@@ -64,6 +64,34 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
       };
     });
   }, [newInstructionText, setGenerativeParams]);
+
+  // Effect to sync parent state changes DOWN to the local UI state.
+  // This ensures the UI reflects the state if it's changed elsewhere.
+  useEffect(() => {
+    const instructionText =
+      generativeParams.systemInstruction?.parts?.[0]?.text ?? "";
+
+    const matchingPersona = PREDEFINED_PERSONAS.find(
+      (p) => p.id !== "custom" && p.systemInstruction === instructionText,
+    );
+
+    if (matchingPersona) {
+      // A predefined persona matches the current instruction.
+      setSelectedPersonaId(matchingPersona.id);
+      setCustomPersona("");
+    } else {
+      // No predefined persona matches. It's either custom or the default empty state.
+      if (instructionText) {
+        // It's a custom persona.
+        setSelectedPersonaId("custom");
+        setCustomPersona(instructionText);
+      } else {
+        // It's the default empty state.
+        setSelectedPersonaId("default");
+        setCustomPersona("");
+      }
+    }
+  }, [generativeParams.systemInstruction]);
 
   // Define the available modes and their display names
   const modes: { id: AppMode; label: string }[] = [
@@ -104,7 +132,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
 
       {/* Backend Selection */}
       <div className={styles.backendSelector}>
-        <h6 className={styles.selectorTitle}>Backend API</h6>
+        <h5 className={styles.selectorTitle}>Backend API</h5>
         <div className={styles.radioGroup}>
           <label>
             <input
@@ -134,7 +162,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
       {/* Persona Selector */}
       {activeMode === "chat" && (
         <div className={styles.personaSelector}>
-          <h6 className={styles.selectorTitle}>Persona</h6>
+          <h5 className={styles.selectorTitle}>Persona</h5>
           <select
             value={selectedPersonaId}
             onChange={handlePersonaChange}
