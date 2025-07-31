@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AppMode } from "../../App";
 import styles from "./LeftSidebar.module.css";
-import { BackendType } from "firebase/ai";
+import { BackendType, ModelParams } from "firebase/ai";
+import { PREDEFINED_PERSONAS } from "../../config/personas";
 
 interface LeftSidebarProps {
   /** The currently active application mode (e.g., 'chat', 'imagenGen'). */
@@ -10,6 +11,10 @@ interface LeftSidebarProps {
   setActiveMode: (mode: AppMode) => void;
   activeBackend: BackendType;
   setActiveBackend: (backend: BackendType) => void;
+  generativeParams: ModelParams;
+  setGenerativeParams: (
+    params: ModelParams | ((prevState: ModelParams) => ModelParams),
+  ) => void;
 }
 
 /**
@@ -20,7 +25,50 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
   setActiveMode,
   activeBackend,
   setActiveBackend,
+  generativeParams,
+  setGenerativeParams,
 }) => {
+  const [selectedPersonaId, setSelectedPersonaId] = useState<string>("default");
+  const [customPersona, setCustomPersona] = useState<string>("");
+
+  // Effect to update systemInstruction when persona changes
+  useEffect(() => {
+    const selected = PREDEFINED_PERSONAS.find(
+      (p) => p.id === selectedPersonaId,
+    );
+    if (!selected) return;
+
+    const newInstructionText =
+      selected.id === "custom" ? customPersona : selected.systemInstruction;
+
+    setGenerativeParams((prevParams) => {
+      const newSystemInstruction = newInstructionText
+        ? { parts: [{ text: newInstructionText }] }
+        : undefined;
+
+      const currentInstruction = prevParams.systemInstruction;
+      const currentInstructionText =
+        currentInstruction &&
+        typeof currentInstruction === "object" &&
+        "parts" in currentInstruction &&
+        Array.isArray(currentInstruction.parts) &&
+        currentInstruction.parts.length > 0 &&
+        "text" in currentInstruction.parts[0]
+          ? currentInstruction.parts[0].text
+          : undefined;
+
+      // Only update if the text content has actually changed.
+      if ((newInstructionText || "") !== (currentInstructionText || "")) {
+        return {
+          ...prevParams,
+          systemInstruction: newSystemInstruction,
+        };
+      }
+      // If no change, return the previous state to prevent re-render.
+      return prevParams;
+    });
+  }, [selectedPersonaId, customPersona, setGenerativeParams]);
+
   // Define the available modes and their display names
   const modes: { id: AppMode; label: string }[] = [
     { id: "chat", label: "Chat" },
@@ -29,6 +77,16 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
 
   const handleBackendChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setActiveBackend(event.target.value as BackendType);
+  };
+
+  const handlePersonaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPersonaId(e.target.value);
+  };
+
+  const handleCustomPersonaChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setCustomPersona(e.target.value);
   };
 
   return (
@@ -76,6 +134,33 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
           </label>
         </div>
       </div>
+
+      {/* Persona Selector */}
+      {activeMode === "chat" && (
+        <div className={styles.personaSelector}>
+          <h6 className={styles.selectorTitle}>Persona</h6>
+          <select
+            value={selectedPersonaId}
+            onChange={handlePersonaChange}
+            className={styles.personaDropdown}
+          >
+            {PREDEFINED_PERSONAS.map((persona) => (
+              <option key={persona.id} value={persona.id}>
+                {persona.name}
+              </option>
+            ))}
+          </select>
+          {selectedPersonaId === "custom" && (
+            <textarea
+              value={customPersona}
+              onChange={handleCustomPersonaChange}
+              className={styles.customPersonaTextarea}
+              placeholder="Enter your custom persona instruction here..."
+              rows={5}
+            />
+          )}
+        </div>
+      )}
     </nav>
   );
 };

@@ -1,73 +1,85 @@
-.sidebar ul {
-  list-style: none;
-  padding: 0 12px;
-  margin: 0;
+.sidebar {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  height: 100%;
+  border-right: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.sidebar li {
-  margin-bottom: 4px;
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .navButton {
   background-color: transparent;
-  border: none;
-  color: var(--color-text-secondary);
-  padding: 8px 12px;
-  text-align: left;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  padding: 0.75rem 1rem;
   width: 100%;
+  text-align: left;
   cursor: pointer;
-  border-radius: 4px;
-  font-size: 0.875rem;
+  font-size: 1rem;
+  color: #212529;
   transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
-  font-weight: 500;
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
 }
 
 .navButton:hover {
-  background-color: var(--color-surface-tertiary);
-  color: var(--color-text-primary);
+  background-color: #e9ecef;
 }
 
 .navButton.active {
-  background-color: var(--color-surface-tertiary);
-  color: var(--color-text-accent);
-  font-weight: 500;
+  background-color: #0d6efd;
+  color: white;
+  border-color: #0d6efd;
 }
 
-.navButton.active:hover {
-  background-color: var(--brand-gray-40);
-}
-
-.backendSelector {
-  margin-top: 24px;
-  padding: 0 12px;
-  border-top: 1px solid var(--color-border-primary);
-  padding-top: 16px;
+.backendSelector,
+.personaSelector {
+  border-top: 1px solid #dee2e6;
+  padding-top: 1rem;
 }
 
 .selectorTitle {
-  color: var(--color-text-secondary);
-  font-size: 0.75rem;
-  font-weight: 500;
-  margin: 0 0 8px 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6c757d;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
 }
 
 .radioGroup {
-  margin-bottom: 6px;
+  margin-bottom: 0.5rem;
 }
 
 .radioGroup label {
   display: flex;
   align-items: center;
-  font-size: 0.875rem;
-  color: var(--color-text-primary);
+  gap: 0.5rem;
+  font-size: 0.95rem;
   cursor: pointer;
 }
 
-.radioGroup input[type="radio"] {
-  margin-right: 8px;
-  accent-color: var(--brand-google-blue);
+.personaDropdown {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+  font-size: 0.9rem;
+  background-color: #fff;
+}
+
+.customPersonaTextarea {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+  font-size: 0.9rem;
+  resize: vertical;
 }
