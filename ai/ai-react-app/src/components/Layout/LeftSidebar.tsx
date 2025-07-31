@@ -46,16 +46,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
         ? { parts: [{ text: newInstructionText }] }
         : undefined;
 
-      const currentInstruction = prevParams.systemInstruction;
-      const currentInstructionText =
-        currentInstruction &&
-        typeof currentInstruction === "object" &&
-        "parts" in currentInstruction &&
-        Array.isArray(currentInstruction.parts) &&
-        currentInstruction.parts.length > 0 &&
-        "text" in currentInstruction.parts[0]
-          ? currentInstruction.parts[0].text
-          : undefined;
+      const currentInstructionText = prevParams.systemInstruction?.parts?.[0]?.text;
 
       // Only update if the text content has actually changed.
       if ((newInstructionText || "") !== (currentInstructionText || "")) {
