@@ -1,10 +1,4 @@
-export interface Persona {
-  id: string;
-  name: string;
-  systemInstruction: string;
-}
-
-export const PREDEFINED_PERSONAS: Persona[] = [
+export const PREDEFINED_PERSONAS = [
   {
     id: "default",
     name: "Default",
@@ -39,4 +33,4 @@ export const PREDEFINED_PERSONAS: Persona[] = [
     name: "Custom...",
     systemInstruction: "",
   },
-];
+] as const;
