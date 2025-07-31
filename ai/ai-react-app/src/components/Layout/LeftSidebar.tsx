@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AppMode } from "../../App";
 import styles from "./LeftSidebar.module.css";
-import { BackendType } from "firebase/ai";
+import { BackendType, ModelParams } from "firebase/ai";
+import { PREDEFINED_PERSONAS } from "../../config/personas";
 
 interface LeftSidebarProps {
   /** The currently active application mode (e.g., 'chat', 'imagenGen'). */
@@ -10,6 +11,10 @@ interface LeftSidebarProps {
   setActiveMode: (mode: AppMode) => void;
   activeBackend: BackendType;
   setActiveBackend: (backend: BackendType) => void;
+  generativeParams: ModelParams;
+  setGenerativeParams: (
+    params: ModelParams | ((prevState: ModelParams) => ModelParams),
+  ) => void;
 }
 
 /**
@@ -20,7 +25,74 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
   setActiveMode,
   activeBackend,
   setActiveBackend,
+  generativeParams,
+  setGenerativeParams,
 }) => {
+  const [selectedPersonaId, setSelectedPersonaId] = useState<string>("default");
+  const [customPersona, setCustomPersona] = useState<string>("");
+
+  // Memoize the calculation of the new instruction text based on UI state.
+  const newInstructionText = React.useMemo(() => {
+    const selected = PREDEFINED_PERSONAS.find(
+      (p) => p.id === selectedPersonaId,
+    );
+    if (!selected) return ""; // Should not happen, but a safe fallback.
+
+    return selected.id === "custom"
+      ? customPersona
+      : selected.systemInstruction;
+  }, [selectedPersonaId, customPersona]);
+
+  // Effect to sync UI changes (from dropdown or textarea) UP to the parent state.
+  useEffect(() => {
+    setGenerativeParams((prevParams) => {
+      const currentInstructionText =
+        prevParams.systemInstruction?.parts?.[0]?.text ?? "";
+
+      // Only update if the text content has actually changed to prevent re-renders.
+      if (newInstructionText === currentInstructionText) {
+        return prevParams;
+      }
+
+      const newSystemInstruction = newInstructionText
+        ? { parts: [{ text: newInstructionText }] }
+        : undefined;
+
+      return {
+        ...prevParams,
+        systemInstruction: newSystemInstruction,
+      };
+    });
+  }, [newInstructionText, setGenerativeParams]);
+
+  // Effect to sync parent state changes DOWN to the local UI state.
+  // This ensures the UI reflects the state if it's changed elsewhere.
+  useEffect(() => {
+    const instructionText =
+      generativeParams.systemInstruction?.parts?.[0]?.text ?? "";
+
+    const matchingPersona = PREDEFINED_PERSONAS.find(
+      (p) => p.id !== "custom" && p.systemInstruction === instructionText,
+    );
+
+    if (matchingPersona) {
+      // A predefined persona matches the current instruction.
+      setSelectedPersonaId(matchingPersona.id);
+      setCustomPersona("");
+    } else {
+      // No predefined persona matches. It's either custom or the default empty state.
+      if (instructionText) {
+        // It's a custom persona.
+        setSelectedPersonaId("custom");
+        setCustomPersona(instructionText);
+      } else {
+        // It's the default empty state.
+        setSelectedPersonaId("default");
+        setCustomPersona("");
+      }
+    }
+  }, [generativeParams.systemInstruction]);
+
   // Define the available modes and their display names
   const modes: { id: AppMode; label: string }[] = [
     { id: "chat", label: "Chat" },
@@ -29,6 +101,16 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
 
   const handleBackendChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setActiveBackend(event.target.value as BackendType);
+  };
+
+  const handlePersonaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPersonaId(e.target.value);
+  };
+
+  const handleCustomPersonaChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setCustomPersona(e.target.value);
   };
 
   return (
@@ -50,7 +132,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
 
       {/* Backend Selection */}
       <div className={styles.backendSelector}>
-        <h6 className={styles.selectorTitle}>Backend API</h6>
+        <h5 className={styles.selectorTitle}>Backend API</h5>
         <div className={styles.radioGroup}>
           <label>
             <input
@@ -76,6 +158,33 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
           </label>
         </div>
       </div>
+
+      {/* Persona Selector */}
+      {activeMode === "chat" && (
+        <div className={styles.personaSelector}>
+          <h5 className={styles.selectorTitle}>Persona</h5>
+          <select
+            value={selectedPersonaId}
+            onChange={handlePersonaChange}
+            className={styles.personaDropdown}
+          >
+            {PREDEFINED_PERSONAS.map((persona) => (
+              <option key={persona.id} value={persona.id}>
+                {persona.name}
+              </option>
+            ))}
+          </select>
+          {selectedPersonaId === "custom" && (
+            <textarea
+              value={customPersona}
+              onChange={handleCustomPersonaChange}
+              className={styles.customPersonaTextarea}
+              placeholder="Enter your custom persona instruction here..."
+              rows={5}
+            />
+          )}
+        </div>
+      )}
     </nav>
   );
 };
