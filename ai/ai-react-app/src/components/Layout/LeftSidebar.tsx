@@ -31,34 +31,39 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
   const [selectedPersonaId, setSelectedPersonaId] = useState<string>("default");
   const [customPersona, setCustomPersona] = useState<string>("");
 
-  // Effect to update systemInstruction when persona changes
-  useEffect(() => {
+  const newInstructionText = React.useMemo(() => {
     const selected = PREDEFINED_PERSONAS.find(
       (p) => p.id === selectedPersonaId,
     );
-    if (!selected) return;
+    // Should not happen with the dropdown, but good to have a fallback.
+    if (!selected) return "";
 
-    const newInstructionText =
-      selected.id === "custom" ? customPersona : selected.systemInstruction;
+    return selected.id === "custom"
+      ? customPersona
+      : selected.systemInstruction;
+  }, [selectedPersonaId, customPersona]);
 
+  // Effect to update systemInstruction when persona changes
+  useEffect(() => {
     setGenerativeParams((prevParams) => {
+      const currentInstructionText =
+        prevParams.systemInstruction?.parts?.[0]?.text ?? "";
+
+      // Only update if the text content has actually changed to prevent re-renders.
+      if (newInstructionText === currentInstructionText) {
+        return prevParams;
+      }
+
       const newSystemInstruction = newInstructionText
         ? { parts: [{ text: newInstructionText }] }
         : undefined;
 
-      const currentInstructionText = prevParams.systemInstruction?.parts?.[0]?.text;
-
-      // Only update if the text content has actually changed.
-      if ((newInstructionText || "") !== (currentInstructionText || "")) {
-        return {
-          ...prevParams,
-          systemInstruction: newSystemInstruction,
-        };
-      }
-      // If no change, return the previous state to prevent re-render.
-      return prevParams;
+      return {
+        ...prevParams,
+        systemInstruction: newSystemInstruction,
+      };
     });
-  }, [selectedPersonaId, customPersona, setGenerativeParams]);
+  }, [newInstructionText, setGenerativeParams]);
 
   // Define the available modes and their display names
   const modes: { id: AppMode; label: string }[] = [
