@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "@/lib/*": ["src/lib/*"],
-      "@/components/*": ["src/components/*"],
-      "@/assets/*": ["assets/*"],
-      "@/pages/*": ["src/pages/*"],
-      "@/layout/*": ["src/layout/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/assets/*": ["./assets/*"],
+      "@/pages/*": ["./src/pages/*"],
+      "@/layout/*": ["./src/layout/*"],
     },
     "target": "es2020",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -16,8 +15,8 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
