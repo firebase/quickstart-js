@@ -108,7 +108,17 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
   const handleCustomPersonaChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    setCustomPersona(e.target.value);
+    const newSystemInstructionText = e.target.value;
+    setCustomPersona(newSystemInstructionText); // 1. update UI state
+    const newSystemInstruction: Content = {
+      parts: [{ text: newSystemInstructionText}],
+      role: 'system'
+    }
+    // 2. Update model state upwards, triggering re-rendering
+    handleModelParamsUpdate((prev: ModelParams) => ({
+      ...prev,
+      systemInstruction: newSystemInstruction
+    }));
   };
 
   return (
