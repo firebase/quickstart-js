@@ -12,9 +12,7 @@ interface LeftSidebarProps {
   activeBackend: BackendType;
   setActiveBackend: (backend: BackendType) => void;
   generativeParams: ModelParams;
-  setGenerativeParams: (
-    params: ModelParams | ((prevState: ModelParams) => ModelParams),
-  ) => void;
+  setGenerativeParams: React.Dispatch<React.SetStateAction<ModelParams>>;
 }
 
 /**
