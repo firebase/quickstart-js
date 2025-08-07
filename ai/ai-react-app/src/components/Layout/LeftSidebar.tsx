@@ -23,7 +23,6 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
   setActiveMode,
   activeBackend,
   setActiveBackend,
-  generativeParams,
   setGenerativeParams,
 }) => {
   // This component now manages its own UI state and pushes updates upwards.
