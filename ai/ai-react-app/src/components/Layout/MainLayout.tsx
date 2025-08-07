@@ -135,6 +135,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
             setActiveMode={setActiveMode}
             activeBackend={activeBackendType}
             setActiveBackend={setActiveBackendType} // Pass backend state/setter
+            generativeParams={generativeParams}
+            setGenerativeParams={setGenerativeParams}
           />
         </div>
         <main className={styles.centerContent}>{renderActiveView()}</main>
