@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AppMode } from "../../App";
 import styles from "./LeftSidebar.module.css";
 import { BackendType, Content, ModelParams } from "firebase/ai";
