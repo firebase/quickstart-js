@@ -1,5 +1,8 @@
 name: Check Firebase AI Samples
 
+permissions:
+  contents: read
+
 on:
   pull_request:
     branches:
