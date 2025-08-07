@@ -1,3 +1,13 @@
+.sidebar {
+  background-color: var(--color-surface-primary);
+  padding: 24px 0;
+  height: 100%;
+  border-right: 1px solid var(--color-border-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .sidebar ul {
   list-style: none;
   padding: 0 12px;
@@ -39,7 +49,8 @@
   background-color: var(--brand-gray-40);
 }
 
-.backendSelector {
+.backendSelector,
+.personaSelector {
   margin-top: 24px;
   padding: 0 12px;
   border-top: 1px solid var(--color-border-primary);
@@ -70,4 +81,34 @@
 .radioGroup input[type="radio"] {
   margin-right: 8px;
   accent-color: var(--brand-google-blue);
+}
+
+.personaDropdown {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: var(--color-surface-primary);
+  border: 1px solid var(--color-border-secondary);
+  color: var(--color-text-primary);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 0.875rem;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.customPersonaTextarea {
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background-color: var(--color-surface-primary);
+  border: 1px solid var(--color-border-secondary);
+  color: var(--color-text-primary);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 0.875rem;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+  resize: vertical;
 }
