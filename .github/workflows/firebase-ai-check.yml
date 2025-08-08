@@ -1,0 +1,35 @@
+name: Check Firebase AI Samples
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'ai/ai-react-app/**'
+
+jobs:
+  build-react-app:
+    name: Build React App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+          cache-dependency-path: 'ai/ai-react-app/yarn.lock'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: ./ai/ai-react-app
+
+      - name: Build application
+        run: yarn build
+        working-directory: ./ai/ai-react-app
