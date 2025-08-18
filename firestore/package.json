@@ -22,7 +22,7 @@
     "@angular/common": "^20.1.7",
     "@angular/compiler": "^20.1.7",
     "@angular/core": "^20.1.7",
-    "@angular/fire": "^7.6.1",
+    "@angular/fire": "^20.0.1",
     "@angular/flex-layout": "^15.0.0-beta.42",
     "@angular/forms": "^20.1.7",
     "@angular/material": "^20.1.6",
@@ -38,14 +38,14 @@
     "@angular-devkit/build-angular": "^20.1.6",
     "@angular/cli": "~20.1.6",
     "@angular/compiler-cli": "^20.1.7",
-    "@types/jasmine": "~4.3.0",
-    "jasmine-core": "~4.6.0",
-    "karma": "~6.4.0",
+    "@types/jasmine": "^5.1.9",
+    "jasmine-core": "^5.9.0",
+    "karma": "^6.4.4",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.8.3",
-    "prettier": "^1.5.3"
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
   }
 }
