@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RestaurantCardComponent } from './restaurant-card/restaurant-card.component';
 import { MatCardModule } from '@angular/material/card';
@@ -43,10 +43,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { connectFirestoreEmulator } from '@firebase/firestore';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignInModalComponent } from './sign-in-modal/sign-in-modal.component';
 import { DefaultHomepageFirestore, HomepageFirestore } from './homepage/hompage.service';
 
@@ -63,7 +62,11 @@ import { DefaultHomepageFirestore, HomepageFirestore } from './homepage/hompage.
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatSlideToggleModule,
     MatCardModule,
     FlexLayoutModule,
@@ -76,9 +79,9 @@ import { DefaultHomepageFirestore, HomepageFirestore } from './homepage/hompage.
     MatOptionModule,
     MatInputModule,
     MatButtonModule,
-    BrowserAnimationsModule,
+  ],
+  providers: [
     provideFirebaseApp(() => initializeApp(projectConfig)),
-    FormsModule,
     provideAuth(() => {
       const auth = getAuth();
       if (auth.app.options.projectId!.indexOf('demo') === 0)
@@ -96,8 +99,9 @@ import { DefaultHomepageFirestore, HomepageFirestore } from './homepage/hompage.
     }),
     provideFunctions(() => getFunctions()),
     provideStorage(() => getStorage()),
+    { provide: HomepageFirestore, useClass: DefaultHomepageFirestore }
   ],
-  providers: [{ provide: HomepageFirestore, useClass: DefaultHomepageFirestore }],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
