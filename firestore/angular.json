@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "friendly-eats-quickstart:build:production"
+              "buildTarget": "friendly-eats-quickstart:build:production"
             },
-            "local":{
-              "browserTarget": "friendly-eats-quickstart:build:local"
+            "local": {
+              "buildTarget": "friendly-eats-quickstart:build:local"
             }
           },
           "defaultConfiguration": "local"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "friendly-eats-quickstart:build"
+            "buildTarget": "friendly-eats-quickstart:build"
           }
         },
         "test": {
