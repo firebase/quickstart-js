@@ -19,9 +19,10 @@ import { Restaurant } from '../../types/restaurant';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-restaurant-card',
-  templateUrl: './restaurant-card.component.html',
-  styleUrls: ['./restaurant-card.component.css'],
+    selector: 'app-restaurant-card',
+    templateUrl: './restaurant-card.component.html',
+    styleUrls: ['./restaurant-card.component.css'],
+    standalone: false
 })
 export class RestaurantCardComponent {
   onCardClicked = () => {

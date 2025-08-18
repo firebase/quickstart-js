@@ -25,9 +25,10 @@ import {
 } from '../submit-review-modal/submit-review-modal.component';
 
 @Component({
-  selector: 'app-restuarant-page',
-  templateUrl: './restuarant-page.component.html',
-  styleUrls: ['./restuarant-page.component.css']
+    selector: 'app-restuarant-page',
+    templateUrl: './restuarant-page.component.html',
+    styleUrls: ['./restuarant-page.component.css'],
+    standalone: false
 })
 export class RestuarantPageComponent implements OnInit {
   restaurantData: Observable<Restaurant> = new Observable();

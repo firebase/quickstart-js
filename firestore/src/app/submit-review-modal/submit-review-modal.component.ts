@@ -22,10 +22,11 @@ import { Auth } from '@angular/fire/auth';
 import { Rating } from "../../types/ratings";
 
 @Component({
-  selector: "app-submit-review-modal",
-  templateUrl: "./submit-review-modal.component.html",
-  styleUrls: ["./submit-review-modal.component.css"],
-  encapsulation: ViewEncapsulation.None
+    selector: "app-submit-review-modal",
+    templateUrl: "./submit-review-modal.component.html",
+    styleUrls: ["./submit-review-modal.component.css"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class SubmitReviewModalComponent {
   private firestore: Firestore = inject(Firestore);

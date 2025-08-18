@@ -20,9 +20,10 @@ import { Observable } from 'rxjs';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 @Component({
-  selector: 'app-review-list',
-  templateUrl: './review-list.component.html',
-  styleUrls: ['./review-list.component.css']
+    selector: 'app-review-list',
+    templateUrl: './review-list.component.html',
+    styleUrls: ['./review-list.component.css'],
+    standalone: false
 })
 export class ReviewListComponent implements OnInit {
   @Input() restaurantID: string | null = null;
