@@ -34,20 +34,20 @@ import { SignInModalComponent } from '../sign-in-modal/sign-in-modal.component';
 import { HomepageFirestore } from './hompage.service';
 
 @Component({
-    selector: 'app-homepage',
-    templateUrl: './homepage.component.html',
-    styleUrls: ['./homepage.component.css'],
-    providers: [
-        {
-            provide: MAT_DIALOG_DATA,
-            useValue: {}
-        },
-        {
-            provide: MatDialogRef,
-            useValue: {}
-        }
-    ],
-    standalone: false
+  selector: 'app-homepage',
+  templateUrl: './homepage.component.html',
+  styleUrls: ['./homepage.component.css'],
+  providers: [
+    {
+      provide: MAT_DIALOG_DATA,
+      useValue: {}
+    },
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    }
+  ],
+  standalone: false
 })
 
 export class HomepageComponent {

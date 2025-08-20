@@ -20,11 +20,11 @@ import { DialogData, filterCategories, filterCities } from './dialogdata';
 
 
 @Component({
-    selector: 'app-filter-dialog',
-    templateUrl: './filter-dialog.component.html',
-    styleUrls: ['./filter-dialog.component.css'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: 'app-filter-dialog',
+  templateUrl: './filter-dialog.component.html',
+  styleUrls: ['./filter-dialog.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class FilterDialogComponent {
   cities: string[] = filterCities;
