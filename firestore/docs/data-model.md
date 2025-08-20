@@ -4,7 +4,7 @@ The Friendly Eats application uses two main collections in Firestore: `restauran
 
 ## `restaurants`
 
-This collection contains a document for each restaurant. The structure of a restaurant document is as follows:
+This collection contains a document for each restaurant. The structure of a restaurant document is defined in the [`restaurant.ts`](../src/types/restaurant.ts) file.
 
 *   `id` (string): The unique identifier for the restaurant.
 *   `avgRating` (number): The average rating of the restaurant.
@@ -17,7 +17,7 @@ This collection contains a document for each restaurant. The structure of a rest
 
 ## `ratings`
 
-This is a sub-collection of a restaurant document. It contains a document for each rating that a restaurant has received. The structure of a rating document is as follows:
+This is a sub-collection of a restaurant document. It contains a document for each rating that a restaurant has received. The structure of a rating document is defined in the [`ratings.ts`](../src/types/ratings.ts) file.
 
 *   `id` (string, optional): The unique identifier for the rating.
 *   `rating` (number): The rating given by the user (1-5).

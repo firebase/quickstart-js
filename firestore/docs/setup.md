@@ -9,6 +9,13 @@ This document provides step-by-step instructions for setting up the Friendly Eat
 *   [Angular CLI](https://angular.io/cli)
 *   [Firebase CLI](https://firebase.google.com/docs/cli)
 
+To install the CLIs globally, run the following commands:
+
+```bash
+npm install -g @angular/cli
+npm install -g firebase-tools
+```
+
 ## Installation
 
 1.  **Clone the repository:**
