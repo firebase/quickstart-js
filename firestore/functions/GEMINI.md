@@ -4,7 +4,7 @@ This folder contains the backend logic for the firestore friendly eats sample ap
 
 ## Overview 
 - Source code is in `src/`
-- The backend logic is a firebse function that uses firebase functions and firestore triggers
+- The backend logic is a firebase function that uses firebase functions and firestore triggers
 
 ## Essential commands
 - Build with `npm build`
