@@ -4,7 +4,7 @@
 
 ## Introduction
 
-FriendlyEats is a restaurant recommendation app built on Firestore. It was built with the [Angular](https://angular.io/) Javascript framework, and can make use of [Firebase's Local Emulator Suite][emulator-docs] (specifically, the [Authentication](https://firebase.google.com/docs/emulator-suite/connect_auth), [Storage](https://firebase.google.com/docs/emulator-suite/connect_storage), [Functions](https://firebase.google.com/docs/emulator-suite/connect_functions), and [Firestore](https://firebase.google.com/docs/emulator-suite/connect_firestore) emulators) so that the quickstart can be run without needing to create a project in the [Firebase Console](https://console.firebase.google.com).
+FriendlyEats is a restaurant recommendation app built on Firestore. It was built with the [Angular](https://angular.dev/) Javascript framework, and can make use of [Firebase's Local Emulator Suite][emulator-docs] (specifically, the [Authentication](https://firebase.google.com/docs/emulator-suite/connect_auth), [Storage](https://firebase.google.com/docs/emulator-suite/connect_storage), [Functions](https://firebase.google.com/docs/emulator-suite/connect_functions), and [Firestore](https://firebase.google.com/docs/emulator-suite/connect_firestore) emulators) so that the quickstart can be run without needing to create a project in the [Firebase Console](https://console.firebase.google.com).
 
 For more information about Firestore visit the [Firestore docs][firestore-docs].
 

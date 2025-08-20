@@ -20,8 +20,8 @@ The application is built with the following technologies:
 
 *   **Language**: [TypeScript](https://www.typescriptlang.org/) - The primary programming language for the application.
 *   **Frontend**:
-    *   [Angular](https://angular.io/) - A popular web application framework. Please note that this project currently uses an older version of Angular, while the Firebase integrations are more recent.
-    *   [Angular Material](https://material.angular.io/) - UI component library for Angular.
+    *   [Angular](https://angular.dev/) - A popular web application framework. Please note that this project currently uses an older version of Angular, while the Firebase integrations are more recent.
+    *   [Angular Material](https://material.angular.dev/) - UI component library for Angular.
 *   **Backend**: [Firebase Functions](https://firebase.google.com/docs/functions) - Serverless functions to extend Firebase services.
 *   **Database**: [Firestore](https://firebase.google.com/docs/firestore) - A flexible, scalable NoSQL cloud database.
 *   **Authentication**: [Firebase Authentication](https://firebase.google.com/docs/auth) - A service for managing user authentication.

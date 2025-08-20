@@ -4,7 +4,7 @@ The Friendly Eats application is a full-stack application with a clear separatio
 
 ## Frontend
 
-The frontend is an [Angular](https://angular.io/) application located in the root directory of the project. It is responsible for rendering the user interface and interacting with the Firebase services. For more details, see the [frontend documentation](./frontend.md).
+The frontend is an [Angular](https://angular.dev/) application located in the root directory of the project. It is responsible for rendering the user interface and interacting with the Firebase services. For more details, see the [frontend documentation](./frontend.md).
 
 ## Backend
 

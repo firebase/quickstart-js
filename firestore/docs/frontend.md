@@ -1,6 +1,6 @@
 # Frontend
 
-The frontend of the Friendly Eats application is an [Angular](https://angular.io/) application.
+The frontend of the Friendly Eats application is an [Angular](https://angular.dev/) application.
 
 ## Commands
 

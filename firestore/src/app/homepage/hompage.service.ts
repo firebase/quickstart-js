@@ -43,7 +43,7 @@ import { Restaurant } from "types/restaurant";
  * methods had been written directly into the`homepage.component.ts` file.
  * 
  * For more information about dependency injection and unit testing in Angular
- * visit the Angular docs: https://angular.io/guide/dependency-injection
+ * visit the Angular docs: https://angular.dev/
  */
 
 @Injectable()
