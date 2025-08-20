@@ -6,7 +6,7 @@ This document provides step-by-step instructions for setting up the Friendly Eat
 
 *   [Node.js](https://nodejs.org/en/download) (version 16.0 or higher)
 *   [Java](https://jdk.java.net/) (JDK version 11 or higher)
-*   [Angular CLI](https://angular.io/cli)
+*   [Angular CLI](https://angular.dev/cli)
 *   [Firebase CLI](https://firebase.google.com/docs/cli)
 
 To install the CLIs globally, run the following commands:

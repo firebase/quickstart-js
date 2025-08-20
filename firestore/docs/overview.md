@@ -28,5 +28,5 @@ The application is built with the following technologies:
 *   **Storage**: [Cloud Storage for Firebase](https://firebase.google.com/docs/storage) - A service for storing and serving user-generated content.
 *   **Tooling**:
     *   [npm](https://www.npmjs.com/) - Package manager for JavaScript.
-    *   [Angular CLI](https://angular.io/cli) - Command-line interface for Angular.
+    *   [Angular CLI](https://angular.dev/cli) - Command-line interface for Angular.
     *   [Firebase CLI](https://firebase.google.com/docs/cli) - Command-line interface for Firebase.
