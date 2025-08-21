@@ -6,7 +6,7 @@ permissions:
 on:
   pull_request:
     branches:
-      - main
+      - master
     paths:
       - 'ai/ai-react-app/**'
 
