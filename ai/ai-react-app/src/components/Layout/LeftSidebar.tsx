@@ -5,7 +5,7 @@ import { BackendType, Content, ModelParams } from "firebase/ai";
 import { PREDEFINED_PERSONAS } from "../../config/personas";
 
 interface LeftSidebarProps {
-  /** The currently active application mode (e.g., 'chat', 'imagenGen'). */
+  /** The currently active application mode. */
   activeMode: AppMode;
   /** Function to call when a mode button is clicked, updating the active mode in the parent. */
   setActiveMode: (mode: AppMode) => void;
@@ -41,6 +41,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
   const modes: { id: AppMode; label: string }[] = [
     { id: "chat", label: "Chat" },
     { id: "imagenGen", label: "Imagen Generation" },
+    { id: "live", label: "Live Conversation" },
   ];
 
   const handleBackendChange = (event: React.ChangeEvent<HTMLInputElement>) => {

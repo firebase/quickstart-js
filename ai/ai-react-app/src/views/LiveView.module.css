@@ -1,0 +1,101 @@
+.liveViewContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 24px;
+  text-align: center;
+  gap: 20px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.instructions {
+  max-width: 500px;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.statusContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 24px;
+}
+
+.statusIndicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--color-text-placeholder);
+  transition: background-color 0.3s ease;
+}
+
+.statusIndicator.active {
+  background-color: var(--brand-google-cloud-green);
+  animation: pulse 2s infinite;
+}
+
+.statusText {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.controlButton {
+  background-color: var(--color-surface-interactive);
+  color: var(--color-text-on-interactive);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background-color 0.15s ease;
+  min-width: 200px;
+}
+.controlButton:hover:not(:disabled) {
+  background-color: var(--color-surface-interactive-hover);
+}
+.controlButton.stop {
+  background-color: var(--brand-firebase-red);
+}
+.controlButton.stop:hover:not(:disabled) {
+  background-color: #b71c1c;
+}
+.controlButton:disabled {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.errorMessage {
+  background-color: var(--color-error-bg);
+  color: var(--color-error-text);
+  border: 1px solid var(--color-error-border);
+  padding: 10px 16px;
+  border-radius: 4px;
+  margin-top: 20px;
+  max-width: 500px;
+  white-space: pre-wrap;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 168, 83, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(52, 168, 83, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 168, 83, 0);
+  }
+}

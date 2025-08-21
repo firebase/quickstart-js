@@ -12,6 +12,7 @@ import {
   ImagenModelParams,
   FunctionCall,
   GoogleSearchTool,
+  BackendType,
 } from "firebase/ai";
 
 import { firebaseConfig } from "../config/firebase-config";
@@ -23,6 +24,10 @@ export const AVAILABLE_GENERATIVE_MODELS = [
   "gemini-2.5-flash"
 ];
 export const AVAILABLE_IMAGEN_MODELS = ["imagen-3.0-generate-002"];
+export const LIVE_MODELS = new Map<BackendType, string>([
+  [BackendType.GOOGLE_AI, 'gemini-live-2.5-flash-preview'],
+  [BackendType.VERTEX_AI, 'gemini-2.0-flash-exp']
+])
 
 let app: FirebaseApp;
 try {
