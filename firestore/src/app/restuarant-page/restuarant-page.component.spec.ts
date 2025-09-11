@@ -23,6 +23,10 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { projectConfig } from 'src/environments/environment.default';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { ReviewListComponent } from '../review-list/review-list.component';
 
 describe('RestuarantPageComponent', () => {
   let component: RestuarantPageComponent;
@@ -32,11 +36,15 @@ describe('RestuarantPageComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule,
         MatDialogModule,
+        MatToolbarModule,
+        MatIconModule,
+        CommonModule
+      ],
+      declarations: [RestuarantPageComponent, ReviewListComponent],
+      providers: [
         provideFirebaseApp(() => initializeApp(projectConfig)),
         provideFirestore(() => getFirestore()),
-        provideAuth(() => getAuth())],
-      declarations: [RestuarantPageComponent],
-      providers: [
+        provideAuth(() => getAuth()),
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
       ]

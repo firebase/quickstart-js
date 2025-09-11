@@ -4,7 +4,7 @@
 
 ## Introduction
 
-FriendlyEats is a restaurant recommendation app built on Firestore. It was built with the [Angular](https://angular.io/) Javascript framework, and can make use of [Firebase's Local Emulator Suite][emulator-docs] (specifically, the [Authentication](https://firebase.google.com/docs/emulator-suite/connect_auth), [Storage](https://firebase.google.com/docs/emulator-suite/connect_storage), [Functions](https://firebase.google.com/docs/emulator-suite/connect_functions), and [Firestore](https://firebase.google.com/docs/emulator-suite/connect_firestore) emulators) so that the quickstart can be run without needing to create a project in the [Firebase Console](https://console.firebase.google.com).
+FriendlyEats is a restaurant recommendation app built on Firestore. It was built with the [Angular](https://angular.dev/) Javascript framework, and can make use of [Firebase's Local Emulator Suite][emulator-docs] (specifically, the [Authentication](https://firebase.google.com/docs/emulator-suite/connect_auth), [Storage](https://firebase.google.com/docs/emulator-suite/connect_storage), [Functions](https://firebase.google.com/docs/emulator-suite/connect_functions), and [Firestore](https://firebase.google.com/docs/emulator-suite/connect_firestore) emulators) so that the quickstart can be run without needing to create a project in the [Firebase Console](https://console.firebase.google.com).
 
 For more information about Firestore visit the [Firestore docs][firestore-docs].
 
@@ -32,9 +32,9 @@ Follow these steps to setup and run the quickstart:
     npm -g i firebase-tools
     ```
 
- 1. Install and build all project dependencies
+ 1. Install all project dependencies
     ```bash
-    npm install && (cd functions && npm install)
+    npm install && (cd functions && npm install) && (cd scripts && npm install)
     ```
 
     > **Note:** When modifying the contents of `functions/src`, be sure to run `npm run build` in the `functions/` directory so that Typescript changes can be compiled and present in the next emulator run.
@@ -49,7 +49,9 @@ Follow these steps to setup and run the quickstart:
 
 Follow these steps to have a working version of the quickstart running with the Firebase console:
 
-   > **Note:** In the original application (that runs on the emulators), there is a Firebase Function that updates the `avgRating` field of a restaurant whenever that restaurant recieves a review. While **Authentication**, **Storage**, and **Firestore** are offered as free services through the Firebase console, using Firebase **Functions** on the Firebase Console requires a billing plan. There is a [free tier billing plan](https://firebase.google.com/pricing) that allows up to 2 million free function calls per month, but enabling this plan requires presenting payment information to Firebase. The following instructions, therefore, exclude those steps needed to deploy and host functions on the Firebase Console. All application functionality, other than the auto-updating `avgRating` field for restaurants, is conserved.
+   > **Note on Billing:** Firebase offers two main pricing plans: the Spark Plan (free) and the Blaze Plan (pay-as-you-go). The Spark Plan has a generous free tier for many services, including Cloud Functions. If you exceed the limits of the Spark Plan, your app's usage of that particular service will be capped for the rest of the billing cycle to prevent any charges. The Blaze Plan gives you the same free tier as the Spark Plan, but you are billed for any usage that exceeds those limits.
+   >
+   > For more information, see the [Firebase pricing page](https://firebase.google.com/pricing).
 
  1. Create a new Firebase project in the [Firebase Console](https://console.firebase.google.com)
 
