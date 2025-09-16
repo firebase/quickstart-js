@@ -134,7 +134,7 @@ const ChatView: React.FC<ChatViewProps> = ({
   const suggestions = [
     "Explain the difference between `let`, `const`, and `var` in JavaScript.",
     "Write a short story about a friendly robot.",
-    "Describe this image.",
+    "Summarize this page: https://en.wikipedia.org/wiki/Galatea_of_the_Spheres",
     "What's the weather in London in Celsius?",
   ];
   const handleSuggestion = (suggestion: string) => {
