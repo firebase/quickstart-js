@@ -77,126 +77,66 @@
   cursor: not-allowed;
 }
 
-
-
 .errorMessage {
-
   background-color: var(--color-error-bg);
-
   color: var(--color-error-text);
-
   border: 1px solid var(--color-error-border);
-
   padding: 10px 16px;
-
   border-radius: 4px;
-
   margin-top: 20px;
-
   max-width: 500px;
-
   white-space: pre-wrap;
-
 }
-
-
 
 .controlsContainer {
-
   display: flex;
-
   flex-direction: column;
-
   gap: 16px;
-
   margin-top: 20px;
-
   padding-top: 20px;
-
   border-top: 1px solid var(--color-border-primary);
-
   width: 100%;
-
   max-width: 500px;
-
   align-items: center;
-
 }
-
-
 
 .videoControls {
-
   display: flex;
-
   gap: 10px;
-
   align-items: center;
-
   justify-content: center;
-
   width: 100%;
-
 }
 
-
-
 .videoSourceSelect {
-
   padding: 12px 16px;
-
   background-color: var(--color-surface-primary);
-
   border: 1px solid var(--color-border-secondary);
-
   color: var(--color-text-primary);
-
   border-radius: 24px;
-
   font-size: 1rem;
-
   cursor: pointer;
-
   transition: border-color 0.15s ease;
-
 }
 
 .videoSourceSelect:hover {
-
   border-color: var(--brand-gray-50);
-
 }
 
 .videoSourceSelect:disabled {
-
   opacity: 0.5;
-
   cursor: not-allowed;
-
   background-color: var(--color-surface-tertiary);
-
 }
 
-
-
 @keyframes pulse {
-
   0% {
-
     box-shadow: 0 0 0 0 rgba(52, 168, 83, 0.7);
-
   }
-
   70% {
-
     box-shadow: 0 0 0 10px rgba(52, 168, 83, 0);
-
   }
-
   100% {
-
     box-shadow: 0 0 0 0 rgba(52, 168, 83, 0);
-
   }
-
 }
