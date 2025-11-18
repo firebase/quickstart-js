@@ -81,7 +81,7 @@ const addFakeRestaurant = async (restaurant) => {
 };
 
 /**
- * A function to generate 20 random `Restaurant` objects. The definiton
+ * A function to generate 20 random `Restaurant` objects. The definition
  * for a `Restaurant` is given in `../types/restaurant.ts`.
  * @returns A list of 20 mock `Restaurant` objects to send to firestore
  */
