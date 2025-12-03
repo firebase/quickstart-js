@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "firebase": "12.2.1",
+    "firebase": "12.6.0",
     "immer": "^10.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
