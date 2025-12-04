@@ -13,15 +13,15 @@ import {
   FunctionCall,
   GoogleSearchTool,
   BackendType,
+  URLContextTool,
 } from "firebase/ai";
 
 import { firebaseConfig } from "../config/firebase-config";
 
 export const AVAILABLE_GENERATIVE_MODELS = [
+  "gemini-2.5-flash",
   "gemini-2.0-flash",
   "gemini-2.0-flash-lite",
-  "gemini-2.0-flash-exp",
-  "gemini-2.5-flash"
 ];
 export const AVAILABLE_IMAGEN_MODELS = [
   "imagen-4.0-generate-001",
@@ -69,8 +69,12 @@ export const defaultFunctionCallingTool = {
 };
 
 export const defaultGoogleSearchTool: GoogleSearchTool = {
-  googleSearch: {}
-}
+  googleSearch: {},
+};
+
+export const defaultURLContextTool: URLContextTool = {
+  urlContext: {},
+};
 
 export const defaultGenerativeParams: Omit<ModelParams, "model"> = {
   // Model name itself is selected in the UI
@@ -120,7 +124,7 @@ export const handleFunctionExecution = async (
     await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate delay
     const location: string =
       "location" in functionCall.args &&
-        typeof functionCall.args.location === "string"
+      typeof functionCall.args.location === "string"
         ? functionCall.args.location
         : "Default City, ST";
     const unit: string =

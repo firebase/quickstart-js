@@ -6,6 +6,7 @@ import {
   AVAILABLE_IMAGEN_MODELS,
   defaultFunctionCallingTool,
   defaultGoogleSearchTool,
+  defaultURLContextTool,
 } from "../../services/firebaseAIService";
 import {
   ModelParams,
@@ -160,9 +161,12 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
           nextState.toolConfig = undefined; // Clear config when turning off
         }
       } else if (name === "google-search-toggle") {
+        const otherTools = (prev.tools || []).filter(
+          (tool) => !("googleSearch" in tool),
+        );
         if (checked) {
           // Turn ON Google Search Grounding
-          nextState.tools = [defaultGoogleSearchTool];
+          nextState.tools = [...otherTools, defaultGoogleSearchTool];
 
           // Turn OFF JSON mode and Function Calling
           nextState.generationConfig.responseMimeType = undefined;
@@ -170,7 +174,23 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
           nextState.toolConfig = undefined;
         } else {
           // Turn OFF Google Search Grounding
-          nextState.tools = undefined;
+          nextState.tools = otherTools.length > 0 ? otherTools : undefined;
+        }
+      } else if (name === "url-context-toggle") {
+        const otherTools = (prev.tools || []).filter(
+          (tool) => !("urlContext" in tool),
+        );
+        if (checked) {
+          // Turn ON URL Context
+          nextState.tools = [...otherTools, defaultURLContextTool];
+
+          // Turn OFF JSON mode and Function Calling
+          nextState.generationConfig.responseMimeType = undefined;
+          nextState.generationConfig.responseSchema = undefined;
+          nextState.toolConfig = undefined;
+        } else {
+          // Turn OFF URL Context
+          nextState.tools = otherTools.length > 0 ? otherTools : undefined;
         }
       }
       console.log("[RightSidebar] Updated generative params state:", nextState);
@@ -227,14 +247,13 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   // Derive UI state from config
   const isStructuredOutputActive =
     generativeParams.generationConfig?.responseMimeType === "application/json";
-  const isFunctionCallingActive =
-    (generativeParams.toolConfig?.functionCallingConfig?.mode ===
-      FunctionCallingMode.AUTO ||
-      generativeParams.toolConfig?.functionCallingConfig?.mode ===
-        FunctionCallingMode.ANY) &&
-    !!generativeParams.tools?.length;
+  const isFunctionCallingActive = !!generativeParams.toolConfig
+    ?.functionCallingConfig;
   const isGroundingWithGoogleSearchActive = !!generativeParams.tools?.some(
     (tool) => "googleSearch" in tool,
+  );
+  const isURLContextActive = !!generativeParams.tools?.some(
+    (tool) => "urlContext" in tool,
   );
 
   return (
@@ -365,7 +384,13 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
           <div>
             <h5 className={styles.subSectionTitle}>Tools</h5>
             <div
-              className={`${styles.toggleGroup} ${isFunctionCallingActive ? styles.disabledText : ""}`}
+              className={`${styles.toggleGroup} ${
+                isFunctionCallingActive ||
+                isGroundingWithGoogleSearchActive ||
+                isURLContextActive
+                  ? styles.disabledText
+                  : ""
+              }`}
             >
               <label htmlFor="structured-output-toggle">
                 Structured output (JSON)
@@ -378,16 +403,22 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   checked={isStructuredOutputActive}
                   onChange={handleToggleChange}
                   disabled={
-                    isFunctionCallingActive || isGroundingWithGoogleSearchActive
+                    isFunctionCallingActive ||
+                    isGroundingWithGoogleSearchActive ||
+                    isURLContextActive
                   }
                 />
-                <span
-                  className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive ? styles.disabled : ""}`}
-                ></span>
+                <span className={styles.slider}></span>
               </label>
             </div>
             <div
-              className={`${styles.toggleGroup} ${isStructuredOutputActive || isGroundingWithGoogleSearchActive ? styles.disabledText : ""}`}
+              className={`${styles.toggleGroup} ${
+                isStructuredOutputActive ||
+                isGroundingWithGoogleSearchActive ||
+                isURLContextActive
+                  ? styles.disabledText
+                  : ""
+              }`}
             >
               <label htmlFor="function-call-toggle">Function calling</label>
               <label className={styles.switch}>
@@ -399,12 +430,11 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   onChange={handleToggleChange}
                   disabled={
                     isStructuredOutputActive ||
-                    isGroundingWithGoogleSearchActive
+                    isGroundingWithGoogleSearchActive ||
+                    isURLContextActive
                   }
                 />
-                <span
-                  className={`${styles.slider} ${isStructuredOutputActive ? styles.disabled : ""}`}
-                ></span>
+                <span className={styles.slider}></span>
               </label>
             </div>
             <div
@@ -426,13 +456,27 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   onChange={handleToggleChange}
                   disabled={isStructuredOutputActive || isFunctionCallingActive}
                 />
-                <span
-                  className={`${styles.slider} ${
-                    isStructuredOutputActive || isFunctionCallingActive
-                      ? styles.disabled
-                      : ""
-                  }`}
-                ></span>
+                <span className={styles.slider}></span>
+              </label>
+            </div>
+            <div
+              className={`${styles.toggleGroup} ${
+                isStructuredOutputActive || isFunctionCallingActive
+                  ? styles.disabledText
+                  : ""
+              }`}
+            >
+              <label htmlFor="url-context-toggle">URL Context</label>
+              <label className={styles.switch}>
+                <input
+                  type="checkbox"
+                  id="url-context-toggle"
+                  name="url-context-toggle"
+                  checked={isURLContextActive}
+                  onChange={handleToggleChange}
+                  disabled={isStructuredOutputActive || isFunctionCallingActive}
+                />
+                <span className={styles.slider}></span>
               </label>
             </div>
           </div>
