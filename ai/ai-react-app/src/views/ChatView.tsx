@@ -486,6 +486,17 @@ const ChatView: React.FC<ChatViewProps> = ({
     onUsageMetadataChange,
   ]);
 
+  const currentLatLng = currentParams.toolConfig?.retrievalConfig?.latLng;
+  const isGroundingWithGoogleMapsActive = !!currentParams.tools?.some(
+    (tool) => "googleMaps" in tool,
+  );
+  const isLatLngInvalid =
+    isGroundingWithGoogleMapsActive &&
+    ((currentLatLng?.latitude !== undefined &&
+      currentLatLng?.longitude === undefined) ||
+      (currentLatLng?.latitude === undefined &&
+        currentLatLng?.longitude !== undefined));
+
   return (
     <div className={styles.chatViewContainer}>
       {/* Chat History Area */}
@@ -549,6 +560,7 @@ const ChatView: React.FC<ChatViewProps> = ({
           aiInstance={aiInstance}
           currentParams={currentParams}
           selectedFile={selectedFile}
+          disabled={isLatLngInvalid}
         />
       </div>
     </div>

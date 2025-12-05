@@ -25,6 +25,7 @@ interface PromptInputProps {
   currentParams?: ModelParams;
   currentImagenParams?: ImagenModelParams;
   selectedFile: File | null;
+  disabled?: boolean;
 }
 
 const PromptInput: React.FC<PromptInputProps> = ({
@@ -39,6 +40,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
   aiInstance,
   currentParams,
   selectedFile,
+  disabled = false,
 }) => {
   const [tokenCount, setTokenCount] = useState<CountTokensResponse | null>(
     null,
@@ -142,14 +144,14 @@ const PromptInput: React.FC<PromptInputProps> = ({
           value={prompt}
           onChange={(e) => onPromptChange(e.target.value)}
           placeholder={placeholder}
-          disabled={isLoading || isCountingTokens} // Disable if main loading OR counting
+          disabled={disabled || isLoading || isCountingTokens} // Disable if main loading OR counting
           rows={3}
           aria-label="Prompt input"
         />
         <button
           className={styles.runButton}
           onClick={onSubmit}
-          disabled={isLoading || isCountingTokens || !prompt.trim()} // Disable if loading, counting, or empty
+          disabled={disabled || isLoading || isCountingTokens || !prompt.trim()} // Disable if loading, counting, or empty
           aria-label="Submit prompt"
         >
           {isLoading ? "Running..." : "Run ➤"}

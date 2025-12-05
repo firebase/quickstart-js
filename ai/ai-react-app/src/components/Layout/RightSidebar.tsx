@@ -211,6 +211,28 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
     });
   };
 
+  const handleLatLngChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: "latitude" | "longitude",
+  ) => {
+    const value = parseFloat(e.target.value);
+    handleModelParamsUpdate((prev: ModelParams): ModelParams => {
+      const nextState = JSON.parse(JSON.stringify(prev));
+      nextState.toolConfig = nextState.toolConfig || {};
+      nextState.toolConfig.retrievalConfig =
+        nextState.toolConfig.retrievalConfig || {};
+      nextState.toolConfig.retrievalConfig.latLng =
+        nextState.toolConfig.retrievalConfig.latLng || {};
+
+      if (isNaN(value)) {
+        delete nextState.toolConfig.retrievalConfig.latLng[field];
+      } else {
+        nextState.toolConfig.retrievalConfig.latLng[field] = value;
+      }
+      return nextState;
+    });
+  };
+
   const handleImagenModelChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -276,6 +298,13 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   const isGoogleMapsWidgetEnabled = !!generativeParams.tools?.find(
     (tool) => "googleMaps" in tool,
   )?.googleMaps?.enableWidget;
+
+  const currentLatLng = generativeParams.toolConfig?.retrievalConfig?.latLng;
+  const isLatLngInvalid =
+    (currentLatLng?.latitude !== undefined &&
+      currentLatLng?.longitude === undefined) ||
+    (currentLatLng?.latitude === undefined &&
+      currentLatLng?.longitude !== undefined);
 
   return (
     <div className={styles.rightSidebarContainer}>
@@ -404,140 +433,178 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
 
           <div>
             <h5 className={styles.subSectionTitle}>Tools</h5>
-            <div
-              className={`${styles.toggleGroup} ${isFunctionCallingActive ? styles.disabledText : ""}`}
-            >
-              <label htmlFor="structured-output-toggle">
-                Structured output (JSON)
-              </label>
-              <label className={styles.switch}>
-                <input
-                  type="checkbox"
-                  id="structured-output-toggle"
-                  name="structured-output-toggle"
-                  checked={isStructuredOutputActive}
-                  onChange={handleToggleChange}
-                  disabled={
-                    isFunctionCallingActive ||
-                    isGroundingWithGoogleSearchActive ||
-                    isGroundingWithGoogleMapsActive
-                  }
-                />
-                <span
-                  className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive || isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
-                ></span>
-              </label>
+            <div className={styles.groupContainer}>
+              <div
+                className={`${styles.toggleGroup} ${isFunctionCallingActive ? styles.disabledText : ""}`}
+              >
+                <label htmlFor="structured-output-toggle">
+                  Structured output (JSON)
+                </label>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    id="structured-output-toggle"
+                    name="structured-output-toggle"
+                    checked={isStructuredOutputActive}
+                    onChange={handleToggleChange}
+                    disabled={
+                      isFunctionCallingActive ||
+                      isGroundingWithGoogleSearchActive ||
+                      isGroundingWithGoogleMapsActive
+                    }
+                  />
+                  <span
+                    className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive || isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
+                  ></span>
+                </label>
+              </div>
             </div>
-            <div
-              className={`${styles.toggleGroup} ${isStructuredOutputActive || isGroundingWithGoogleSearchActive ? styles.disabledText : ""}`}
-            >
-              <label htmlFor="function-call-toggle">Function calling</label>
-              <label className={styles.switch}>
-                <input
-                  type="checkbox"
-                  id="function-call-toggle"
-                  name="function-call-toggle"
-                  checked={isFunctionCallingActive}
-                  onChange={handleToggleChange}
-                  disabled={
-                    isStructuredOutputActive ||
-                    isGroundingWithGoogleSearchActive ||
-                    isGroundingWithGoogleMapsActive
-                  }
-                />
-                <span
-                  className={`${styles.slider} ${isStructuredOutputActive ? styles.disabled : ""}`}
-                ></span>
-              </label>
+            <div className={styles.groupContainer}>
+              <div
+                className={`${styles.toggleGroup} ${isStructuredOutputActive || isGroundingWithGoogleSearchActive ? styles.disabledText : ""}`}
+              >
+                <label htmlFor="function-call-toggle">Function calling</label>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    id="function-call-toggle"
+                    name="function-call-toggle"
+                    checked={isFunctionCallingActive}
+                    onChange={handleToggleChange}
+                    disabled={
+                      isStructuredOutputActive ||
+                      isGroundingWithGoogleSearchActive ||
+                      isGroundingWithGoogleMapsActive
+                    }
+                  />
+                  <span
+                    className={`${styles.slider} ${isStructuredOutputActive ? styles.disabled : ""}`}
+                  ></span>
+                </label>
+              </div>
             </div>
-            <div
-              className={`${styles.toggleGroup} ${
-                isStructuredOutputActive || isFunctionCallingActive
+            <div className={styles.groupContainer}>
+              <div
+                className={`${styles.toggleGroup} ${isStructuredOutputActive || isFunctionCallingActive
                   ? styles.disabledText
                   : ""
-              }`}
-            >
-              <label htmlFor="google-search-toggle">
-                Grounding with Google Search
-              </label>
-              <label className={styles.switch}>
-                <input
-                  type="checkbox"
-                  id="google-search-toggle"
-                  name="google-search-toggle"
-                  checked={isGroundingWithGoogleSearchActive}
-                  onChange={handleToggleChange}
-                  disabled={
-                    isStructuredOutputActive || isFunctionCallingActive
-                  }
-                />
-                <span
-                  className={`${styles.slider} ${isStructuredOutputActive ||
-                    isFunctionCallingActive ||
-                    isGroundingWithGoogleMapsActive
-                    ? styles.disabled
-                    : ""
-                    }`}
-                ></span>
-              </label>
-            </div>
-            <div
-              className={`${styles.toggleGroup} ${isStructuredOutputActive ||
-                isFunctionCallingActive ||
-                isGroundingWithGoogleSearchActive
-                ? styles.disabledText
-                : ""
-                }`}
-            >
-              <label htmlFor="google-maps-toggle">
-                Grounding with Google Maps
-              </label>
-              <label className={styles.switch}>
-                <input
-                  type="checkbox"
-                  id="google-maps-toggle"
-                  name="google-maps-toggle"
-                  checked={isGroundingWithGoogleMapsActive}
-                  onChange={handleToggleChange}
-                  disabled={
-                    isStructuredOutputActive || isFunctionCallingActive
-                  }
-                />
-                <span
-                  className={`${styles.slider} ${
-                    isStructuredOutputActive ||
+                  }`}
+              >
+                <label htmlFor="google-search-toggle">
+                  Grounding with Google Search
+                </label>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    id="google-search-toggle"
+                    name="google-search-toggle"
+                    checked={isGroundingWithGoogleSearchActive}
+                    onChange={handleToggleChange}
+                    disabled={
+                      isStructuredOutputActive || isFunctionCallingActive
+                    }
+                  />
+                  <span
+                    className={`${styles.slider} ${isStructuredOutputActive ||
                       isFunctionCallingActive ||
-                      isGroundingWithGoogleSearchActive
+                      isGroundingWithGoogleMapsActive
                       ? styles.disabled
                       : ""
-                  }`}
-                ></span>
-              </label>
+                    }`}
+                  ></span>
+                </label>
+              </div>
             </div>
-            {/* Indented Widget Toggle */}
-            <div
-              className={`${styles.toggleGroup} ${!isGroundingWithGoogleMapsActive ? styles.disabledText : ""}`}
-              style={{ paddingLeft: "20px" }}
-            >
-              <label htmlFor="google-maps-widget-toggle">Enable Widget</label>
-              <label className={styles.switch}>
-                <input
-                  type="checkbox"
-                  id="google-maps-widget-toggle"
-                  name="google-maps-widget-toggle"
-                  checked={isGoogleMapsWidgetEnabled}
-                  onChange={handleToggleChange}
-                  disabled={!isGroundingWithGoogleMapsActive}
-                />
-                <span
-                  className={`${styles.slider} ${!isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
-                ></span>
-              </label>
+            {/* Google Maps Grounding Group */}
+            <div className={styles.groupContainer}>
+              <div
+                className={`${styles.toggleGroup} ${isStructuredOutputActive ||
+                  isFunctionCallingActive ||
+                  isGroundingWithGoogleSearchActive
+                  ? styles.disabledText
+                  : ""
+                  }`}
+              >
+                <label htmlFor="google-maps-toggle">
+                  Grounding with Google Maps
+                </label>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    id="google-maps-toggle"
+                    name="google-maps-toggle"
+                    checked={isGroundingWithGoogleMapsActive}
+                    onChange={handleToggleChange}
+                    disabled={
+                      isStructuredOutputActive || isFunctionCallingActive
+                    }
+                  />
+                  <span
+                    className={`${styles.slider} ${
+                      isStructuredOutputActive || isFunctionCallingActive
+                        ? styles.disabled
+                        : ""
+                      }`}
+                  ></span>
+                </label>
+              </div>
+              {/* Indented Widget Toggle */}
+              <div
+                className={`${styles.toggleGroup} ${!isGroundingWithGoogleMapsActive ? styles.disabledText : ""}`}
+                style={{ paddingLeft: "10px" }}
+              >
+                <label htmlFor="google-maps-widget-toggle">Enable Widget</label>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    id="google-maps-widget-toggle"
+                    name="google-maps-widget-toggle"
+                    checked={isGoogleMapsWidgetEnabled}
+                    onChange={handleToggleChange}
+                    disabled={!isGroundingWithGoogleMapsActive}
+                  />
+                  <span
+                    className={`${styles.slider} ${!isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
+                  ></span>
+                </label>
+              </div>
+              {/* Location Context Inputs */}
+              <div
+                className={`${styles.controlGroup} ${!isGroundingWithGoogleMapsActive ? styles.disabledText : ""}`}
+                style={{ paddingLeft: "10px", marginTop: "10px", marginBottom: 0 }}
+              >
+                <label>Location Context</label>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <input
+                    type="number"
+                    placeholder="Lat"
+                    value={currentLatLng?.latitude ?? ""}
+                    onChange={(e) => handleLatLngChange(e, "latitude")}
+                    disabled={!isGroundingWithGoogleMapsActive}
+                    style={{ width: "50%" }}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Lng"
+                    value={currentLatLng?.longitude ?? ""}
+                    onChange={(e) => handleLatLngChange(e, "longitude")}
+                    disabled={!isGroundingWithGoogleMapsActive}
+                    style={{ width: "50%" }}
+                  />
+                </div>
+              </div>
+              {isGroundingWithGoogleMapsActive && isLatLngInvalid && (
+                <div className={styles.errorBanner}>
+                  <span>⚠️</span>
+                  <span>
+                    Both Latitude and Longitude must be provided if one is set.
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </>
       )}
-
       {/* Imagen Settings */}
       {activeMode === "imagenGen" && (
         <div>
