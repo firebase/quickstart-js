@@ -72,6 +72,10 @@ export const defaultGoogleSearchTool: GoogleSearchTool = {
   googleSearch: {}
 }
 
+export const defaultGoogleMapsTool = {
+  googleMaps: {}
+}
+
 export const defaultGenerativeParams: Omit<ModelParams, "model"> = {
   // Model name itself is selected in the UI
   generationConfig: {

@@ -188,6 +188,13 @@ const ChatView: React.FC<ChatViewProps> = ({
         console.log(
           `[ChatView] Grounding Metadata: ${finalModelCandidate?.groundingMetadata}`,
         );
+
+        if (finalModelCandidate?.groundingMetadata) {
+          console.log("DEDB lastGroundingMetadata: ", JSON.stringify(finalModelCandidate?.groundingMetadata));
+        } else {
+          console.log("DEDB no grounding metadata");
+        }
+
         setLastGroundingMetadata(
           finalModelCandidate?.groundingMetadata || null,
         );

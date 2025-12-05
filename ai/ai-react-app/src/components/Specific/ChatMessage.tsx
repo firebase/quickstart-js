@@ -37,6 +37,23 @@ const getMessageText = (message: Content): string => {
     .join("");
 };
 
+const getChunkDisplayData = (
+  chunk: GroundingChunk,
+): { title: string; uri?: string } => {
+  if (chunk.web) {
+    return {
+      title: chunk.web.title || chunk.web.uri || "Unknown Web Source",
+      uri: chunk.web.uri,
+    };
+  } else if (chunk.maps) {
+    return {
+      title: chunk.maps.title || chunk.maps.text || "Unknown Maps Source",
+      uri: chunk.maps.uri,
+    };
+  }
+  return { title: "Unknown Source" };
+};
+
 const renderTextWithInlineHighlighting = (
   text: string,
   supports: GroundingSupport[],
@@ -89,7 +106,7 @@ const renderTextWithInlineHighlighting = (
     const tooltipText = seg.chunkIndices
       .map((ci) => {
         const chunk = chunks[ci - 1]; // ci is 1-based
-        return chunk.web?.title || chunk.web?.uri || `Source ${ci}`;
+        return getChunkDisplayData(chunk).title;
       })
       .join("; ");
 
@@ -190,23 +207,30 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
                 groundingMetadata.groundingChunks.length > 0 && (
                   <>
                     <h5 className={styles.sourcesTitle}>Sources:</h5>
-                    <ul className={styles.sourcesList}>
-                      {groundingMetadata.groundingChunks.map((chunk, index) => (
+                  <ul className={styles.sourcesList}>
+                    {groundingMetadata.groundingChunks.map((chunk, index) => {
+                      const displayData = getChunkDisplayData(chunk);
+                      return (
                         <li
                           key={index}
                           className={styles.sourceItem}
                           id={`source-ref-${index + 1}`}
                         >
-                          <a
-                            href={chunk.web?.uri}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {`[${index + 1}] ${chunk.web?.title || chunk.web?.uri}`}
-                          </a>
+                          {displayData.uri ? (
+                            <a
+                              href={displayData.uri}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {`[${index + 1}] ${displayData.title}`}
+                            </a>
+                          ) : (
+                            <span>{`[${index + 1}] ${displayData.title}`}</span>
+                          )}
                         </li>
-                      ))}
-                    </ul>
+                      );
+                    })}
+                  </ul>
                   </>
                 )}
             </div>

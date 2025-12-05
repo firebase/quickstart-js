@@ -6,6 +6,7 @@ import {
   AVAILABLE_IMAGEN_MODELS,
   defaultFunctionCallingTool,
   defaultGoogleSearchTool,
+  defaultGoogleMapsTool,
 } from "../../services/firebaseAIService";
 import {
   ModelParams,
@@ -160,17 +161,49 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
           nextState.toolConfig = undefined; // Clear config when turning off
         }
       } else if (name === "google-search-toggle") {
+        let currentTools = nextState.tools ? [...nextState.tools] : [];
         if (checked) {
-          // Turn ON Google Search Grounding
-          nextState.tools = [defaultGoogleSearchTool];
-
+          // Add Google Search if not present
+          if (!currentTools.some((t) => "googleSearch" in t)) {
+            currentTools.push(defaultGoogleSearchTool);
+          }
           // Turn OFF JSON mode and Function Calling
           nextState.generationConfig.responseMimeType = undefined;
           nextState.generationConfig.responseSchema = undefined;
           nextState.toolConfig = undefined;
         } else {
-          // Turn OFF Google Search Grounding
-          nextState.tools = undefined;
+          // Remove Google Search
+          currentTools = currentTools.filter((t) => !("googleSearch" in t));
+        }
+        nextState.tools = currentTools.length > 0 ? currentTools : undefined;
+      } else if (name === "google-maps-toggle") {
+        let currentTools = nextState.tools ? [...nextState.tools] : [];
+        if (checked) {
+          // Add Google Maps if not present
+          if (!currentTools.some((t) => "googleMaps" in t)) {
+            currentTools.push(defaultGoogleMapsTool);
+          }
+          // Turn OFF JSON mode and Function Calling
+          nextState.generationConfig.responseMimeType = undefined;
+          nextState.generationConfig.responseSchema = undefined;
+          nextState.toolConfig = undefined;
+        } else {
+          // Remove Google Maps
+          currentTools = currentTools.filter((t) => !("googleMaps" in t));
+        }
+        nextState.tools = currentTools.length > 0 ? currentTools : undefined;
+      } else if (name === "google-maps-widget-toggle") {
+        let currentTools = nextState.tools ? [...nextState.tools] : [];
+        const mapToolIndex = currentTools.findIndex((t) => "googleMaps" in t);
+        if (mapToolIndex !== -1) {
+          // Update existing tool
+          currentTools[mapToolIndex] = {
+            googleMaps: {
+              enableWidget: checked,
+            },
+          };
+          console.error("DEDB tool: ", currentTools[mapToolIndex]);
+          nextState.tools = currentTools;
         }
       }
       console.log("[RightSidebar] Updated generative params state:", nextState);
@@ -236,6 +269,13 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   const isGroundingWithGoogleSearchActive = !!generativeParams.tools?.some(
     (tool) => "googleSearch" in tool,
   );
+  const isGroundingWithGoogleMapsActive = !!generativeParams.tools?.some(
+    (tool) => "googleMaps" in tool,
+  );
+  // Check if widget is enabled in the first Google Maps tool found
+  const isGoogleMapsWidgetEnabled = !!generativeParams.tools?.find(
+    (tool) => "googleMaps" in tool,
+  )?.googleMaps?.enableWidget;
 
   return (
     <div className={styles.rightSidebarContainer}>
@@ -378,11 +418,13 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   checked={isStructuredOutputActive}
                   onChange={handleToggleChange}
                   disabled={
-                    isFunctionCallingActive || isGroundingWithGoogleSearchActive
+                    isFunctionCallingActive ||
+                    isGroundingWithGoogleSearchActive ||
+                    isGroundingWithGoogleMapsActive
                   }
                 />
                 <span
-                  className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive ? styles.disabled : ""}`}
+                  className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive || isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
                 ></span>
               </label>
             </div>
@@ -399,7 +441,8 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   onChange={handleToggleChange}
                   disabled={
                     isStructuredOutputActive ||
-                    isGroundingWithGoogleSearchActive
+                    isGroundingWithGoogleSearchActive ||
+                    isGroundingWithGoogleMapsActive
                   }
                 />
                 <span
@@ -424,14 +467,70 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   name="google-search-toggle"
                   checked={isGroundingWithGoogleSearchActive}
                   onChange={handleToggleChange}
-                  disabled={isStructuredOutputActive || isFunctionCallingActive}
+                  disabled={
+                    isStructuredOutputActive || isFunctionCallingActive
+                  }
+                />
+                <span
+                  className={`${styles.slider} ${isStructuredOutputActive ||
+                    isFunctionCallingActive ||
+                    isGroundingWithGoogleMapsActive
+                    ? styles.disabled
+                    : ""
+                    }`}
+                ></span>
+              </label>
+            </div>
+            <div
+              className={`${styles.toggleGroup} ${isStructuredOutputActive ||
+                isFunctionCallingActive ||
+                isGroundingWithGoogleSearchActive
+                ? styles.disabledText
+                : ""
+                }`}
+            >
+              <label htmlFor="google-maps-toggle">
+                Grounding with Google Maps
+              </label>
+              <label className={styles.switch}>
+                <input
+                  type="checkbox"
+                  id="google-maps-toggle"
+                  name="google-maps-toggle"
+                  checked={isGroundingWithGoogleMapsActive}
+                  onChange={handleToggleChange}
+                  disabled={
+                    isStructuredOutputActive || isFunctionCallingActive
+                  }
                 />
                 <span
                   className={`${styles.slider} ${
-                    isStructuredOutputActive || isFunctionCallingActive
+                    isStructuredOutputActive ||
+                      isFunctionCallingActive ||
+                      isGroundingWithGoogleSearchActive
                       ? styles.disabled
                       : ""
                   }`}
+                ></span>
+              </label>
+            </div>
+            {/* Indented Widget Toggle */}
+            <div
+              className={`${styles.toggleGroup} ${!isGroundingWithGoogleMapsActive ? styles.disabledText : ""}`}
+              style={{ paddingLeft: "20px" }}
+            >
+              <label htmlFor="google-maps-widget-toggle">Enable Widget</label>
+              <label className={styles.switch}>
+                <input
+                  type="checkbox"
+                  id="google-maps-widget-toggle"
+                  name="google-maps-widget-toggle"
+                  checked={isGoogleMapsWidgetEnabled}
+                  onChange={handleToggleChange}
+                  disabled={!isGroundingWithGoogleMapsActive}
+                />
+                <span
+                  className={`${styles.slider} ${!isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
                 ></span>
               </label>
             </div>
