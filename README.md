@@ -13,8 +13,7 @@ Samples are organized into the following subdirectories and include README.md fi
    - Phone Auth using popup
    - [Google Auth in a Chrome Extension](auth/chromextension/README.md)
    - Facebook auth using Facebook login button
-   - Facebook auth using Firebase popup
-   - Facebook auth using Firebase redirect
+   
    - Google auth using Google sign-in button
    - Google auth using Firebase popup
    - Google auth using Firebase redirect
@@ -24,7 +23,6 @@ Samples are organized into the following subdirectories and include README.md fi
    - Microsoft auth using Firebase redirect
    - GitHub auth using Firebase popup
    - GitHub auth using Firebase redirect
-   - Multi-factor authentication with SMS(currently only available for [Google Cloud Identity Platform](https://cloud.google.com/identity-platform/docs/web/mfa) projects)
  - [Database](database/README.md)
    - Simple Social Blogging app
  - [Firestore](firestore/README.md)
