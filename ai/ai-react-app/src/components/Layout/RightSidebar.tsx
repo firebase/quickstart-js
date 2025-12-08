@@ -435,32 +435,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             <h5 className={styles.subSectionTitle}>Tools</h5>
             <div className={styles.groupContainer}>
               <div
-                className={`${styles.toggleGroup} ${isFunctionCallingActive ? styles.disabledText : ""}`}
-              >
-                <label htmlFor="structured-output-toggle">
-                  Structured output (JSON)
-                </label>
-                <label className={styles.switch}>
-                  <input
-                    type="checkbox"
-                    id="structured-output-toggle"
-                    name="structured-output-toggle"
-                    checked={isStructuredOutputActive}
-                    onChange={handleToggleChange}
-                    disabled={
-                      isFunctionCallingActive ||
-                      isGroundingWithGoogleSearchActive ||
-                      isGroundingWithGoogleMapsActive
-                    }
-                  />
-                  <span
-                    className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive || isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
-                  ></span>
-                </label>
-              </div>
-            </div>
-            <div className={styles.groupContainer}>
-              <div
                 className={`${styles.toggleGroup} ${isStructuredOutputActive || isGroundingWithGoogleSearchActive ? styles.disabledText : ""}`}
               >
                 <label htmlFor="function-call-toggle">Function calling</label>
@@ -479,38 +453,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   />
                   <span
                     className={`${styles.slider} ${isStructuredOutputActive ? styles.disabled : ""}`}
-                  ></span>
-                </label>
-              </div>
-            </div>
-            <div className={styles.groupContainer}>
-              <div
-                className={`${styles.toggleGroup} ${isStructuredOutputActive || isFunctionCallingActive
-                  ? styles.disabledText
-                  : ""
-                  }`}
-              >
-                <label htmlFor="google-search-toggle">
-                  Grounding with Google Search
-                </label>
-                <label className={styles.switch}>
-                  <input
-                    type="checkbox"
-                    id="google-search-toggle"
-                    name="google-search-toggle"
-                    checked={isGroundingWithGoogleSearchActive}
-                    onChange={handleToggleChange}
-                    disabled={
-                      isStructuredOutputActive || isFunctionCallingActive
-                    }
-                  />
-                  <span
-                    className={`${styles.slider} ${isStructuredOutputActive ||
-                      isFunctionCallingActive ||
-                      isGroundingWithGoogleMapsActive
-                      ? styles.disabled
-                      : ""
-                    }`}
                   ></span>
                 </label>
               </div>
@@ -553,7 +495,12 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                 className={`${styles.toggleGroup} ${!isGroundingWithGoogleMapsActive ? styles.disabledText : ""}`}
                 style={{ paddingLeft: "10px" }}
               >
-                <label htmlFor="google-maps-widget-toggle">Enable Widget</label>
+                <label
+                  htmlFor="google-maps-widget-toggle"
+                  title="Include the widget context token in the response."
+                >
+                  Enable Widget
+                </label>
                 <label className={styles.switch}>
                   <input
                     type="checkbox"
@@ -573,7 +520,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                 className={`${styles.controlGroup} ${!isGroundingWithGoogleMapsActive ? styles.disabledText : ""}`}
                 style={{ paddingLeft: "10px", marginTop: "10px", marginBottom: 0 }}
               >
-                <label>Location Context</label>
+                <label>Location Context (optional)</label>
                 <div style={{ display: "flex", gap: "10px" }}>
                   <input
                     type="number"
@@ -601,6 +548,64 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   </span>
                 </div>
               )}
+            </div>
+            <div className={styles.groupContainer}>
+              <div
+                className={`${styles.toggleGroup} ${isStructuredOutputActive || isFunctionCallingActive
+                  ? styles.disabledText
+                  : ""
+                  }`}
+              >
+                <label htmlFor="google-search-toggle">
+                  Grounding with Google Search
+                </label>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    id="google-search-toggle"
+                    name="google-search-toggle"
+                    checked={isGroundingWithGoogleSearchActive}
+                    onChange={handleToggleChange}
+                    disabled={
+                      isStructuredOutputActive || isFunctionCallingActive
+                    }
+                  />
+                  <span
+                    className={`${styles.slider} ${isStructuredOutputActive ||
+                      isFunctionCallingActive ||
+                      isGroundingWithGoogleMapsActive
+                      ? styles.disabled
+                      : ""
+                      }`}
+                  ></span>
+                </label>
+              </div>
+            </div>
+            <div className={styles.groupContainer}>
+              <div
+                className={`${styles.toggleGroup} ${isFunctionCallingActive ? styles.disabledText : ""}`}
+              >
+                <label htmlFor="structured-output-toggle">
+                  Structured output (JSON)
+                </label>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    id="structured-output-toggle"
+                    name="structured-output-toggle"
+                    checked={isStructuredOutputActive}
+                    onChange={handleToggleChange}
+                    disabled={
+                      isFunctionCallingActive ||
+                      isGroundingWithGoogleSearchActive ||
+                      isGroundingWithGoogleMapsActive
+                    }
+                  />
+                  <span
+                    className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive || isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
+                  ></span>
+                </label>
+              </div>
             </div>
           </div>
         </>
