@@ -4,7 +4,10 @@ import {
   AI,
   getLiveGenerativeModel,
   startAudioConversation,
+  startVideoRecording,
   AudioConversationController,
+  VideoRecordingController,
+  LiveSession,
   AIError,
   ResponseModality,
 } from "firebase/ai";
@@ -14,18 +17,27 @@ interface LiveViewProps {
   aiInstance: AI;
 }
 
-type ConversationState = "idle" | "active" | "error";
+type SessionState = "idle" | "connecting" | "connected" | "error";
+type VideoSource = "camera" | "screen";
 
 const LiveView: React.FC<LiveViewProps> = ({ aiInstance }) => {
-  const [conversationState, setConversationState] =
-    useState<ConversationState>("idle");
+  const [sessionState, setSessionState] = useState<SessionState>("idle");
   const [error, setError] = useState<string | null>(null);
-  const [controller, setController] =
-    useState<AudioConversationController | null>(null);
 
-  const handleStartConversation = useCallback(async () => {
+  const [liveSession, setLiveSession] = useState<LiveSession | null>(null);
+  const [audioController, setAudioController] =
+    useState<AudioConversationController | null>(null);
+  const [videoController, setVideoController] =
+    useState<VideoRecordingController | null>(null);
+
+  const [videoSource, setVideoSource] = useState<VideoSource>("camera");
+
+  const isAudioRunning = audioController !== null;
+  const isVideoRunning = videoController !== null;
+
+  const handleConnect = useCallback(async () => {
     setError(null);
-    setConversationState("active");
+    setSessionState("connecting");
 
     try {
       const modelName = LIVE_MODELS.get(aiInstance.backend.backendType)!;
@@ -33,23 +45,17 @@ const LiveView: React.FC<LiveViewProps> = ({ aiInstance }) => {
       const model = getLiveGenerativeModel(aiInstance, {
         model: modelName,
         generationConfig: {
-          responseModalities: [ResponseModality.AUDIO]
-        }
+          responseModalities: [ResponseModality.AUDIO],
+        },
       });
 
       console.log("[LiveView] Connecting to live session...");
-      const liveSession = await model.connect();
-
-      console.log(
-        "[LiveView] Starting audio conversation. This will request microphone permissions.",
-      );
-
-      const newController = await startAudioConversation(liveSession);
-
-      setController(newController);
-      console.log("[LiveView] Audio conversation started successfully.");
+      const session = await model.connect();
+      setLiveSession(session);
+      setSessionState("connected");
+      console.log("[LiveView] Live session connected successfully.");
     } catch (err: unknown) {
-      console.error("[LiveView] Failed to start conversation:", err);
+      console.error("[LiveView] Failed to connect to live session:", err);
       let errorMessage = "An unknown error occurred.";
       if (err instanceof AIError) {
         errorMessage = `Error (${err.code}): ${err.message}`;
@@ -57,39 +63,104 @@ const LiveView: React.FC<LiveViewProps> = ({ aiInstance }) => {
         errorMessage = err.message;
       }
       setError(errorMessage);
-      setConversationState("error");
-      setController(null); // Ensure controller is cleared on error
+      setSessionState("error");
+      setLiveSession(null);
     }
   }, [aiInstance]);
 
-  const handleStopConversation = useCallback(async () => {
-    if (!controller) return;
+  const handleDisconnect = useCallback(async () => {
+    console.log("[LiveView] Disconnecting live session...");
+    if (audioController) {
+      await audioController.stop();
+      setAudioController(null);
+    }
+    if (videoController) {
+      await videoController.stop();
+      setVideoController(null);
+    }
+    // The liveSession does not have an explicit close() method in the public API.
+    // Resources are released when the controllers are stopped.
+    setLiveSession(null);
+    setSessionState("idle");
+    console.log("[LiveView] Live session disconnected.");
+  }, [audioController, videoController]);
 
-    console.log("[LiveView] Stopping audio conversation...");
-    await controller.stop();
-    setController(null);
-    setConversationState("idle");
-    console.log("[LiveView] Audio conversation stopped.");
-  }, [controller]);
+  const handleToggleAudio = useCallback(async () => {
+    if (!liveSession) return;
 
-  // Cleanup effect to stop the conversation if the component unmounts
+    if (isAudioRunning) {
+      console.log("[LiveView] Stopping audio conversation...");
+      await audioController?.stop();
+      setAudioController(null);
+      console.log("[LiveView] Audio conversation stopped.");
+    } else {
+      console.log(
+        "[LiveView] Starting audio conversation. This may request microphone permissions.",
+      );
+      try {
+        const newController = await startAudioConversation(liveSession);
+        setAudioController(newController);
+        console.log("[LiveView] Audio conversation started successfully.");
+      } catch (err: unknown) {
+        console.error("[LiveView] Failed to start audio conversation:", err);
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to start audio conversation.",
+        );
+      }
+    }
+  }, [liveSession, audioController, isAudioRunning]);
+
+  const handleToggleVideo = useCallback(async () => {
+    if (!liveSession) return;
+
+    if (isVideoRunning) {
+      console.log("[LiveView] Stopping video recording...");
+      await videoController?.stop();
+      setVideoController(null);
+      console.log("[LiveView] Video recording stopped.");
+    } else {
+      console.log(
+        `[LiveView] Starting video recording with source: ${videoSource}. This may request permissions.`,
+      );
+      try {
+        const newController = await startVideoRecording(liveSession, {
+          videoSource,
+        });
+        setVideoController(newController);
+        console.log("[LiveView] Video recording started successfully.");
+      } catch (err: unknown) {
+        console.error("[LiveView] Failed to start video recording:", err);
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to start video recording.",
+        );
+      }
+    }
+  }, [liveSession, videoController, isVideoRunning, videoSource]);
+
+  // Cleanup effect to disconnect if the component unmounts
   useEffect(() => {
     return () => {
-      if (controller) {
+      if (liveSession && liveSession.isClosed) {
         console.log(
-          "[LiveView] Component unmounting, stopping active conversation.",
+          "[LiveView] Component unmounting, disconnecting live session.",
         );
-        controller.stop();
+        handleDisconnect();
       }
     };
-  }, [controller]);
+  }, [liveSession, handleDisconnect]);
 
   const getStatusText = () => {
-    switch (conversationState) {
+    switch (sessionState) {
       case "idle":
-        return "Ready";
-      case "active":
-        return "In Conversation";
+        return "Idle";
+      case "connecting":
+        return "Connecting...";
+      case "connected":
+        return "Connected";
       case "error":
         return "Error";
       default:
@@ -99,16 +170,16 @@ const LiveView: React.FC<LiveViewProps> = ({ aiInstance }) => {
 
   return (
     <div className={styles.liveViewContainer}>
-      <h2 className={styles.title}>Live Conversation</h2>
+      <h2 className={styles.title}>Gemini Live</h2>
       <p className={styles.instructions}>
-        Click the button below to start a real-time voice conversation with the
-        model. Your browser will ask for microphone permissions.
+        Connect to a live session, then start audio and/or video streams.
+        Ensure you grant microphone and camera/screen permissions when prompted.
       </p>
 
       <div className={styles.statusContainer}>
         <div
           className={`${styles.statusIndicator} ${
-            conversationState === "active" ? styles.active : ""
+            sessionState === "connected" ? styles.active : ""
           }`}
         />
         <span className={styles.statusText}>Status: {getStatusText()}</span>
@@ -116,19 +187,54 @@ const LiveView: React.FC<LiveViewProps> = ({ aiInstance }) => {
 
       <button
         className={`${styles.controlButton} ${
-          conversationState === "active" ? styles.stop : ""
+          sessionState === "connected" ? styles.stop : ""
         }`}
         onClick={
-          conversationState === "active"
-            ? handleStopConversation
-            : handleStartConversation
+          sessionState === "connected" ? handleDisconnect : handleConnect
         }
-        disabled={false} // The button is never truly disabled, it just toggles state
+        disabled={sessionState === "connecting"}
       >
-        {conversationState === "active"
-          ? "Stop Conversation"
-          : "Start Conversation"}
+        {sessionState === "connected"
+          ? "Disconnect Session"
+          : sessionState === "connecting"
+            ? "Connecting..."
+            : "Connect Session"}
       </button>
+
+      {sessionState === "connected" && (
+        <div className={styles.controlsContainer}>
+          {/* Audio Controls */}
+          <button
+            className={`${styles.controlButton} ${
+              isAudioRunning ? styles.stop : ""
+            }`}
+            onClick={handleToggleAudio}
+          >
+            {isAudioRunning ? "Stop Audio" : "Start Audio"}
+          </button>
+
+          {/* Video Controls */}
+          <div className={styles.videoControls}>
+            <select
+              className={styles.videoSourceSelect}
+              value={videoSource}
+              onChange={(e) => setVideoSource(e.target.value as VideoSource)}
+              disabled={isVideoRunning}
+            >
+              <option value="camera">Camera</option>
+              <option value="screen">Screen</option>
+            </select>
+            <button
+              className={`${styles.controlButton} ${
+                isVideoRunning ? styles.stop : ""
+              }`}
+              onClick={handleToggleVideo}
+            >
+              {isVideoRunning ? "Stop Video" : "Start Video"}
+            </button>
+          </div>
+        </div>
+      )}
 
       {error && <div className={styles.errorMessage}>{error}</div>}
     </div>
