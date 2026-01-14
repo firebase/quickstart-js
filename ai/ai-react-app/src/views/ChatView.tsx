@@ -490,12 +490,18 @@ const ChatView: React.FC<ChatViewProps> = ({
   const isGroundingWithGoogleMapsActive = !!currentParams.tools?.some(
     (tool) => "googleMaps" in tool,
   );
+  const isGroundingWithGoogleSearchActive = !!currentParams.tools?.some(
+    (tool) => "googleSearch" in tool,
+  );
   const isLatLngInvalid =
-    isGroundingWithGoogleMapsActive &&
+    (isGroundingWithGoogleMapsActive || isGroundingWithGoogleSearchActive) &&
     ((currentLatLng?.latitude !== undefined &&
       currentLatLng?.longitude === undefined) ||
       (currentLatLng?.latitude === undefined &&
         currentLatLng?.longitude !== undefined));
+
+  console.log("isLatLngInvalid: ", isLatLngInvalid);
+  console.log("currentLatLng: ", currentLatLng);
 
   return (
     <div className={styles.chatViewContainer}>

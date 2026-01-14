@@ -21,7 +21,11 @@ export const AVAILABLE_GENERATIVE_MODELS = [
   "gemini-2.0-flash",
   "gemini-2.0-flash-lite",
   "gemini-2.0-flash-exp",
-  "gemini-2.5-flash"
+  "gemini-2.5-flash",
+  "gemini-2.5-pro",
+  "gemini-3-pro-preview",
+  "gemini-3-flash-preview"
+
 ];
 export const AVAILABLE_IMAGEN_MODELS = [
   "imagen-4.0-generate-001",
