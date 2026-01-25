@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AppMode } from "../../App";
 import styles from "./RightSidebar.module.css";
 import {
@@ -36,6 +36,29 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   imagenParams,
   setImagenParams,
 }) => {
+  // Local state for Lat/Lng to allow atomic updates
+  const [localLat, setLocalLat] = useState<string>("");
+  const [localLng, setLocalLng] = useState<string>("");
+  const [localLanguageCode, setLocalLanguageCode] = useState<string>("");
+
+  // Sync local state with global params when they change externally (e.g. preset loading)
+  // or when we first load.
+  useEffect(() => {
+    const current = generativeParams.toolConfig?.retrievalConfig?.latLng;
+    if (current && current.latitude !== undefined && current.longitude !== undefined) {
+      setLocalLat(current.latitude.toString());
+      setLocalLng(current.longitude.toString());
+    }
+
+    // Sync Language Code
+    const lang = generativeParams.toolConfig?.retrievalConfig?.languageCode;
+    if (lang !== undefined) {
+      setLocalLanguageCode(lang);
+    } else if (generativeParams.toolConfig?.retrievalConfig === undefined) {
+      setLocalLanguageCode("");
+    }
+  }, [generativeParams.toolConfig?.retrievalConfig]);
+
   const handleModelParamsUpdate = (
     updateFn: (prevState: ModelParams) => ModelParams,
   ) => {
@@ -148,8 +171,12 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             prev.tools && prev.tools.length > 0
               ? prev.tools
               : [defaultFunctionCallingTool];
+
+          // Preserve existing retrieval config
+          const existingRetrievalConfig = nextState.toolConfig?.retrievalConfig;
           nextState.toolConfig = {
             functionCallingConfig: { mode: FunctionCallingMode.AUTO },
+            ...(existingRetrievalConfig ? { retrievalConfig: existingRetrievalConfig } : {})
           };
 
           // Turn OFF JSON mode by clearing its related fields
@@ -158,7 +185,11 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
         } else {
           // Turn OFF Function Calling
           nextState.tools = undefined;
-          nextState.toolConfig = undefined; // Clear config when turning off
+          if (nextState.toolConfig?.retrievalConfig) {
+            delete nextState.toolConfig.functionCallingConfig;
+          } else {
+            nextState.toolConfig = undefined;
+          }
         }
       } else if (name === "google-search-toggle") {
         let currentTools = nextState.tools ? [...nextState.tools] : [];
@@ -170,7 +201,24 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
           // Turn OFF JSON mode and Function Calling
           nextState.generationConfig.responseMimeType = undefined;
           nextState.generationConfig.responseSchema = undefined;
-          nextState.toolConfig = undefined;
+
+          // Reconstruct retrievalConfig from local inputs to ensure sync.
+          const retrievalConfig: any = nextState.toolConfig?.retrievalConfig || {};
+
+          if (localLat && localLng) {
+            const lat = parseFloat(localLat);
+            const lng = parseFloat(localLng);
+            if (!isNaN(lat) && !isNaN(lng)) {
+              retrievalConfig.latLng = { latitude: lat, longitude: lng };
+            }
+          }
+          if (localLanguageCode) {
+            retrievalConfig.languageCode = localLanguageCode;
+          }
+
+          nextState.toolConfig = Object.keys(retrievalConfig).length > 0
+            ? { retrievalConfig }
+            : undefined;
         } else {
           // Remove Google Search
           currentTools = currentTools.filter((t) => !("googleSearch" in t));
@@ -186,10 +234,28 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
           // Turn OFF JSON mode and Function Calling
           nextState.generationConfig.responseMimeType = undefined;
           nextState.generationConfig.responseSchema = undefined;
-          nextState.toolConfig = undefined;
+
+          // Reconstruct retrievalConfig from local inputs to ensure sync
+          const retrievalConfig: any = nextState.toolConfig?.retrievalConfig || {};
+
+          if (localLat && localLng) {
+            const lat = parseFloat(localLat);
+            const lng = parseFloat(localLng);
+            if (!isNaN(lat) && !isNaN(lng)) {
+              retrievalConfig.latLng = { latitude: lat, longitude: lng };
+            }
+          }
+          if (localLanguageCode) {
+            retrievalConfig.languageCode = localLanguageCode;
+          }
+
+          nextState.toolConfig = Object.keys(retrievalConfig).length > 0
+            ? { retrievalConfig }
+            : undefined;
         } else {
           // Remove Google Maps
           currentTools = currentTools.filter((t) => !("googleMaps" in t));
+
         }
         nextState.tools = currentTools.length > 0 ? currentTools : undefined;
       } else if (name === "google-maps-widget-toggle") {
@@ -215,19 +281,71 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
     e: React.ChangeEvent<HTMLInputElement>,
     field: "latitude" | "longitude",
   ) => {
-    const value = parseFloat(e.target.value);
+    const rawValue = e.target.value;
+
+    // 1. Update local UI state immediately
+    if (field === "latitude") {
+      setLocalLat(rawValue);
+    } else {
+      setLocalLng(rawValue);
+    }
+
+    // 2. Validate current pair
+    const targetLatStr = field === "latitude" ? rawValue : localLat;
+    const targetLngStr = field === "longitude" ? rawValue : localLng;
+
+    const lat = parseFloat(targetLatStr);
+    const lng = parseFloat(targetLngStr);
+
+    const isValidPair = !isNaN(lat) && !isNaN(lng) && targetLatStr !== "" && targetLngStr !== "";
+
+    // 3. Update or Clear Global State
     handleModelParamsUpdate((prev: ModelParams): ModelParams => {
       const nextState = JSON.parse(JSON.stringify(prev));
       nextState.toolConfig = nextState.toolConfig || {};
-      nextState.toolConfig.retrievalConfig =
-        nextState.toolConfig.retrievalConfig || {};
-      nextState.toolConfig.retrievalConfig.latLng =
-        nextState.toolConfig.retrievalConfig.latLng || {};
+      nextState.toolConfig.retrievalConfig = nextState.toolConfig.retrievalConfig || {};
 
-      if (isNaN(value)) {
-        delete nextState.toolConfig.retrievalConfig.latLng[field];
+      if (isValidPair) {
+        // Atomic commit
+        nextState.toolConfig.retrievalConfig.latLng = {
+          latitude: lat,
+          longitude: lng,
+        };
       } else {
-        nextState.toolConfig.retrievalConfig.latLng[field] = value;
+        // Clear if not fully valid (avoids partial error states in model)
+        delete nextState.toolConfig.retrievalConfig.latLng;
+        if (Object.keys(nextState.toolConfig.retrievalConfig).length === 0) {
+          delete nextState.toolConfig.retrievalConfig;
+        }
+        if (Object.keys(nextState.toolConfig).length === 0) {
+          delete nextState.toolConfig;
+        }
+      }
+      return nextState;
+    });
+  };
+
+  const handleLanguageCodeChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const val = e.target.value;
+    setLocalLanguageCode(val);
+
+    handleModelParamsUpdate((prev: ModelParams): ModelParams => {
+      const nextState = JSON.parse(JSON.stringify(prev));
+      nextState.toolConfig = nextState.toolConfig || {};
+      nextState.toolConfig.retrievalConfig = nextState.toolConfig.retrievalConfig || {};
+
+      if (val.trim() !== "") {
+        nextState.toolConfig.retrievalConfig.languageCode = val.trim();
+      } else {
+        delete nextState.toolConfig.retrievalConfig.languageCode;
+        if (Object.keys(nextState.toolConfig.retrievalConfig).length === 0) {
+          delete nextState.toolConfig.retrievalConfig;
+        }
+        if (Object.keys(nextState.toolConfig).length === 0) {
+          delete nextState.toolConfig;
+        }
       }
       return nextState;
     });
@@ -299,12 +417,10 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
     (tool) => "googleMaps" in tool,
   )?.googleMaps?.enableWidget;
 
-  const currentLatLng = generativeParams.toolConfig?.retrievalConfig?.latLng;
+
   const isLatLngInvalid =
-    (currentLatLng?.latitude !== undefined &&
-      currentLatLng?.longitude === undefined) ||
-    (currentLatLng?.latitude === undefined &&
-      currentLatLng?.longitude !== undefined);
+    (localLat !== "" && localLng === "") ||
+    (localLat === "" && localLng !== "");
 
   return (
     <div className={styles.rightSidebarContainer}>
@@ -457,8 +573,15 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                 </label>
               </div>
             </div>
-            {/* Google Maps Grounding Group */}
+            {/* Grounding Tools Group */}
             <div className={styles.groupContainer}>
+              <h6
+                className={styles.subSectionTitle}
+                style={{ margin: "0 0 16px 0", fontSize: "0.75rem" }}
+              >
+                Grounding Tools
+              </h6>
+              {/* Google Maps Toggle */}
               <div
                 className={`${styles.toggleGroup} ${isStructuredOutputActive ||
                   isFunctionCallingActive ||
@@ -482,10 +605,9 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                     }
                   />
                   <span
-                    className={`${styles.slider} ${
-                      isStructuredOutputActive || isFunctionCallingActive
-                        ? styles.disabled
-                        : ""
+                    className={`${styles.slider} ${isStructuredOutputActive || isFunctionCallingActive
+                      ? styles.disabled
+                      : ""
                       }`}
                   ></span>
                 </label>
@@ -493,7 +615,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
               {/* Indented Widget Toggle */}
               <div
                 className={`${styles.toggleGroup} ${!isGroundingWithGoogleMapsActive ? styles.disabledText : ""}`}
-                style={{ paddingLeft: "10px" }}
+                style={{ paddingLeft: "10px", marginBottom: "16px" }}
               >
                 <label
                   htmlFor="google-maps-widget-toggle"
@@ -515,41 +637,8 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   ></span>
                 </label>
               </div>
-              {/* Location Context Inputs */}
-              <div
-                className={`${styles.controlGroup} ${!isGroundingWithGoogleMapsActive ? styles.disabledText : ""}`}
-                style={{ paddingLeft: "10px", marginTop: "10px", marginBottom: 0 }}
-              >
-                <label>Location Context (optional)</label>
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <input
-                    type="number"
-                    placeholder="Lat"
-                    value={currentLatLng?.latitude ?? ""}
-                    onChange={(e) => handleLatLngChange(e, "latitude")}
-                    disabled={!isGroundingWithGoogleMapsActive}
-                    style={{ width: "50%" }}
-                  />
-                  <input
-                    type="number"
-                    placeholder="Lng"
-                    value={currentLatLng?.longitude ?? ""}
-                    onChange={(e) => handleLatLngChange(e, "longitude")}
-                    disabled={!isGroundingWithGoogleMapsActive}
-                    style={{ width: "50%" }}
-                  />
-                </div>
-              </div>
-              {isGroundingWithGoogleMapsActive && isLatLngInvalid && (
-                <div className={styles.errorBanner}>
-                  <span>⚠️</span>
-                  <span>
-                    Both Latitude and Longitude must be provided if one is set.
-                  </span>
-                </div>
-              )}
-            </div>
-            <div className={styles.groupContainer}>
+
+              {/* Google Search Toggle */}
               <div
                 className={`${styles.toggleGroup} ${isStructuredOutputActive || isFunctionCallingActive
                   ? styles.disabledText
@@ -580,6 +669,62 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   ></span>
                 </label>
               </div>
+
+            </div>
+
+            {/* Retrieval Config Group */}
+            <div className={styles.groupContainer}>
+              <h6
+                className={styles.subSectionTitle}
+                style={{ margin: "0 0 16px 0", fontSize: "0.75rem" }}
+              >
+                Retrieval Config (optional)
+              </h6>
+              <div
+                className={`${styles.controlGroup} ${isStructuredOutputActive ? styles.disabledText : ""
+                  }`}
+              >
+                <label>Location</label>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <input
+                    type="number"
+                    placeholder="Lat"
+                    value={localLat}
+                    onChange={(e) => handleLatLngChange(e, "latitude")}
+                    disabled={isStructuredOutputActive}
+                    style={{ width: "50%" }}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Lng"
+                    value={localLng}
+                    onChange={(e) => handleLatLngChange(e, "longitude")}
+                    disabled={isStructuredOutputActive}
+                    style={{ width: "50%" }}
+                  />
+                </div>
+              </div>
+              <div
+                className={`${styles.controlGroup} ${isStructuredOutputActive ? styles.disabledText : ""
+                  }`}
+              >
+                <label>Language Code (ex: en, es, etc)</label>
+                <input
+                  type="text"
+                  placeholder="Language Code"
+                  value={localLanguageCode}
+                  onChange={handleLanguageCodeChange}
+                  disabled={isStructuredOutputActive}
+                />
+              </div>
+              {isLatLngInvalid && (
+                <div className={styles.errorBanner}>
+                  <span>⚠️</span>
+                  <span>
+                    Both Latitude and Longitude must be provided if one is set.
+                  </span>
+                </div>
+              )}
             </div>
             <div className={styles.groupContainer}>
               <div
