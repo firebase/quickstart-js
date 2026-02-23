@@ -5,8 +5,10 @@
 **/*.bak
 .idea
 .firebaserc
+.firebase
 dist/
 **/ui-debug.log
 .next
 /template-test
 .oops
+*.patch
