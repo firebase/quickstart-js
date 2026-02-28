@@ -18,19 +18,17 @@ import {
 import { firebaseConfig } from "../config/firebase-config";
 
 export const AVAILABLE_GENERATIVE_MODELS = [
-  "gemini-2.0-flash",
-  "gemini-2.0-flash-lite",
-  "gemini-2.0-flash-exp",
-  "gemini-2.5-flash"
+  "gemini-3-flash-preview",
+  "gemini-3-pro-preview",
+  "gemini-2.5-flash-lite",
 ];
 export const AVAILABLE_IMAGEN_MODELS = [
-  "imagen-4.0-generate-001",
-  "imagen-4.0-fast-generate-001",
-  "imagen-4.0-ultra-generate-001"
+  "gemini-3-pro-image-preview",
+  "gemini-2.5-flash-image"
 ];
 export const LIVE_MODELS = new Map<BackendType, string>([
-  [BackendType.GOOGLE_AI, 'gemini-2.5-flash-native-audio-preview-09-2025'],
-  [BackendType.VERTEX_AI, 'gemini-live-2.5-flash-preview-native-audio-09-2025']
+  [BackendType.GOOGLE_AI, 'gemini-2.5-flash-native-audio-preview-12-2025'],
+  [BackendType.VERTEX_AI, 'gemini-live-2.5-flash-native-audio']
 ])
 
 let app: FirebaseApp;
