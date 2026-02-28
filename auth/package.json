@@ -29,6 +29,6 @@
   },
   "dependencies": {
     "firebase": "^10.1.0",
-    "jsrsasign": "^10.8.6"
+    "jsrsasign": "^11.0.0"
   }
 }
