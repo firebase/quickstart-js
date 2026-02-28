@@ -32,7 +32,7 @@ describe('FilterDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MatDialogModule, MatIconModule, MatDividerModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule],
+      imports: [MatDialogModule, MatIconModule, MatDividerModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule, FilterDialogComponent],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
         {
@@ -44,7 +44,7 @@ describe('FilterDialogComponent', () => {
         }
       ],
 
-      declarations: [FilterDialogComponent]
+      declarations: []
     });
     fixture = TestBed.createComponent(FilterDialogComponent);
     component = fixture.componentInstance;

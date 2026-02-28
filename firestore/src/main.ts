@@ -14,10 +14,44 @@
  * limitations under the License.
  */
 
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideFunctions, getFunctions } from '@angular/fire/functions';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+import { projectConfig } from './environments/environment.default';
+import { connectFirestoreEmulator } from '@firebase/firestore';
+import { DefaultHomepageFirestore, HomepageFirestore } from './app/homepage/hompage.service';
+import { provideRouter, Routes } from '@angular/router';
+import { HomepageComponent } from './app/homepage/homepage.component';
+import { RestuarantPageComponent } from './app/restuarant-page/restuarant-page.component';
 
-import { AppModule } from './app/app.module';
+const routes: Routes = [
+  { path: 'restaurant/:id', component: RestuarantPageComponent },
+  { path: '**', component: HomepageComponent },
+];
 
+bootstrapApplication(AppComponent, { providers : [    provideFirebaseApp(() => initializeApp(projectConfig)),
+    provideAuth(() => {
+      const auth = getAuth();
+      if (auth.app.options.projectId!.indexOf('demo') === 0)
+        connectAuthEmulator(auth, 'http://127.0.0.1:9099');
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+      return auth;
+    }),
+    provideFirestore(() => {
+      const firestore = getFirestore();
+
+      if (firestore.app.options.projectId!.indexOf('demo') === 0)
+        connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
+
+      return firestore;
+    }),
+    provideFunctions(() => getFunctions()),
+    provideStorage(() => getStorage()),
+    { provide: HomepageFirestore, useClass: DefaultHomepageFirestore },
+   provideRouter(routes)
+] })
   .catch(err => console.error(err));

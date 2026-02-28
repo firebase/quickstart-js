@@ -32,11 +32,12 @@ describe('RestuarantPageComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule,
         MatDialogModule,
+        RestuarantPageComponent],
+      declarations: [],
+      providers: [
         provideFirebaseApp(() => initializeApp(projectConfig)),
         provideFirestore(() => getFirestore()),
-        provideAuth(() => getAuth())],
-      declarations: [RestuarantPageComponent],
-      providers: [
+        provideAuth(() => getAuth()),
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
       ]
