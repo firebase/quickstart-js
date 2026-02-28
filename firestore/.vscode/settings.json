@@ -1,0 +1,7 @@
+{
+  "workbench.editorAssociations": {
+    "*.md": "vscode.markdown.preview.editor"
+  },
+  "firstTimePrompt": true,
+  "shouldRunNPMTask": true
+}
