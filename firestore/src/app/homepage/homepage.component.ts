@@ -46,7 +46,8 @@ import { HomepageFirestore } from './hompage.service';
       provide: MatDialogRef,
       useValue: {}
     }
-  ]
+  ],
+  standalone: false
 })
 
 export class HomepageComponent {
