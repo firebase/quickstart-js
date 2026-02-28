@@ -21,6 +21,7 @@ export default defineConfig({
         'google-redirect.html',
         'index.html',
         'mfa-password.html',
+        'mfa-password-enterprise.html',
         'microsoft-popup.html',
         'microsoft-redirect.html',
         'multi-tenant-ui.html',

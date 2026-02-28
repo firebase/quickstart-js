@@ -5,6 +5,7 @@
 **/*.bak
 .idea
 .firebaserc
+.firebase
 dist/
 **/ui-debug.log
 .next
