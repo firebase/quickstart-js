@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Carousel from '@/components/carousel';
-import { handleGetTopMovies, handleGetLatestMovies } from '@/lib/MovieService';
+import { listMoviesRef, OrderDirection } from '@/lib/dataconnect-sdk';
+import { useDataConnectQuery } from '@tanstack-query-firebase/react/data-connect';
 
 const ConditionalRender = ({ condition, preferred, alternate }: { condition: boolean, preferred: React.ReactNode, alternate: React.ReactNode }) => (
   condition ? preferred : alternate
@@ -36,37 +37,21 @@ const PlaceholderMessage = () => (
 );
 
 export default function HomePage() {
-  const [topMovies, setTopMovies] = useState([]);
-  const [latestMovies, setLatestMovies] = useState([]);
-  const [needsToRunEmulators, setNeedsToRunEmulators] = useState(true);
-
-  useEffect(() => {
-    async function fetchMovies() {
-      const topMoviesData = await handleGetTopMovies(10);
-      const latestMoviesData = await handleGetLatestMovies(10);
-
-      // Or seed data
-      const shouldRunEmulators = topMoviesData.length === 0 && latestMoviesData.length === 0;
-      setNeedsToRunEmulators(shouldRunEmulators);
-
-      if (topMoviesData) setTopMovies(topMoviesData);
-      if (latestMoviesData) setLatestMovies(latestMoviesData);
-    }
-
-    fetchMovies();
-  }, []);
-
+  const { data: topMovies,  isLoading: loadingTopMovies } = useDataConnectQuery(listMoviesRef({ limit: 10, orderByRating: OrderDirection.DESC }));
+  const { data: latestMovies, isLoading: loadingLatestMovies } = useDataConnectQuery(listMoviesRef({ limit: 10, orderByReleaseYear: OrderDirection.DESC }));
+  const shouldRunEmulators = loadingLatestMovies || loadingTopMovies || topMovies?.movies.length === 0 && latestMovies?.movies.length === 0;
+  
   const carousels = (
     <>
-      <Carousel title="Top 10 Movies" movies={topMovies} />
-      <Carousel title="Latest Movies" movies={latestMovies} />
+      <Carousel title="Top 10 Movies" movies={topMovies?.movies} />
+      <Carousel title="Latest Movies" movies={latestMovies?.movies} />
     </>
   )
 
   return (
     <div className="container mx-auto p-4 bg-gray-900 text-white shadow-md min-h-screen">
       <ConditionalRender 
-        condition={!needsToRunEmulators} 
+        condition={!shouldRunEmulators} 
         preferred={carousels} 
         alternate={<PlaceholderMessage />} />
     </div>

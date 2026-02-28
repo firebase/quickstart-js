@@ -1,5 +1,5 @@
 import React from 'react';
-import MovieCard from '@/components/moviecard';
+import MovieCard from '@/components/moviecard.jsx';
 
 interface CarouselProps {
   title: string;
