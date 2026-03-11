@@ -22,8 +22,8 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.9",
-    "firebase-tools": "^13.20.2",
-    "lerna": "^6.6.1"
+    "firebase-tools": "^15.9.1",
+    "lerna": "^9.0.6"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
