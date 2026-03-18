@@ -37,6 +37,12 @@ const getMessageText = (message: Content): string => {
     .join("");
 };
 
+/**
+ * Extracts display information (title and URI) from a grounding chunk.
+ * Handles both web and maps grounding sources, falling back to "Unknown Source".
+ * @param chunk The GroundingChunk object.
+ * @returns An object containing the title and optional URI for display.
+ */
 const getChunkDisplayData = (
   chunk: GroundingChunk,
 ): { title: string; uri?: string } => {

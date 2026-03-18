@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AppMode } from "../../App";
 import styles from "./RightSidebar.module.css";
+import { isLatLngPartial } from "../../utils/validationUtils";
 import {
   AVAILABLE_GENERATIVE_MODELS,
   AVAILABLE_IMAGEN_MODELS,
@@ -268,7 +269,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
               enableWidget: checked,
             },
           };
-          console.error("DEDB tool: ", currentTools[mapToolIndex]);
           nextState.tools = currentTools;
         }
       }
@@ -290,7 +290,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
       setLocalLng(rawValue);
     }
 
-    // 2. Validate current pair
+    // 2. Validate current lattitude and longitude pair.
     const targetLatStr = field === "latitude" ? rawValue : localLat;
     const targetLngStr = field === "longitude" ? rawValue : localLng;
 
@@ -306,13 +306,13 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
       nextState.toolConfig.retrievalConfig = nextState.toolConfig.retrievalConfig || {};
 
       if (isValidPair) {
-        // Atomic commit
         nextState.toolConfig.retrievalConfig.latLng = {
           latitude: lat,
           longitude: lng,
         };
       } else {
-        // Clear if not fully valid (avoids partial error states in model)
+        // Clear values if they're not fully valid. This avoids partial error
+        // states from reaching the model.
         delete nextState.toolConfig.retrievalConfig.latLng;
         if (Object.keys(nextState.toolConfig.retrievalConfig).length === 0) {
           delete nextState.toolConfig.retrievalConfig;
@@ -412,15 +412,14 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   const isGroundingWithGoogleMapsActive = !!generativeParams.tools?.some(
     (tool) => "googleMaps" in tool,
   );
-  // Check if widget is enabled in the first Google Maps tool found
+  // Check if enableWidget is enabled.
   const isGoogleMapsWidgetEnabled = !!generativeParams.tools?.find(
     (tool) => "googleMaps" in tool,
   )?.googleMaps?.enableWidget;
 
 
-  const isLatLngInvalid =
-    (localLat !== "" && localLng === "") ||
-    (localLat === "" && localLng !== "");
+  // Invalid if exactly one coordinate is provided (must provide both or neither).
+  const isLatLngInvalid = isLatLngPartial(localLat, localLng);
 
   return (
     <div className={styles.rightSidebarContainer}>

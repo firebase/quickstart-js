@@ -18,6 +18,7 @@ import PromptInput from "../components/Common/PromptInput";
 import ChatMessage from "../components/Specific/ChatMessage";
 import FileUploader from "../components/Common/FileUploader";
 import { fileToGenerativePart } from "../utils/fileUtils";
+import { isLatLngPartial } from "../utils/validationUtils";
 import styles from "./ChatView.module.css";
 import { AppMode } from "../App";
 
@@ -188,12 +189,6 @@ const ChatView: React.FC<ChatViewProps> = ({
         console.log(
           `[ChatView] Grounding Metadata: ${finalModelCandidate?.groundingMetadata}`,
         );
-
-        if (finalModelCandidate?.groundingMetadata) {
-          console.log("DEDB lastGroundingMetadata: ", JSON.stringify(finalModelCandidate?.groundingMetadata));
-        } else {
-          console.log("DEDB no grounding metadata");
-        }
 
         setLastGroundingMetadata(
           finalModelCandidate?.groundingMetadata || null,
@@ -495,10 +490,7 @@ const ChatView: React.FC<ChatViewProps> = ({
   );
   const isLatLngInvalid =
     (isGroundingWithGoogleMapsActive || isGroundingWithGoogleSearchActive) &&
-    ((currentLatLng?.latitude !== undefined &&
-      currentLatLng?.longitude === undefined) ||
-      (currentLatLng?.latitude === undefined &&
-        currentLatLng?.longitude !== undefined));
+    isLatLngPartial(currentLatLng?.latitude, currentLatLng?.longitude);
 
   console.log("isLatLngInvalid: ", isLatLngInvalid);
   console.log("currentLatLng: ", currentLatLng);
