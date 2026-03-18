@@ -23,6 +23,7 @@
 // Hence, we do not connect to the emulator in this example.
 
 import { initializeApp } from 'firebase/app';
+import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 
 import {
   MultiFactorInfo,
@@ -51,7 +52,14 @@ script.async = true;
 script.defer = true;
 document.head.appendChild(script);
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
+// Initialize App Check
+initializeAppCheck(app, {
+  provider: new ReCaptchaEnterpriseProvider(reCaptchaSiteKey),
+  // Optional: set to true if you want to allow App Check to run on unsupported browsers
+  isTokenAutoRefreshEnabled: true
+});
 
 const auth = getAuth();
 
