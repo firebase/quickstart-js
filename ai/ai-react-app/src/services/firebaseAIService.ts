@@ -29,8 +29,8 @@ export const AVAILABLE_IMAGEN_MODELS = [
   "imagen-4.0-ultra-generate-001"
 ];
 export const LIVE_MODELS = new Map<BackendType, string>([
-  [BackendType.GOOGLE_AI, 'gemini-live-2.5-flash-preview'],
-  [BackendType.VERTEX_AI, 'gemini-2.0-flash-exp']
+  [BackendType.GOOGLE_AI, 'gemini-2.5-flash-native-audio-preview-09-2025'],
+  [BackendType.VERTEX_AI, 'gemini-live-2.5-flash-preview-native-audio-09-2025']
 ])
 
 let app: FirebaseApp;
