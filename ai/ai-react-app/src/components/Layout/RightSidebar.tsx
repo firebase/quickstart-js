@@ -419,7 +419,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
 
 
   // Invalid if exactly one coordinate is provided (must provide both or neither).
-  const isLatLngInvalid = isLatLngPartial(localLat, localLng);
+  const isLatLngValid = !isLatLngPartial(localLat, localLng);
 
   return (
     <div className={styles.rightSidebarContainer}>
@@ -716,7 +716,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   disabled={isStructuredOutputActive}
                 />
               </div>
-              {isLatLngInvalid && (
+              {!isLatLngValid && (
                 <div className={styles.errorBanner}>
                   <span>⚠️</span>
                   <span>

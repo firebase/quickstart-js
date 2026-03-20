@@ -488,11 +488,11 @@ const ChatView: React.FC<ChatViewProps> = ({
   const isGroundingWithGoogleSearchActive = !!currentParams.tools?.some(
     (tool) => "googleSearch" in tool,
   );
-  const isLatLngInvalid =
-    (isGroundingWithGoogleMapsActive || isGroundingWithGoogleSearchActive) &&
-    isLatLngPartial(currentLatLng?.latitude, currentLatLng?.longitude);
+  const isLatLngValid =
+    !(isGroundingWithGoogleMapsActive || isGroundingWithGoogleSearchActive) ||
+    !isLatLngPartial(currentLatLng?.latitude, currentLatLng?.longitude);
 
-  console.log("isLatLngInvalid: ", isLatLngInvalid);
+  console.log("isLatLngValid: ", isLatLngValid);
   console.log("currentLatLng: ", currentLatLng);
 
   return (
@@ -558,7 +558,7 @@ const ChatView: React.FC<ChatViewProps> = ({
           aiInstance={aiInstance}
           currentParams={currentParams}
           selectedFile={selectedFile}
-          disabled={isLatLngInvalid}
+          disabled={!isLatLngValid}
         />
       </div>
     </div>
