@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { AI, getTemplateGenerativeModel, UsageMetadata, TemplateToolConfig } from "firebase/ai";
+import { AI, getTemplateGenerativeModel, UsageMetadata, TemplateToolConfig, GroundingMetadata } from "firebase/ai";
 import styles from "./ServerTemplateView.module.css";
+import ChatMessage from "../components/Specific/ChatMessage";
 
 interface ServerTemplateViewProps {
   aiInstance: AI;
@@ -18,6 +19,7 @@ const ServerTemplateView: React.FC<ServerTemplateViewProps> = ({
     { id: "1", key: "", value: "" }
   ]);
   const [response, setResponse] = useState<string | null>(null);
+  const [groundingMetadata, setGroundingMetadata] = useState<GroundingMetadata | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -71,6 +73,9 @@ const ServerTemplateView: React.FC<ServerTemplateViewProps> = ({
       
       setResponse(result.response.text());
       
+      const candidate = result.response.candidates?.[0];
+      setGroundingMetadata(candidate?.groundingMetadata || null);
+
     } catch (err: unknown) {
       console.error("[ServerTemplateView] Error calling generate:", err);
       if (err instanceof Error) {
@@ -89,7 +94,10 @@ const ServerTemplateView: React.FC<ServerTemplateViewProps> = ({
         {response && (
           <div className={styles.responseArea}>
             <h3>Response:</h3>
-            <pre>{response}</pre>
+            <ChatMessage
+              message={{ role: "model", parts: [{ text: response }] }}
+              groundingMetadata={groundingMetadata}
+            />
           </div>
         )}
         {isLoading && (
