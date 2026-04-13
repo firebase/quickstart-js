@@ -14,27 +14,28 @@ const ServerTemplateView: React.FC<ServerTemplateViewProps> = ({
   currentParams,
 }) => {
   const [templateId, setTemplateId] = useState("");
-  const [variables, setVariables] = useState<{ [key: string]: string }>({});
-  const [newKey, setNewKey] = useState("");
-  const [newValue, setNewValue] = useState("");
+  const [variables, setVariables] = useState<Array<{ id: string; key: string; value: string }>>([
+    { id: "1", key: "", value: "" }
+  ]);
   const [response, setResponse] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleAddVariable = () => {
-    if (newKey.trim()) {
-      setVariables((prev) => ({ ...prev, [newKey.trim()]: newValue }));
-      setNewKey("");
-      setNewValue("");
-    }
+    setVariables((prev) => [
+      ...prev,
+      { id: Math.random().toString(36).substr(2, 9), key: "", value: "" }
+    ]);
   };
 
-  const handleRemoveVariable = (key: string) => {
-    setVariables((prev) => {
-      const next = { ...prev };
-      delete next[key];
-      return next;
-    });
+  const handleRemoveVariable = (id: string) => {
+    setVariables((prev) => prev.filter((v) => v.id !== id));
+  };
+
+  const handleVariableChange = (id: string, field: "key" | "value", value: string) => {
+    setVariables((prev) =>
+      prev.map((v) => (v.id === id ? { ...v, [field]: value } : v))
+    );
   };
 
   const handleSubmit = async () => {
@@ -51,20 +52,24 @@ const ServerTemplateView: React.FC<ServerTemplateViewProps> = ({
     try {
       console.log("[ServerTemplateView] Building model with getTemplateGenerativeModel");
       
-      // Construct TemplateToolConfig with RetrievalConfig if enabled in currentParams
       const templateToolConfig: TemplateToolConfig | undefined = currentParams.toolConfig?.retrievalConfig ? {
         retrievalConfig: currentParams.toolConfig.retrievalConfig
       } : undefined;
 
       const model = getTemplateGenerativeModel(aiInstance, {});
 
-      console.log("[ServerTemplateView] Calling generateContent with variables:", variables);
-      const result = await model.generateContent(templateId.trim(), variables, undefined, templateToolConfig);
+      // Convert array to object
+      const variablesObject: Record<string, string> = {};
+      variables.forEach((v) => {
+        if (v.key.trim()) {
+          variablesObject[v.key.trim()] = v.value;
+        }
+      });
+
+      console.log("[ServerTemplateView] Calling generateContent with variables:", variablesObject);
+      const result = await model.generateContent(templateId.trim(), variablesObject, undefined, templateToolConfig);
       
       setResponse(result.response.text());
-      
-      // If usage metadata is available, report it
-      // if (result.usageMetadata) onUsageMetadataChange(result.usageMetadata);
       
     } catch (err: unknown) {
       console.error("[ServerTemplateView] Error calling generate:", err);
@@ -119,33 +124,35 @@ const ServerTemplateView: React.FC<ServerTemplateViewProps> = ({
         <div className={styles.sectionLabel}>Template Variables:</div>
 
         <div className={styles.variableList}>
-          {Object.entries(variables).map(([key, value]) => (
-            <div key={key} className={styles.variableInputGroup}>
-              <input type="text" value={key} readOnly className={styles.narrowInput} />
-              <input type="text" value={value} readOnly className={styles.wideInput} />
-              <button onClick={() => handleRemoveVariable(key)} disabled={isLoading}>Remove</button>
+          {variables.map((v) => (
+            <div key={v.id} className={styles.variableInputGroup}>
+              <input
+                type="text"
+                placeholder="Key"
+                value={v.key}
+                onChange={(e) => handleVariableChange(v.id, "key", e.target.value)}
+                disabled={isLoading}
+                className={styles.narrowInput}
+              />
+              <input
+                type="text"
+                placeholder="Value"
+                value={v.value}
+                onChange={(e) => handleVariableChange(v.id, "value", e.target.value)}
+                disabled={isLoading}
+                className={styles.wideInput}
+              />
+              <button onClick={() => handleRemoveVariable(v.id)} disabled={isLoading}>
+                Remove
+              </button>
             </div>
           ))}
         </div>
 
         <div className={styles.variableInputGroup}>
-          <input
-            type="text"
-            placeholder="Key"
-            value={newKey}
-            onChange={(e) => setNewKey(e.target.value)}
-            disabled={isLoading}
-            className={styles.narrowInput}
-          />
-          <input
-            type="text"
-            placeholder="Value"
-            value={newValue}
-            onChange={(e) => setNewValue(e.target.value)}
-            disabled={isLoading}
-            className={styles.wideInput}
-          />
-          <button onClick={handleAddVariable} disabled={isLoading}>Add Variable</button>
+          <button onClick={handleAddVariable} disabled={isLoading}>
+            Add Row
+          </button>
         </div>
 
         <button 
