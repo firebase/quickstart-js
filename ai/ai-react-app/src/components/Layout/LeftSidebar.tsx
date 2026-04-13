@@ -42,6 +42,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
     { id: "chat", label: "Chat" },
     { id: "imagenGen", label: "Imagen Generation" },
     { id: "live", label: "Live Conversation" },
+    { id: "serverTemplate", label: "Server Prompt Templates" },
   ];
 
   const handleBackendChange = (event: React.ChangeEvent<HTMLInputElement>) => {
