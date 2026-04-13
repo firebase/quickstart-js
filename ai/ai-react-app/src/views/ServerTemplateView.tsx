@@ -104,7 +104,9 @@ const ServerTemplateView: React.FC<ServerTemplateViewProps> = ({
 
       <div className={styles.inputAreaContainer}>
         <div className={styles.variableInputGroup}>
+          <label htmlFor="template-id-input">Template ID</label>
           <input
+            id="template-id-input"
             type="text"
             placeholder="Template ID"
             value={templateId}
@@ -113,6 +115,8 @@ const ServerTemplateView: React.FC<ServerTemplateViewProps> = ({
             className={styles.narrowInput}
           />
         </div>
+
+        <div className={styles.sectionLabel}>Template Variables:</div>
 
         <div className={styles.variableList}>
           {Object.entries(variables).map(([key, value]) => (

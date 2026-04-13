@@ -142,6 +142,21 @@
   align-items: center;
 }
 
+.variableInputGroup label {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.sectionLabel {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
 .variableInputGroup input {
   padding: 8px;
   border: 1px solid var(--color-border-primary);
