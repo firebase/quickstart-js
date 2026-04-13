@@ -18,6 +18,7 @@ import PromptInput from "../components/Common/PromptInput";
 import ChatMessage from "../components/Specific/ChatMessage";
 import FileUploader from "../components/Common/FileUploader";
 import { fileToGenerativePart } from "../utils/fileUtils";
+import { isLatLngPartial } from "../utils/validationUtils";
 import styles from "./ChatView.module.css";
 import { AppMode } from "../App";
 
@@ -188,6 +189,7 @@ const ChatView: React.FC<ChatViewProps> = ({
         console.log(
           `[ChatView] Grounding Metadata: ${finalModelCandidate?.groundingMetadata}`,
         );
+
         setLastGroundingMetadata(
           finalModelCandidate?.groundingMetadata || null,
         );
@@ -479,6 +481,20 @@ const ChatView: React.FC<ChatViewProps> = ({
     onUsageMetadataChange,
   ]);
 
+  const currentLatLng = currentParams.toolConfig?.retrievalConfig?.latLng;
+  const isGroundingWithGoogleMapsActive = !!currentParams.tools?.some(
+    (tool) => "googleMaps" in tool,
+  );
+  const isGroundingWithGoogleSearchActive = !!currentParams.tools?.some(
+    (tool) => "googleSearch" in tool,
+  );
+  const isLatLngValid =
+    !(isGroundingWithGoogleMapsActive || isGroundingWithGoogleSearchActive) ||
+    !isLatLngPartial(currentLatLng?.latitude, currentLatLng?.longitude);
+
+  console.log("isLatLngValid: ", isLatLngValid);
+  console.log("currentLatLng: ", currentLatLng);
+
   return (
     <div className={styles.chatViewContainer}>
       {/* Chat History Area */}
@@ -542,6 +558,7 @@ const ChatView: React.FC<ChatViewProps> = ({
           aiInstance={aiInstance}
           currentParams={currentParams}
           selectedFile={selectedFile}
+          disabled={!isLatLngValid}
         />
       </div>
     </div>

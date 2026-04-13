@@ -5,6 +5,7 @@ import RightSidebar from "./RightSidebar";
 import ChatView from "../../views/ChatView";
 import ImagenView from "../../views/ImagenView";
 import LiveView from "../../views/LiveView";
+import ServerTemplateView from "../../views/ServerTemplateView";
 import { AppMode } from "../../App";
 import {
   UsageMetadata,
@@ -82,7 +83,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   }, [activeMode]);
 
   useEffect(() => {
-    const validModes: AppMode[] = ["chat", "imagenGen", "live"];
+    const validModes: AppMode[] = ["chat", "imagenGen", "live", "serverTemplate"];
     if (!validModes.includes(activeMode)) {
       console.warn(`Invalid activeMode "${activeMode}". Resetting to "chat".`);
       setActiveMode("chat");
@@ -116,6 +117,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({
       case "live":
         return (
           <LiveView aiInstance={activeAI} />
+        );
+      case "serverTemplate":
+        return (
+          <ServerTemplateView
+            aiInstance={activeAI}
+            onUsageMetadataChange={setUsageMetadata}
+            currentParams={generativeParams}
+          />
         );
       default:
         console.error(`Unexpected activeMode: ${activeMode}`);

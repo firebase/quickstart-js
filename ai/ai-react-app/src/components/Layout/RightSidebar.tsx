@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AppMode } from "../../App";
 import styles from "./RightSidebar.module.css";
+import { isLatLngPartial } from "../../utils/validationUtils";
 import {
   AVAILABLE_GENERATIVE_MODELS,
   AVAILABLE_IMAGEN_MODELS,
   defaultFunctionCallingTool,
   defaultGoogleSearchTool,
+  defaultGoogleMapsTool,
 } from "../../services/firebaseAIService";
 import {
   ModelParams,
@@ -35,6 +37,29 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   imagenParams,
   setImagenParams,
 }) => {
+  // Local state for Lat/Lng to allow atomic updates
+  const [localLat, setLocalLat] = useState<string>("");
+  const [localLng, setLocalLng] = useState<string>("");
+  const [localLanguageCode, setLocalLanguageCode] = useState<string>("");
+
+  // Sync local state with global params when they change externally (e.g. preset loading)
+  // or when we first load.
+  useEffect(() => {
+    const current = generativeParams.toolConfig?.retrievalConfig?.latLng;
+    if (current && current.latitude !== undefined && current.longitude !== undefined) {
+      setLocalLat(current.latitude.toString());
+      setLocalLng(current.longitude.toString());
+    }
+
+    // Sync Language Code
+    const lang = generativeParams.toolConfig?.retrievalConfig?.languageCode;
+    if (lang !== undefined) {
+      setLocalLanguageCode(lang);
+    } else if (generativeParams.toolConfig?.retrievalConfig === undefined) {
+      setLocalLanguageCode("");
+    }
+  }, [generativeParams.toolConfig?.retrievalConfig]);
+
   const handleModelParamsUpdate = (
     updateFn: (prevState: ModelParams) => ModelParams,
   ) => {
@@ -147,8 +172,12 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             prev.tools && prev.tools.length > 0
               ? prev.tools
               : [defaultFunctionCallingTool];
+
+          // Preserve existing retrieval config
+          const existingRetrievalConfig = nextState.toolConfig?.retrievalConfig;
           nextState.toolConfig = {
             functionCallingConfig: { mode: FunctionCallingMode.AUTO },
+            ...(existingRetrievalConfig ? { retrievalConfig: existingRetrievalConfig } : {})
           };
 
           // Turn OFF JSON mode by clearing its related fields
@@ -157,23 +186,167 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
         } else {
           // Turn OFF Function Calling
           nextState.tools = undefined;
-          nextState.toolConfig = undefined; // Clear config when turning off
+          if (nextState.toolConfig?.retrievalConfig) {
+            delete nextState.toolConfig.functionCallingConfig;
+          } else {
+            nextState.toolConfig = undefined;
+          }
         }
       } else if (name === "google-search-toggle") {
+        let currentTools = nextState.tools ? [...nextState.tools] : [];
         if (checked) {
-          // Turn ON Google Search Grounding
-          nextState.tools = [defaultGoogleSearchTool];
-
+          // Add Google Search if not present
+          if (!currentTools.some((t) => "googleSearch" in t)) {
+            currentTools.push(defaultGoogleSearchTool);
+          }
           // Turn OFF JSON mode and Function Calling
           nextState.generationConfig.responseMimeType = undefined;
           nextState.generationConfig.responseSchema = undefined;
-          nextState.toolConfig = undefined;
+
+          // Reconstruct retrievalConfig from local inputs to ensure sync.
+          const retrievalConfig: any = nextState.toolConfig?.retrievalConfig || {};
+
+          if (localLat && localLng) {
+            const lat = parseFloat(localLat);
+            const lng = parseFloat(localLng);
+            if (!isNaN(lat) && !isNaN(lng)) {
+              retrievalConfig.latLng = { latitude: lat, longitude: lng };
+            }
+          }
+          if (localLanguageCode) {
+            retrievalConfig.languageCode = localLanguageCode;
+          }
+
+          nextState.toolConfig = Object.keys(retrievalConfig).length > 0
+            ? { retrievalConfig }
+            : undefined;
         } else {
-          // Turn OFF Google Search Grounding
-          nextState.tools = undefined;
+          // Remove Google Search
+          currentTools = currentTools.filter((t) => !("googleSearch" in t));
+        }
+        nextState.tools = currentTools.length > 0 ? currentTools : undefined;
+      } else if (name === "google-maps-toggle") {
+        let currentTools = nextState.tools ? [...nextState.tools] : [];
+        if (checked) {
+          // Add Google Maps if not present
+          if (!currentTools.some((t) => "googleMaps" in t)) {
+            currentTools.push(defaultGoogleMapsTool);
+          }
+          // Turn OFF JSON mode and Function Calling
+          nextState.generationConfig.responseMimeType = undefined;
+          nextState.generationConfig.responseSchema = undefined;
+
+          // Reconstruct retrievalConfig from local inputs to ensure sync
+          const retrievalConfig: any = nextState.toolConfig?.retrievalConfig || {};
+
+          if (localLat && localLng) {
+            const lat = parseFloat(localLat);
+            const lng = parseFloat(localLng);
+            if (!isNaN(lat) && !isNaN(lng)) {
+              retrievalConfig.latLng = { latitude: lat, longitude: lng };
+            }
+          }
+          if (localLanguageCode) {
+            retrievalConfig.languageCode = localLanguageCode;
+          }
+
+          nextState.toolConfig = Object.keys(retrievalConfig).length > 0
+            ? { retrievalConfig }
+            : undefined;
+        } else {
+          // Remove Google Maps
+          currentTools = currentTools.filter((t) => !("googleMaps" in t));
+
+        }
+        nextState.tools = currentTools.length > 0 ? currentTools : undefined;
+      } else if (name === "google-maps-widget-toggle") {
+        let currentTools = nextState.tools ? [...nextState.tools] : [];
+        const mapToolIndex = currentTools.findIndex((t) => "googleMaps" in t);
+        if (mapToolIndex !== -1) {
+          // Update existing tool
+          currentTools[mapToolIndex] = {
+            googleMaps: {
+              enableWidget: checked,
+            },
+          };
+          nextState.tools = currentTools;
         }
       }
       console.log("[RightSidebar] Updated generative params state:", nextState);
+      return nextState;
+    });
+  };
+
+  const handleLatLngChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: "latitude" | "longitude",
+  ) => {
+    const rawValue = e.target.value;
+
+    // 1. Update local UI state immediately
+    if (field === "latitude") {
+      setLocalLat(rawValue);
+    } else {
+      setLocalLng(rawValue);
+    }
+
+    // 2. Validate current lattitude and longitude pair.
+    const targetLatStr = field === "latitude" ? rawValue : localLat;
+    const targetLngStr = field === "longitude" ? rawValue : localLng;
+
+    const lat = parseFloat(targetLatStr);
+    const lng = parseFloat(targetLngStr);
+
+    const isValidPair = !isNaN(lat) && !isNaN(lng) && targetLatStr !== "" && targetLngStr !== "";
+
+    // 3. Update or Clear Global State
+    handleModelParamsUpdate((prev: ModelParams): ModelParams => {
+      const nextState = JSON.parse(JSON.stringify(prev));
+      nextState.toolConfig = nextState.toolConfig || {};
+      nextState.toolConfig.retrievalConfig = nextState.toolConfig.retrievalConfig || {};
+
+      if (isValidPair) {
+        nextState.toolConfig.retrievalConfig.latLng = {
+          latitude: lat,
+          longitude: lng,
+        };
+      } else {
+        // Clear values if they're not fully valid. This avoids partial error
+        // states from reaching the model.
+        delete nextState.toolConfig.retrievalConfig.latLng;
+        if (Object.keys(nextState.toolConfig.retrievalConfig).length === 0) {
+          delete nextState.toolConfig.retrievalConfig;
+        }
+        if (Object.keys(nextState.toolConfig).length === 0) {
+          delete nextState.toolConfig;
+        }
+      }
+      return nextState;
+    });
+  };
+
+  const handleLanguageCodeChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const val = e.target.value;
+    setLocalLanguageCode(val);
+
+    handleModelParamsUpdate((prev: ModelParams): ModelParams => {
+      const nextState = JSON.parse(JSON.stringify(prev));
+      nextState.toolConfig = nextState.toolConfig || {};
+      nextState.toolConfig.retrievalConfig = nextState.toolConfig.retrievalConfig || {};
+
+      if (val.trim() !== "") {
+        nextState.toolConfig.retrievalConfig.languageCode = val.trim();
+      } else {
+        delete nextState.toolConfig.retrievalConfig.languageCode;
+        if (Object.keys(nextState.toolConfig.retrievalConfig).length === 0) {
+          delete nextState.toolConfig.retrievalConfig;
+        }
+        if (Object.keys(nextState.toolConfig).length === 0) {
+          delete nextState.toolConfig;
+        }
+      }
       return nextState;
     });
   };
@@ -236,30 +409,43 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   const isGroundingWithGoogleSearchActive = !!generativeParams.tools?.some(
     (tool) => "googleSearch" in tool,
   );
+  const isGroundingWithGoogleMapsActive = !!generativeParams.tools?.some(
+    (tool) => "googleMaps" in tool,
+  );
+  // Check if enableWidget is enabled.
+  const isGoogleMapsWidgetEnabled = !!generativeParams.tools?.find(
+    (tool) => "googleMaps" in tool,
+  )?.googleMaps?.enableWidget;
+
+
+  // Invalid if exactly one coordinate is provided (must provide both or neither).
+  const isLatLngValid = !isLatLngPartial(localLat, localLng);
 
   return (
     <div className={styles.rightSidebarContainer}>
       {/* Generative Model Settings */}
-      {activeMode === "chat" && (
+      {(activeMode === "chat" || activeMode === "serverTemplate") && (
         <>
           <div>
             <h5 className={styles.subSectionTitle}>
               Generative Model Settings
             </h5>
-            <div className={styles.controlGroup}>
-              <label htmlFor="model-select">Model</label>
-              <select
-                id="model-select"
-                value={generativeParams.model}
-                onChange={handleGenerativeModelChange}
-              >
-                {AVAILABLE_GENERATIVE_MODELS.map((modelName) => (
-                  <option key={modelName} value={modelName}>
-                    {modelName}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {activeMode !== "serverTemplate" && (
+              <div className={styles.controlGroup}>
+                <label htmlFor="model-select">Model</label>
+                <select
+                  id="model-select"
+                  value={generativeParams.model}
+                  onChange={handleGenerativeModelChange}
+                >
+                  {AVAILABLE_GENERATIVE_MODELS.map((modelName) => (
+                    <option key={modelName} value={modelName}>
+                      {modelName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
             <div className={styles.controlGroup}>
               <label htmlFor="temperature-slider">
                 Temperature:{" "}
@@ -364,81 +550,218 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
 
           <div>
             <h5 className={styles.subSectionTitle}>Tools</h5>
-            <div
-              className={`${styles.toggleGroup} ${isFunctionCallingActive ? styles.disabledText : ""}`}
-            >
-              <label htmlFor="structured-output-toggle">
-                Structured output (JSON)
-              </label>
-              <label className={styles.switch}>
-                <input
-                  type="checkbox"
-                  id="structured-output-toggle"
-                  name="structured-output-toggle"
-                  checked={isStructuredOutputActive}
-                  onChange={handleToggleChange}
-                  disabled={
-                    isFunctionCallingActive || isGroundingWithGoogleSearchActive
-                  }
-                />
-                <span
-                  className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive ? styles.disabled : ""}`}
-                ></span>
-              </label>
-            </div>
-            <div
-              className={`${styles.toggleGroup} ${isStructuredOutputActive || isGroundingWithGoogleSearchActive ? styles.disabledText : ""}`}
-            >
-              <label htmlFor="function-call-toggle">Function calling</label>
-              <label className={styles.switch}>
-                <input
-                  type="checkbox"
-                  id="function-call-toggle"
-                  name="function-call-toggle"
-                  checked={isFunctionCallingActive}
-                  onChange={handleToggleChange}
-                  disabled={
-                    isStructuredOutputActive ||
-                    isGroundingWithGoogleSearchActive
-                  }
-                />
-                <span
-                  className={`${styles.slider} ${isStructuredOutputActive ? styles.disabled : ""}`}
-                ></span>
-              </label>
-            </div>
-            <div
-              className={`${styles.toggleGroup} ${
-                isStructuredOutputActive || isFunctionCallingActive
-                  ? styles.disabledText
-                  : ""
-              }`}
-            >
-              <label htmlFor="google-search-toggle">
-                Grounding with Google Search
-              </label>
-              <label className={styles.switch}>
-                <input
-                  type="checkbox"
-                  id="google-search-toggle"
-                  name="google-search-toggle"
-                  checked={isGroundingWithGoogleSearchActive}
-                  onChange={handleToggleChange}
-                  disabled={isStructuredOutputActive || isFunctionCallingActive}
-                />
-                <span
-                  className={`${styles.slider} ${
-                    isStructuredOutputActive || isFunctionCallingActive
-                      ? styles.disabled
+            {activeMode !== "serverTemplate" && (
+              <>
+                <div className={styles.groupContainer}>
+                  <div
+                    className={`${styles.toggleGroup} ${isStructuredOutputActive || isGroundingWithGoogleSearchActive ? styles.disabledText : ""}`}
+                  >
+                    <label htmlFor="function-call-toggle">Function calling</label>
+                    <label className={styles.switch}>
+                      <input
+                        type="checkbox"
+                        id="function-call-toggle"
+                        name="function-call-toggle"
+                        checked={isFunctionCallingActive}
+                        onChange={handleToggleChange}
+                        disabled={
+                          isStructuredOutputActive ||
+                          isGroundingWithGoogleSearchActive ||
+                          isGroundingWithGoogleMapsActive
+                        }
+                      />
+                      <span
+                        className={`${styles.slider} ${isStructuredOutputActive ? styles.disabled : ""}`}
+                      ></span>
+                    </label>
+                  </div>
+                </div>
+                {/* Grounding Tools Group */}
+                <div className={styles.groupContainer}>
+                  <h6
+                    className={styles.subSectionTitle}
+                    style={{ margin: "0 0 16px 0", fontSize: "0.75rem" }}
+                  >
+                    Grounding Tools
+                  </h6>
+                  {/* Google Maps Toggle */}
+                  <div
+                    className={`${styles.toggleGroup} ${isStructuredOutputActive ||
+                      isFunctionCallingActive ||
+                      isGroundingWithGoogleSearchActive
+                      ? styles.disabledText
                       : ""
-                  }`}
-                ></span>
-              </label>
-            </div>
+                      }`}
+                  >
+                    <label htmlFor="google-maps-toggle">
+                      Grounding with Google Maps
+                    </label>
+                    <label className={styles.switch}>
+                      <input
+                        type="checkbox"
+                        id="google-maps-toggle"
+                        name="google-maps-toggle"
+                        checked={isGroundingWithGoogleMapsActive}
+                        onChange={handleToggleChange}
+                        disabled={
+                          isStructuredOutputActive || isFunctionCallingActive
+                        }
+                      />
+                      <span
+                        className={`${styles.slider} ${isStructuredOutputActive || isFunctionCallingActive
+                          ? styles.disabled
+                          : ""
+                          }`}
+                      ></span>
+                    </label>
+                  </div>
+                  {/* Indented Widget Toggle */}
+                  <div
+                    className={`${styles.toggleGroup} ${!isGroundingWithGoogleMapsActive ? styles.disabledText : ""}`}
+                    style={{ paddingLeft: "10px", marginBottom: "16px" }}
+                  >
+                    <label
+                      htmlFor="google-maps-widget-toggle"
+                      title="Include the widget context token in the response."
+                    >
+                      Enable Widget
+                    </label>
+                    <label className={styles.switch}>
+                      <input
+                        type="checkbox"
+                        id="google-maps-widget-toggle"
+                        name="google-maps-widget-toggle"
+                        checked={isGoogleMapsWidgetEnabled}
+                        onChange={handleToggleChange}
+                        disabled={!isGroundingWithGoogleMapsActive}
+                      />
+                      <span
+                        className={`${styles.slider} ${!isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
+                      ></span>
+                    </label>
+                  </div>
+
+                  {/* Google Search Toggle */}
+                  <div
+                    className={`${styles.toggleGroup} ${isStructuredOutputActive || isFunctionCallingActive
+                      ? styles.disabledText
+                      : ""
+                      }`}
+                  >
+                    <label htmlFor="google-search-toggle">
+                      Grounding with Google Search
+                    </label>
+                    <label className={styles.switch}>
+                      <input
+                        type="checkbox"
+                        id="google-search-toggle"
+                        name="google-search-toggle"
+                        checked={isGroundingWithGoogleSearchActive}
+                        onChange={handleToggleChange}
+                        disabled={
+                          isStructuredOutputActive || isFunctionCallingActive
+                        }
+                      />
+                      <span
+                        className={`${styles.slider} ${isStructuredOutputActive ||
+                          isFunctionCallingActive ||
+                          isGroundingWithGoogleMapsActive
+                          ? styles.disabled
+                          : ""
+                          }`}
+                      ></span>
+                    </label>
+                  </div>
+
+                </div>
+              </>
+            )}
           </div>
+
+            {/* Retrieval Config Group */}
+            <div className={styles.groupContainer}>
+              <h6
+                className={styles.subSectionTitle}
+                style={{ margin: "0 0 16px 0", fontSize: "0.75rem" }}
+              >
+                Retrieval Config (optional)
+              </h6>
+              <div
+                className={`${styles.controlGroup} ${isStructuredOutputActive ? styles.disabledText : ""
+                  }`}
+              >
+                <label>Location</label>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <input
+                    type="number"
+                    placeholder="Lat"
+                    value={localLat}
+                    onChange={(e) => handleLatLngChange(e, "latitude")}
+                    disabled={isStructuredOutputActive}
+                    style={{ width: "50%" }}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Lng"
+                    value={localLng}
+                    onChange={(e) => handleLatLngChange(e, "longitude")}
+                    disabled={isStructuredOutputActive}
+                    style={{ width: "50%" }}
+                  />
+                </div>
+              </div>
+              <div
+                className={`${styles.controlGroup} ${isStructuredOutputActive ? styles.disabledText : ""
+                  }`}
+              >
+                <label>Language Code (ex: en, es, etc)</label>
+                <input
+                  type="text"
+                  placeholder="Language Code"
+                  value={localLanguageCode}
+                  onChange={handleLanguageCodeChange}
+                  disabled={isStructuredOutputActive}
+                />
+              </div>
+              {!isLatLngValid && (
+                <div className={styles.errorBanner}>
+                  <span>⚠️</span>
+                  <span>
+                    Both Latitude and Longitude must be provided if one is set.
+                  </span>
+                </div>
+              )}
+            </div>
+            {activeMode !== "serverTemplate" && (
+              <div className={styles.groupContainer}>
+                <div
+                  className={`${styles.toggleGroup} ${isFunctionCallingActive ? styles.disabledText : ""}`}
+                >
+                  <label htmlFor="structured-output-toggle">
+                    Structured output (JSON)
+                  </label>
+                  <label className={styles.switch}>
+                    <input
+                      type="checkbox"
+                      id="structured-output-toggle"
+                      name="structured-output-toggle"
+                      checked={isStructuredOutputActive}
+                      onChange={handleToggleChange}
+                      disabled={
+                        isFunctionCallingActive ||
+                        isGroundingWithGoogleSearchActive ||
+                        isGroundingWithGoogleMapsActive
+                      }
+                    />
+                    <span
+                      className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive || isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
+                    ></span>
+                  </label>
+                </div>
+              </div>
+            )}
         </>
       )}
-
       {/* Imagen Settings */}
       {activeMode === "imagenGen" && (
         <div>
