@@ -112,33 +112,35 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
       </ul>
 
       {/* Backend Selection */}
-      <div className={styles.backendSelector}>
-        <h5 className={styles.selectorTitle}>Backend API</h5>
-        <div className={styles.radioGroup}>
-          <label>
-            <input
-              type="radio"
-              name="backend"
-              value={BackendType.GOOGLE_AI}
-              checked={activeBackend === BackendType.GOOGLE_AI}
-              onChange={handleBackendChange}
-            />
-            Gemini Developer API
-          </label>
+      {activeMode !== "serverTemplate" && (
+        <div className={styles.backendSelector}>
+          <h5 className={styles.selectorTitle}>Backend API</h5>
+          <div className={styles.radioGroup}>
+            <label>
+              <input
+                type="radio"
+                name="backend"
+                value={BackendType.GOOGLE_AI}
+                checked={activeBackend === BackendType.GOOGLE_AI}
+                onChange={handleBackendChange}
+              />
+              Gemini Developer API
+            </label>
+          </div>
+          <div className={styles.radioGroup}>
+            <label>
+              <input
+                type="radio"
+                name="backend"
+                value={BackendType.VERTEX_AI}
+                checked={activeBackend === BackendType.VERTEX_AI}
+                onChange={handleBackendChange}
+              />
+              Vertex AI Gemini API
+            </label>
+          </div>
         </div>
-        <div className={styles.radioGroup}>
-          <label>
-            <input
-              type="radio"
-              name="backend"
-              value={BackendType.VERTEX_AI}
-              checked={activeBackend === BackendType.VERTEX_AI}
-              onChange={handleBackendChange}
-            />
-            Vertex AI Gemini API
-          </label>
-        </div>
-      </div>
+      )}
 
       {/* Persona Selector */}
       {activeMode === "chat" && (

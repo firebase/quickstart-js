@@ -732,32 +732,34 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                 </div>
               )}
             </div>
-            <div className={styles.groupContainer}>
-              <div
-                className={`${styles.toggleGroup} ${isFunctionCallingActive ? styles.disabledText : ""}`}
-              >
-                <label htmlFor="structured-output-toggle">
-                  Structured output (JSON)
-                </label>
-                <label className={styles.switch}>
-                  <input
-                    type="checkbox"
-                    id="structured-output-toggle"
-                    name="structured-output-toggle"
-                    checked={isStructuredOutputActive}
-                    onChange={handleToggleChange}
-                    disabled={
-                      isFunctionCallingActive ||
-                      isGroundingWithGoogleSearchActive ||
-                      isGroundingWithGoogleMapsActive
-                    }
-                  />
-                  <span
-                    className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive || isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
-                  ></span>
-                </label>
+            {activeMode !== "serverTemplate" && (
+              <div className={styles.groupContainer}>
+                <div
+                  className={`${styles.toggleGroup} ${isFunctionCallingActive ? styles.disabledText : ""}`}
+                >
+                  <label htmlFor="structured-output-toggle">
+                    Structured output (JSON)
+                  </label>
+                  <label className={styles.switch}>
+                    <input
+                      type="checkbox"
+                      id="structured-output-toggle"
+                      name="structured-output-toggle"
+                      checked={isStructuredOutputActive}
+                      onChange={handleToggleChange}
+                      disabled={
+                        isFunctionCallingActive ||
+                        isGroundingWithGoogleSearchActive ||
+                        isGroundingWithGoogleMapsActive
+                      }
+                    />
+                    <span
+                      className={`${styles.slider} ${isFunctionCallingActive || isGroundingWithGoogleSearchActive || isGroundingWithGoogleMapsActive ? styles.disabled : ""}`}
+                    ></span>
+                  </label>
+                </div>
               </div>
-            </div>
+            )}
         </>
       )}
       {/* Imagen Settings */}
