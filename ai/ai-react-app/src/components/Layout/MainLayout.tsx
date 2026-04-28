@@ -15,6 +15,7 @@ import {
   GoogleAIBackend,
   getAI,
   ResponseModality,
+  InferenceMode,
 } from "firebase/ai";
 import {
   AVAILABLE_GENERATIVE_MODELS,
@@ -51,6 +52,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
       responseModalities: [ResponseModality.TEXT, ResponseModality.IMAGE],
     },
   });
+  const [isHybridMode, setIsHybridMode] = useState(false);
+  const [inferenceMode, setInferenceMode] = useState<InferenceMode>(InferenceMode.PREFER_ON_DEVICE);
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<string | undefined>();
 
   const [usageMetadata, setUsageMetadata] = useState<UsageMetadata | null>(
@@ -111,6 +114,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
             onUsageMetadataChange={setUsageMetadata}
             currentParams={generativeParams}
             activeMode={activeMode}
+            isHybridMode={isHybridMode}
+            inferenceMode={inferenceMode}
           />
         );
       case "nanobanana":
@@ -129,6 +134,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
             onUsageMetadataChange={setUsageMetadata}
             currentParams={generativeParams}
             activeMode={activeMode}
+            isHybridMode={isHybridMode}
+            inferenceMode={inferenceMode}
           />
         );
     }
@@ -160,6 +167,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({
             setNanoBananaParams={setNanoBananaParams}
             selectedAspectRatio={selectedAspectRatio}
             setSelectedAspectRatio={setSelectedAspectRatio}
+            isHybridMode={isHybridMode}
+            setIsHybridMode={setIsHybridMode}
+            inferenceMode={inferenceMode}
+            setInferenceMode={setInferenceMode}
           />
         </div>
       </div>

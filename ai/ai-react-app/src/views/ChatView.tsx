@@ -13,6 +13,7 @@ import {
   AIError,
   AI,
   GroundingMetadata,
+  InferenceMode,
 } from "firebase/ai";
 import PromptInput from "../components/Common/PromptInput";
 import ChatMessage from "../components/Specific/ChatMessage";
@@ -26,6 +27,8 @@ interface ChatViewProps {
   onUsageMetadataChange: (metadata: UsageMetadata | null) => void;
   currentParams: ModelParams;
   activeMode: AppMode;
+  isHybridMode: boolean;
+  inferenceMode: InferenceMode;
 }
 
 const modelParamsChanged = (
@@ -67,6 +70,8 @@ const ChatView: React.FC<ChatViewProps> = ({
   currentParams,
   aiInstance,
   activeMode,
+  isHybridMode,
+  inferenceMode,
 }) => {
   const [chatHistory, setChatHistory] = useState<Content[]>([]);
   const [currentInput, setCurrentInput] = useState("");
@@ -82,6 +87,8 @@ const ChatView: React.FC<ChatViewProps> = ({
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const chatSessionRef = useRef<ChatSession | null>(null);
   const sessionParamsRef = useRef<ModelParams | null>(null);
+  const sessionIsHybridModeRef = useRef<boolean>(isHybridMode);
+  const sessionInferenceModeRef = useRef<InferenceMode>(inferenceMode);
 
   const initializeChatSession = useCallback(
     (params: ModelParams) => {
@@ -90,7 +97,12 @@ const ChatView: React.FC<ChatViewProps> = ({
           "[ChatView] Initializing new chat session with params:",
           params,
         );
-        const model = getGenerativeModel(aiInstance, params);
+        const paramsToUse = isHybridMode ? {
+          mode: inferenceMode,
+          inCloudParams: params,
+          onDeviceParams: {}
+        } : params;
+        const model = getGenerativeModel(aiInstance, paramsToUse as any);
         const newSession = model.startChat({
           history: [],
           safetySettings: params.safetySettings,
@@ -102,6 +114,8 @@ const ChatView: React.FC<ChatViewProps> = ({
         chatSessionRef.current = newSession;
         // Store a deep copy of the params used for this session
         sessionParamsRef.current = JSON.parse(JSON.stringify(params));
+        sessionIsHybridModeRef.current = isHybridMode;
+        sessionInferenceModeRef.current = inferenceMode;
         setChatHistory([]);
         setError(null);
         onUsageMetadataChange(null);
@@ -114,7 +128,7 @@ const ChatView: React.FC<ChatViewProps> = ({
         sessionParamsRef.current = null;
       }
     },
-    [onUsageMetadataChange, aiInstance],
+    [onUsageMetadataChange, aiInstance, isHybridMode, inferenceMode],
   );
 
   useEffect(() => {
@@ -400,10 +414,10 @@ const ChatView: React.FC<ChatViewProps> = ({
       return;
     }
 
-    const needsNewSession = modelParamsChanged(
-      currentParams,
-      sessionParamsRef.current,
-    );
+    const needsNewSession =
+      modelParamsChanged(currentParams, sessionParamsRef.current) ||
+      isHybridMode !== sessionIsHybridModeRef.current ||
+      inferenceMode !== sessionInferenceModeRef.current;
     let sessionToUse: ChatSession;
 
     const currentHistoryForSession = [...chatHistory];
@@ -413,7 +427,12 @@ const ChatView: React.FC<ChatViewProps> = ({
         console.log(
           "[ChatView] Significant parameters changed or no session exists. Initializing new session *with existing history*.",
         );
-        const model = getGenerativeModel(aiInstance, currentParams);
+        const paramsToUse = isHybridMode ? {
+          mode: inferenceMode,
+          inCloudParams: currentParams,
+          onDeviceParams: {}
+        } : currentParams;
+        const model = getGenerativeModel(aiInstance, paramsToUse as any);
         sessionToUse = model.startChat({
           history: currentHistoryForSession,
           safetySettings: currentParams.safetySettings,
@@ -424,6 +443,8 @@ const ChatView: React.FC<ChatViewProps> = ({
         });
         chatSessionRef.current = sessionToUse;
         sessionParamsRef.current = JSON.parse(JSON.stringify(currentParams));
+        sessionIsHybridModeRef.current = isHybridMode;
+        sessionInferenceModeRef.current = inferenceMode;
         console.log("[ChatView] New session started with preserved history.");
       } catch (sessionError: unknown) {
         console.error(
@@ -441,7 +462,12 @@ const ChatView: React.FC<ChatViewProps> = ({
           "[ChatView] Session ref is null unexpectedly. Attempting recovery.",
         );
         try {
-          const model = getGenerativeModel(aiInstance, currentParams);
+          const paramsToUse = isHybridMode ? {
+            mode: inferenceMode,
+            inCloudParams: currentParams,
+            onDeviceParams: {}
+          } : currentParams;
+          const model = getGenerativeModel(aiInstance, paramsToUse as any);
           sessionToUse = model.startChat({ history: currentHistoryForSession });
           chatSessionRef.current = sessionToUse;
           sessionParamsRef.current = JSON.parse(JSON.stringify(currentParams));

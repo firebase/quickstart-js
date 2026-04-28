@@ -15,6 +15,7 @@ import {
   FunctionCallingMode,
   UsageMetadata,
   ResponseModality,
+  InferenceMode,
 } from "firebase/ai";
 
 export interface ExtendedGenerationConfig extends GenerationConfig {
@@ -34,6 +35,10 @@ interface RightSidebarProps {
   setNanoBananaParams: React.Dispatch<React.SetStateAction<ModelParams>>;
   selectedAspectRatio?: string;
   setSelectedAspectRatio: (ar?: string) => void;
+  isHybridMode: boolean;
+  setIsHybridMode: React.Dispatch<React.SetStateAction<boolean>>;
+  inferenceMode: InferenceMode;
+  setInferenceMode: React.Dispatch<React.SetStateAction<InferenceMode>>;
 }
 
 const RightSidebar: React.FC<RightSidebarProps> = ({
@@ -45,7 +50,58 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   setNanoBananaParams,
   selectedAspectRatio,
   setSelectedAspectRatio,
+  isHybridMode,
+  setIsHybridMode,
+  inferenceMode,
+  setInferenceMode,
 }) => {
+  const [schemaText, setSchemaText] = React.useState(
+    JSON.stringify(generativeParams.generationConfig?.responseJsonSchema || {}, null, 2)
+  );
+  const [modelStatus, setModelStatus] = React.useState<string>("unknown");
+
+  React.useEffect(() => {
+    setSchemaText(
+      JSON.stringify(generativeParams.generationConfig?.responseJsonSchema || {}, null, 2)
+    );
+  }, [generativeParams.generationConfig?.responseJsonSchema]);
+
+  React.useEffect(() => {
+    if (isHybridMode) {
+      checkModelAvailability();
+    }
+  }, [isHybridMode]);
+
+  const checkModelAvailability = async () => {
+    setModelStatus("checking");
+    try {
+      const ai = (window as any).LanguageModel;
+      if (!ai) {
+        setModelStatus("unavailable");
+        return;
+      }
+      const availability = await ai.availability();
+      setModelStatus(availability);
+    } catch (err) {
+      console.error("Error checking model availability:", err);
+      setModelStatus("error");
+    }
+  };
+
+  const handleDownloadModel = async () => {
+    setModelStatus("downloading");
+    try {
+      const ai = (window as any).LanguageModel;
+      if (ai) {
+        await ai.create();
+        setModelStatus("available");
+      }
+    } catch (err) {
+      console.error("Error downloading model:", err);
+      setModelStatus("error");
+    }
+  };
+
   const handleModelParamsUpdate = (
     updateFn: (prevState: ModelParams) => ModelParams,
   ) => {
@@ -154,6 +210,8 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
         if (checked) {
           // Turn ON JSON
           nextState.generationConfig.responseMimeType = "application/json";
+          nextState.generationConfig.responseJsonSchema = { type: "object", properties: {} }; // Default schema
+          nextState.generationConfig.responseSchema = undefined;
 
           // Turn OFF Function Calling by clearing its related fields
           nextState.generationConfig.responseSchema = undefined;
@@ -162,6 +220,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
         } else {
           // Turn OFF JSON
           nextState.generationConfig.responseMimeType = undefined;
+          nextState.generationConfig.responseJsonSchema = undefined;
           nextState.generationConfig.responseSchema = undefined;
         }
       } else if (name === "function-call-toggle") {
@@ -178,6 +237,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
 
           // Turn OFF JSON mode by clearing its related fields
           nextState.generationConfig.responseMimeType = undefined;
+          nextState.generationConfig.responseJsonSchema = undefined;
           nextState.generationConfig.responseSchema = undefined;
         } else {
           // Turn OFF Function Calling
@@ -191,6 +251,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
 
           // Turn OFF JSON mode and Function Calling
           nextState.generationConfig.responseMimeType = undefined;
+          nextState.generationConfig.responseJsonSchema = undefined;
           nextState.generationConfig.responseSchema = undefined;
           nextState.toolConfig = undefined;
         } else {
@@ -342,6 +403,54 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
 
           <div>
             <h5 className={styles.subSectionTitle}>Tools</h5>
+            <div className={styles.toggleGroup}>
+              <label htmlFor="hybrid-mode-toggle">Hybrid Mode</label>
+              <label className={styles.switch}>
+                <input
+                  type="checkbox"
+                  id="hybrid-mode-toggle"
+                  name="hybrid-mode-toggle"
+                  checked={isHybridMode}
+                  onChange={(e) => setIsHybridMode(e.target.checked)}
+                />
+                <span className={styles.slider}></span>
+              </label>
+            </div>
+            {isHybridMode && (
+              <>
+                <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '5px', marginBottom: '10px' }}>
+                  To use on-device inference, ensure you have enabled the Prompt API in Chrome and downloaded the model.
+                  See <a href="https://developer.chrome.com/docs/ai/prompt-api" target="_blank" rel="noopener noreferrer">Chrome AI Prompt API</a> for details.
+                </div>
+                <div className={styles.controlGroup}>
+                  <label>Model Status</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ textTransform: 'capitalize' }}>{modelStatus}</span>
+                    {modelStatus === "downloadable" && (
+                      <button onClick={handleDownloadModel} style={{ padding: '2px 5px', fontSize: '0.8rem' }}>
+                        Download
+                      </button>
+                    )}
+                    {modelStatus === "downloading" && (
+                      <span className={styles.spinner}>⏳</span> // Using an emoji as a simple spinner
+                    )}
+                  </div>
+                </div>
+                <div className={styles.controlGroup}>
+                  <label htmlFor="inference-mode-select">Inference Mode</label>
+                  <select
+                    id="inference-mode-select"
+                    value={inferenceMode}
+                    onChange={(e) => setInferenceMode(e.target.value as InferenceMode)}
+                  >
+                    <option value={InferenceMode.PREFER_ON_DEVICE}>Prefer On-Device</option>
+                    <option value={InferenceMode.ONLY_ON_DEVICE}>Only On-Device</option>
+                    <option value={InferenceMode.ONLY_IN_CLOUD}>Only In-Cloud</option>
+                    <option value={InferenceMode.PREFER_IN_CLOUD}>Prefer In-Cloud</option>
+                  </select>
+                </div>
+              </>
+            )}
             <div
               className={`${styles.toggleGroup} ${isFunctionCallingActive ? styles.disabledText : ""}`}
             >
@@ -364,6 +473,33 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                 ></span>
               </label>
             </div>
+            {isStructuredOutputActive && (
+              <div className={styles.controlGroup} style={{ marginTop: "10px", marginBottom: "10px" }}>
+                <label htmlFor="json-schema-input" style={{ display: "block", marginBottom: "5px" }}>JSON Schema</label>
+                <textarea
+                  id="json-schema-input"
+                  rows={5}
+                  placeholder='e.g. { "type": "object", "properties": { "response": { "type": "string" } } }'
+                  value={schemaText}
+                  onChange={(e) => {
+                    setSchemaText(e.target.value);
+                    try {
+                      const schema = JSON.parse(e.target.value);
+                      handleModelParamsUpdate((prev: ModelParams) => ({
+                        ...prev,
+                        generationConfig: {
+                          ...prev.generationConfig,
+                          responseJsonSchema: schema,
+                        },
+                      }));
+                    } catch (err) {
+                      // Ignore invalid JSON while typing
+                    }
+                  }}
+                  style={{ width: "100%", fontFamily: "monospace", fontSize: "0.8rem", padding: "5px", boxSizing: "border-box" }}
+                />
+              </div>
+            )}
             <div
               className={`${styles.toggleGroup} ${isStructuredOutputActive || isGroundingWithGoogleSearchActive ? styles.disabledText : ""}`}
             >
