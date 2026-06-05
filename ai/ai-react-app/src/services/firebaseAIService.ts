@@ -71,8 +71,6 @@ export const defaultGoogleSearchTool: GoogleSearchTool = {
 export const defaultGenerativeParams: Omit<ModelParams, "model"> = {
   // Model name itself is selected in the UI
   // Note: temperature, top_p, and top_k are deprecated and not recommended for Gemini 3.x models.
-
-  generationConfig: {},
   safetySettings: [
     {
       category: HarmCategory.HARM_CATEGORY_HARASSMENT,
