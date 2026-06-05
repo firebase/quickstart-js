@@ -26,7 +26,7 @@ export const AVAILABLE_NANO_BANANA_MODELS = [
 ];
 export const LIVE_MODELS = new Map<BackendType, string>([
   [BackendType.GOOGLE_AI, 'gemini-3.1-flash-live-preview'],
-  [BackendType.VERTEX_AI, 'gemini-live-2.5-flash-native-audio.']
+  [BackendType.VERTEX_AI, 'gemini-live-2.5-flash-native-audio']
 ])
 
 let app: FirebaseApp;
