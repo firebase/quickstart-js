@@ -1,7 +1,16 @@
 import { defineConfig } from 'vite';
+import path from 'path';
 
 export default defineConfig({
   base: '/',
+  resolve: {
+    alias: {
+      'firebase/app': path.resolve(__dirname, '../../firebase-js-sdk/packages/app/dist/esm/index.esm.js'),
+      'firebase/auth': path.resolve(__dirname, '../../firebase-js-sdk/packages/auth/dist/esm/index.js'),
+      '@firebase/app': path.resolve(__dirname, '../../firebase-js-sdk/packages/app/dist/esm/index.esm.js'),
+      '@firebase/auth': path.resolve(__dirname, '../../firebase-js-sdk/packages/auth/dist/esm/index.js'),
+    }
+  },
   build: {
     rollupOptions: {
       input: [
@@ -24,6 +33,7 @@ export default defineConfig({
         'microsoft-popup.html',
         'microsoft-redirect.html',
         'multi-tenant-ui.html',
+        'passkey.html',
         'phone-invisible.html',
         'phone-simple-popup.html',
         'phone-simple.html',
