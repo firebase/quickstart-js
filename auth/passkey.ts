@@ -7,6 +7,8 @@ import {
   enrollPasskey,
   signInWithPasskey,
   unenrollPasskey,
+  reload,
+  User,
 } from 'firebase/auth';
 import { firebaseConfig } from './config';
 
@@ -14,7 +16,8 @@ initializeApp(firebaseConfig);
 
 const auth = getAuth();
 
-if (window.location.hostname === 'localhost') {
+// Connect to the local emulator for testing.
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
   connectAuthEmulator(auth, 'http://127.0.0.1:9099');
 }
 
@@ -74,6 +77,10 @@ function handleEnroll() {
   enrollPasskey(user, name)
     .then(function () {
       alert('Passkey enrolled successfully!');
+      return reload(user);
+    })
+    .then(function () {
+      updateAccountDetails(user);
       enrollButton.disabled = false;
       enrollNameInput.value = '';
     })
@@ -83,26 +90,31 @@ function handleEnroll() {
       enrollButton.disabled = false;
     });
 }
-
-/**
- * Handles get enrolled passkeys button press.
- */
 function handleGetEnrolled() {
   const user = auth.currentUser;
   if (!user) {
     alert('You must be signed in to get enrolled passkeys.');
     return;
   }
-  // Try retrieving passkeys
-  const passkeys = (user as any).enrolledPasskeys || [];
-  if (passkeys.length === 0) {
-    alert('No passkeys enrolled for this user.');
-  } else {
-    const listStr = passkeys
-      .map((pk: any) => `Name: ${pk.name || 'Unnamed'}, Credential ID: ${pk.credentialId}`)
-      .join('\n');
-    alert(`Enrolled Passkeys:\n${listStr}`);
-  }
+  getEnrolledButton.disabled = true;
+  reload(user)
+    .then(function () {
+      updateAccountDetails(user);
+      const passkeys = (user as any).enrolledPasskeys || [];
+      if (passkeys.length === 0) {
+        alert('No passkeys enrolled for this user.');
+      } else {
+        const listStr = passkeys
+          .map((pk: any) => `Name: ${pk.name || 'Unnamed'}, Credential ID: ${pk.credentialId}`)
+          .join('\n');
+        alert(`Enrolled Passkeys:\n${listStr}`);
+      }
+      getEnrolledButton.disabled = false;
+    })
+    .catch(function (error) {
+      alert(error.message);
+      getEnrolledButton.disabled = false;
+    });
 }
 
 /**
@@ -123,6 +135,10 @@ function handleUnenroll() {
   unenrollPasskey(user, credentialId)
     .then(function () {
       alert('Passkey unenrolled successfully!');
+      return reload(user);
+    })
+    .then(function () {
+      updateAccountDetails(user);
       unenrollButton.disabled = false;
       unenrollIdInput.value = '';
     })
@@ -133,14 +149,20 @@ function handleUnenroll() {
     });
 }
 
-// Listening for auth state changes.
-onAuthStateChanged(auth, function (user) {
+/**
+ * Updates the displayed account details.
+ */
+function updateAccountDetails(user: User | null) {
   if (user) {
     // User is signed in.
     signInStatus.textContent = 'Signed in';
     signInButton.textContent = 'Sign out';
     signInButton.disabled = false;
-    accountDetails.textContent = JSON.stringify(user, null, '  ');
+    const userJson = {
+      ...user.toJSON(),
+      enrolledPasskeys: (user as any).enrolledPasskeys || [],
+    };
+    accountDetails.textContent = JSON.stringify(userJson, null, '  ');
     
     // Enable enroll/unenroll buttons
     enrollButton.disabled = false;
@@ -158,7 +180,10 @@ onAuthStateChanged(auth, function (user) {
     getEnrolledButton.disabled = true;
     unenrollButton.disabled = true;
   }
-});
+}
+
+// Listening for auth state changes.
+onAuthStateChanged(auth, updateAccountDetails);
 
 signInButton.addEventListener('click', handleSignIn, false);
 enrollButton.addEventListener('click', handleEnroll, false);
