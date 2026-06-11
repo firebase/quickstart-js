@@ -17,19 +17,16 @@ import {
 import { firebaseConfig } from "../config/firebase-config";
 
 export const AVAILABLE_GENERATIVE_MODELS = [
-  "gemini-2.0-flash",
-  "gemini-2.0-flash-lite",
-  "gemini-2.0-flash-exp",
-  "gemini-2.5-flash"
+  "gemini-3.1-flash-lite",
+  "gemini-3.5-flash",
 ];
 export const AVAILABLE_NANO_BANANA_MODELS = [
-  "gemini-3-pro-image-preview",
-  "gemini-3.1-flash-image-preview",
-  "gemini-2.5-flash-image",
+  "gemini-3-pro-image",
+  "gemini-3.1-flash-image",
 ];
 export const LIVE_MODELS = new Map<BackendType, string>([
-  [BackendType.GOOGLE_AI, 'gemini-2.5-flash-native-audio-preview-09-2025'],
-  [BackendType.VERTEX_AI, 'gemini-live-2.5-flash-preview-native-audio-09-2025']
+  [BackendType.GOOGLE_AI, 'gemini-3.1-flash-live-preview'],
+  [BackendType.VERTEX_AI, 'gemini-live-2.5-flash-native-audio']
 ])
 
 let app: FirebaseApp;
@@ -73,9 +70,7 @@ export const defaultGoogleSearchTool: GoogleSearchTool = {
 
 export const defaultGenerativeParams: Omit<ModelParams, "model"> = {
   // Model name itself is selected in the UI
-  generationConfig: {
-    temperature: 0.9,
-  },
+  // Note: temperature, top_p, and top_k are deprecated and not recommended for Gemini 3.x models.
   safetySettings: [
     {
       category: HarmCategory.HARM_CATEGORY_HARASSMENT,
