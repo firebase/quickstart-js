@@ -1,0 +1,150 @@
+<!doctype html>
+<!--
+Copyright (c) 2024 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Passkey Authentication Example</title>
+
+    <!-- Material Design Theming -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.3/material.orange-indigo.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.3/material.min.js" integrity="sha384-uPYzrTH2t7ylklro1PUyd6TJeFO7k55e1/Mt10hlBbpsunjogP2e93SabttxCUZy" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <!-- Header section containing title -->
+      <header
+        class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700"
+      >
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+          <div
+            class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop"
+          >
+            <a href="/"><h3>Firebase Authentication</h3></a>
+          </div>
+        </div>
+      </header>
+
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+          <!-- Container for the demo -->
+          <div
+            class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop"
+          >
+            <div
+              class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white"
+            >
+              <h2 class="mdl-card__title-text">
+                Firebase Passkey Authentication
+              </h2>
+            </div>
+            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+              <p>
+                Sign in with a Passkey, or enroll/unenroll passkeys on the active user account.
+              </p>
+
+              <!-- Sign In Section -->
+              <h4>Sign in with Passkey</h4>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: inline-block; margin-right: 16px;">
+                <input
+                  class="mdl-textfield__input"
+                  type="text"
+                  id="signin-passkey-name"
+                  name="signin-passkey-name"
+                />
+                <label class="mdl-textfield__label" for="signin-passkey-name">Passkey Name (e.g. email or username)</label>
+              </div>
+              <button
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+                id="quickstart-sign-in"
+                name="signin"
+              >
+                Sign In
+              </button>
+              <br /><br />
+
+              <!-- Enrollment Section -->
+              <h4>Enroll/Unenroll Passkeys (Requires Auth Session)</h4>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: inline-block; margin-right: 16px;">
+                <input
+                  class="mdl-textfield__input"
+                  type="text"
+                  id="enroll-passkey-name"
+                  name="enroll-passkey-name"
+                />
+                <label class="mdl-textfield__label" for="enroll-passkey-name">Passkey Label/Name</label>
+              </div>
+              <button
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                id="quickstart-enroll-passkey"
+                name="enroll-passkey"
+              >
+                Enroll Passkey
+              </button>
+              <br /><br />
+              
+              <button
+                class="mdl-button mdl-js-button mdl-button--raised"
+                id="quickstart-get-enrolled-passkeys"
+                name="get-enrolled"
+              >
+                Get Enrolled Passkeys
+              </button>
+              <br /><br />
+
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: inline-block; margin-right: 16px;">
+                <input
+                  class="mdl-textfield__input"
+                  type="text"
+                  id="unenroll-passkey-credential-id"
+                  name="unenroll-passkey-credential-id"
+                />
+                <label class="mdl-textfield__label" for="unenroll-passkey-credential-id">Passkey Credential ID</label>
+              </div>
+              <button
+                class="mdl-button mdl-js-button mdl-button--raised"
+                id="quickstart-unenroll-passkey"
+                name="unenroll-passkey"
+              >
+                Unenroll Passkey
+              </button>
+
+              <!-- Container where we'll display the user details -->
+              <div class="quickstart-user-details-container">
+                Firebase sign-in status:
+                <span id="quickstart-sign-in-status">Unknown</span>
+                <div>Firebase auth <code>currentUser</code> object value:</div>
+                <pre><code id="quickstart-account-details">null</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="passkey.ts"></script>
+  </body>
+</html>

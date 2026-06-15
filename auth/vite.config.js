@@ -24,6 +24,7 @@ export default defineConfig({
         'microsoft-popup.html',
         'microsoft-redirect.html',
         'multi-tenant-ui.html',
+        'passkey.html',
         'phone-invisible.html',
         'phone-simple-popup.html',
         'phone-simple.html',
