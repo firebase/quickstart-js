@@ -1,8 +1,6 @@
-import React from 'react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { generateText } from './service';
 
-export default function Feature() {
 export default function TextGeneration() {
   const [prompt, setPrompt] = useState<string>('');
   const [response, setResponse] = useState<string>('');
@@ -27,9 +25,8 @@ export default function TextGeneration() {
     }
   };
 
+
   return (
-    <div>
-      <h2>text-generation</h2>
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
       <h2>Text Generation</h2>
       

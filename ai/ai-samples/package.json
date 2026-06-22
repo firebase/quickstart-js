@@ -5,6 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:text": "VITE_ISOLATED_FEATURE=text-generation vite",
+    "dev:chat": "VITE_ISOLATED_FEATURE=chat vite",
+    "dev:multimodal": "VITE_ISOLATED_FEATURE=multimodal vite",
+    "dev:structured": "VITE_ISOLATED_FEATURE=structured-output vite",
+    "dev:function": "VITE_ISOLATED_FEATURE=function-calling vite",
+    "dev:image": "VITE_ISOLATED_FEATURE=image-generation vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -12,11 +18,14 @@
   "dependencies": {
     "firebase": "^12.2.1",
     "react": "^19.2.1",
-    "react-dom": "^19.2.1"
+    "react-dom": "^19.2.1",
+    "react-router-dom": "^7.17.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.3.4",
     "typescript": "~5.7.2",
     "vite": "^6.3.1"
