@@ -28,9 +28,5 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "test": "scripts/test.sh"
-  },
-  "dependencies": {
-    "@firebase/ai": "^2.13.1",
-    "firebase": "^12.14.0"
   }
 }
