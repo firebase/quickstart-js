@@ -30,6 +30,6 @@ if (typeof window !== 'undefined') {
 
 const ai = getAI(app);
 
-export const getAiModel = (modelName: string = 'gemini-2.5-flash', additionalConfig: Record<string, any> = {}) => {
+export const getAiModel = (modelName: string = 'gemini-3.5-flash', additionalConfig: Record<string, any> = {}) => {
   return getGenerativeModel(ai, { model: modelName, ...additionalConfig });
 };
