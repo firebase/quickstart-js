@@ -19,8 +19,9 @@ This repository demonstrates the following capabilities:
 To connect this sample app to your Firebase project, register a new Web App in your Firebase Console to generate your Firebase configuration object.
 
 1. Navigate to this directory and install dependencies:
-   ```bash
-   npm install
+```bash
+npm install
+```
 
 2. Add your Firebase config
 
