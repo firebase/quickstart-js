@@ -32,7 +32,7 @@ Copy the example config file and fill in your project values. Open src/config/fi
 3. Running the samples
 
 For a full app experience to browse all features:
-    npm run dev
+npm run dev
 
 To run indivual features in isolated mode, run the single feature directly without the app shell using one of these scripts:
 
