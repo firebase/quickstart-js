@@ -18,11 +18,12 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 // initialize app check with debug token 
 if (typeof window !== 'undefined') {
-  // Use a debug token in development mode
-  if (import.meta.env.DEV) {
-    (window as any).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-  }
+  (window as any).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+
   initializeAppCheck(app, {
+  // The string here doesn't matter in this specific case, as setting 
+  // FIREBASE_APPCHECK_DEBUG_TOKEN above means it will be ignored. 
+  // However, in production, this MUST be a valid reCAPTCHA site key.
     provider: new ReCaptchaEnterpriseProvider('YOUR_RECAPTCHA_SITE_KEY'),
     isTokenAutoRefreshEnabled: true
   });
