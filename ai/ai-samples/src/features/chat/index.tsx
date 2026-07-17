@@ -22,10 +22,14 @@ export default function ChatView() {
     handleResetChat();
   }, []);
 
-  const handleResetChat = () => {
-    chatSessionRef.current = startNewChat();
+   const handleResetChat = () => {
+    try {
+      chatSessionRef.current = startNewChat();
+      setError(null);
+    } catch (err: any) {
+      setError(err.message || 'Failed to initialize chat session. Please check your Firebase configuration.');
+    }
     setMessages([]);
-    setError(null);
     setInput('');
   };
 
