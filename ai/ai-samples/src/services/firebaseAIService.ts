@@ -1,4 +1,4 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
+import { initializeApp} from 'firebase/app';
 import { getAI, getGenerativeModel } from 'firebase/ai';
 // Import App Check if you haven't already
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
@@ -14,7 +14,7 @@ const firebaseConfig = import.meta.env.VITE_FIREBASE_CONFIG
       appId: "YOUR_APP_ID"
     };
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const app = initializeApp(firebaseConfig);
 
 // initialize app check with debug token 
 if (typeof window !== 'undefined') {
