@@ -36,15 +36,26 @@ For a full app experience to browse all features:
 npm run dev
 ```
 
-To run indivual features in isolated mode, run the single feature directly without the app shell using one of these scripts:
+To run individual features in isolated mode, run the single feature directly without the app shell using one of these scripts:
 ```bash
 npm run dev:text #Text Generation
+```
+```bash
 npm run dev:chat #Chat
+```
+```bash
 npm run dev:multimodal #Multimodal
+```
+```bash
 npm run dev:structured #Structured Output
+```
+```bash
 npm run dev:function #Function Calling
+```
+```bash
 npm run dev:image #Image Generation
 ```
+
 After running any of the above commands, open your browser to https://localhost:*** (provided in the console)
 
 ## Copy service.ts for platform agnostic use
@@ -58,10 +69,10 @@ All AI logic is decoupled from the React UI. If you want to use these features i
 App check protects your API Key from unauthorized use. It is not required to run the samples locally but highly recommended before deploying to production. 
 
 ### Debug token: 
-`firebaseAIService.ts` includes App Check intilization for local development. To enable it:
+`firebaseAIService.ts` includes App Check initialization for local development. To enable it:
 
 1. Set `VITE_APPCHECK_DEBUG_TOKEN=true` in your **.env.local** file
-2. On the first run, a deug token will be printed in the browser console.
+2. On the first run, a debug token will be printed in the browser console.
 3. Copy that token and register it in the Firebase Console under
 **App Check -> Apps -> your apps -> Debug Token**
 
@@ -72,4 +83,4 @@ For production, use reCAPTCHA v3 as the App Check provider:
 2. Choose reCaptcha v3 and follow the setup steps
 3. Add your reCaptcha site key to **firebase-config.ts**
 
-See the [App Check Documentation](https://firebase.google.com/docs/app-check/web/recaptcha-provider) for full instruction.
+See the [App Check Documentation](https://firebase.google.com/docs/app-check/web/recaptcha-provider) for full instructions.
