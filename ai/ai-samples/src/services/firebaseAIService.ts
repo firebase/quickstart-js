@@ -17,9 +17,7 @@ const firebaseConfig = import.meta.env.VITE_FIREBASE_CONFIG
 const app = initializeApp(firebaseConfig);
 
 // initialize app check with debug token 
-if (typeof window !== 'undefined') {
   (window as any).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-
   initializeAppCheck(app, {
   // The string here doesn't matter in this specific case, as setting 
   // FIREBASE_APPCHECK_DEBUG_TOKEN above means it will be ignored. 
@@ -27,10 +25,8 @@ if (typeof window !== 'undefined') {
     provider: new ReCaptchaEnterpriseProvider('YOUR_RECAPTCHA_SITE_KEY'),
     isTokenAutoRefreshEnabled: true
   });
-}
 
 const ai = getAI(app);
 
 export const getAiModel = (modelName: string = 'gemini-3.5-flash', additionalConfig: Record<string, any> = {}) => {
   return getGenerativeModel(ai, { model: modelName, ...additionalConfig });
-};
