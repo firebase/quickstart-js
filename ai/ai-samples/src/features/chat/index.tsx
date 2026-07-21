@@ -124,7 +124,7 @@ export default function ChatView() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message..."
-          disabled={loading}
+          disabled={loading || !chatSessionRef.current}
           style={{
             flex: 1,
             padding: '12px',
@@ -135,7 +135,7 @@ export default function ChatView() {
         />
         <button
           type="submit"
-          disabled={loading || !input.trim()}
+          disabled={loading || !input.trim() || !chatSessionRef.current}
           style={{
             padding: '0 24px',
             backgroundColor: loading || !input.trim() ? '#ccc' : '#1a73e8',
