@@ -8,31 +8,29 @@ import { Part } from 'firebase/ai';
  * @returns A Promise that resolves to an InlineData Part object
  */
 export async function fileToGenerativePart(file: File): Promise<Part> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
 
-    reader.onloadend = () => {
-      const result = reader.result;
-      if (typeof result === 'string') {
-        const splitResult = result.split(',');
-        if (splitResult.length > 1) {
-          resolve({
-            inlineData: {
-              data: splitResult[1],
-              mimeType: file.type
+        reader.onloadend = () => {
+            const result = reader.result;
+            if (typeof result === 'string') {
+                const splitResult = result.split(',');
+                if (splitResult.length > 1) {
+                    resolve({
+                        inlineData: {
+                            data: splitResult[1],
+                            mimeType: file.type
+                        }
+                    });
+                    return;
+                }
             }
-          });
-          return;
-        }
-      }
-      reject(new Error('Failed to parse file data as Base64.'));
-    };
+            reject(new Error('Failed to parse file data as Base64.'));
+        };
 
-    reader.onerror = () => reject(reader.error || new Error('Error reading file.'));
-
-    // Trigger the file read
-    reader.readAsDataURL(file);
-  });
+        reader.onerror = () => reject(reader.error || new Error('Error reading file.'));
+        reader.readAsDataURL(file);
+    });
 }
 
 /**
