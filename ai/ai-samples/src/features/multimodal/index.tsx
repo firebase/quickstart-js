@@ -7,7 +7,6 @@ export default function MultimodalView() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // use ref to cleanly grab the files without needing complex state management
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleGenerate = async () => {
@@ -25,7 +24,10 @@ export default function MultimodalView() {
       return;
     }
 
-    // TODO: Note: *** add note here about file size
+    // Note: The Gemini API restricts the total size of inline data payloads. 
+    // To process larger files without hitting HTTP 413 errors (PayLoad Too Large),
+    // See the official Firebase AI documentation for current file size limits and workarounds:
+    // https://firebase.google.com/docs/ai-logic/solutions/cloud-storage
 
     setLoading(true);
     setError(null);
