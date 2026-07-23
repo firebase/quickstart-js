@@ -11,26 +11,28 @@ export default function MultimodalView() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleGenerate = async () => {
-    const files = fileInputRef.current?.files;
+    const fileArray = Array.from(fileInputRef.current?.files ?? []);
 
-    if (!files || files.length === 0) {
+    if (fileArray.length === 0) {
       setError('Please select at least one file (Image or PDF).');
       return;
     }
 
-    if (!prompt.trim()) {
+    const cleanedPrompt = prompt.trim();
+
+    if (!cleanedPrompt) {
       setError('Please enter a prompt.');
       return;
     }
+
+    // TODO: Note: *** add note here about file size
 
     setLoading(true);
     setError(null);
     setResponse('');
 
     try {
-      const fileArray = Array.from(files);
-
-      const resultText = await generateMultimodalContent(prompt, fileArray);
+      const resultText = await generateMultimodalContent(cleanedPrompt, fileArray);
       setResponse(resultText);
     } catch (err: any) {
       setError(err.message || 'An error occurred during multimodal generation.');
