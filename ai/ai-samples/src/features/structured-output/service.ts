@@ -17,6 +17,8 @@ const characterSchema = Schema.object({
                 },
                 // Note: In the Firebase AI Logic SDK, all fields are required by default.
                 // You must explicitly pass an array of properties that the model can skip.
+                // For more information, see official Firebase documentation:
+                // https://firebase.google.com/docs/ai-logic/generate-structured-output?api=dev
                 optionalProperties: ["accessory"],
             }),
         }),
