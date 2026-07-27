@@ -66,7 +66,7 @@ export async function generateWithEnumValues(prompt: string): Promise<string> {
     try {
         const model = getAiModel('gemini-3.5-flash', {
             generationConfig: {
-                responseMimeType: 'text/x.enum',
+                responseMimeType: 'application/json',
                 responseSchema: genreEnumSchema
             }
         });
