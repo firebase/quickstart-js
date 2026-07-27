@@ -31,8 +31,9 @@ export default function MultimodalView() {
     try {
       const resultText = await generateMultimodalContent(cleanedPrompt, fileArray);
       setResponse(resultText);
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during multimodal generation.');
+   } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'An error occurred during multimodal generation.';
+      setError(message);
     } finally {
       setLoading(false);
     }

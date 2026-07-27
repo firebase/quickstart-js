@@ -50,8 +50,7 @@ export async function generateMultimodalContent(prompt: string, files: File[]): 
         const model = getAiModel('gemini-3.5-flash');
         const result = await model.generateContent([prompt, ...fileParts]);
         return result.response.text();
-    } catch (error) {
-        console.error('Error generating multimodal content with Firebase AI:', error);
-        throw error;
+    } catch (error: unknown) {
+        throw error instanceof Error ? error : new Error('An unknown error occurred during generation.');
     }
 }
