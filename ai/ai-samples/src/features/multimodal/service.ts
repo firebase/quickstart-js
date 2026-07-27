@@ -33,6 +33,11 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
     });
 }
 
+// Note: The Gemini API restricts the total size of inline data payloads. 
+// To process larger files without hitting HTTP 413 errors (PayLoad Too Large),
+// See the official Firebase AI documentation for current file size limits and workarounds:
+// https://firebase.google.com/docs/ai-logic/solutions/cloud-storage
+
 /**
  * Sends a multimodal request (text + files) to the Gemini model.
  * @param prompt The string instruction sent to the model.
