@@ -130,11 +130,11 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
             <input
               type="radio"
               name="backend"
-              value={BackendType.VERTEX_AI}
-              checked={activeBackend === BackendType.VERTEX_AI}
+              value={BackendType.AGENT_PLATFORM}
+              checked={activeBackend === BackendType.AGENT_PLATFORM}
               onChange={handleBackendChange}
             />
-            Vertex AI Gemini API
+            Agent Platform Gemini API
           </label>
         </div>
       </div>

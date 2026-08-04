@@ -11,7 +11,7 @@ import {
   ModelParams,
   BackendType,
   AI,
-  VertexAIBackend,
+  AgentPlatformBackend,
   GoogleAIBackend,
   getAI,
   ResponseModality,
@@ -61,10 +61,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     console.log(`Initializing AI instance for backend: ${activeBackendType}`);
     try {
       const backendInstance =
-        activeBackendType === BackendType.VERTEX_AI
-          ? activeMode === "nanobanana"
-            ? new VertexAIBackend("global")
-            : new VertexAIBackend()
+        activeBackendType === BackendType.AGENT_PLATFORM
+          ? new AgentPlatformBackend()
           : new GoogleAIBackend();
       const aiInstance = getAI(getApp(), { backend: backendInstance });
       setActiveAI(aiInstance);
