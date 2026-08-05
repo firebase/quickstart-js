@@ -84,45 +84,47 @@ export default function FunctionCallingView() {
       {result && (
         <div style={{ marginTop: '25px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
 
-          {/* Step 1 & 2: Function Call Request */}
-          {result.functionCall ? (
-            <div style={{ padding: '15px', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#f8f9fa' }}>
-              <h4 style={{ margin: '0 0 8px 0', color: '#1a73e8' }}>
-                Step 1 & 2: Model Triggered Function Call
-              </h4>
-              <p style={{ margin: '0 0 8px 0', fontSize: '13px', color: '#555' }}>
-                Tool Requested: <code>{result.functionCall.name}</code>
-              </p>
-              <pre style={{ margin: 0, padding: '10px', backgroundColor: '#282c34', color: '#abb2bf', borderRadius: '4px', overflowX: 'auto', fontSize: '12px' }}>
-                {JSON.stringify(result.functionCall.args, null, 2)}
-              </pre>
-            </div>
+          {/* Render each function call execution (handles 1 or multiple parallel calls) */}
+          {result.functionCalls && result.functionCalls.length > 0 ? (
+            result.functionCalls.map((call, index) => (
+              <div 
+                key={index} 
+                style={{ padding: '15px', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#f8f9fa' }}
+              >
+                <h4 style={{ margin: '0 0 8px 0', color: '#1a73e8' }}>
+                  Tool Call #{index + 1}: <code>{call.name}</code>
+                </h4>
+
+                {/* Step 1 & 2: Arguments Extracted */}
+                <p style={{ margin: '0 0 4px 0', fontSize: '13px', color: '#555', fontWeight: 'bold' }}>
+                  Step 1 & 2: Arguments Extracted by Gemini
+                </p>
+                <pre style={{ margin: '0 0 12px 0', padding: '10px', backgroundColor: '#282c34', color: '#abb2bf', borderRadius: '4px', overflowX: 'auto', fontSize: '12px' }}>
+                  {JSON.stringify(call.args, null, 2)}
+                </pre>
+
+                {/* Step 3: Local Function Output */}
+                <p style={{ margin: '0 0 4px 0', fontSize: '13px', color: '#555', fontWeight: 'bold' }}>
+                  Step 3: Local Function Output
+                </p>
+                <pre style={{ margin: 0, padding: '10px', backgroundColor: '#282c34', color: '#abb2bf', borderRadius: '4px', overflowX: 'auto', fontSize: '12px' }}>
+                  {JSON.stringify(call.result, null, 2)}
+                </pre>
+              </div>
+            ))
           ) : (
+            /* Fallback if no tools were called (e.g. Direct Answer prompt) */
             <div style={{ padding: '15px', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#fff3cd' }}>
-              <p style={{ margin: 0, color: '#856404' }}>
+              <p style={{ margin: 0, color: '#856404', fontSize: '14px' }}>
+                <strong>No tools called:</strong> Gemini answered directly without invoking local functions.
               </p>
             </div>
           )}
 
-          {/* Step 3: Local Function Output */}
-          {result.functionResult && (
-            <div style={{ padding: '15px', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#f8f9fa' }}>
-              <h4 style={{ margin: '0 0 8px 0', color: '#137333' }}>
-                Step 3: Local Function Execution Result
-              </h4>
-              <p style={{ margin: '0 0 8px 0', fontSize: '13px', color: '#555' }}>
-                Data returned from local <code>fetchWeather</code> API:
-              </p>
-              <pre style={{ margin: 0, padding: '10px', backgroundColor: '#282c34', color: '#abb2bf', borderRadius: '4px', overflowX: 'auto', fontSize: '12px' }}>
-                {JSON.stringify(result.functionResult, null, 2)}
-              </pre>
-            </div>
-          )}
-
-          {/* Step 4 & 5: Final Synthesized Text Response */}
+          {/* Step 4 & 5: Final Model Response*/}
           <div style={{ padding: '15px', border: '1px solid #ceebe1', borderRadius: '8px', backgroundColor: '#e6f4ea' }}>
             <h4 style={{ margin: '0 0 8px 0', color: '#137333' }}>
-              Step 4 & 5: Final Model Response
+              Final Model Response
             </h4>
             <p style={{ margin: 0, fontSize: '15px', color: '#202124', lineHeight: '1.5' }}>
               {result.finalText}

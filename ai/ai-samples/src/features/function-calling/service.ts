@@ -2,14 +2,13 @@ import { FunctionDeclarationsTool, Schema } from 'firebase/ai';
 import { getAiModel } from '../../services/firebaseAIService';
 
 export interface FunctionCallingResult {
-    functionCall?: {
+    functionCalls?: {
         name: string;
         args: Record<string, any>;
-    };
-    functionResult?: Record<string, any>;
+        result: Record<string, any>
+    }[];
     finalText: string;
 }
-
 /**
  * Step 1: Write the local function.
  * This interacts with your internal/external API or service.
@@ -21,6 +20,7 @@ export interface FunctionCallingResult {
 async function fetchWeather({ location, date }: { location: { city: string; state: string }; date: string }) {
     // TODO(developer): Write a standard function that would call to an external weather API.
     console.log(`Fetching mock weather for ${location.city}, ${location.state} on ${date}`);
+
     // For demo purposes, this hypothetical response is hardcoded here in the expected format.
     return {
         temperature: 38,
@@ -61,7 +61,7 @@ const fetchWeatherTool: FunctionDeclarationsTool = {
  */
 export async function executeFunctionCalling(prompt: string): Promise<FunctionCallingResult> {
     // Step 3: Provide the function declaration during model initialization.
-    const model = getAiModel('gemini-3.6-flash', {
+    const model = getAiModel('gemini-3.1-flash-lite', {
         tools: [fetchWeatherTool],
     });
 
@@ -72,41 +72,42 @@ export async function executeFunctionCalling(prompt: string): Promise<FunctionCa
     let result = await chat.sendMessage(prompt);
     const functionCalls = result.response.functionCalls() ?? [];
 
-    let functionCall: { name: string; args: Record<string, any> } | undefined;
-    let functionResult: Record<string, any> | undefined;
+    const resolvedCalls: { name: string; args: any; result: any }[] = [];
+
     // When the model responds with one or more function calls, invoke the function(s).
     if (functionCalls.length > 0) {
         for (const call of functionCalls) {
             if (call.name === 'fetchWeather') {
-                // Forward the structured input data prepared by the model
-                // to the hypothetical external API.
-                functionCall = { name: call.name, args: call.args as Record<string, any> };
-                functionResult = await fetchWeather(call.args as { location: { city: string; state: string }; date: string });
+                try {
+                    const weatherResult = await fetchWeather(call.args as { location: { city: string; state: string }; date: string });
+                    resolvedCalls.push({ name: call.name, args: call.args, result: weatherResult });
+                } catch (err: unknown) {
+                    const message = err instanceof Error ? err.message : 'Unknown error occured';
+                    resolvedCalls.push({
+                        name: call.name, args: call.args, result: {error: message}
+                    });
+                }
             }
         }
     }
 
     /**
-     * Step 5: Send the response from the function back to the model
-     * so that the model can use it to generate its final response.
-     */
+    * Step 5: Send the response from the function back to the model
+    * so that the model can use it to generate its final response.
+    */
+    if (resolvedCalls.length > 0) {
+        result = await chat.sendMessage(
+            resolvedCalls.map(c => ({
+                functionResponse: { name: c.name, response: c.result },
+            }))
 
-    if (functionCall && functionResult) {
-        result = await chat.sendMessage([
-            {
-                functionResponse: {
-                    name: functionCall.name, // "fetchWeather"
-                    response: functionResult,
-                },
-            },
-        ]);
+        );
+
     }
 
     const finalText = result.response.text();
 
     return {
-        functionCall,
-        functionResult,
-        finalText,
+        functionCalls: resolvedCalls, finalText,
     };
 }
