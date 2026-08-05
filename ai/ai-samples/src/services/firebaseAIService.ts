@@ -1,6 +1,5 @@
 import { initializeApp} from 'firebase/app';
 import { getAI, getGenerativeModel } from 'firebase/ai';
-// Import App Check if you haven't already
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
 
 const firebaseConfig = import.meta.env.VITE_FIREBASE_CONFIG 
