@@ -49,7 +49,7 @@ Follow these steps to setup and run the quickstart:
 
 Follow these steps to have a working version of the quickstart running with the Firebase console:
 
-   > **Note:** In the original application (that runs on the emulators), there is a Firebase Function that updates the `avgRating` field of a restaurant whenever that restaurant recieves a review. While **Authentication**, **Storage**, and **Firestore** are offered as free services through the Firebase console, using Firebase **Functions** on the Firebase Console requires a billing plan. There is a [free tier billing plan](https://firebase.google.com/pricing) that allows up to 2 million free function calls per month, but enabling this plan requires presenting payment information to Firebase. The following instructions, therefore, exclude those steps needed to deploy and host functions on the Firebase Console. All application functionality, other than the auto-updating `avgRating` field for restaurants, is conserved.
+   > **Note:** In the original application (that runs on the emulators), there is a Firebase Function that updates the `avgRating` field of a restaurant whenever that restaurant receives a review. While **Authentication**, **Storage**, and **Firestore** are offered as free services through the Firebase console, using Firebase **Functions** on the Firebase Console requires a billing plan. There is a [free tier billing plan](https://firebase.google.com/pricing) that allows up to 2 million free function calls per month, but enabling this plan requires presenting payment information to Firebase. The following instructions, therefore, exclude those steps needed to deploy and host functions on the Firebase Console. All application functionality, other than the auto-updating `avgRating` field for restaurants, is conserved.
 
  1. Create a new Firebase project in the [Firebase Console](https://console.firebase.google.com)
 
@@ -73,7 +73,7 @@ Follow these steps to have a working version of the quickstart running with the 
 
  ![Photo of Firebase Firestore Setup](images/EnableFirestore.png)
 
- 6. Simmilarly, enable Cloud Storage on your project by clicking **Get Started** in the **Storage** section of the console and answering all prompts.
+ 6. Similarly, enable Cloud Storage on your project by clicking **Get Started** in the **Storage** section of the console and answering all prompts.
 
    * When prompted, select "Start in Test Mode"
 
@@ -94,13 +94,13 @@ Follow these steps to have a working version of the quickstart running with the 
 
  11. (Optional) Populate production Firestore with mock data
 
- Now that the application is live on the Firebase console, you likely want to add some data to your production Firestore database so that you can see the application in action. Rather than manually adding restaurants and reviews, a convenice script is available to populate your production Firestore database. Run the following command (defined in the `Firestore/` directory's `package.json`) to add mock data:
+ Now that the application is live on the Firebase console, you likely want to add some data to your production Firestore database so that you can see the application in action. Rather than manually adding restaurants and reviews, a convenience script is available to populate your production Firestore database. Run the following command (defined in the `Firestore/` directory's `package.json`) to add mock data:
 
  ```bash
  npm run populate-production
  ```
 
- > **Note:** To ensure that the script runs as intended, make sure that you have correctly populated the `environemnt.prod.ts` file with your Firebase credentials.
+ > **Note:** To ensure that the script runs as intended, make sure that you have correctly populated the `environment.prod.ts` file with your Firebase credentials.
  
 ## Support
 
