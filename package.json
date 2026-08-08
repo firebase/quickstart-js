@@ -28,5 +28,9 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "test": "scripts/test.sh"
+  },
+  "dependencies": {
+    "@tanstack-query-firebase/react": "^1.0.4",
+    "@tanstack/react-query": "^5.62.16"
   }
 }
