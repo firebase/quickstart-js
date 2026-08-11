@@ -35,17 +35,23 @@ function extractTextAndImages(parts: Part[] = []): ImageGenerationResult {
  * Helper: Converts a standard browser File object into a Firebase AI SDK Part.
  * Uses the native browser FileReader API to extract the Base64 string.
  */
+
 export async function fileToGenerativePart(file: File): Promise<Part> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       if (typeof reader.result === 'string') {
-        resolve({
-          inlineData: {
-            data: reader.result.split(',')[1],
-            mimeType: file.type
-          }
-        });
+        const base64Data = reader.result.split(',')[1];
+        if (base64Data) {
+          resolve({
+            inlineData: {
+              data: base64Data,
+              mimeType: file.type
+            }
+          });
+        } else {
+          reject(new Error("Failed to extract Base64 data from file."));
+        }
       } else {
         reject(new Error("Failed to parse file data as Base64."));
       }
