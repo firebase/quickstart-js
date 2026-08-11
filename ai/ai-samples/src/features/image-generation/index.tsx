@@ -41,20 +41,17 @@ export default function ImageGenerationView() {
     try {
       setMessages((prev) => [...prev, { role: 'user', text: cleanedPrompt }]);
       const result = await sendImageChatMessage(chatSessionRef.current, cleanedPrompt, referenceFile);
-      setMessages((prev) => [...prev, { 
-        role: 'model', 
-        segments: result.segments 
+      setMessages((prev) => [...prev, {
+        role: 'model',
+        segments: result.segments
       }]);
-      
-      if (fileInputRef.current) fileInputRef.current.value = '';
 
+      if (fileInputRef.current) fileInputRef.current.value = '';
     } catch (err: unknown) {
       console.error(err);
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('An error occurred during image generation.');
-      }
+      const message = err instanceof Error ? err.message : 'An error occurred during image generation.';
+      setError(message);
+
     } finally {
       setLoading(false);
     }
