@@ -1,9 +1,11 @@
 import { ChatSession, ImageConfigAspectRatio, ImageConfigImageSize, Part, ResponseModality } from 'firebase/ai';
 import { getAiModel } from '../../services/firebaseAIService';
 
+export type ImageGenerationSegment =
+  | { type: 'text'; text: string }
+  | { type: 'image'; mimeType: string; base64: string };
 export interface ImageGenerationResult {
-  text: string;
-  images: { mimeType: string; base64: string }[];
+  segments: ImageGenerationSegment[];
 }
 
 /**
@@ -11,25 +13,22 @@ export interface ImageGenerationResult {
  * Iterates over all parts and capturing everything.
  */
 function extractTextAndImages(parts: Part[] = []): ImageGenerationResult {
-  let extractedText = '';
-  const extractedImages: { mimeType: string; base64: string }[] = [];
+  const segments: ImageGenerationSegment[] = [];
 
   for (const part of parts) {
     if (part.text) {
-      extractedText += part.text + '\n';
+      segments.push({ type: 'text', text: part.text });
     }
     if (part.inlineData) {
-      extractedImages.push({
+      segments.push({
+        type: 'image',
         mimeType: part.inlineData.mimeType,
         base64: part.inlineData.data
       });
     }
   }
 
-  return {
-    text: extractedText.trim(),
-    images: extractedImages
-  };
+  return { segments };
 }
 
 /**
@@ -42,9 +41,9 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
     reader.onloadend = () => {
       if (typeof reader.result === 'string') {
         resolve({
-          inlineData: { 
-            data: reader.result.split(',')[1], 
-            mimeType: file.type 
+          inlineData: {
+            data: reader.result.split(',')[1],
+            mimeType: file.type
           }
         });
       } else {
@@ -61,17 +60,17 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
  * Demonstrates unary text-to-image generation, injecting custom aspect ratio and size parameters.
  */
 export async function generateImage(
-  prompt: string, 
-  aspectRatio: ImageConfigAspectRatio = ImageConfigAspectRatio.SQUARE_1x1, 
+  prompt: string,
+  aspectRatio: ImageConfigAspectRatio = ImageConfigAspectRatio.SQUARE_1x1,
   imageSize: ImageConfigImageSize = ImageConfigImageSize.SIZE_1K
 ): Promise<ImageGenerationResult> {
   const model = getAiModel('gemini-3.1-flash-lite-image', {
     generationConfig: {
-      responseModalities: [ResponseModality.IMAGE], 
+      responseModalities: [ResponseModality.IMAGE],
       imageConfig: { aspectRatio, imageSize }
     }
   });
-  
+
   const result = await model.generateContent(prompt);
   const parts = result.response.candidates?.[0]?.content?.parts ?? [];
   return extractTextAndImages(parts);
@@ -84,7 +83,7 @@ export async function generateImage(
 export async function generateInterleavedContent(prompt: string): Promise<ImageGenerationResult> {
   const model = getAiModel('gemini-3.1-flash-lite-image', {
     generationConfig: {
-      responseModalities: [ResponseModality.TEXT, ResponseModality.IMAGE] // Both modalities active
+      responseModalities: [ResponseModality.TEXT, ResponseModality.IMAGE]
     }
   });
 
@@ -117,11 +116,11 @@ export async function editSingleImage(prompt: string, file: File): Promise<Image
 export function startImageChat(aspectRatio: ImageConfigAspectRatio = ImageConfigAspectRatio.SQUARE_1x1): ChatSession {
   const model = getAiModel('gemini-3.1-flash-lite-image', {
     generationConfig: {
-      responseModalities: [ResponseModality.TEXT, ResponseModality.IMAGE], 
+      responseModalities: [ResponseModality.TEXT, ResponseModality.IMAGE],
       imageConfig: { aspectRatio }
     }
   });
-  
+
   return model.startChat({ history: [] });
 }
 
@@ -129,13 +128,15 @@ export function startImageChat(aspectRatio: ImageConfigAspectRatio = ImageConfig
  * Sends a message to the active image chat session.
  * For the initial turn, you can pass a reference file. Follow-up turns can omit the file 
  * and rely purely on the ChatSession history.
+ * Note: The SDK's ChatSession automatically appends prompts and responses to the history array behind the scenes. 
+ * For long iterative image sessions, generated base64 image strings will accumulate in memory.
  */
 export async function sendImageChatMessage(
-  chat: ChatSession, 
-  prompt: string, 
+  chat: ChatSession,
+  prompt: string,
   file?: File
 ): Promise<ImageGenerationResult> {
-  const messagePayload: (string | Part) [] = [prompt];
+  const messagePayload: (string | Part)[] = [prompt];
   if (file) {
     messagePayload.push(await fileToGenerativePart(file));
   }
