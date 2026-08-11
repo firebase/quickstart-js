@@ -29,11 +29,11 @@ export default function ImageGenerationView() {
   }, []);
 
   const handleGenerate = async () => {
+    if (loading) return;
     const cleanedPrompt = prompt.trim();
     if (!cleanedPrompt || !chatSessionRef.current) return;
     const files = Array.from(fileInputRef.current?.files ?? []);
     const referenceFile = files.length > 0 ? files[0] : undefined;
-
     setLoading(true);
     setError(null);
     setPrompt('');
@@ -41,11 +41,11 @@ export default function ImageGenerationView() {
     try {
       setMessages((prev) => [...prev, { role: 'user', text: cleanedPrompt }]);
       const result = await sendImageChatMessage(chatSessionRef.current, cleanedPrompt, referenceFile);
-      setMessages((prev) => [...prev, {
-        role: 'model',
-        segments: result.segments
+      setMessages((prev) => [...prev, { 
+        role: 'model', 
+        segments: result.segments 
       }]);
-
+      
       if (fileInputRef.current) fileInputRef.current.value = '';
 
     } catch (err: unknown) {
@@ -58,7 +58,7 @@ export default function ImageGenerationView() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const handleResetChat = () => {
     try {
