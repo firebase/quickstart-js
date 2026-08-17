@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       { path: 'multimodal', element: <Multimodal /> },
       { path: 'structured-output', element: <StructuredOutput /> },
       { path: 'function-calling', element: <FunctionCalling /> },
-      { path: 'automatic-function-calling', element: <AutomaticFunctionCallingView /> },
+      { path: 'automatic-function-calling', element: <AutomaticFunctionCalling /> },
       { path: 'image-generation', element: <ImageGeneration /> },
       
     ],
