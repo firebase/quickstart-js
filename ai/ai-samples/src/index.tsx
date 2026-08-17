@@ -8,7 +8,7 @@ import Multimodal from './features/multimodal';
 import StructuredOutput from './features/structured-output';
 import FunctionCalling from './features/function-calling';
 import ImageGeneration from './features/image-generation';
-import AutomaticFunctionCallingView from './features/automatic-function-calling';
+import AutomaticFunctionCalling from './features/automatic-function-calling';
 
 
 const router = createBrowserRouter([
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       { path: 'multimodal', element: <Multimodal /> },
       { path: 'structured-output', element: <StructuredOutput /> },
       { path: 'function-calling', element: <FunctionCalling /> },
-      { path: 'automatic-function-calling', element: <AutomaticFunctionCallingView /> },
+      { path: 'automatic-function-calling', element: <AutomaticFunctionCalling /> },
       { path: 'image-generation', element: <ImageGeneration /> },
       
     ],
