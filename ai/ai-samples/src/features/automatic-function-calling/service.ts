@@ -49,16 +49,11 @@ const fetchWeatherTool: FunctionDeclarationsTool = {
  * Step 3: Execute the prompt.
  */
 export async function executeAutomaticFunctionCalling(prompt: string): Promise<string> {
-    try {
-        const model = getAiModel('gemini-3.5-flash', {
-            tools: [fetchWeatherTool],
-        });
-        const chat = model.startChat();
-        const result = await chat.sendMessage(prompt);
+  const model = getAiModel('gemini-3.5-flash', {
+    tools: [fetchWeatherTool],
+  });
+  const chat = model.startChat();
+  const result = await chat.sendMessage(prompt);
 
-        return result.response.text();
-    } catch (error) {
-        console.error('Error during automatic function calling:', error);
-        throw error;
-    }
+  return result.response.text();
 }
