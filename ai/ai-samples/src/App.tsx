@@ -5,6 +5,7 @@ import MultimodalView from './features/multimodal';
 import StructuredOutputView from './features/structured-output';
 import FunctionCallingView from './features/function-calling';
 import ImageGenerationView from './features/image-generation';
+import AutomaticFunctionCallingView from './features/automatic-function-calling';
 
 const NAV_ITEMS = [
   { path: '/text-generation', label: 'Text Generation' },
@@ -12,7 +13,9 @@ const NAV_ITEMS = [
   { path: '/multimodal', label: 'Multimodal' },
   { path: '/structured-output', label: 'Structured Output' },
   { path: '/function-calling', label: 'Function Calling' },
+  { path: '/automatic-function-calling', label: 'Automatic Function Calling' },
   { path: '/image-generation', label: 'Image Generation' },
+  
 ];
 
 export default function App() {
@@ -26,6 +29,7 @@ export default function App() {
       case 'multimodal': return <MultimodalView />;
       case 'structured-output': return <StructuredOutputView />;
       case 'function-calling': return <FunctionCallingView />;
+      case 'automatic-function-calling': return <AutomaticFunctionCallingView />;
       case 'image-generation': return <ImageGenerationView />;
     }
   }

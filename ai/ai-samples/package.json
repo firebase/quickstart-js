@@ -10,6 +10,7 @@
     "dev:multimodal": "VITE_ISOLATED_FEATURE=multimodal vite",
     "dev:structured": "VITE_ISOLATED_FEATURE=structured-output vite",
     "dev:function": "VITE_ISOLATED_FEATURE=function-calling vite",
+    "dev:auto-function": "VITE_ISOLATED_FEATURE=automatic-function-calling vite",
     "dev:image": "VITE_ISOLATED_FEATURE=image-generation vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
