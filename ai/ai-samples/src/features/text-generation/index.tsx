@@ -58,7 +58,7 @@ export default function TextGeneration() {
           value={systemInstruction}
           onChange={(e) => setSystemInstruction(e.target.value)}
           placeholder="e.g., You are a helpful assistant..."
-          disabled={loading || useStreaming} // Disabled if streaming, since your service stream function doesn't support it yet
+          disabled={loading || useStreaming} 
           style={{ width: '100%', padding: '10px', boxSizing: 'border-box' }}
         />
       </div>
