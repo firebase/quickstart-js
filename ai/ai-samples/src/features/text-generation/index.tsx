@@ -92,8 +92,8 @@ export default function TextGeneration() {
 
         <button 
           onClick={handleGenerate} 
-          disabled={loading || !prompt.trim()} 
-          style={{ padding: '10px 20px', cursor: (loading || !prompt.trim()) ? 'not-allowed' : 'pointer' }}
+          disabled={loading || !cleanPrompt} 
+          style={{ padding: '10px 20px', cursor: (loading || !cleanPrompt) ? 'not-allowed' : 'pointer' }}
         >
           {loading ? 'Generating...' : 'Generate'}
         </button>
