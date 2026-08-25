@@ -17,19 +17,19 @@ export default function ChatView() {
     handleResetChat();
   }, []);
 
-  const handleResetChat = () => {
-  try {
-    chatSessionRef.current = startNewChat();
-    setError(null);
-  } catch (err: unknown) {
-    const errorMessage = err instanceof Error 
-      ? err.message 
-      : 'Failed to initialize chat session. Please check your Firebase configuration.';
-    setError(errorMessage);
-  }
-  setMessages([]);
-  setInput('');
-};
+  const handleResetChat = React.useCallback(() => {
+    try {
+      chatSessionRef.current = startNewChat();
+      setError(null);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error 
+        ? err.message 
+        : 'Failed to initialize chat session. Please check your Firebase configuration.';
+      setError(errorMessage);
+    }
+    setMessages([]);
+    setInput('');
+  }, []);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
