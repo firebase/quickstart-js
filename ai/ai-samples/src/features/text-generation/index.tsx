@@ -1,13 +1,9 @@
 import { useState } from 'react';
-import {
-  generateText,
-  streamText,
-  generateWithSystemInstruction
-} from './service';
+import { generateText, streamText } from './service';
 
-export default function TextGeneration() {
+export default function TextGenerationView() {
   const [prompt, setPrompt] = useState<string>('');
-  const cleanPrompt = prompt.trim();
+  const cleanPrompt = prompt.trim(); 
   const [systemInstruction, setSystemInstruction] = useState<string>('');
   const [useStreaming, setUseStreaming] = useState<boolean>(true);
   const [response, setResponse] = useState<string>('');
@@ -22,15 +18,16 @@ export default function TextGeneration() {
     setResponse('');
 
     try {
+      const cleanInstruction = systemInstruction.trim() || undefined;
+
       if (useStreaming) {
-        await streamText(cleanPrompt, (chunk) => {
-          setResponse((prev) => prev + chunk);
-        });
-      } else if (systemInstruction.trim()) {
-        const text = await generateWithSystemInstruction(systemInstruction, cleanPrompt);
-        setResponse(text);
+        await streamText(
+          cleanPrompt, 
+          (chunk) => setResponse((prev) => prev + chunk),
+          cleanInstruction
+        );
       } else {
-        const text = await generateText(cleanPrompt);
+        const text = await generateText(cleanPrompt, cleanInstruction);
         setResponse(text);
       }
     } catch (err: unknown) {
@@ -58,7 +55,7 @@ export default function TextGeneration() {
           value={systemInstruction}
           onChange={(e) => setSystemInstruction(e.target.value)}
           placeholder="e.g., You are a helpful assistant..."
-          disabled={loading || useStreaming}
+          disabled={loading}
           style={{ width: '100%', padding: '10px', boxSizing: 'border-box' }}
         />
       </div>
