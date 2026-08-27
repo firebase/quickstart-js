@@ -16,7 +16,6 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
-      // Redirect the root path to text-generation automatically
       { index: true, element: <Navigate to="/text-generation" replace /> },
       { path: 'text-generation', element: <TextGeneration /> },
       { path: 'chat', element: <Chat /> },
@@ -32,7 +31,6 @@ const router = createBrowserRouter([
 
 const isolatedFeature = import.meta.env.VITE_ISOLATED_FEATURE;
 
-// Determine what to render based on the flag
 const renderContent = () => {
   if (isolatedFeature) {
     switch (isolatedFeature) {
@@ -49,16 +47,13 @@ const renderContent = () => {
       case 'image-generation':
         return <ImageGeneration />;
       default:
-        // Fallback if the flag is set to something unknown
         return <RouterProvider router={router} />;
     }
   }
 
-  // If no flag provided, run the normal full app router
   return <RouterProvider router={router} />;
 };
 
-// Mount to the DOM
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     {renderContent()}
