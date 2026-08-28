@@ -12,44 +12,37 @@ export default function ChatView() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  // Use a ref to hold the active chat session from the Firebase AI SDK.
-  // This prevents the session from being recreated on every React render.
   const chatSessionRef = useRef<ChatSession | null>(null);
-
-  // Initialize the chat when the component mounts
   useEffect(() => {
     handleResetChat();
   }, []);
 
-   const handleResetChat = () => {
+  const handleResetChat = React.useCallback(() => {
     try {
       chatSessionRef.current = startNewChat();
       setError(null);
-    } catch (err: any) {
-      setError(err.message || 'Failed to initialize chat session. Please check your Firebase configuration.');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error 
+        ? err.message 
+        : 'Failed to initialize chat session. Please check your Firebase configuration.';
+      setError(errorMessage);
     }
     setMessages([]);
     setInput('');
-  };
+  }, []);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || !chatSessionRef.current) return;
 
     const userMessage = input.trim();
-    setInput(''); // Clear input immediately
+    setInput(''); 
     setError(null);
     setLoading(true);
-
-    // Optimistically add user message to UI
     setMessages((prev) => [...prev, { role: 'user', text: userMessage }]);
 
     try {
-      // Call framework-agnostic service layer
       const responseText = await sendChatMessage(chatSessionRef.current, userMessage);
-      
-      // Add model response to UI
       setMessages((prev) => [...prev, { role: 'model', text: responseText }]);
     } catch (err: any) {
       setError(err.message || 'Failed to send message. Check console for details.');
