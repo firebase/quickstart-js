@@ -43,11 +43,11 @@ describe('SignInModalComponent', () => {
         MatFormFieldModule,
         FormsModule,
         MatInputModule,
-        BrowserAnimationsModule,
+        BrowserAnimationsModule],
+      providers: [
         provideFirebaseApp(() => initializeApp(projectConfig)),
         provideFirestore(() => getFirestore()),
-        provideAuth(() => getAuth())],
-      providers: [
+        provideAuth(() => getAuth()),
         { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: MatDialogRef, useValue: {

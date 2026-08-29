@@ -32,6 +32,7 @@ export interface SignInOptions {
   templateUrl: "./sign-in-modal.component.html",
   styleUrls: ["./sign-in-modal.component.css"],
   encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 
 /**

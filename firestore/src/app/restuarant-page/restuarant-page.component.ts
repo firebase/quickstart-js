@@ -27,7 +27,8 @@ import {
 @Component({
   selector: 'app-restuarant-page',
   templateUrl: './restuarant-page.component.html',
-  styleUrls: ['./restuarant-page.component.css']
+  styleUrls: ['./restuarant-page.component.css'],
+  standalone: false
 })
 export class RestuarantPageComponent implements OnInit {
   restaurantData: Observable<Restaurant> = new Observable();
