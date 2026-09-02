@@ -11,7 +11,7 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
-    reader.onloadend = () => {
+    reader.onload = () => {
       const result = reader.result;
       if (typeof result === 'string') {
         const splitResult = result.split(',');
