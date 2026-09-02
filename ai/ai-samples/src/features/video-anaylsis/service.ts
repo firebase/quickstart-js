@@ -47,7 +47,7 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
 export async function analyzeVideo(prompt: string, videoFile: File): Promise<string> {
   try {
     const videoPart = await fileToGenerativePart(videoFile);
-    const model = getAiModel('gemini-3.5-flash');
+    const model = getAiModel('gemini-3.7-flash');
     const result = await model.generateContent([prompt, videoPart]);
     return result.response.text();
   } catch (error: unknown) {
