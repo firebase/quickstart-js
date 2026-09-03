@@ -1,74 +1,111 @@
 import { initializeApp } from 'firebase/app';
-import { MessagePayload, deleteToken, getMessaging, getToken, onMessage } from 'firebase/messaging';
+import {
+  MessagePayload,
+  getMessaging,
+  onMessage,
+  onRegistered,
+  onUnregistered,
+  register,
+  unregister,
+} from 'firebase/messaging';
 import { firebaseConfig, vapidKey } from './config';
 
 initializeApp(firebaseConfig);
 
 const messaging = getMessaging();
 
-// IDs of divs that display registration token UI or request permission UI.
-const tokenDivId = 'token_div';
+// 7 days in milliseconds for FID server sync expiration.
+const SEVEN_DAYS_IN_MS = 7 * 24 * 60 * 60 * 1000;
+
+// IDs of divs that display registration FID UI or request permission UI.
+const fidDivId = 'fid_div';
 const permissionDivId = 'permission_div';
 
 // Handle incoming messages. Called when:
 // - a message is received while the app has focus
 // - the user clicks on an app notification created by a service worker
 //   `messaging.onBackgroundMessage` handler.
-onMessage(messaging, (payload) => {
+onMessage(messaging, (payload: MessagePayload) => {
   console.log('Message received. ', payload);
   // Update the UI to include the received message.
   appendMessage(payload);
 });
 
+onRegistered(messaging, (fid) => {
+  console.log('Registered with FID:', fid);
+  sendFidToServer(fid);
+  updateUIForPushEnabled(fid);
+});
+
+onUnregistered(messaging, (fid) => {
+  console.log('Unregistered FID:', fid);
+  setFidSentToServer(false);
+  updateUIForUnregistered();
+});
+
 function resetUI() {
   clearMessages();
-  showToken('loading...');
-  // Get registration token. Initially this makes a network call, once retrieved
-  // subsequent calls to getToken will return from cache.
-  getToken(messaging, { vapidKey }).then((currentToken) => {
-    if (currentToken) {
-      sendTokenToServer(currentToken);
-      updateUIForPushEnabled(currentToken);
-    } else {
-      // Show permission request.
-      console.log('No registration token available. Request permission to generate one.');
-      // Show permission UI.
-      updateUIForPushPermissionRequired();
-      setTokenSentToServer(false);
-    }
-  }).catch((err) => {
-    console.log('An error occurred while retrieving token. ', err);
-    showToken('Error retrieving registration token.');
-    setTokenSentToServer(false);
-  });
-}
-
-
-function showToken(currentToken: string) {
-  // Show token in console and UI.
-  const tokenElement = document.querySelector('#token')!;
-  tokenElement.textContent = currentToken;
-}
-
-// Send the registration token your application server, so that it can:
-// - send messages back to this app
-// - subscribe/unsubscribe the token from topics
-function sendTokenToServer(currentToken: string) {
-  if (!isTokenSentToServer()) {
-    console.log('Sending token to server...', currentToken);
-    // TODO(developer): Send the current token to your server.
-    setTokenSentToServer(true);
+  if (
+    typeof Notification !== 'undefined' &&
+    Notification.permission === 'granted'
+  ) {
+    showHideDiv(fidDivId, true);
+    showHideDiv(permissionDivId, false);
+    showFid('loading...');
+    register(messaging, { vapidKey }).catch((err) => {
+      console.warn('An error occurred while registering: ', err);
+      updateUIForUnregistered();
+    });
   } else {
-    console.log('Token already sent to server so won\'t send it again unless it changes');
+    // Show permission request.
+    console.log(
+      'No registration FID available. Request permission to generate one.',
+    );
+    // Show permission UI.
+    updateUIForPushPermissionRequired();
+    setFidSentToServer(false);
   }
 }
 
-function isTokenSentToServer() {
-  return window.localStorage.getItem('sentToServer') === '1';
+function showFid(currentFid: string) {
+  // Show FID in console and UI.
+  const fidElement = document.querySelector('#fid')!;
+  fidElement.textContent = currentFid;
 }
 
-function setTokenSentToServer(sent: boolean) {
-  window.localStorage.setItem('sentToServer', sent ? '1' : '0');
+// Send the registration FID to your application server, so that it can:
+// - send messages back to this app
+// - subscribe/unsubscribe the FID from topics
+function sendFidToServer(currentFid: string) {
+  if (!isFidRecentlySentToServer()) {
+    console.log('Sending FID to server...', currentFid);
+    // TODO(developer): Send the current FID to your server.
+    setFidSentToServer(true);
+  } else {
+    console.log(
+      "FID already sent to server so won't send it again unless it changes or expires",
+    );
+  }
+}
+
+function isFidRecentlySentToServer() {
+  const sentTimestamp = window.localStorage.getItem('sentFidToServerTimestamp');
+  if (!sentTimestamp) {
+    return false;
+  }
+  const timeElapsed = Date.now() - parseInt(sentTimestamp, 10);
+  return timeElapsed < SEVEN_DAYS_IN_MS;
+}
+
+function setFidSentToServer(sent: boolean) {
+  if (sent) {
+    window.localStorage.setItem(
+      'sentFidToServerTimestamp',
+      Date.now().toString(),
+    );
+  } else {
+    window.localStorage.removeItem('sentFidToServerTimestamp');
+  }
 }
 
 function showHideDiv(divId: string, show: boolean) {
@@ -80,12 +117,25 @@ function showHideDiv(divId: string, show: boolean) {
   }
 }
 
+function updateButtonStates(isRegistered: boolean) {
+  const registerBtn = document.querySelector(
+    '#register-button',
+  ) as HTMLButtonElement | null;
+  const unregisterBtn = document.querySelector(
+    '#unregister-button',
+  ) as HTMLButtonElement | null;
+  if (registerBtn && unregisterBtn) {
+    registerBtn.disabled = isRegistered;
+    unregisterBtn.disabled = !isRegistered;
+  }
+}
+
 function requestPermission() {
   console.log('Requesting permission...');
   Notification.requestPermission().then((permission) => {
     if (permission === 'granted') {
       console.log('Notification permission granted.');
-      // TODO(developer): Retrieve a registration token for use with FCM.
+      // TODO(developer): Retrieve Firebase Installation ID (FID) for use with FCM.
       // In many cases once an app has been granted notification permission,
       // it should update its UI reflecting this.
       resetUI();
@@ -95,24 +145,23 @@ function requestPermission() {
   });
 }
 
-function deleteTokenFromFirebase() {
-  // Delete registration token.
-  getToken(messaging).then((currentToken) => {
-    deleteToken(messaging).then(() => {
-      console.log('Token deleted.', currentToken);
-      setTokenSentToServer(false);
-      // Once token is deleted update UI.
-      resetUI();
-    }).catch((err) => {
-      console.log('Unable to delete token. ', err);
-    });
-  }).catch((err) => {
-    console.log('Error retrieving registration token. ', err);
-    showToken('Error retrieving registration token.');
+// Register FID with FCM.
+function registerFidFromFirebase() {
+  showFid('loading...');
+  register(messaging, { vapidKey }).catch((err) => {
+    console.warn('Failed to register: ', err);
+    updateUIForUnregistered();
   });
 }
 
-// Add a message to the messages element.
+// Unregister FID with FCM.
+function unregisterFidFromFirebase() {
+  unregister(messaging).catch((err) => {
+    console.warn('Failed to unregister: ', err);
+  });
+}
+
+// Add a message to the messages list.
 function appendMessage(payload: MessagePayload) {
   const messagesElement = document.querySelector('#messages')!;
   const dataHeaderElement = document.createElement('h5');
@@ -124,7 +173,7 @@ function appendMessage(payload: MessagePayload) {
   messagesElement.appendChild(dataElement);
 }
 
-// Clear the messages element of all children.
+// Clear the list of received messages.
 function clearMessages() {
   const messagesElement = document.querySelector('#messages')!;
   while (messagesElement.hasChildNodes()) {
@@ -132,18 +181,33 @@ function clearMessages() {
   }
 }
 
-function updateUIForPushEnabled(currentToken: string) {
-  showHideDiv(tokenDivId, true);
+function updateUIForPushEnabled(currentFid: string) {
+  showHideDiv(fidDivId, true);
   showHideDiv(permissionDivId, false);
-  showToken(currentToken);
+  showFid(currentFid);
+  updateButtonStates(true);
+}
+
+function updateUIForUnregistered() {
+  showHideDiv(fidDivId, true);
+  showHideDiv(permissionDivId, false);
+  showFid('Not Registered');
+  updateButtonStates(false);
 }
 
 function updateUIForPushPermissionRequired() {
-  showHideDiv(tokenDivId, false);
+  showHideDiv(fidDivId, false);
   showHideDiv(permissionDivId, true);
 }
 
-document.getElementById('request-permission-button')!.addEventListener('click', requestPermission);
-document.getElementById('delete-token-button')!.addEventListener('click', deleteTokenFromFirebase);
+document
+  .getElementById('request-permission-button')!
+  .addEventListener('click', requestPermission);
+document
+  .getElementById('register-button')!
+  .addEventListener('click', registerFidFromFirebase);
+document
+  .getElementById('unregister-button')!
+  .addEventListener('click', unregisterFidFromFirebase);
 
 resetUI();
