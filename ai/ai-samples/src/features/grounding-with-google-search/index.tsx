@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { generateGroundedContent, GroundedResult } from './service';
 
 export default function GroundingWithGoogleSearchView() {
-  const [prompt, setPrompt] = useState('Who won the world cup 2026?');
+  const [prompt, setPrompt] = useState('Who won the euro 2024?');
   const [result, setResult] = useState<GroundedResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +29,8 @@ export default function GroundingWithGoogleSearchView() {
       setLoading(false);
     }
   };
+
+  const renderedContent = result?.groundingMetadata?.searchEntryPoint?.renderedContent;
 
   const uniqueSources = Array.from(
     new Map(
@@ -83,6 +85,20 @@ export default function GroundingWithGoogleSearchView() {
           <h3>Response:</h3>
           <p style={{ whiteSpace: 'pre-wrap', lineHeight: '1.5' }}>{result.text}</p>
 
+          {/* REQUIRED COMPLIANCE: Display Google Search suggestions if returned */}
+          {renderedContent && (
+            <div style={{ marginTop: '15px' }}>
+              <h4>Search Suggestions:</h4>
+              <iframe
+                srcDoc={renderedContent}
+                sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+                style={{ width: '100%', border: 'none', minHeight: '60px' }}
+                title="Google Search Suggestions"
+              />
+            </div>
+          )}
+
+          {/* REQUIRED COMPLIANCE: Display sources */}
           {uniqueSources.length > 0 && (
             <div style={{ marginTop: '15px' }}>
               <h4>Sources:</h4>
