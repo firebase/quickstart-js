@@ -1,5 +1,24 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { generateGroundedContent, GroundedResult } from './service';
+
+/**
+ * Encapsulates the Google Search suggestions HTML/CSS within a Shadow DOM
+ * as documented in Firebase's SearchEntrypoint reference:
+ * container.attachShadow({ mode: 'open' }).innerHTML = renderedContent;
+ */
+function SearchSuggestionsWidget({ renderedContent }: { renderedContent: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const shadowRoot =
+      containerRef.current.shadowRoot ||
+      containerRef.current.attachShadow({ mode: 'open' });
+    shadowRoot.innerHTML = renderedContent;
+  }, [renderedContent]);
+
+  return <div ref={containerRef} style={{ minHeight: '40px' }} />;
+}
 
 export default function GroundingWithGoogleSearchView() {
   const [prompt, setPrompt] = useState('Who won the euro 2024?');
@@ -85,16 +104,11 @@ export default function GroundingWithGoogleSearchView() {
           <h3>Response:</h3>
           <p style={{ whiteSpace: 'pre-wrap', lineHeight: '1.5' }}>{result.text}</p>
 
-          {/* REQUIRED COMPLIANCE: Display Google Search suggestions if returned */}
+          {/* REQUIRED COMPLIANCE: Display Google Search suggestions in Shadow DOM if returned */}
           {renderedContent && (
             <div style={{ marginTop: '15px' }}>
               <h4>Search Suggestions:</h4>
-              <iframe
-                srcDoc={renderedContent}
-                sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-                style={{ width: '100%', border: 'none', minHeight: '60px' }}
-                title="Google Search Suggestions"
-              />
+              <SearchSuggestionsWidget renderedContent={renderedContent} />
             </div>
           )}
 
