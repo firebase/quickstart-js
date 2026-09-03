@@ -5,6 +5,7 @@ import { generateGroundedContent, GroundedResult } from './service';
  * Encapsulates the Google Search suggestions HTML/CSS within a Shadow DOM
  * as documented in Firebase's SearchEntrypoint reference:
  * container.attachShadow({ mode: 'open' }).innerHTML = renderedContent;
+ * (https://firebase.google.com/docs/reference/js/ai.searchentrypoint)
  */
 function SearchSuggestionsWidget({ renderedContent }: { renderedContent: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
