@@ -8,12 +8,11 @@ const NAV_ITEMS = [
   { path: '/function-calling', label: 'Function Calling' },
   { path: '/automatic-function-calling', label: 'Automatic Function Calling' },
   { path: '/image-generation', label: 'Image Generation' },
-
+  { path: '/video-analysis', label: 'Video Analysis' },
 ];
 
 export default function App() {
   const { pathname } = useLocation();
-
 
   return (
     <div className="app-shell">

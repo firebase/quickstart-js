@@ -9,7 +9,7 @@ import StructuredOutput from './features/structured-output';
 import FunctionCalling from './features/function-calling';
 import ImageGeneration from './features/image-generation';
 import AutomaticFunctionCalling from './features/automatic-function-calling';
-
+import VideoAnalysis from './features/video-anaylsis';
 
 const router = createBrowserRouter([
   {
@@ -24,9 +24,10 @@ const router = createBrowserRouter([
       { path: 'function-calling', element: <FunctionCalling /> },
       { path: 'automatic-function-calling', element: <AutomaticFunctionCalling /> },
       { path: 'image-generation', element: <ImageGeneration /> },
-      
+      { path: 'video-analysis', element: <VideoAnalysis /> },
     ],
   },
+
 ]);
 
 const isolatedFeature = import.meta.env.VITE_ISOLATED_FEATURE;
@@ -46,6 +47,10 @@ const renderContent = () => {
         return <FunctionCalling />;
       case 'image-generation':
         return <ImageGeneration />;
+      case 'automatic-function-calling':
+        return <AutomaticFunctionCalling />;
+      case 'video-anaylsis':
+        return <VideoAnalysis />;
       default:
         return <RouterProvider router={router} />;
     }
