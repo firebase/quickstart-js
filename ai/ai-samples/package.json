@@ -12,6 +12,7 @@
     "dev:function": "VITE_ISOLATED_FEATURE=function-calling vite",
     "dev:auto-function": "VITE_ISOLATED_FEATURE=automatic-function-calling vite",
     "dev:image": "VITE_ISOLATED_FEATURE=image-generation vite",
+    "dev:video": "VITE_ISOLATED_FEATURE=video-analysis vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
