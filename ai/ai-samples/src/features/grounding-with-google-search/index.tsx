@@ -30,7 +30,13 @@ export default function GroundingWithGoogleSearchView() {
     }
   };
 
-  const sources = result?.groundingMetadata?.groundingChunks?.filter((chunk) => chunk.web) ?? [];
+  const uniqueSources = Array.from(
+    new Map(
+      (result?.groundingMetadata?.groundingChunks ?? [])
+        .filter((chunk): chunk is { web: { uri: string; title?: string } } => Boolean(chunk.web?.uri))
+        .map((chunk) => [chunk.web.uri, chunk.web])
+    ).values()
+  );
 
   return (
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
@@ -77,19 +83,19 @@ export default function GroundingWithGoogleSearchView() {
           <h3>Response:</h3>
           <p style={{ whiteSpace: 'pre-wrap', lineHeight: '1.5' }}>{result.text}</p>
 
-          {sources.length > 0 && (
+          {uniqueSources.length > 0 && (
             <div style={{ marginTop: '15px' }}>
               <h4>Sources:</h4>
               <ul style={{ paddingLeft: '20px' }}>
-                {sources.map((chunk, i) => (
-                  <li key={i} style={{ marginBottom: '4px' }}>
+                {uniqueSources.map((source) => (
+                  <li key={source.uri} style={{ marginBottom: '4px' }}>
                     <a
-                      href={chunk.web?.uri}
+                      href={source.uri}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ color: '#007BFF' }}
                     >
-                      {chunk.web?.title || chunk.web?.uri}
+                      {source.title || source.uri}
                     </a>
                   </li>
                 ))}
