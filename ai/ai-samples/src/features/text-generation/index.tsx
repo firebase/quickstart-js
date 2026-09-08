@@ -1,49 +1,110 @@
 import { useState } from 'react';
-import { generateText } from './service';
+import { generateText, streamText } from './service';
 
-export default function TextGeneration() {
+export default function TextGenerationView() {
   const [prompt, setPrompt] = useState<string>('');
+  const cleanPrompt = prompt.trim(); 
+  const [systemInstruction, setSystemInstruction] = useState<string>('');
+  const [useStreaming, setUseStreaming] = useState<boolean>(true);
   const [response, setResponse] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async () => {
-    if (!prompt.trim()) return;
+    if (!cleanPrompt) return;
 
     setLoading(true);
     setError(null);
     setResponse('');
 
     try {
-      // Direct call to the decoupled logic service
-      const text = await generateText(prompt);
-      setResponse(text);
-    } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred');
+      const cleanInstruction = systemInstruction.trim() || undefined;
+
+      if (useStreaming) {
+        await streamText(
+          cleanPrompt, 
+          (chunk) => setResponse((prev) => prev + chunk),
+          cleanInstruction
+        );
+      } else {
+        const text = await generateText(cleanPrompt, cleanInstruction);
+        setResponse(text);
+      }
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error
+        ? err.message
+        : 'An unexpected error occurred';
+
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
       <h2>Text Generation</h2>
-      
-      <textarea
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-        placeholder="Ask the AI a question..."
-        rows={5}
-        style={{ width: '100%', marginBottom: '10px', padding: '10px' }}
-      />
-      
-      <button onClick={handleGenerate} disabled={loading || !prompt.trim()} style={{ padding: '10px 20px' }}>
-        {loading ? 'Generating...' : 'Generate'}
-      </button>
 
-      {error && <p style={{ color: 'red', marginTop: '15px' }}>{error}</p>}
-      {response && <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f0f0f0' }}><p style={{ whiteSpace: 'pre-wrap' }}>{response}</p></div>}
+      {/* System Instruction Input */}
+      <div style={{ marginBottom: '12px' }}>
+        <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.9rem', color: '#5f6368' }}>
+          System Instruction (Persona/Rules)
+        </label>
+        <input
+          type="text"
+          value={systemInstruction}
+          onChange={(e) => setSystemInstruction(e.target.value)}
+          placeholder="e.g., You are a helpful assistant..."
+          disabled={loading}
+          style={{ width: '100%', padding: '10px', boxSizing: 'border-box' }}
+        />
+      </div>
+
+      {/* Main Prompt Input */}
+      <div style={{ marginBottom: '12px' }}>
+        <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.9rem', color: '#5f6368' }}>
+          Prompt
+        </label>
+        <textarea
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          placeholder="Ask the AI a question..."
+          rows={5}
+          disabled={loading}
+          style={{ width: '100%', padding: '10px', boxSizing: 'border-box' }}
+        />
+      </div>
+
+      {/* Controls: Checkbox and Button */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+          <input
+            type="checkbox"
+            checked={useStreaming}
+            onChange={(e) => setUseStreaming(e.target.checked)}
+            disabled={loading}
+          />
+          Stream response
+        </label>
+
+        <button
+          onClick={handleGenerate}
+          disabled={loading || !cleanPrompt}
+          style={{ padding: '10px 20px', cursor: (loading || !cleanPrompt) ? 'not-allowed' : 'pointer' }}
+        >
+          {loading ? 'Generating...' : 'Generate'}
+        </button>
+      </div>
+
+      {/* Error Message */}
+      {error && <p style={{ color: '#c5221f', marginTop: '15px' }}>{error}</p>}
+
+      {/* Response Box */}
+      {response && (
+        <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f0f0f0', borderRadius: '8px' }}>
+          <p style={{ whiteSpace: 'pre-wrap', margin: 0 }}>{response}</p>
+        </div>
+      )}
     </div>
   );
 }

@@ -9,14 +9,13 @@ import StructuredOutput from './features/structured-output';
 import FunctionCalling from './features/function-calling';
 import ImageGeneration from './features/image-generation';
 import AutomaticFunctionCalling from './features/automatic-function-calling';
-
+import GroundingWithGoogleSearch from './features/grounding-with-google-search';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      // Redirect the root path to text-generation automatically
       { index: true, element: <Navigate to="/text-generation" replace /> },
       { path: 'text-generation', element: <TextGeneration /> },
       { path: 'chat', element: <Chat /> },
@@ -25,14 +24,13 @@ const router = createBrowserRouter([
       { path: 'function-calling', element: <FunctionCalling /> },
       { path: 'automatic-function-calling', element: <AutomaticFunctionCalling /> },
       { path: 'image-generation', element: <ImageGeneration /> },
-      
+      { path: 'grounding-with-google-search', element: <GroundingWithGoogleSearch /> },
     ],
   },
 ]);
 
 const isolatedFeature = import.meta.env.VITE_ISOLATED_FEATURE;
 
-// Determine what to render based on the flag
 const renderContent = () => {
   if (isolatedFeature) {
     switch (isolatedFeature) {
@@ -48,17 +46,18 @@ const renderContent = () => {
         return <FunctionCalling />;
       case 'image-generation':
         return <ImageGeneration />;
+      case 'automatic-function-calling':
+        return <AutomaticFunctionCalling />;
+      case 'grounding-with-google-search':
+        return <GroundingWithGoogleSearch />;
       default:
-        // Fallback if the flag is set to something unknown
         return <RouterProvider router={router} />;
     }
   }
 
-  // If no flag provided, run the normal full app router
   return <RouterProvider router={router} />;
 };
 
-// Mount to the DOM
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     {renderContent()}
