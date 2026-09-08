@@ -14,6 +14,7 @@ This repository demonstrates the following capabilities:
 * Function Calling
 * Automatic Function Calling
 * Image Generation
+* Video Analysis
 * Grounding with Google Search
 
 ## Setup & Configuration
@@ -48,6 +49,7 @@ npm run dev:structured    # Structured Output
 npm run dev:function      # Function Calling
 npm run dev:auto-function # Automatic Function Calling
 npm run dev:image         # Image Generation
+npm run dev:video         # Video Analysis
 npm run dev:grounding     # Grounding with Google Search
 ```
 
