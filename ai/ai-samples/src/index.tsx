@@ -10,6 +10,7 @@ import FunctionCalling from './features/function-calling';
 import ImageGeneration from './features/image-generation';
 import AutomaticFunctionCalling from './features/automatic-function-calling';
 import VideoAnalysis from './features/video-analysis';
+import GroundingWithGoogleSearch from './features/grounding-with-google-search';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       { path: 'automatic-function-calling', element: <AutomaticFunctionCalling /> },
       { path: 'image-generation', element: <ImageGeneration /> },
       { path: 'video-analysis', element: <VideoAnalysis /> },
+      { path: 'grounding-with-google-search', element: <GroundingWithGoogleSearch /> },
     ],
   },
 
@@ -51,6 +53,8 @@ const renderContent = () => {
         return <AutomaticFunctionCalling />;
       case 'video-anaylsis':
         return <VideoAnalysis />;
+      case 'grounding-with-google-search':
+        return <GroundingWithGoogleSearch />;
       default:
         return <RouterProvider router={router} />;
     }

@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { path: '/automatic-function-calling', label: 'Automatic Function Calling' },
   { path: '/image-generation', label: 'Image Generation' },
   { path: '/video-analysis', label: 'Video Analysis' },
+  { path: '/grounding-with-google-search', label: 'Grounding with Google Search' },
 ];
 
 export default function App() {
