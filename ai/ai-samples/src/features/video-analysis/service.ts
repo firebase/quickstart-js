@@ -25,7 +25,7 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
             resolve({
                 inlineData: {
                     data: base64Data,
-                    mimeType: file.type || 'video/mp4',
+                    mimeType: file.type,
                 },
             });
         };
