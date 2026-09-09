@@ -72,7 +72,7 @@ export async function streamVideoAnalysis(
 ): Promise<void> {
     try {
         const videoPart = await fileToGenerativePart(videoFile);
-        const model = getAiModel('gemini-3.5-flash-lite');
+        const model = getAiModel();
         const result = await model.generateContentStream([prompt, videoPart]);
 
         for await (const chunk of result.stream) {
