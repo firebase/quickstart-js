@@ -15,7 +15,7 @@ export interface GroundedResult {
  */
 export async function generateGroundedContent(prompt: string): Promise<GroundedResult> {
   try {
-    const model = getAiModel('gemini-3.7-flash', {
+    const model = getAiModel('gemini-3.5-flash-lite', {
       tools: [{ googleSearch: {} }],
     });
 

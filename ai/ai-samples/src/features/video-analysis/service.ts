@@ -49,7 +49,7 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
 export async function analyzeVideo(prompt: string, videoFile: File): Promise<string> {
     try {
         const videoPart = await fileToGenerativePart(videoFile);
-        const model = getAiModel('gemini-3.7-flash');
+        const model = getAiModel('gemini-3.5-flash-lite');
         const result = await model.generateContent([prompt, videoPart]);
         return result.response.text();
     } catch (error: unknown) {
@@ -72,7 +72,7 @@ export async function streamVideoAnalysis(
 ): Promise<void> {
     try {
         const videoPart = await fileToGenerativePart(videoFile);
-        const model = getAiModel('gemini-3.7-flash');
+        const model = getAiModel('gemini-3.5-flash-lite');
         const result = await model.generateContentStream([prompt, videoPart]);
 
         for await (const chunk of result.stream) {
