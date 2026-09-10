@@ -11,6 +11,7 @@ import ImageGeneration from './features/image-generation';
 import AutomaticFunctionCalling from './features/automatic-function-calling';
 import VideoAnalysis from './features/video-analysis';
 import GroundingWithGoogleSearch from './features/grounding-with-google-search';
+import ServerPromptTemplates from './features/server-prompt-templates';
 
 const router = createBrowserRouter([
   {
@@ -27,9 +28,14 @@ const router = createBrowserRouter([
       { path: 'image-generation', element: <ImageGeneration /> },
       { path: 'video-analysis', element: <VideoAnalysis /> },
       { path: 'grounding-with-google-search', element: <GroundingWithGoogleSearch /> },
+      { path: 'server-prompt-templates', element: <ServerPromptTemplates /> },
+      { path: '*', element: <Navigate to="/text-generation" replace /> },
     ],
   },
-
+  {
+    path: '*',
+    element: <Navigate to="/text-generation" replace />,
+  },
 ]);
 
 const isolatedFeature = import.meta.env.VITE_ISOLATED_FEATURE;
@@ -51,10 +57,16 @@ const renderContent = () => {
         return <ImageGeneration />;
       case 'automatic-function-calling':
         return <AutomaticFunctionCalling />;
+      case 'video-analysis':
       case 'video-anaylsis':
         return <VideoAnalysis />;
       case 'grounding-with-google-search':
+      case 'grounding':
         return <GroundingWithGoogleSearch />;
+      case 'server-prompt-templates':
+      case 'server-prompt-template':
+      case 'template':
+        return <ServerPromptTemplates />;
       default:
         return <RouterProvider router={router} />;
     }
