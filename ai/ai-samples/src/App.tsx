@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { path: '/image-generation', label: 'Image Generation' },
   { path: '/video-analysis', label: 'Video Analysis' },
   { path: '/grounding-with-google-search', label: 'Grounding with Google Search' },
+  { path: '/server-prompt-templates', label: 'Server Prompt Templates' },
 ];
 
 export default function App() {

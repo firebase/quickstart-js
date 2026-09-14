@@ -28,9 +28,8 @@ Before running this sample, create and lock the template in your Firebase projec
     Create an example customer invoice for a customer named {{customerName}}.
    ```
 5. Click **Save**.
-6. **Important**: Click **Lock** (or **Publish**). Client SDKs can only execute locked/published templates. Unlocked templates remain in draft mode and will return `NOT_FOUND` to client applications.
+6. **Important**: While client applications can execute both unlocked (draft) and locked templates during development, you should always **Lock** your template before deploying to production. Locking freezes the prompt configuration, ensuring that subsequent console edits do not accidentally change your production app's behavior.
 
-<!-- TODO(docs): possible add screenshot / GIF walkthrough of creating and locking the template in Firebase Console -->
 
 ---
 
@@ -65,14 +64,13 @@ const result = await model.generateContent('invoice-generator', {
   customerName: 'Jane Doe',
 });
 console.log(result.response.text());
-
-// TODO: Add example for model.startChat with templateId once template-grounded multi-turn chat is explored
 ```
 
 ---
 
 ## 4. Troubleshooting & Failure Surfaces
-
-// make a table for template ID mismatch
-// missing variable output
-// AI Logic API enabling note
+| Issue | Cause | Resolution |
+|---|---|---|
+| `NOT_FOUND` / 404 | Template ID mismatch or template doesn't exist in the active Firebase project  | Verify that the template ID in your code is exactly `invoice-generator` and that you are initialized in the correct Firebase Project |
+| Missing Variable output | Variable names in client code don't match console | Ensure the keys passed to `templateVariables` match the `{{variable}}` placeholders in your prompt template. |
+| `PERMISSION_DENIED` | Firebase AI Logic API not enabled or App Check blocked | Follow the Firebase AI Logic guided setup in the console and ensure your API key / App Check tokens are valid. |
