@@ -52,13 +52,10 @@ const renderContent = () => {
         return <ImageGeneration />;
       case 'automatic-function-calling':
         return <AutomaticFunctionCalling />;
-      case 'video-analysis':
       case 'video-anaylsis':
         return <VideoAnalysis />;
       case 'grounding-with-google-search':
-      case 'grounding':
         return <GroundingWithGoogleSearch />;
-      case 'server-prompt-templates':
       case 'server-prompt-template':
       case 'template':
         return <ServerPromptTemplates />;
