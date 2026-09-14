@@ -9,8 +9,6 @@ export default function ServerPromptTemplatesView() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // TODO: Add support for dynamic custom key-value variable pairs if developer wants to test other templates
-
   const handleExecute = async () => {
     const trimmedId = templateId.trim();
     if (!trimmedId) {
@@ -140,7 +138,6 @@ export default function ServerPromptTemplatesView() {
       {response && (
         <div style={{ marginTop: '20px', borderTop: '1px solid #eee', paddingTop: '15px' }}>
           <h3>Response:</h3>
-          {/* TODO: maybe add copy-to-clipboard/formatted markdown renderer */}
           <p style={{ whiteSpace: 'pre-wrap', lineHeight: '1.5' }}>{response}</p>
         </div>
       )}

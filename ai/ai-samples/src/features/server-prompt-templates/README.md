@@ -51,7 +51,7 @@ Open your browser to the local URL (e.g., `http://localhost:XXXX/server-prompt-t
 
 ## 3. Using in Your Own Project
 
-To use Server Prompt Templates in any JavaScript or TypeScript project, copy [`service.ts`](./service.ts):
+To use Server Prompt Templates in your project:
 
 ```ts
 import { getAI, getTemplateGenerativeModel } from 'firebase/ai';
@@ -68,7 +68,7 @@ console.log(result.response.text());
 
 ---
 
-## 4. Troubleshooting & Failure Surfaces
+## 4. Possile Troubleshooting & Failure Surfaces
 | Issue | Cause | Resolution |
 |---|---|---|
 | `NOT_FOUND` / 404 | Template ID mismatch or template doesn't exist in the active Firebase project  | Verify that the template ID in your code is exactly `invoice-generator` and that you are initialized in the correct Firebase Project |
