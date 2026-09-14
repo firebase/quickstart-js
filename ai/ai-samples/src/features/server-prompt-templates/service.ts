@@ -1,4 +1,5 @@
 import { getAiTemplateModel } from '../../services/firebaseAIService';
+
 export interface InvoiceTemplateVariables {
   customerName: string;
 }

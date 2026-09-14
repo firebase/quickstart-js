@@ -30,7 +30,6 @@ Before running this sample, create and lock the template in your Firebase projec
 5. Click **Save**.
 6. **Important**: While client applications can execute both unlocked (draft) and locked templates during development, you should always **Lock** your template before deploying to production. Locking freezes the prompt configuration, ensuring that subsequent console edits do not accidentally change your production app's behavior.
 
-
 ---
 
 ## 2. Running the Sample Locally
@@ -45,7 +44,7 @@ Or run this feature directly in isolated mode:
 npm run dev:template
 ```
 
-Open your browser to the local URL (e.g., `http://localhost:XXXX/server-prompt-templates`).
+Open your browser to the local URL (e.g., `http://localhost:***` provided in the console).
 
 ---
 
@@ -68,9 +67,10 @@ console.log(result.response.text());
 
 ---
 
-## 4. Possile Troubleshooting & Failure Surfaces
+## 4. Possible Troubleshooting & Failure Surfaces
+
 | Issue | Cause | Resolution |
 |---|---|---|
-| `NOT_FOUND` / 404 | Template ID mismatch or template doesn't exist in the active Firebase project  | Verify that the template ID in your code is exactly `invoice-generator` and that you are initialized in the correct Firebase Project |
+| `NOT_FOUND` / 404 | Template ID mismatch or template doesn't exist in the active Firebase project | Verify that the template ID in your code is exactly `invoice-generator` and that you are initialized in the correct Firebase Project |
 | Missing Variable output | Variable names in client code don't match console | Ensure the keys passed to `templateVariables` match the `{{variable}}` placeholders in your prompt template. |
 | `PERMISSION_DENIED` | Firebase AI Logic API not enabled or App Check blocked | Follow the Firebase AI Logic guided setup in the console and ensure your API key / App Check tokens are valid. |

@@ -65,6 +65,7 @@ export default function ServerPromptTemplatesView() {
         }}
       >
         <strong>Console Prerequisite:</strong> Requires a published/locked template in the Firebase Console.
+        <strong>Console Prerequisite:</strong> Requires a saved template in the Firebase Console.
         See <code>README.md</code> in this feature folder for the setup guide.
       </div>
 
@@ -128,6 +129,7 @@ export default function ServerPromptTemplatesView() {
               <ul style={{ margin: '6px 0 0 16px', padding: 0 }}>
                 <li>Template <code>{templateId}</code> exists in your Firebase project?</li>
                 <li>Template status is <strong>Locked / Published</strong> (drafts cannot be called by client SDKs)?</li>
+                <li>Template is saved in the Firebase Console (and locked for production)?</li>
                 <li>Your web app configuration matches the Firebase project where the template is stored?</li>
               </ul>
             </div>
