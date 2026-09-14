@@ -1,4 +1,4 @@
-import { getAiTemplateModel } from '../../services/firebaseAIService';
+import { getAiModel } from '../../services/firebaseAIService';
 
 export interface InvoiceTemplateVariables {
   customerName: string;
@@ -17,7 +17,7 @@ export async function generateFromTemplate(
   variables: Record<string, unknown>
 ): Promise<string> {
   try {
-    const model = getAiTemplateModel();
+    const model = getAiModel();
     const result = await model.generateContent(templateId, variables);
     return result.response.text();
   } catch (error: unknown) {

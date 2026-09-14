@@ -29,12 +29,7 @@ const router = createBrowserRouter([
       { path: 'video-analysis', element: <VideoAnalysis /> },
       { path: 'grounding-with-google-search', element: <GroundingWithGoogleSearch /> },
       { path: 'server-prompt-templates', element: <ServerPromptTemplates /> },
-      { path: '*', element: <Navigate to="/text-generation" replace /> },
     ],
-  },
-  {
-    path: '*',
-    element: <Navigate to="/text-generation" replace />,
   },
 ]);
 
