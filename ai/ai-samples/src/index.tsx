@@ -56,7 +56,7 @@ const renderContent = () => {
         return <VideoAnalysis />;
       case 'grounding-with-google-search':
         return <GroundingWithGoogleSearch />;
-      case 'server-prompt-template':
+      case 'server-prompt-templates':
       case 'template':
         return <ServerPromptTemplates />;
       default:
