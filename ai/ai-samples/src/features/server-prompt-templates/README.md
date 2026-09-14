@@ -48,26 +48,7 @@ Open your browser to the local URL (e.g., `http://localhost:***` provided in the
 
 ---
 
-## 3. Using in Your Own Project
-
-To use Server Prompt Templates in your project:
-
-```ts
-import { getAI, getTemplateGenerativeModel } from 'firebase/ai';
-import { initializeApp } from 'firebase/app';
-
-const app = initializeApp(firebaseConfig);
-const ai = getAI(app);
-const model = getTemplateGenerativeModel(ai);
-const result = await model.generateContent('invoice-generator', {
-  customerName: 'Jane Doe',
-});
-console.log(result.response.text());
-```
-
----
-
-## 4. Possible Troubleshooting & Failure Surfaces
+## 3. Possible Troubleshooting & Failure Surfaces
 
 | Issue | Cause | Resolution |
 |---|---|---|
