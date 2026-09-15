@@ -16,6 +16,7 @@ This repository demonstrates the following capabilities:
 * Image Generation
 * Video Analysis
 * Grounding with Google Search
+* Server Prompt Templates
 
 ## Setup & Configuration
 
@@ -51,6 +52,9 @@ npm run dev:auto-function # Automatic Function Calling
 npm run dev:image         # Image Generation
 npm run dev:video         # Video Analysis
 npm run dev:grounding     # Grounding with Google Search
+# Note: Server Prompt Templates requires template setup in the Firebase Console first.
+# See src/features/server-prompt-templates/README.md for setup instructions before running:
+npm run dev:template      # Server Prompt Templates
 ```
 
 After running any of the above commands, open your browser to http://localhost:*** (provided in the console)
