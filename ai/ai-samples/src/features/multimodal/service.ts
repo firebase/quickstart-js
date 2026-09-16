@@ -47,7 +47,7 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
 export async function generateMultimodalContent(prompt: string, files: File[]): Promise<string> {
     try {
         const fileParts = await Promise.all(files.map(fileToGenerativePart));
-        const model = getAiModel('gemini-3.5-flash');
+        const model = getAiModel();
         const result = await model.generateContent([prompt, ...fileParts]);
         return result.response.text();
     } catch (error: unknown) {

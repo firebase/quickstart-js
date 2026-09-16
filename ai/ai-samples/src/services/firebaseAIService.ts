@@ -1,17 +1,17 @@
-import { initializeApp} from 'firebase/app';
-import { getAI, getGenerativeModel } from 'firebase/ai';
+import { initializeApp } from 'firebase/app';
+import { getAI, getGenerativeModel, getTemplateGenerativeModel, RequestOptions } from 'firebase/ai';
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
 
-const firebaseConfig = import.meta.env.VITE_FIREBASE_CONFIG 
-  ? JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG) 
+const firebaseConfig = import.meta.env.VITE_FIREBASE_CONFIG
+  ? JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG)
   : {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
 
 const app = initializeApp(firebaseConfig);
 
@@ -20,9 +20,9 @@ if (typeof window !== 'undefined') {
   (window as any).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
 
   initializeAppCheck(app, {
-  // The string here doesn't matter in this specific case, as setting 
-  // FIREBASE_APPCHECK_DEBUG_TOKEN above means it will be ignored. 
-  // However, in production, this MUST be a valid reCAPTCHA site key.
+    // The string here doesn't matter in this specific case, as setting 
+    // FIREBASE_APPCHECK_DEBUG_TOKEN above means it will be ignored. 
+    // However, in production, this MUST be a valid reCAPTCHA site key.
     provider: new ReCaptchaEnterpriseProvider('YOUR_RECAPTCHA_SITE_KEY'),
     isTokenAutoRefreshEnabled: true
   });
@@ -30,6 +30,10 @@ if (typeof window !== 'undefined') {
 
 const ai = getAI(app);
 
-export const getAiModel = (modelName: string = 'gemini-3.5-flash', additionalConfig: Record<string, any> = {}) => {
+export const getAiModel = (modelName: string = 'gemini-3.5-flash-lite', additionalConfig: Record<string, any> = {}) => {
   return getGenerativeModel(ai, { model: modelName, ...additionalConfig });
+};
+
+export const getAiTemplateModel = (requestOptions?: RequestOptions) => {
+  return getTemplateGenerativeModel(ai, requestOptions);
 };

@@ -9,7 +9,7 @@ import { getAiModel } from '../../services/firebaseAIService';
 export async function generateText(prompt: string, systemInstruction?: string): Promise<string> {
   try {
     const options = systemInstruction ? { systemInstruction } : undefined;
-    const model = getAiModel('gemini-3.5-flash', options);
+    const model = getAiModel('gemini-3.5-flash-lite', options);
     
     const result = await model.generateContent(prompt);
     return result.response.text(); 
@@ -28,7 +28,7 @@ export async function generateText(prompt: string, systemInstruction?: string): 
 export async function streamText(prompt: string, onChunk: (chunk: string) => void, systemInstruction?: string): Promise<void> {
   try {
     const options = systemInstruction ? { systemInstruction } : undefined;
-    const model = getAiModel('gemini-3.5-flash', options);
+    const model = getAiModel('gemini-3.5-flash-lite', options);
     
     const result = await model.generateContentStream(prompt);
 

@@ -49,7 +49,7 @@ const fetchWeatherTool: FunctionDeclarationsTool = {
  * Step 3: Execute the prompt.
  */
 export async function executeAutomaticFunctionCalling(prompt: string): Promise<string> {
-    const model = getAiModel('gemini-3.5-flash', {
+    const model = getAiModel('gemini-3.5-flash-lite', {
         tools: [fetchWeatherTool],
     });
     const chat = model.startChat();
