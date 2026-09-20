@@ -70,9 +70,9 @@ export class HomepageComponent {
       constraints.push(where('price', '==', this.sortingData.price))
     }
     if (this.sortingData.sortBy === 'Rating') {
-      constraints.push(orderBy('numRatings', 'desc'));
-    } else {
       constraints.push(orderBy('avgRating', 'desc'));
+    } else {
+      constraints.push(orderBy('numRatings', 'desc'));
     }
 
     this.restaurants = this.homepageFirestore
