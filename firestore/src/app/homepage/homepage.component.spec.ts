@@ -98,15 +98,18 @@ describe('HomepageComponent', () => {
         MatToolbarModule,
         MatIconModule,
         MatCardModule,
+        HomepageComponent, RestaurantCardComponent
+      ],
+      declarations: [],
+      providers: [
         provideFirebaseApp(() => initializeApp(projectConfig)),
         provideFirestore(() => getFirestore()),
         provideAuth(() => getAuth()),
-      ],
-      declarations: [HomepageComponent, RestaurantCardComponent],
-      providers: [{
-        provide: HomepageFirestore,
-        useClass: MockHomepageFirestore
-      }]
+        {
+          provide: HomepageFirestore,
+          useClass: MockHomepageFirestore
+        }
+      ]
     });
     fixture = TestBed.createComponent(HomepageComponent);
     component = fixture.componentInstance;
