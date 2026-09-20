@@ -24,6 +24,7 @@ import { DialogData, filterCategories, filterCities } from './dialogdata';
   templateUrl: './filter-dialog.component.html',
   styleUrls: ['./filter-dialog.component.css'],
   encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class FilterDialogComponent {
   cities: string[] = filterCities;

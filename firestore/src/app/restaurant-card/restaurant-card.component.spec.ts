@@ -15,6 +15,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { RestaurantCardComponent } from './restaurant-card.component';
 
@@ -25,7 +28,7 @@ describe('RestaurantCardComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [RestaurantCardComponent],
-      imports: []
+      imports: [MatCardModule, MatIconModule, RouterTestingModule]
     });
     fixture = TestBed.createComponent(RestaurantCardComponent);
     component = fixture.componentInstance;
