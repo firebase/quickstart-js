@@ -9,14 +9,15 @@ import StructuredOutput from './features/structured-output';
 import FunctionCalling from './features/function-calling';
 import ImageGeneration from './features/image-generation';
 import AutomaticFunctionCalling from './features/automatic-function-calling';
-
+import VideoAnalysis from './features/video-analysis';
+import GroundingWithGoogleSearch from './features/grounding-with-google-search';
+import ServerPromptTemplates from './features/server-prompt-templates';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      // Redirect the root path to text-generation automatically
       { index: true, element: <Navigate to="/text-generation" replace /> },
       { path: 'text-generation', element: <TextGeneration /> },
       { path: 'chat', element: <Chat /> },
@@ -25,14 +26,15 @@ const router = createBrowserRouter([
       { path: 'function-calling', element: <FunctionCalling /> },
       { path: 'automatic-function-calling', element: <AutomaticFunctionCalling /> },
       { path: 'image-generation', element: <ImageGeneration /> },
-      
+      { path: 'video-analysis', element: <VideoAnalysis /> },
+      { path: 'grounding-with-google-search', element: <GroundingWithGoogleSearch /> },
+      { path: 'server-prompt-templates', element: <ServerPromptTemplates /> },
     ],
   },
 ]);
 
 const isolatedFeature = import.meta.env.VITE_ISOLATED_FEATURE;
 
-// Determine what to render based on the flag
 const renderContent = () => {
   if (isolatedFeature) {
     switch (isolatedFeature) {
@@ -48,17 +50,23 @@ const renderContent = () => {
         return <FunctionCalling />;
       case 'image-generation':
         return <ImageGeneration />;
+      case 'automatic-function-calling':
+        return <AutomaticFunctionCalling />;
+      case 'video-anaylsis':
+        return <VideoAnalysis />;
+      case 'grounding-with-google-search':
+        return <GroundingWithGoogleSearch />;
+      case 'server-prompt-templates':
+      case 'template':
+        return <ServerPromptTemplates />;
       default:
-        // Fallback if the flag is set to something unknown
         return <RouterProvider router={router} />;
     }
   }
 
-  // If no flag provided, run the normal full app router
   return <RouterProvider router={router} />;
 };
 
-// Mount to the DOM
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     {renderContent()}

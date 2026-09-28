@@ -61,7 +61,7 @@ const fetchWeatherTool: FunctionDeclarationsTool = {
  */
 export async function executeFunctionCalling(prompt: string): Promise<FunctionCallingResult> {
     // Step 3: Provide the function declaration during model initialization.
-    const model = getAiModel('gemini-3.1-flash-lite', {
+    const model = getAiModel('gemini-3.5-flash-lite', {
         tools: [fetchWeatherTool],
     });
 

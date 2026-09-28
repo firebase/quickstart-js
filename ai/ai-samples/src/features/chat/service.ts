@@ -8,7 +8,7 @@ import { getAiModel } from '../../services/firebaseAIService';
  * * @returns A new ChatSession instance.
  */
 export function startNewChat(): ChatSession {
-  const model = getAiModel('gemini-3.5-flash');
+  const model = getAiModel();
   return model.startChat({
     history: [],
   });

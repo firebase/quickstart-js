@@ -39,7 +39,7 @@ const genreEnumSchema = Schema.enumString({
  */
 export async function generateWithSDKSchema(prompt: string): Promise<string> {
     try {
-        const model = getAiModel('gemini-3.5-flash', {
+        const model = getAiModel('gemini-3.5-flash-lite', {
             generationConfig: {
                 responseMimeType: 'application/json',
                 responseSchema: characterSchema
@@ -62,7 +62,7 @@ export async function generateWithSDKSchema(prompt: string): Promise<string> {
  */
 export async function generateWithEnumValues(prompt: string): Promise<string> {
     try {
-        const model = getAiModel('gemini-3.5-flash', {
+        const model = getAiModel('gemini-3.5-flash-lite', {
             generationConfig: {
                 responseMimeType: 'text/x.enum',
                 responseSchema: genreEnumSchema
