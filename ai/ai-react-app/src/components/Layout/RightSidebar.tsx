@@ -58,9 +58,14 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
     setNanoBananaParams((prevState) => updateFn(prevState));
   };
 
-  const handleModalityChange = (modality: ResponseModality, checked: boolean) => {
+  const handleModalityChange = (
+    modality: ResponseModality,
+    checked: boolean,
+  ) => {
     handleNanoBananaModelParamsUpdate((prev) => {
-      const currentModalities = (prev.generationConfig as ExtendedGenerationConfig)?.responseModalities || [ResponseModality.TEXT];
+      const currentModalities = (
+        prev.generationConfig as ExtendedGenerationConfig
+      )?.responseModalities || [ResponseModality.TEXT];
       let newModalities = [...currentModalities];
       if (checked) {
         if (!newModalities.includes(modality)) newModalities.push(modality);
@@ -68,7 +73,13 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
         newModalities = newModalities.filter((m) => m !== modality);
       }
       if (newModalities.length === 0) return prev;
-      return { ...prev, generationConfig: { ...prev.generationConfig, responseModalities: newModalities } };
+      return {
+        ...prev,
+        generationConfig: {
+          ...prev.generationConfig,
+          responseModalities: newModalities,
+        },
+      };
     });
   };
 
@@ -88,32 +99,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
     handleModelParamsUpdate((prev: ModelParams) => ({
       ...prev,
       model: newModel,
-    }));
-  };
-
-  const handleTemperatureChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const newTemp = parseFloat(event.target.value);
-    handleModelParamsUpdate((prev: ModelParams) => ({
-      ...prev,
-      generationConfig: { ...prev.generationConfig, temperature: newTemp },
-    }));
-  };
-
-  const handleTopPChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newTopP = parseFloat(event.target.value);
-    handleModelParamsUpdate((prev: ModelParams) => ({
-      ...prev,
-      generationConfig: { ...prev.generationConfig, topP: newTopP },
-    }));
-  };
-
-  const handleTopKChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newTopK = parseInt(event.target.value, 10);
-    handleModelParamsUpdate((prev: ModelParams) => ({
-      ...prev,
-      generationConfig: { ...prev.generationConfig, topK: newTopK },
     }));
   };
 
@@ -239,68 +224,12 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
               </select>
             </div>
             <div className={styles.controlGroup}>
-              <label htmlFor="temperature-slider">
-                Temperature:{" "}
-                {generativeParams.generationConfig?.temperature?.toFixed(1) ??
-                  "N/A"}
-              </label>
-              <input
-                type="range"
-                id="temperature-slider"
-                min="0"
-                max="2"
-                step="0.1"
-                value={generativeParams.generationConfig?.temperature ?? 0.9}
-                onChange={handleTemperatureChange}
-              />
-            </div>
-            <div className={styles.controlGroup}>
               <label>Last Response Tokens</label>
               <div className={styles.tokenDisplay}>
                 {usageMetadata
                   ? `Prompt: ${usageMetadata.promptTokenCount} / Candidate: ${usageMetadata.candidatesTokenCount} / Total: ${usageMetadata.totalTokenCount}`
                   : `N/A`}
               </div>
-            </div>
-          </div>
-
-          <div>
-            <h5
-              className={styles.subSectionTitle}
-              style={{ marginTop: "20px" }}
-            >
-              Advanced Generation
-            </h5>
-            <div className={styles.controlGroup}>
-              <label htmlFor="topP-slider">
-                Top P:{" "}
-                {generativeParams.generationConfig?.topP?.toFixed(2) ??
-                  "N/A (Default)"}
-              </label>
-              <input
-                type="range"
-                id="topP-slider"
-                min="0"
-                max="1"
-                step="0.01"
-                value={generativeParams.generationConfig?.topP ?? 0.95}
-                onChange={handleTopPChange}
-              />
-            </div>
-            <div className={styles.controlGroup}>
-              <label htmlFor="topK-slider">
-                Top K:{" "}
-                {generativeParams.generationConfig?.topK ?? "N/A (Default)"}
-              </label>
-              <input
-                type="range"
-                id="topK-slider"
-                min="1"
-                max="100"
-                step="1"
-                value={generativeParams.generationConfig?.topK ?? 40}
-                onChange={handleTopKChange}
-              />
             </div>
           </div>
 
@@ -426,7 +355,12 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             <select
               id="nanobanana-model-select"
               value={nanoBananaParams.model}
-              onChange={(e) => handleNanoBananaModelParamsUpdate((prev) => ({ ...prev, model: e.target.value }))}
+              onChange={(e) =>
+                handleNanoBananaModelParamsUpdate((prev) => ({
+                  ...prev,
+                  model: e.target.value,
+                }))
+              }
             >
               {AVAILABLE_NANO_BANANA_MODELS.map((modelName) => (
                 <option key={modelName} value={modelName}>
@@ -438,20 +372,42 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
 
           <div className={styles.controlGroup}>
             <label>Response Modalities</label>
-            <div style={{ display: 'flex', gap: '10px', marginTop: '5px' }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <div style={{ display: "flex", gap: "10px", marginTop: "5px" }}>
+              <label
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
                 <input
                   type="checkbox"
-                  checked={((nanoBananaParams.generationConfig as ExtendedGenerationConfig)?.responseModalities || [ResponseModality.TEXT]).includes(ResponseModality.TEXT)}
-                  onChange={(e) => handleModalityChange(ResponseModality.TEXT, e.target.checked)}
+                  checked={(
+                    (
+                      nanoBananaParams.generationConfig as ExtendedGenerationConfig
+                    )?.responseModalities || [ResponseModality.TEXT]
+                  ).includes(ResponseModality.TEXT)}
+                  onChange={(e) =>
+                    handleModalityChange(
+                      ResponseModality.TEXT,
+                      e.target.checked,
+                    )
+                  }
                 />
                 Text
               </label>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <label
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
                 <input
                   type="checkbox"
-                  checked={((nanoBananaParams.generationConfig as ExtendedGenerationConfig)?.responseModalities || []).includes(ResponseModality.IMAGE)}
-                  onChange={(e) => handleModalityChange(ResponseModality.IMAGE, e.target.checked)}
+                  checked={(
+                    (
+                      nanoBananaParams.generationConfig as ExtendedGenerationConfig
+                    )?.responseModalities || []
+                  ).includes(ResponseModality.IMAGE)}
+                  onChange={(e) =>
+                    handleModalityChange(
+                      ResponseModality.IMAGE,
+                      e.target.checked,
+                    )
+                  }
                 />
                 Image
               </label>
@@ -463,10 +419,23 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             <select
               id="aspect-ratio-select"
               value={selectedAspectRatio || ""}
-              onChange={(e) => setSelectedAspectRatio(e.target.value || undefined)}
+              onChange={(e) =>
+                setSelectedAspectRatio(e.target.value || undefined)
+              }
             >
               <option value="">None</option>
-              {["1:1", "3:2", "2:3", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"].map((ar) => (
+              {[
+                "1:1",
+                "3:2",
+                "2:3",
+                "3:4",
+                "4:3",
+                "4:5",
+                "5:4",
+                "9:16",
+                "16:9",
+                "21:9",
+              ].map((ar) => (
                 <option key={ar} value={ar}>
                   {ar}
                 </option>

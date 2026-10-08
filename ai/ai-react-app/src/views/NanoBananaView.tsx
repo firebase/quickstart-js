@@ -1,10 +1,5 @@
 import React, { useState, useCallback } from "react";
-import {
-  getGenerativeModel,
-  ModelParams,
-  AI,
-  AIError,
-} from "firebase/ai";
+import { getGenerativeModel, ModelParams, AI, AIError } from "firebase/ai";
 import PromptInput from "../components/Common/PromptInput";
 import styles from "./NanoBananaView.module.css";
 
@@ -69,7 +64,9 @@ const NanoBananaView: React.FC<NanoBananaViewProps> = ({
 }) => {
   const [currentPrompt, setCurrentPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedContent, setGeneratedContent] = useState<GeneratedContentPart[]>([]);
+  const [generatedContent, setGeneratedContent] = useState<
+    GeneratedContentPart[]
+  >([]);
   const [filteredReason, setFilteredReason] = useState<string | undefined>(
     undefined,
   );
@@ -95,7 +92,9 @@ const NanoBananaView: React.FC<NanoBananaViewProps> = ({
     setError(null);
 
     try {
-      console.log(`[NanoBananaView] Using Generative model for interleaved content`);
+      console.log(
+        `[NanoBananaView] Using Generative model for interleaved content`,
+      );
       const model = getGenerativeModel(aiInstance, {
         model: currentParams.model,
         generationConfig: currentParams.generationConfig,
@@ -103,17 +102,17 @@ const NanoBananaView: React.FC<NanoBananaViewProps> = ({
 
       const result = await model.generateContent(finalPromptText);
       console.log("[NanoBananaView] Generation successful.", result);
-      
+
       const response = result.response;
       const parts: GeneratedContentPart[] = [];
-      
+
       // Intentionally only support handling the primary candidate.
       if (response.candidates?.[0].content?.parts) {
         for (const part of response.candidates?.[0].content?.parts) {
-          if (part.text) {
+          if (part.type === "text" && part.text) {
             parts.push({ text: part.text });
           }
-          if (part.inlineData) {
+          if (part.type === "inlineData" && part.inlineData) {
             parts.push({
               image: {
                 mimeType: part.inlineData.mimeType,
@@ -125,12 +124,22 @@ const NanoBananaView: React.FC<NanoBananaViewProps> = ({
       }
 
       const candidate = response.candidates?.[0];
-      if (candidate && candidate.finishReason && candidate.finishReason !== "STOP") {
-        setFilteredReason(`Generation stopped due to: ${candidate.finishReason}`);
+      if (
+        candidate &&
+        candidate.finishReason &&
+        candidate.finishReason !== "STOP"
+      ) {
+        setFilteredReason(
+          `Generation stopped due to: ${candidate.finishReason}`,
+        );
       }
 
       if (response.promptFeedback) {
-        setFilteredReason(response.promptFeedback.blockReason ? `Prompt blocked due to: ${response.promptFeedback.blockReason}` : "Prompt blocked due to safety or policy reasons.");
+        setFilteredReason(
+          response.promptFeedback.blockReason
+            ? `Prompt blocked due to: ${response.promptFeedback.blockReason}`
+            : "Prompt blocked due to safety or policy reasons.",
+        );
       }
 
       setGeneratedContent(parts);
@@ -151,7 +160,13 @@ const NanoBananaView: React.FC<NanoBananaViewProps> = ({
       setIsLoading(false);
       setCurrentPrompt("");
     }
-  }, [currentPrompt, isLoading, currentParams, aiInstance, selectedAspectRatio]);
+  }, [
+    currentPrompt,
+    isLoading,
+    currentParams,
+    aiInstance,
+    selectedAspectRatio,
+  ]);
 
   const suggestions = [
     "A photorealistic portrait of a tabby cat wearing sunglasses.",

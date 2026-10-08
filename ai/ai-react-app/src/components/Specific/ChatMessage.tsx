@@ -4,6 +4,7 @@ import {
   GroundingChunk,
   GroundingMetadata,
   GroundingSupport,
+  TextPart,
 } from "firebase/ai";
 import styles from "./ChatMessage.module.css";
 
@@ -30,9 +31,9 @@ const getMessageText = (message: Content): string => {
   if (!message.parts || message.parts.length === 0) {
     return "";
   }
-  // Filter for parts that are TextPart (have a 'text' property) and join them.
+  // Filter for parts that are TextPart (have type === 'text') and join them.
   return message.parts
-    .filter((part): part is { text: string } => typeof part.text === "string")
+    .filter((part): part is TextPart => part.type === "text")
     .map((part) => part.text)
     .join("");
 };
@@ -138,9 +139,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   // 1. 'function' role messages (these represent execution results, not direct chat).
   // 2. 'model' role messages that *only* contain function calls (these are instructions, not display text).
   // 3. 'system' role messages (handled separately, not usually in chat history display).
-  const shouldRender =
-    isUser ||
-    (isModel && text.trim() !== "");
+  const shouldRender = isUser || (isModel && text.trim() !== "");
 
   if (!shouldRender) {
     return null;
