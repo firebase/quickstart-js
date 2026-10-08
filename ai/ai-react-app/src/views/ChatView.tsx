@@ -6,10 +6,10 @@ import {
   Part,
   UsageMetadata,
   FunctionResponsePart,
+  FunctionCallPart,
   ChatSession,
   GenerateContentCandidate,
   ModelParams,
-  FunctionCall,
   AIError,
   AI,
   GroundingMetadata,
@@ -214,8 +214,8 @@ const ChatView: React.FC<ChatViewProps> = ({
         });
 
         const functionCalls = finalModelCandidate.content?.parts
-          .filter((part) => !!part.functionCall)
-          .map((part) => part.functionCall as FunctionCall);
+          .filter((part): part is FunctionCallPart => part.type === "functionCall")
+          .map((part) => part.functionCall);
 
         if (functionCalls && functionCalls.length > 0) {
           console.log("[ChatView] Function call(s) requested:", functionCalls);
@@ -227,6 +227,7 @@ const ChatView: React.FC<ChatViewProps> = ({
             try {
               const apiResult = await handleFunctionExecution(call);
               functionResponses.push({
+                type: "functionResponse",
                 functionResponse: { name: call.name, response: apiResult },
               });
             } catch (execError: unknown) {
@@ -235,6 +236,7 @@ const ChatView: React.FC<ChatViewProps> = ({
                 execError,
               );
               functionResponses.push({
+                type: "functionResponse",
                 functionResponse: {
                   name: call.name,
                   response: { error: `Execution failed` },
@@ -380,7 +382,7 @@ const ChatView: React.FC<ChatViewProps> = ({
 
     const userMessageParts: Part[] = [];
     if (currentInput.trim())
-      userMessageParts.push({ text: currentInput.trim() });
+      userMessageParts.push({ type: "text", text: currentInput.trim() });
     if (selectedFile) {
       try {
         userMessageParts.push(await fileToGenerativePart(selectedFile));
@@ -493,7 +495,7 @@ const ChatView: React.FC<ChatViewProps> = ({
             message.role === "model" && index === chatHistory.length - 1;
           return (
             <ChatMessage
-              key={`${message.role}-${index}-${message.parts[0]?.text?.slice(0, 10) ?? "part"}`}
+              key={`${message.role}-${index}-${message.parts[0]?.type === "text" ? message.parts[0].text.slice(0, 10) : "part"}`}
               message={message}
               // Pass groundingMetadata only to the last model message that's fully loaded
               groundingMetadata={

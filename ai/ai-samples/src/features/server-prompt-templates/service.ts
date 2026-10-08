@@ -17,8 +17,11 @@ export async function generateFromTemplate(
   variables: Record<string, unknown>
 ): Promise<string> {
   try {
-     const model = getAiTemplateModel();
-    const result = await model.generateContent(templateId, variables);
+    const model = getAiTemplateModel();
+    const result = await model.generateContent({
+      templateId,
+      templateVariables: variables,
+    });
     return result.response.text();
   } catch (error: unknown) {
     throw error instanceof Error

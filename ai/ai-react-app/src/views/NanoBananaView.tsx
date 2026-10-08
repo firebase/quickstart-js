@@ -110,10 +110,10 @@ const NanoBananaView: React.FC<NanoBananaViewProps> = ({
       // Intentionally only support handling the primary candidate.
       if (response.candidates?.[0].content?.parts) {
         for (const part of response.candidates?.[0].content?.parts) {
-          if (part.text) {
+          if (part.type === "text" && part.text) {
             parts.push({ text: part.text });
           }
-          if (part.inlineData) {
+          if (part.type === "inlineData" && part.inlineData) {
             parts.push({
               image: {
                 mimeType: part.inlineData.mimeType,

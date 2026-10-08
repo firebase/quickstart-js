@@ -63,7 +63,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
 
     // Add text part if present
     if (textToCount) {
-      parts.push({ text: textToCount });
+      parts.push({ type: "text", text: textToCount });
     }
 
     // Add file part if present

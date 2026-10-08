@@ -4,6 +4,7 @@ import {
   GroundingChunk,
   GroundingMetadata,
   GroundingSupport,
+  TextPart,
 } from "firebase/ai";
 import styles from "./ChatMessage.module.css";
 
@@ -30,9 +31,9 @@ const getMessageText = (message: Content): string => {
   if (!message.parts || message.parts.length === 0) {
     return "";
   }
-  // Filter for parts that are TextPart (have a 'text' property) and join them.
+  // Filter for parts that are TextPart (have type === 'text') and join them.
   return message.parts
-    .filter((part): part is { text: string } => typeof part.text === "string")
+    .filter((part): part is TextPart => part.type === "text")
     .map((part) => part.text)
     .join("");
 };

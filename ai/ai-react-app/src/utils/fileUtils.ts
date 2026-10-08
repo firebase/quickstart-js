@@ -35,6 +35,7 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
   try {
     const base64EncodedData = await base64EncodedDataPromise;
     return {
+      type: "inlineData",
       inlineData: {
         data: base64EncodedData,
         mimeType: file.type,

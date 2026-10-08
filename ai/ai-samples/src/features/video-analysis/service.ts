@@ -23,6 +23,7 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
                 return reject(new Error('Failed to extract Base64 data from file.'));
             }
             resolve({
+                type: 'inlineData',
                 inlineData: {
                     data: base64Data,
                     mimeType: file.type,

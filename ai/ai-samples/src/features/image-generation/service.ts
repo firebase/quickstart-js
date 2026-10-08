@@ -16,10 +16,10 @@ function extractTextAndImages(parts: Part[] = []): ImageGenerationResult {
   const segments: ImageGenerationSegment[] = [];
 
   for (const part of parts) {
-    if (part.text) {
+    if (part.type === 'text' && part.text) {
       segments.push({ type: 'text', text: part.text });
     }
-    if (part.inlineData) {
+    if (part.type === 'inlineData' && part.inlineData) {
       segments.push({
         type: 'image',
         mimeType: part.inlineData.mimeType,
@@ -49,6 +49,7 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
         return reject(new Error("Failed to extract Base64 data from file."));
       }
       resolve({
+        type: 'inlineData',
         inlineData: {
           data: base64Data,
           mimeType: file.type

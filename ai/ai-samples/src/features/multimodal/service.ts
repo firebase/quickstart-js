@@ -17,6 +17,7 @@ export async function fileToGenerativePart(file: File): Promise<Part> {
                 const splitResult = result.split(',');
                 if (splitResult.length > 1) {
                     resolve({
+                        type: 'inlineData',
                         inlineData: {
                             data: splitResult[1],
                             mimeType: file.type

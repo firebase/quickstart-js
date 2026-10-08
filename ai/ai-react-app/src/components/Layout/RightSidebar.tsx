@@ -91,32 +91,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
     }));
   };
 
-  const handleTemperatureChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const newTemp = parseFloat(event.target.value);
-    handleModelParamsUpdate((prev: ModelParams) => ({
-      ...prev,
-      generationConfig: { ...prev.generationConfig, temperature: newTemp },
-    }));
-  };
-
-  const handleTopPChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newTopP = parseFloat(event.target.value);
-    handleModelParamsUpdate((prev: ModelParams) => ({
-      ...prev,
-      generationConfig: { ...prev.generationConfig, topP: newTopP },
-    }));
-  };
-
-  const handleTopKChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newTopK = parseInt(event.target.value, 10);
-    handleModelParamsUpdate((prev: ModelParams) => ({
-      ...prev,
-      generationConfig: { ...prev.generationConfig, topK: newTopK },
-    }));
-  };
-
   const handleSafetySettingChange = (
     category: HarmCategory,
     threshold: HarmBlockThreshold,
@@ -239,68 +213,12 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
               </select>
             </div>
             <div className={styles.controlGroup}>
-              <label htmlFor="temperature-slider">
-                Temperature:{" "}
-                {generativeParams.generationConfig?.temperature?.toFixed(1) ??
-                  "N/A"}
-              </label>
-              <input
-                type="range"
-                id="temperature-slider"
-                min="0"
-                max="2"
-                step="0.1"
-                value={generativeParams.generationConfig?.temperature ?? 0.9}
-                onChange={handleTemperatureChange}
-              />
-            </div>
-            <div className={styles.controlGroup}>
               <label>Last Response Tokens</label>
               <div className={styles.tokenDisplay}>
                 {usageMetadata
                   ? `Prompt: ${usageMetadata.promptTokenCount} / Candidate: ${usageMetadata.candidatesTokenCount} / Total: ${usageMetadata.totalTokenCount}`
                   : `N/A`}
               </div>
-            </div>
-          </div>
-
-          <div>
-            <h5
-              className={styles.subSectionTitle}
-              style={{ marginTop: "20px" }}
-            >
-              Advanced Generation
-            </h5>
-            <div className={styles.controlGroup}>
-              <label htmlFor="topP-slider">
-                Top P:{" "}
-                {generativeParams.generationConfig?.topP?.toFixed(2) ??
-                  "N/A (Default)"}
-              </label>
-              <input
-                type="range"
-                id="topP-slider"
-                min="0"
-                max="1"
-                step="0.01"
-                value={generativeParams.generationConfig?.topP ?? 0.95}
-                onChange={handleTopPChange}
-              />
-            </div>
-            <div className={styles.controlGroup}>
-              <label htmlFor="topK-slider">
-                Top K:{" "}
-                {generativeParams.generationConfig?.topK ?? "N/A (Default)"}
-              </label>
-              <input
-                type="range"
-                id="topK-slider"
-                min="1"
-                max="100"
-                step="1"
-                value={generativeParams.generationConfig?.topK ?? 40}
-                onChange={handleTopKChange}
-              />
             </div>
           </div>
 

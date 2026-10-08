@@ -98,6 +98,7 @@ export async function executeFunctionCalling(prompt: string): Promise<FunctionCa
     if (resolvedCalls.length > 0) {
         result = await chat.sendMessage(
             resolvedCalls.map(c => ({
+                type: 'functionResponse' as const,
                 functionResponse: { name: c.name, response: c.result },
             }))
 
