@@ -8,7 +8,7 @@ on:
     branches:
       - master
     paths:
-      - 'ai/ai-react-app/**'
+      - "ai/**"
 
 jobs:
   build-react-app:
@@ -22,9 +22,9 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'yarn'
-          cache-dependency-path: 'ai/ai-react-app/yarn.lock'
+          node-version: "24"
+          cache: "yarn"
+          cache-dependency-path: "ai/ai-react-app/yarn.lock"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -33,3 +33,26 @@ jobs:
       - name: Build application
         run: yarn build
         working-directory: ./ai/ai-react-app
+
+  build-ai-samples-app:
+    name: Build AI Samples App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "yarn"
+          cache-dependency-path: "ai/ai-samples/package-lock.json"
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./ai/ai-samples
+
+      - name: Build application
+        run: npm run build
+        working-directory: ./ai/ai-samples
