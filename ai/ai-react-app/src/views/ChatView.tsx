@@ -214,7 +214,9 @@ const ChatView: React.FC<ChatViewProps> = ({
         });
 
         const functionCalls = finalModelCandidate.content?.parts
-          .filter((part): part is FunctionCallPart => part.type === "functionCall")
+          .filter(
+            (part): part is FunctionCallPart => part.type === "functionCall",
+          )
           .map((part) => part.functionCall);
 
         if (functionCalls && functionCalls.length > 0) {

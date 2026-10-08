@@ -139,9 +139,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   // 1. 'function' role messages (these represent execution results, not direct chat).
   // 2. 'model' role messages that *only* contain function calls (these are instructions, not display text).
   // 3. 'system' role messages (handled separately, not usually in chat history display).
-  const shouldRender =
-    isUser ||
-    (isModel && text.trim() !== "");
+  const shouldRender = isUser || (isModel && text.trim() !== "");
 
   if (!shouldRender) {
     return null;

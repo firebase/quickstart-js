@@ -66,7 +66,10 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
     }
 
     const newSystemInstruction: Content | undefined = newSystemInstructionText
-      ? { parts: [{ type: "text", text: newSystemInstructionText }], role: "system" }
+      ? {
+          parts: [{ type: "text", text: newSystemInstructionText }],
+          role: "system",
+        }
       : undefined;
 
     // 2. Update model state upwards
@@ -83,7 +86,10 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
     setCustomPersona(newSystemInstructionText); // 1. Update UI state
 
     const newSystemInstruction: Content | undefined = newSystemInstructionText
-      ? { parts: [{ type: "text", text: newSystemInstructionText }], role: "system" }
+      ? {
+          parts: [{ type: "text", text: newSystemInstructionText }],
+          role: "system",
+        }
       : undefined;
 
     // 2. Update model state upwards
