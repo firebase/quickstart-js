@@ -20,7 +20,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "firebase": "^12.2.1",
+    "firebase": "^13.0.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "react-router-dom": "^7.17.0",

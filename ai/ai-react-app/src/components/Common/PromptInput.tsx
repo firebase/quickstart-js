@@ -63,7 +63,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
 
     // Add text part if present
     if (textToCount) {
-      parts.push({ text: textToCount });
+      parts.push({ type: "text", text: textToCount });
     }
 
     // Add file part if present
@@ -141,7 +141,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
 
       {/* Main Input Area */}
       <div className={styles.inputArea}>
-        <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+        <div style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
           <textarea
             className={styles.promptTextarea}
             value={prompt}
@@ -152,7 +152,14 @@ const PromptInput: React.FC<PromptInputProps> = ({
             aria-label="Prompt input"
           />
           {selectedAspectRatio && (
-            <div style={{ color: '#aaa', fontSize: '0.9em', marginTop: '5px', width: '100%' }}>
+            <div
+              style={{
+                color: "#aaa",
+                fontSize: "0.9em",
+                marginTop: "5px",
+                width: "100%",
+              }}
+            >
               Use aspect ratio {selectedAspectRatio}
             </div>
           )}

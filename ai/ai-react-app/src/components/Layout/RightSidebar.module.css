@@ -114,13 +114,6 @@
   min-height: 60px;
 }
 
-.temperatureDisplay {
-  text-align: right;
-  font-size: 0.8125rem;
-  color: var(--color-text-placeholder);
-  margin-top: 6px;
-}
-
 .tokenDisplay {
   background-color: var(--color-surface-primary);
   border: 1px solid var(--color-border-secondary);
@@ -209,47 +202,4 @@ input:checked + .slider:before {
 }
 .toggleGroup input:disabled ~ span {
   cursor: not-allowed;
-}
-
-.advancedSettings details {
-  border: none;
-  margin-top: 20px;
-  background-color: transparent;
-}
-.advancedSettings summary {
-  padding: 8px 0;
-  cursor: pointer;
-  outline: none;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  font-size: 0.875rem;
-  list-style: none;
-  position: relative;
-}
-.advancedSettings summary:hover {
-  color: var(--color-text-primary);
-}
-.advancedSettings summary::-webkit-details-marker {
-  display: none;
-}
-.advancedSettings summary::before {
-  content: "▶";
-  display: inline-block;
-  margin-right: 8px;
-  font-size: 0.7em;
-  transition: transform 0.2s ease-out;
-  color: var(--color-text-placeholder);
-}
-.advancedSettings details[open] summary::before {
-  transform: rotate(90deg);
-}
-
-.advancedSettings .advancedContent {
-  padding: 16px 0 0 0;
-  border-top: 1px solid var(--color-border-primary);
-  margin-top: 8px;
-}
-.advancedSettings .controlGroup label {
-  font-weight: 400;
-  color: var(--color-text-secondary);
 }
