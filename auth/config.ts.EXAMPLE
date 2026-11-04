@@ -10,3 +10,7 @@ export const firebaseConfig = {
   appId: 'APP_ID',
   measurementId: 'G-MEASUREMENT_ID',
 };
+
+// Your web app's ReCaptcha Enterprise Site-Key
+// https://firebase.google.com/docs/app-check/web/recaptcha-enterprise-provider#project-setup
+export const reCaptchaSiteKey = 'RECAPTCHA_SITE_KEY'
