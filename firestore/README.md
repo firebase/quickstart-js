@@ -37,7 +37,7 @@ Follow these steps to setup and run the quickstart:
     npm install && (cd functions && npm install)
     ```
 
-    > **Note:** When modifying the contents of `functions/src`, be sure to run `npm run build` in the `functions/` directory so that Typescript changes can be compiled and present in the next emulator run.
+    > **Note:** When modifying the contents of `functions/src`, be sure to run `npm run build` in the `functions/` directory so that Typescript changes can be compiled and present in the next emulator run. Additionally, if you're using VSCode, then you should receive a prompt when you first open the project asking if you would like to enable the `Install on Open` task. If you choose to enable this task, then all npm dependencies will be installed and updated *everytime that the project is opened* using the same `npm install && (cd functions && npm install)` script shown above.
 
  1. Run and serve the project locally:
     ```bash
