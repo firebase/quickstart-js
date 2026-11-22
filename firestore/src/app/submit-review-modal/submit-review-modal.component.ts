@@ -16,8 +16,13 @@
 
 import { Component, ViewEncapsulation, inject, Inject } from "@angular/core";
 import { Firestore, collection, addDoc } from "@angular/fire/firestore";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog"
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from "@angular/material/dialog"
 import { Auth } from '@angular/fire/auth';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 import { Rating } from "../../types/ratings";
 
@@ -25,7 +30,16 @@ import { Rating } from "../../types/ratings";
   selector: "app-submit-review-modal",
   templateUrl: "./submit-review-modal.component.html",
   styleUrls: ["./submit-review-modal.component.css"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
+    MatButtonModule
+  ]
 })
 export class SubmitReviewModalComponent {
   private firestore: Firestore = inject(Firestore);

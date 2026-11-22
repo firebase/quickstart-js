@@ -18,11 +18,15 @@ import { Component, OnInit, Input, inject } from '@angular/core';
 import { Rating } from '../../types/ratings';
 import { Observable } from 'rxjs';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-review-list',
   templateUrl: './review-list.component.html',
-  styleUrls: ['./review-list.component.css']
+  styleUrls: ['./review-list.component.css'],
+  standalone: true,
+  imports: [CommonModule, MatDividerModule]
 })
 export class ReviewListComponent implements OnInit {
   @Input() restaurantID: string | null = null;

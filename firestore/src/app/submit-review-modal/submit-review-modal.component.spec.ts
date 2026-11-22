@@ -32,14 +32,15 @@ describe('SubmitReviewModalComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MatDialogModule,
+        SubmitReviewModalComponent],
+      providers: [
         provideFirebaseApp(() => initializeApp(projectConfig)),
         provideFirestore(() => getFirestore()),
-        provideAuth(() => getAuth())],
-      providers: [
+        provideAuth(() => getAuth()),
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }
       ],
-      declarations: [SubmitReviewModalComponent]
+      declarations: []
     });
     fixture = TestBed.createComponent(SubmitReviewModalComponent);
     component = fixture.componentInstance;

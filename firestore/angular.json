@@ -61,12 +61,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "friendly-eats-quickstart:build"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "friendly-eats-quickstart:build:production"
+              "buildTarget": "friendly-eats-quickstart:build:production"
             },
             "local":{
-              "browserTarget": "friendly-eats-quickstart:build:local"
+              "buildTarget": "friendly-eats-quickstart:build:local"
             }
           },
           "defaultConfiguration": "local"

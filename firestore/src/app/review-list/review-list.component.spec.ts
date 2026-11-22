@@ -28,10 +28,13 @@ describe('ReviewListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ReviewListComponent],
-      imports: [provideFirebaseApp(() => initializeApp(projectConfig)),
-      provideFirestore(() => getFirestore()),
-      provideAuth(() => getAuth())]
+      imports: [ReviewListComponent],
+      declarations: [],
+      providers: [
+        provideFirebaseApp(() => initializeApp(projectConfig)),
+        provideFirestore(() => getFirestore()),
+        provideAuth(() => getAuth()),
+      ]
     });
     fixture = TestBed.createComponent(ReviewListComponent);
     component = fixture.componentInstance;
