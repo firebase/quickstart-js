@@ -21,6 +21,9 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { projectConfig } from 'src/environments/environment.default';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 describe('ReviewListComponent', () => {
   let component: ReviewListComponent;
@@ -29,9 +32,16 @@ describe('ReviewListComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ReviewListComponent],
-      imports: [provideFirebaseApp(() => initializeApp(projectConfig)),
-      provideFirestore(() => getFirestore()),
-      provideAuth(() => getAuth())]
+      imports: [
+        MatDividerModule,
+        MatIconModule,
+        CommonModule
+      ],
+      providers: [
+        provideFirebaseApp(() => initializeApp(projectConfig)),
+        provideFirestore(() => getFirestore()),
+        provideAuth(() => getAuth())
+      ]
     });
     fixture = TestBed.createComponent(ReviewListComponent);
     component = fixture.componentInstance;

@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
   selector: 'app-restaurant-card',
   templateUrl: './restaurant-card.component.html',
   styleUrls: ['./restaurant-card.component.css'],
+  standalone: false
 })
 export class RestaurantCardComponent {
   onCardClicked = () => {
